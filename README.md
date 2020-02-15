@@ -53,7 +53,7 @@
 <br>
 <br>
 
-# ○History/Activity
+# ○History / Activity
 
 ----------------------------
 
