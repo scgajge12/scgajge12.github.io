@@ -27,11 +27,23 @@
 ## Language
 ### 　C, Python, C++, JS, PHP, etc.
 
+## Qualification
+### 　・基本情報技術者試験(FE-2018.5)
+
 ## Hobby
 ### 　CTF, アイデア発想, 水泳, 登山, ピアノ, etc.
 
-## Qualification
-### 　・基本情報技術者試験(FE-2018.5)
+## Other
+### 　ディズニー, 写真, 寝ること
+
+### アニメ, 映画
+```
+　　・名探偵コナン
+　　・FAIRY TAIL
+　　・MAJOR
+　　・七つの大罪
+　　・宇宙兄弟
+```
 
 <br>
 <br>
