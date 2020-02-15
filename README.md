@@ -1,11 +1,7 @@
-# scgajge12
-
-<br>
-
-# ◯Profile
+# ○Profile
 
 # Name
-### 　Morioka　Yuta
+## 　Morioka　Yuta
 
 # Birthplace　
 ### 　神奈川県(Kanagawa,Japan)
