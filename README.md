@@ -89,4 +89,4 @@
  
 <br>
 
-# (Update date: February 16, 2020)
+# (Update date: Feb. 16, 2020)
