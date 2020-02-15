@@ -1,0 +1,47 @@
+.head{
+  position: relative;
+  width: 100%;
+  margin-top: 70px;
+}
+.site-icon{
+  border-radius: 50%;
+  width: 65%;
+  box-shadow: 0px 0px 20px 0px #00000087
+
+}
+.f {
+  width: 80%;
+}
+.head > .head-inner {
+  position: absolute;
+  text-align: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  width: 80%;
+  height: 3.2rem;
+}
+.head > .head-inner  > .profile-img{
+  border-radius: 50%;
+  width: 20%;
+  box-shadow: 0px 0px 20px 0px #00000087;
+}
+.head > .head-inner > .head-plof > h1,h2,h3{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.head-plof{
+  margin-bottom: 30px;
+}
+.head-plof > table {
+  margin: auto;
+  text-align: left;
+}
+.head-plof > table > tbody > tr > td {
+  text-align: center;
+}
+.head-plof > table > tbody > tr > td.plof-left {
+  text-align: left;
+}
