@@ -10,12 +10,14 @@
 # Birthplace　
 ### 　神奈川県(Kanagawa,Japan)
 
-# Profession　(2020年4月より)
+# Profession　
+　　　(2020年4月より)
 ### 　情報科学専門学校(ISC)　
 
 ### 　情報セキュリティ学科　1年
 
-# Affiliation　(2020年4月より)
+# Affiliation　
+　　　(2020年4月より)
 ### 　IPFactry
 
 # Areas of interest
@@ -48,7 +50,7 @@
 # 2019　
 ### 　Sep.　SecHack365 Returns 2019
 
-### 　Oct.　CODEBLUE 2019　Student staff
+### 　Oct.　CODEBLUE 2019　Student Staff
 
 ### 　Dec.　SECCON 2019　Sponsor Staff(SecHack365修了生)
 
@@ -68,11 +70,16 @@
 
 # 　[Solved CTF list](https://github.com/scgajge12/Solved-CTFs)
 
-# 　[vulnerability practice sites list](https://github.com/scgajge12/Vulnerability_Practice_site)
+# 　[Vulnerability practice sites list](https://github.com/scgajge12/Vulnerability_Practice_site)
 
 <br>
 <br>
 <br>
+<br>
+
+### Contact email address
+　morioka1831@gmail.com
+ 
 <br>
 
 # (Update date: February 16, 2020)
