@@ -56,22 +56,22 @@
 ----------------------------
 
 ## 2016
-### 　Oct. プログラミング独学スタート(C言語)  
+### 　Oct.　プログラミング独学スタート(C言語)  
 
 ## 2017
 
 ## 2018　
-### 　May. SecHack365　思索駆動コース
+### 　May.　SecHack365　思索駆動コース
 　　　　　　　　　　　　　　　　　　　(2期生)
 
-### 　Sep. パソコン甲子園　プログラミング部門
+### 　Sep.　パソコン甲子園　プログラミング部門
 
 ## 2019　
-### 　Sep. SecHack365 Returns 2019
+### 　Sep.　SecHack365 Returns 2019
 
-### 　Oct. CODEBLUE 2019　Student Staff
+### 　Oct.　CODEBLUE 2019　Student Staff
 
-### 　Dec. SECCON 2019　Sponsor Staff
+### 　Dec.　SECCON 2019　Sponsor Staff
 　　　　　　　　　　　　　　　(SecHack365修了生)
 
 ## 2020　
