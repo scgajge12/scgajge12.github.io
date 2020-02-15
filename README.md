@@ -1,28 +1,37 @@
-# scgajge12.github.io
+# scgajge12
+
+# Profile
+
+### Name
+　Morioka　Yuta
+
+### Birthplace　
+　神奈川県(Kanagawa,Japan)
+
+### Profession
+　情報科学専門学校(ISC)　
+ 
+　情報セキュリティ学科　1年
+
+### Affiliation
+　IPFactry
+
+### Areas of interest
+　セキュリティ,Webセキュリティ,バグバウンティ,競技プログラミング
+
+### language
+　C,Python,C++,JavaScript,PHP,　etc...
+
+### hobby
+　CTF,アイデア発想,水泳,登山,ピアノ,　etc...
+
+### Qualification
+　・基本情報技術者試験(FE　-　2018.5)
 
 <br>
-
-○プロフィール(Profile)
-
-・名前(Name)　Morioka　Yuta
-
-・出身():　神奈川県(Kanagawa,Japan)
-
-・職業():　情報科学専門学校(ISC)　情報セキュリティ学科　1年
-
-・所属():　IPFactry
-
-・関心():　セキュリティ,　Webセキュリティ,　バグバウンティ,　Web_CTF,　競技プログラミング
-
-・言語():　C,　Python,　C++,　JavaScript,　PHP,　etc...
-
-・趣味():　CTF,　アイデア発想,　水泳,　登山,　ピアノ,　etc...
-
-・資格():　基本情報技術者試験(FE　-　2018.5),
-
 <br>
 
-○履歴/活動(     Activity)
+# History/Activity
 
 ・2016　10　　プログラミング独学スタート(C言語)  
 
