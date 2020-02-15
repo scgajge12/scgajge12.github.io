@@ -9,14 +9,16 @@
 ### 　神奈川県(Kanagawa,Japan)
 
 # Profession　
-　　　　　　　　　　(2020年4月より)
 ### 　情報科学専門学校(ISC)　
 
 ### 　情報セキュリティ学科　1年
 
+　　　　　　　　　　　　(2020年4月より)
+
 # Affiliation　
-　　　　　　　　　　(2020年4月より)
 ### 　IPFactry
+
+　　　　　　　　　　　　(2020年4月より)
 
 # Areas of interest
 ### 　Security,Websec,BugBounty,競プロ
@@ -38,24 +40,25 @@
 ----------------------------
 
 # 2016
-### 　Oct.　プログラミング独学スタート(C言語)  
+### 　Oct.プログラミング独学スタート(C言語)  
 
 # 2017
 
 # 2018　
-### 　May.　SecHack365'18　思索駆動コース　2期生
+### 　May.SecHack365'18　思索駆動コース　2期生
 
-### 　Sep.　パソコン甲子園'18　プログラミング部門
+### 　Sep.パソコン甲子園'18　プログラミング部門
 
 # 2019　
-### 　Sep.　SecHack365 Returns 2019
+### 　Sep.SecHack365 Returns 2019
 
-### 　Oct.　CODEBLUE 2019　Student Staff
+### 　Oct.CODEBLUE 2019　Student Staff
 
-### 　Dec.　SECCON 2019　Sponsor Staff(SecHack365修了生)
+### 　Dec.SECCON 2019　Sponsor Staff
+　　　　　　　　　　　　　　　(SecHack365修了生)
 
 # 2020　
-
+### 
 
 <br>
 <br>
