@@ -2,67 +2,74 @@
 
 <br>
 
-# Profile
+# ◯Profile
 
-## Name
-　Morioka　Yuta
+# Name
+## 　Morioka　Yuta
 
-## Birthplace　
-　神奈川県(Kanagawa,Japan)
+# Birthplace　
+## 　神奈川県(Kanagawa,Japan)
 
-## Profession (2020年4月より)
-```
-　情報科学専門学校(ISC)　
-　情報セキュリティ学科　1年
-```
-## Affiliation
-　IPFactry
+# Profession　(2020年4月より)
+## 　情報科学専門学校(ISC)　
 
-## Areas of interest
-　セキュリティ,Webセキュリティ,バグバウンティ,競技プログラミング
+## 　情報セキュリティ学科　1年
 
-## language
-　C,Python,C++,JavaScript,PHP,　etc...
+# Affiliation　(2020年4月より)
+## 　IPFactry
 
-## hobby
-　CTF,アイデア発想,水泳,登山,ピアノ,　etc...
+# Areas of interest
+## 　Security,Websec,BugBounty,競プロ
 
-## Qualification
-　・基本情報技術者試験(FE　-　2018.5)
+# language
+## 　C,Python,C++,JavaScript,PHP,　etc...
+
+# hobby
+## 　CTF,アイデア発想,水泳,登山,ピアノ,　etc...
+
+# Qualification
+## 　・基本情報技術者試験(FE-2018.5)
+
+<br>
+<br>
+
+# ◯History/Activity
+
+# 2016
+## 　Oct.　プログラミング独学スタート(C言語)  
+
+# 2017
+
+# 2018　
+## 　May.　SecHack365'18　思索駆動コース　2期生
+
+## 　Sep.　パソコン甲子園'18　プログラミング部門
+
+# 2019　
+## 　Sep.　SecHack365 Returns 2019
+
+## 　Oct.　CODEBLUE 2019　Student staff
+
+## 　Dec.　SECCON 2019　Sponsor Staff(SecHack365修了生)
+
+# 2020　
+
 
 <br>
 <br>
 
-# History/Activity
+# ◯Link
 
-・2016　10　　プログラミング独学スタート(C言語)  
+# [Twitter](https://twitter.com/scgajge12)
 
-・2017
+# [Hatena](https://scgajge12.hatenablog.com/)
 
-・2018　05　　SecHack365　'18　思索駆動コース　2期生
+# [GitHub](https://github.com/scgajge12)
 
-・　　　09　　パソコン甲子園　'18　プログラミング部門
+# 　[Solved CTF list](https://github.com/scgajge12/Solved-CTFs)
 
-・2019　09　　SecHack365　Returns　2019
-
-・　　　10　　CODEBLUE　2019　　学生スタッフ
-
-・　　　12　　SECCON　2019　　スポンサースタッフ(SecHack365修了生)
-
-・2020　
-
-
+# 　[List of vulnerability practice sites solved](https://github.com/scgajge12/Vulnerability_Practice_site)
 
 <br>
 
-○リンク
-
-・[Twitter]()
-
-・[Hatena]()
-
-・[GitHub]()
-
-<br>
-
-　　　　　　　　　　　　　　　　　　　　　　　　　　　(更新日　_ _)
+# (Update date: February 16, 2020)
