@@ -74,7 +74,7 @@
 ### 　Oct.　CODEBLUE 2019　Student Staff
 
 ### 　Dec.　SECCON 2019　Sponsor Staff
-　　　　　　　　　　　　　　　(SecHack365修了生)
+　　　　　　　　　　　　　　　　(SecHack365修了生)
 
 ## 2020　
 
