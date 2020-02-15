@@ -64,7 +64,7 @@
 
 # 　[Twitter](https://twitter.com/scgajge12)
 
-# 　[Hatena](https://scgajge12.hatenablog.com/)
+# 　[HatenaBlog](https://scgajge12.hatenablog.com/)
 
 # 　[GitHub](https://github.com/scgajge12)
 
@@ -81,7 +81,7 @@
 
 
 ## Contact email address
-### 　morioka1831@gmail.com
+### 　: morioka1831@gmail.com
  
 <br>
 
