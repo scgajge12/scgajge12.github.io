@@ -5,14 +5,14 @@
 # ◯Profile
 
 # Name
-### 　Morioka　Yuta
+#### 　Morioka　Yuta
 
 # Birthplace　
-### 　神奈川県(Kanagawa,Japan)
+##### 　神奈川県(Kanagawa,Japan)
 
 # Profession　
 　　　(2020年4月より)
-### 　情報科学専門学校(ISC)　
+###### 　情報科学専門学校(ISC)　
 
 ### 　情報セキュリティ学科　1年
 
