@@ -10,7 +10,7 @@
 ### 　Morioka Yuta
 
 ## Birthplace　
-### 　神奈川県 (Kanagawa, Japan)
+### 　Kanagawa, Japan
 
 ## Profession　
 ### 　情報科学専門学校 (ISC)　
