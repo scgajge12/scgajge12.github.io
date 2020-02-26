@@ -21,11 +21,6 @@
 
 　　　　　　　　　　　　(2020年4月より)
 
-## Affiliation　
-### 　IPFactry
-
-　　　　　　　　　　　　(2020年4月より)
-
 ## Areas of interest
 ### 　Security, Websec, BugBounty, 競プロ
 
