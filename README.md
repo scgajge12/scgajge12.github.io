@@ -26,7 +26,7 @@
 ### 　C, Python, C++, JS, PHP, etc.
 
 ## Qualification
-### 　・基本情報技術者試験(FE-2018.5)
+### 　・基本情報技術者試験(FE- 2018.5)
 
 ## Hobby
 ### 　CTF, アイデア発想, 水泳, 登山, ピアノ, etc.
@@ -85,9 +85,9 @@
 
 ## 　[GitHub](https://github.com/scgajge12)
 
-## 　　[Solved CTF list](https://github.com/scgajge12/Solved-CTFs)
+## 　　[・Solved CTF list](https://github.com/scgajge12/Solved-CTFs)
 
-## 　　[Vulnerability practice list](https://github.com/scgajge12/Vulnerability_Practice_site)
+## 　　[・Vulnerability practice list](https://github.com/scgajge12/Vulnerability_Practice_site)
 
 <br>
 <br>
