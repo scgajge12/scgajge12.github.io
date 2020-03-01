@@ -12,12 +12,12 @@
 ## Birthplace　
 ### 　Kanagawa, Japan
 
-## Profession　　(2020年4月より)
+## Profession 　　(2020年4月より)
 ### 　情報科学専門学校 (ISC)　
 
 ### 　情報セキュリティ学科　1年
 
-### 　　サイバースペシャリストコース　　　　　　　　　　　　
+### 　　サイバースペシャリストコース
 
 ## Areas of interest
 ### 　Security, Websec, BugBounty, 競プロ
