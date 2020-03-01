@@ -85,9 +85,9 @@
 
 ## 　[GitHub](https://github.com/scgajge12)
 
-## 　　[・Solved CTF list](https://github.com/scgajge12/Solved-CTFs)
+## 　　・[Solved CTF list](https://github.com/scgajge12/Solved-CTFs)
 
-## 　　[・Vulnerability practice list](https://github.com/scgajge12/Vulnerability_Practice_site)
+## 　　・[Vulnerability practice list](https://github.com/scgajge12/Vulnerability_Practice_site)
 
 <br>
 <br>
