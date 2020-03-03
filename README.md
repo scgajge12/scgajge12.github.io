@@ -70,7 +70,7 @@
 　　　　　　　　　　　　　　　　(SecHack365修了生)
 
 ## 2020　
-###   Feb. BugBounty 取り組みスタート
+### 　Feb. BugBounty 取り組みスタート
 
 <br>
 <br>
