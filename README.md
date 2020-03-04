@@ -68,7 +68,7 @@
 　　　　　　　　　　　　　　　　　　　(2nd grade)
 
 ### 　Sep.　PC Koshien　Programming Division
-　　　　　パソコン甲子園 　プログラミング部門
+　　　　　　パソコン甲子園 　プログラミング部門
 
 ## 2019　
 ### 　Sep.　SecHack365 Returns 2019
