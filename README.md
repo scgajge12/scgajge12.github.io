@@ -28,7 +28,7 @@
 ## Areas of interest
 ### 　Security, Websec, BugBounty, 
 
-### 　Competition programming (競プロ)
+### 　Competition Programming (競プロ)
 
 ## Language
 ### 　C, Python, C++, JS, PHP, etc.
