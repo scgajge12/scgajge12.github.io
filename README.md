@@ -19,6 +19,8 @@
 
 ### 　　Cyber Specialist Course
 
+<br>
+
 ### 　情報科学専門学校
 
 ### 　情報セキュリティ学科　1年
