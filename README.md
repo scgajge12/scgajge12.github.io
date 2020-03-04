@@ -16,7 +16,7 @@
 ### 　Information Science College (ISC)
 
 ### 　Information Security Department 
-　　　　　　　　　　　　　　　　　　　1st grade
+　　　　　　　　　　　　　　　　　1st grade
 
 ### 　　Cyber Specialist Course
 
@@ -77,7 +77,7 @@
 ### 　Oct.　CODE BLUE 2019　Student Staff
 
 ### 　Dec.　SECCON 2019　Sponsor Staff
-　　　　　　　　　　　(SecHack365 Graduate)
+　　　　　　　　　　　　　　(SecHack365 Graduate)
 
 ## 2020　
 ### 　Feb.　BugBounty　Start of Initiatives
