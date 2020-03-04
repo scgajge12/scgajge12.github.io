@@ -77,7 +77,7 @@
 ### 　Oct.　CODE BLUE 2019　Student Staff
 
 ### 　Dec.　SECCON 2019　Sponsor Staff
-　　　　　　　　　　　　　　　　(SecHack365 Graduate)
+　　　　　　　　　　　(SecHack365 Graduate)
 
 ## 2020　
 ### 　Feb.　BugBounty　Start of Initiatives
