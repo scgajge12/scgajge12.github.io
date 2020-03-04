@@ -19,8 +19,6 @@
 
 ### 　　Cyber Specialist Course
 
-<br>
-
 ### 　情報科学専門学校
 
 ### 　情報セキュリティ学科　1年
@@ -116,6 +114,7 @@
 
 ## 　○[SECCON](https://www.seccon.jp/)
 
+<br>
 <br>
 <br>
 <br>
