@@ -12,7 +12,7 @@
 ## Birthplace　
 ### 　Kanagawa, Japan
 
-## Profession 　　(2020年4月～)
+## Profession 　　(2020.4 ～)
 ### 　Information Science College (ISC)
 
 ### 　Information Security Department 
