@@ -16,9 +16,8 @@
 ### 　Information Science College (ISC)
 
 ### 　Information Security Department 
-　　　　　　　　　　　　　　　　　1st grade
 
-### 　　Cyber Specialist Course
+### 　　Cyber Specialist Course　1st grade
 
 ### 　情報科学専門学校
 
