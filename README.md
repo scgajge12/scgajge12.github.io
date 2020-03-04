@@ -12,8 +12,14 @@
 ## Birthplace　
 ### 　Kanagawa, Japan
 
-## Profession 　　(2020年4月より)
-### 　情報科学専門学校 (ISC)　
+## Profession 　　(2020年4月～)
+### 　Information Science College (ISC)
+
+### 　Information Security Department 1st grade
+
+### 　　Cyber Specialist Course
+
+### 　情報科学専門学校
 
 ### 　情報セキュリティ学科　1年
 
@@ -51,26 +57,27 @@
 ----------------------------
 
 ## 2016
-### 　Oct.　プログラミング独学スタート(C言語)  
+### 　Oct.　Start Programming Self-Study (C)  
 
 ## 2017
 
 ## 2018　
-### 　May.　SecHack365　思索駆動コース
-　　　　　　　　　　　　　　　　　　　(2期生)
+### 　May.　SecHack365　Thought driving course
+　　　　　　　　　　　　　　　思索駆動コース　(2nd gen)
 
-### 　Sep.　パソコン甲子園 プログラミング部門
+### 　Sep.　PC Koshien　Programming Division
+　　　　　　パソコン甲子園 　プログラミング部門
 
 ## 2019　
 ### 　Sep.　SecHack365 Returns 2019
 
-### 　Oct.　CODEBLUE 2019　Student Staff
+### 　Oct.　CODE BLUE 2019　Student Staff
 
 ### 　Dec.　SECCON 2019　Sponsor Staff
-　　　　　　　　　　　　　　　　(SecHack365修了生)
+　　　　　　　　　　　　　　　　(SecHack365 Graduate)
 
 ## 2020　
-### 　Feb.　BugBounty　取り組みスタート
+### 　Feb.　BugBounty　Start of initiatives
 
 <br>
 <br>
@@ -79,15 +86,31 @@
 
 -------------------------
 
-## 　[Twitter](https://twitter.com/scgajge12)
+## 　○[Twitter](https://twitter.com/scgajge12)
 
-## 　[HatenaBlog](https://scgajge12.hatenablog.com/)
+## 　○[HatenaBlog](https://scgajge12.hatenablog.com/)
 
-## 　[GitHub](https://github.com/scgajge12)
+## 　○[GitHub](https://github.com/scgajge12)
 
 ## 　　・[Solved CTF list](https://github.com/scgajge12/Solved-CTFs)
 
 ## 　　・[Vulnerability practice list](https://github.com/scgajge12/Vulnerability_Practice_site)
+
+## 　○BugBounty (Feb.13.2020 ~)
+
+## 　　・[intigriti ](https://www.intigriti.com/profile/morioka12)
+
+<br>
+
+# ○Official
+
+## 　○[SecHack365](https://sechack365.nict.go.jp/)
+
+## 　○[PC Koshien](https://web-ext.u-aizu.ac.jp/pc-concours/)
+
+## 　○[CODE BLUE](https://codeblue.jp/)
+
+## 　○[SECCON](https://www.seccon.jp/)
 
 <br>
 <br>
@@ -104,4 +127,4 @@
  
 <br>
 
-## (Update date: Feb.16,2020)
+## (Update date: Mar.4,2020)
