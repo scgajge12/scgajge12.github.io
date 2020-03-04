@@ -15,7 +15,8 @@
 ## Profession 　　(2020年4月～)
 ### 　Information Science College (ISC)
 
-### 　Information Security Department 1st grade
+### 　Information Security Department 
+　　　　　　　　　　　　　　　　　　　1st grade
 
 ### 　　Cyber Specialist Course
 
