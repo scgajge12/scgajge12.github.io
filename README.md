@@ -28,7 +28,9 @@
 ### 　　サイバースペシャリストコース
 
 ## Areas of interest
-### 　Security, Websec, BugBounty, 競プロ
+### 　Security, Websec, BugBounty, 
+
+### 　Competition programming (競プロ)
 
 ## Language
 ### 　C, Python, C++, JS, PHP, etc.
@@ -40,7 +42,7 @@
 ### 　CTF, アイデア発想, 水泳, 登山, ピアノ, etc.
 
 ## Other
-### 　ディズニー, カワセミ, 写真, ゲーム, 睡眠,
+### 　Disney, カワセミ, 写真, ゲーム, 睡眠,
 
 ### 　アニメ, 映画, etc.
 ```
@@ -64,7 +66,7 @@
 ## 2017
 
 ## 2018　
-### 　May.　SecHack365　Thought driving course
+### 　May.　SecHack365　Thought Driving Course
 　　　　　　　　　　　　　　　思索駆動コース　(2nd gen)
 
 ### 　Sep.　PC Koshien　Programming Division
@@ -79,7 +81,7 @@
 　　　　　　　　　　　　　　　　(SecHack365 Graduate)
 
 ## 2020　
-### 　Feb.　BugBounty　Start of initiatives
+### 　Feb.　BugBounty　Start of Initiatives
 
 <br>
 <br>
