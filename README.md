@@ -31,7 +31,7 @@
 ### 　Competition Programming (競プロ)
 
 ## Language
-### 　C, Python, C++, JS, PHP, etc.
+### 　C, Python, C++, JS, etc.
 
 ## Qualification
 ### 　・基本情報技術者試験(FE- 2018.5)
@@ -132,4 +132,4 @@
  
 <br>
 
-## (Update date: Mar.4,2020)
+## (Update date: Mar.15,2020)
