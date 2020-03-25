@@ -44,7 +44,7 @@
 ## Other
 ### 　Disney, Kingfisher, Photo, Sleep,
 
-### 　Anime, Movies, Game,　　　　　　　etc.
+### 　Anime, Movies, Game,　　　　etc.
 ```
 　　・名探偵コナン　　　・ツムツム
 　　・七つの大罪　　　　・荒野行動
