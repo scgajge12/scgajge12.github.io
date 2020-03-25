@@ -39,7 +39,7 @@
 ## Hobby
 ### 　CTF, Idea, Swimming, Piano, 
 
-### 　Mountain-Climbing, 　　　　etc.
+### 　Mountain-Climbing, 　　　etc.
 
 ## Other
 ### 　Disney, Kingfisher, Photo, Sleep,
