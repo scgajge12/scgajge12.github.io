@@ -37,17 +37,19 @@
 ### 　・基本情報技術者試験(FE- 2018.5)
 
 ## Hobby
-### 　CTF, アイデア発想, 水泳, 登山, ピアノ, etc.
+### 　CTF, Idea, Swimming, Piano, 
+
+### 　Mountain-Climbing, etc.
 
 ## Other
-### 　Disney, カワセミ, 写真, ゲーム, 睡眠,
+### 　Disney, Kingfisher, Photo, Sleep,
 
-### 　アニメ, 映画, etc.
+### 　Anime, Movies, Game, etc.
 ```
-　　・名探偵コナン　・ツムツム
-　　・七つの大罪　　・荒野行動
-　　・宇宙兄弟　　　・パワプロ
-　　・FAIRY TAIL
+　　・名探偵コナン　　　・ツムツム
+　　・七つの大罪　　　　・荒野行動
+　　・宇宙兄弟　　　　　・パワプロ
+　　・フェアリーテイル　・CoD: Mobile
 　　・MAJOR
 ```
 
