@@ -58,13 +58,7 @@
 
 # ○History / Activity
 
-----------------------------
-
-## 2016
-### 　Oct.　Start Programming Self-Study (C)  
-
-## 2017
-
+---------------------------
 ## 2018　
 ### 　May.　SecHack365　思索駆動コース
 　　　　　　　　　　　　　　　　　　　(2nd grade)
