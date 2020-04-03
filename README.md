@@ -83,7 +83,7 @@
 ---------------------------
 ## Submission stats
 
-### 　・Accepted    　 3
+### 　・Accepted     　3
 
 ### 　・Duplicate   　10
 
