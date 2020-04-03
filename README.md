@@ -83,9 +83,9 @@
 ---------------------------
 ## Submission stats
 
-### 　・Accepted     　3
+### 　・Accepted　　3
 
-### 　・Duplicate   　10
+### 　・Duplicate　10
 
 ### 　・All Bounty ￥28,358 
 
