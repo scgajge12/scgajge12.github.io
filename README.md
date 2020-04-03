@@ -87,7 +87,7 @@
 
 ### 　・Duplicate　10
 
-### 　・All Bounty ￥28,358 
+### 　・All Bounty 　￥28,358 
 
 
 <br>
