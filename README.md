@@ -12,7 +12,7 @@
 ## Birthplace　
 ### 　Kanagawa, Japan
 
-## Profession 　　(2020.4 ～)
+## Profession
 ### 　Information Science College (ISC)
 
 ### 　Information Security Department 
@@ -85,9 +85,9 @@
 
 ### Accepted    3
 
-### Duplicate   8
+### Duplicate   10
 
-### Bounty      ￥28,358 
+### Bounty ￥28,358 
 
 
 <br>
