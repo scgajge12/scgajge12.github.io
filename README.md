@@ -78,6 +78,21 @@
 <br>
 <br>
 
+# ○Bug Bounty info
+
+---------------------------
+## Submission stats
+
+### Accepted    3
+
+### Duplicate   8
+
+### Bounty      ￥28,358 
+
+
+<br>
+<br>
+
 # ○Link
 
 -------------------------
@@ -128,4 +143,4 @@
  
 <br>
 
-## (Update date: Mar.25,2020)
+## (Update date: Apr.4,2020)
