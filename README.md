@@ -26,9 +26,7 @@
 ### 　　サイバースペシャリストコース
 
 ## Areas of interest
-### 　Security, Websec, BugBounty, 
-
-### 　Competition Programming (競プロ)
+### 　Security, Websec, Bug Bounty, 
 
 ## Language
 ### 　C, Python, C++, JS, etc.
