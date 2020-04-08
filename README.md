@@ -83,11 +83,11 @@
 ---------------------------
 ## Submission stats
 
-### 　・Accepted　 3
+### 　・Accepted　 5
 
-### 　・Duplicate　10
+### 　・Duplicate　11
 
-### 　・All Bounty 　￥28,358 
+### 　・All Bounty 　￥87,423　(€775)
 
 
 <br>
@@ -143,4 +143,4 @@
  
 <br>
 
-## (Update date: Apr.4,2020)
+## (Update date: Apr.8,2020)
