@@ -87,7 +87,7 @@
 
 ### 　・Duplicate　11
 
-### 　・All Bounty 　￥87,423　(€775)
+### 　・All Bounty 　￥87,423 JPY　(€775)
 
 
 <br>
