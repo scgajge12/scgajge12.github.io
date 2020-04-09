@@ -111,7 +111,9 @@
 
 ## 　○BugBounty (Feb.13.2020 ~)
 
-## 　　・[intigriti ](https://www.intigriti.com/profile/morioka12)
+## 　　・[intigriti](https://www.intigriti.com/profile/morioka12)
+
+## 　　・[HackerOne](https://hackerone.com/morioka12)
 
 <br>
 
