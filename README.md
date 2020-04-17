@@ -31,7 +31,7 @@
 
 ## CTF Team
 
-### 　None (urrently recruiting)
+### 　None (currently recruiting)
 
 ## Areas of interest
 ### 　Security, Websec, BugBounty, CTF,
