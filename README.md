@@ -115,7 +115,7 @@
 
 ## 　　・[Solved CTF list](https://github.com/scgajge12/Solved-CTFs)
 
-## 　○BugBounty (Feb.2020 ~)
+## 　○Bug Bounty
 
 ## 　　・[intigriti](https://www.intigriti.com/profile/morioka12)
 
