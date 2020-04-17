@@ -115,8 +115,6 @@
 
 ## 　　・[Solved CTF list](https://github.com/scgajge12/Solved-CTFs)
 
-## 　　・[Vulnerability practice list](https://github.com/scgajge12/Vulnerability_Practice_site)
-
 ## 　○BugBounty (Feb.13.2020 ~)
 
 ## 　　・[intigriti](https://www.intigriti.com/profile/morioka12)
