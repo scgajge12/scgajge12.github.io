@@ -25,8 +25,16 @@
 
 ### 　　サイバースペシャリストコース
 
+## Affiliation (Circle/Club)
+
+### 　
+
+## CTF Team
+
+### None (recruiting)
+
 ## Areas of interest
-### 　Security, Websec, Bug Bounty, 
+### 　Security, Websec, BugBounty, CTF,
 
 ## Language
 ### 　C, Python, C++, JS, etc.
@@ -112,8 +120,6 @@
 ## 　○BugBounty (Feb.13.2020 ~)
 
 ## 　　・[intigriti](https://www.intigriti.com/profile/morioka12)
-
-## 　　・[HackerOne](https://hackerone.com/morioka12)
 
 <br>
 
