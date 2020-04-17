@@ -34,7 +34,7 @@
 ### 　None (currently recruiting)
 
 ## Areas of interest
-### 　Security, Websec, BugBounty, CTF,
+### 　Security, Web, BugBounty, CTF
 
 ## Language
 ### 　C, Python, C++, JS, etc.
