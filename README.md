@@ -32,7 +32,6 @@
 ## CTF Team
 
 ### 　None (currently recruiting)
-　　　DM please.　募集中~
 
 ## Areas of interest
 ### 　Security, Websec, BugBounty, CTF,
