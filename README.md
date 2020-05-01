@@ -37,7 +37,7 @@
 ### 　Security, Web, BugBounty, CTF
 
 ## Language
-### 　C, Python, C++, JS, etc.
+### 　C, PHP, Python, C++, JS, etc.
 
 ## Qualification
 ### 　・基本情報技術者試験(FE- 2018.5)
@@ -149,4 +149,4 @@
  
 <br>
 
-## (Update date: Apr.8,2020)
+## (Update date: May 1,2020)
