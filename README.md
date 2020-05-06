@@ -25,16 +25,18 @@
 
 ### 　　サイバースペシャリストコース
 
-## Affiliation (Circle/Club)
+## Affiliation (Club)
 
-### 　
+### 　IPFactory
 
 ## CTF Team
 
 ### 　None (currently recruiting)
 
 ## Areas of interest
-### 　Security, Web, BugBounty, CTF
+### 　Security, Web, BugBounty, 
+
+### 　Log analysis, CTF,
 
 ## Language
 ### 　C, PHP, JS, Python,  etc.
@@ -124,6 +126,8 @@
 # ○Official
 
 ## 　○[ISC](http://isc.iwasaki.ac.jp/)
+
+## 　　・[IPFactory](https://ipfactory.github.io/)
 
 ## 　○[SecHack365](https://sechack365.nict.go.jp/)
 
