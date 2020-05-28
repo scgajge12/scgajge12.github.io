@@ -39,7 +39,7 @@
 ### 　Log analysis, CTF,
 
 ## Language
-### 　C, PHP, Python,  etc.
+### 　C, PHP, Python, JS,  etc.
 
 ## Qualification
 ### 　・基本情報技術者試験(FE- 2018.5)
