@@ -53,13 +53,7 @@
 ### 　Disney, Kingfisher, Photo, Sleep,
 
 ### 　Anime, Movies, Game,　　　　etc.
-```
-　　・名探偵コナン　　　・ツムツム
-　　・七つの大罪　　　　・荒野行動
-　　・宇宙兄弟　　　　　・パワプロ
-　　・フェアリーテイル　・CoD: Mobile
-　　・MAJOR
-```
+
 
 <br>
 <br>
