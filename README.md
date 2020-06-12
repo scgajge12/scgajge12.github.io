@@ -26,12 +26,7 @@
 ### 　　サイバースペシャリストコース
 
 ## Affiliation (Club)
-
 ### 　IPFactory
-
-## CTF Team
-
-### 　None (currently recruiting)
 
 ## Areas of interest
 ### 　Security, Web, BugBounty, 
