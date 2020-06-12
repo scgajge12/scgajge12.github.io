@@ -82,21 +82,6 @@
 <br>
 <br>
 
-# ○Bug Bounty info
-
----------------------------
-## Submission stats
-
-### 　・Accepted　 5
-
-### 　・Duplicate　11
-
-### 　・All Bounty 　￥87,423 JPY　(€775)
-
-
-<br>
-<br>
-
 # ○Link
 
 -------------------------
