@@ -129,7 +129,7 @@
 ----------------------------------------
 
 ## Contact email address
-### 　: morioka1831@gmail.com
+### 　 morioka1831@gmail.com
  
 <br>
 
