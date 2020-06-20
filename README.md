@@ -3,14 +3,14 @@
 <br>
 
 # Contents
- - [Profile](#name)
- - [History Activity](#2018)
- - [Link](#my)
+ - [Profile](#profile)
+ - [History Activity](#history--activity)
+ - [Link](#link)
  - [Contact](#contact-email-address)
 
 <br>
 
-# ○Profile
+## ○Profile
 
 ----------------------------
 
@@ -61,7 +61,7 @@
 <br>
 <br>
 
-# ○History / Activity
+## ○History / Activity
 
 ---------------------------
 ## 2018　
@@ -85,7 +85,7 @@
 <br>
 <br>
 
-# ○Link
+## ○Link
 
 -------------------------
 
