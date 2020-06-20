@@ -1,9 +1,11 @@
 # morioka12 About
 
+<br>
+
 # Contents
- - [Profile](#○profile)
- - [History Activity](#○history-/-activity)
- - [Link](#○link)
+ - [Profile](#name)
+ - [History Activity](#2018)
+ - [Link](#my)
  - [Contact](#contact-email-address)
 
 <br>
@@ -87,7 +89,7 @@
 
 -------------------------
 
-# ○My
+## ○My
 
 ## 　○[Twitter](https://twitter.com/scgajge12)
 
@@ -101,7 +103,7 @@
 
 <br>
 
-# ○Official
+## ○Official
 
 ## 　○[ISC](http://isc.iwasaki.ac.jp/)
 
