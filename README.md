@@ -81,7 +81,7 @@
 ### 　Feb.　BugBounty　start of initiatives
 
 ### 　Jul.　Flatt Security Inc.　long internship
-　　　　　　　　　　　　　　(Security Engineer)
+　　　　　　　　　　　　　　　　　(Security Engineer)
 
 <br><br>
 
