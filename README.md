@@ -36,6 +36,9 @@
 ## Affiliation (Club)
 ### 　IPFactory
 
+## Work / Part time job
+### 　Security Engineer
+
 ## Areas of interest
 ### 　Security, Web, BugBounty, 
 
