@@ -57,9 +57,7 @@
 
 ### 　Anime, Movies, Game,　　　　etc.
 
-
-<br>
-<br>
+<br><br>
 
 ## ○History / Activity
 
@@ -74,16 +72,18 @@
 ## 2019　
 ### 　Sep.　SecHack365 Returns 2019
 
-### 　Oct.　CODE BLUE 2019　Student Staff
+### 　Oct.　CODE BLUE 2019　student staff
 
-### 　Dec.　SECCON 2019　Sponsor Staff
+### 　Dec.　SECCON 2019　sponsor staff
 　　　　　　　　　　　　　　(SecHack365 Graduate)
 
 ## 2020　
-### 　Feb.　BugBounty　Start of Initiatives
+### 　Feb.　BugBounty　start of initiatives
 
-<br>
-<br>
+### 　Jul.　Flatt Security Inc.　long internship
+　　　　　　　　　　　　　　(Security Engineer)
+
+<br><br>
 
 ## ○Link
 
@@ -117,13 +117,9 @@
 
 ## 　○[SECCON](https://www.seccon.jp/)
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+## 　○[Flatt Security Inc.](https://flatt.tech/)
+
+<br><br><br><br><br><br><br>
 
 ----------------------------------------
 ----------------------------------------
@@ -133,4 +129,4 @@
  
 <br>
 
-## (Update date: June ,2020)
+## (Update date: June 26,2020)
