@@ -33,7 +33,7 @@
 
 ### 　　サイバースペシャリストコース
 
-## Affiliation (Club)
+## Affiliation / Club
 ### 　IPFactory
 
 ## Work / Part time job
