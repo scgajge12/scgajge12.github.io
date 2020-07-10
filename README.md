@@ -40,7 +40,7 @@
 ### 　Security Engineer
 
 ## Areas of interest
-### 　Security, Web, BugBounty, 
+### 　Security, Websec, BugBounty, 
 
 ### 　Log analysis, CTF,
 
