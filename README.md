@@ -45,7 +45,9 @@
 ### 　Log analysis, CTF,
 
 ## Language
-### 　C, PHP, Python, JS,  etc.
+### 　C, PHP, Python, JavaScript,  
+
+### 　Ruby on Rails, etc.
 
 ## Qualification
 ### 　・基本情報技術者試験(FE- 2018.5)
@@ -132,4 +134,4 @@
  
 <br>
 
-## (Update date: July 1,2020)
+## (Update date: Aug. 5,2020)
