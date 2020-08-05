@@ -47,7 +47,7 @@
 ## Language
 ### 　C, PHP, Python, JavaScript,  
 
-### 　Ruby on Rails, etc.
+### 　Ruby on Rails,  etc.
 
 ## Qualification
 ### 　・基本情報技術者試験(FE- 2018.5)
