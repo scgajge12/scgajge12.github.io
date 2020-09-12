@@ -91,7 +91,7 @@
 ### 　Sep.　SecHack365 Returns 2020
 
 ### 　Oct.　Security Camp 2020　on-line
-　　　　　　　　(Elective Course: B - product security track)
+　　　　　(Elective Course: B - product security track)
 
 <br><br>
 
