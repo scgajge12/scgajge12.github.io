@@ -91,7 +91,7 @@
 ### 　Sep.　SecHack365 Returns 2020
 
 ### 　Oct.　Security Camp 2020　on-line
-　　　　　　　　　　　　　　(Elective Course: B)
+　　　　　　　　　　　　　　　　(Elective Course: B)
 
 <br><br>
 
