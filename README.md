@@ -90,7 +90,8 @@
 
 ### 　Sep.　SecHack365 Returns 2020
 
-### 　Oct. Security Camp 2020  on-line
+### 　Oct.　Security Camp 2020　on-line
+　　　　　　　　　　　　　　(Elective Course: B)
 
 <br><br>
 
@@ -110,13 +111,15 @@
 
 ## 　　・[intigriti](https://www.intigriti.com/profile/morioka12)
 
-<br>
-
-## ○Official
-
 ## 　○[ISC](http://isc.iwasaki.ac.jp/)
 
 ## 　　・[IPFactory](https://ipfactory.github.io/)
+
+## 　○[Flatt Security Inc.](https://flatt.tech/)
+
+<br>
+
+## ○Official
 
 ## 　○[SecHack365](https://sechack365.nict.go.jp/)
 
@@ -125,8 +128,6 @@
 ## 　○[CODE BLUE](https://codeblue.jp/)
 
 ## 　○[SECCON](https://www.seccon.jp/)
-
-## 　○[Flatt Security Inc.](https://flatt.tech/)
 
 ## 　○[Security Camp](https://www.ipa.go.jp/jinzai/camp/index.html)
 
