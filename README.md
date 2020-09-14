@@ -129,7 +129,7 @@
 
 ## 　○[SECCON](https://www.seccon.jp/)
 
-## 　○[Security Camp](https://www.ipa.go.jp/jinzai/camp/index.html)
+## 　○[Security Camp](https://www.security-camp.or.jp/)
 
 <br><br><br><br><br><br><br>
 
