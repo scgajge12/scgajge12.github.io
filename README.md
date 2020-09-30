@@ -40,9 +40,11 @@
 ### 　Security Engineer
 
 ## Areas of interest
-### 　Security, Websec, BugBounty, 
+### 　Web Security, Bug Bounty, 
 
-### 　Log analysis, CTF,
+### 　Log analysis, Cloud Security,
+
+### 　CTF, HackTheBox, 
 
 ## Language
 ### 　C, PHP, Python, JavaScript,  
@@ -141,4 +143,4 @@
  
 <br>
 
-## (Update date: Sep. 12,2020)
+## (Update date: Sep.30,2020)
