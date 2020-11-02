@@ -101,13 +101,13 @@
 
 -------------------------
 
-## ○My
-
 ## 　○[Twitter](https://twitter.com/scgajge12)
 
 ## 　○[GitHub](https://github.com/scgajge12)
 
-## 　○[HatenaBlog](https://scgajge12.hatenablog.com/)
+## 　○[HatenaBlog](https://scgajge12.hatenablog.com)
+
+## 　○[Qiita](https://qiita.com/scgajge12)
 
 ## 　○BugBounty
 
@@ -120,8 +120,6 @@
 ## 　○[Flatt Security Inc.](https://flatt.tech/)
 
 <br>
-
-## ○Official
 
 ## 　○[SecHack365](https://sechack365.nict.go.jp/)
 
@@ -143,4 +141,4 @@
  
 <br>
 
-## (Update date: Sep.30,2020)
+## (Update date: Nov.2,2020)
