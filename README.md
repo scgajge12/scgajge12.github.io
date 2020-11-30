@@ -1,4 +1,4 @@
-# About morioka12
+# About morioka12 (@scgajge12)
 
 <br>
 
@@ -15,7 +15,7 @@
 ----------------------------
 
 ## Name
-### 　Morioka Yuta
+### 　Yuta Morioka  /  森岡 優太
 
 ## Birthplace　
 ### 　Kanagawa, Japan
@@ -40,29 +40,33 @@
 ### 　Security Engineer
 
 ## Areas of interest
-### 　Web Security, Bug Bounty, 
+### 　Web Security, Cloud Security,
 
-### 　Log analysis, Cloud Security,
+### 　Bug Bounty, CTF (web),
 
-### 　CTF, HackTheBox, 
+### 　TryHackMe, HackTheBox,
 
 ## Language
 ### 　C, PHP, Python, JavaScript,  
 
-### 　Ruby on Rails,  etc.
+### 　Ruby on Rails, Go,  etc.
 
 ## Qualification
 ### 　・基本情報技術者試験(FE- 2018.5)
 
 ## Hobby
-### 　CTF, Idea, Swimming, Piano, 
+### 　Swimming, Piano, Mountain-Climbing,
 
-### 　Mountain-Climbing, 　　　etc.
+### 　Fishing, Baseball, Shogi, Photo,
 
-## Other
-### 　Disney, Kingfisher, Photo, Sleep,
+### 　Game , Anime / Movies
 
-### 　Anime, Movies, Game,　　　　etc.
+## Favorite things
+### 　Disney (Chip and Dale), 
+
+### 　Detective Conan,
+
+### 　Kingfisher (Kawasemi),
 
 <br><br>
 
@@ -111,7 +115,7 @@
 
 ## 　○BugBounty
 
-## 　　・[intigriti](https://www.intigriti.com/profile/morioka12)
+## 　　・[Intigriti](https://www.intigriti.com/profile/morioka12)
 
 ## 　○[ISC](http://isc.iwasaki.ac.jp/)
 
@@ -141,4 +145,4 @@
  
 <br>
 
-## (Update date: Nov.2,2020)
+## (Update date: Nov.30,2020
