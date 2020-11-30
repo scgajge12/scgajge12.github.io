@@ -59,7 +59,7 @@
 
 ### 　Fishing, Baseball, Shogi, Photo,
 
-### 　Game , Anime / Movies
+### 　Game , Anime / Movies, Sleep,  etc.
 
 ## Favorite things
 ### 　Disney (Chip and Dale), 
