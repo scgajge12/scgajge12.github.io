@@ -46,7 +46,7 @@
 
 ### 　TryHackMe, HackTheBox,
 
-## Language
+## Programming language
 ### 　C, PHP, Python, JavaScript,  
 
 ### 　Ruby on Rails, Go,  etc.
