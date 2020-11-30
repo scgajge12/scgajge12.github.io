@@ -62,7 +62,7 @@
 ### 　Game , Anime / Movies, Sleep,  etc.
 
 ## Favorite things
-### 　Disney (Chip 'n Dale
+### 　Disney (Chip 'n Dale),
 
 ### 　Detective Conan,
 
