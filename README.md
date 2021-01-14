@@ -146,3 +146,5 @@
 <br>
 
 ## (Update date: Nov.30,2020)
+
+### All Rights Reserved.
