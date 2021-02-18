@@ -42,7 +42,7 @@
 ## Areas of interest
 ### 　Web Security, Cloud Security,
 
-### 　Bug Bounty, CTF (web),
+### 　Bug Bounty, CTF (web), 
 
 ### 　TryHackMe, HackTheBox,
 
@@ -99,6 +99,11 @@
 ### 　Oct.　Security Camp 2020　on-line
 　　　　　　　　　(Course B : product security track)
 
+## 2021
+### 　Feb.　SB Technolory Corp.　1day internship
+　　　　　　　　　　　　　(Security work experience)
+
+
 <br><br>
 
 ## ○Link
@@ -113,6 +118,10 @@
 
 ## 　○[Qiita](https://qiita.com/scgajge12)
 
+## 　○[connpass](https://connpass.com/user/scgajge12/)
+
+## 　○[Doorkeeper](https://www.doorkeeper.jp/users/mvk0vr8s89y3guj1av28h3jk49snd9)
+
 ## 　○BugBounty
 
 ## 　　・[Intigriti](https://www.intigriti.com/profile/morioka12)
@@ -121,9 +130,12 @@
 
 ## 　○[ISC](http://isc.iwasaki.ac.jp/)
 
-## 　　・[IPFactory](https://ipfactory.github.io/)
+## 　　・[IPFactory](https://ipfactory.org/)
 
 ## 　○[Flatt Security Inc.](https://flatt.tech/)
+
+## 　○[SB Technology Corp.](https://www.softbanktech.co.jp/)
+
 
 <br>
 
@@ -147,7 +159,7 @@
  
 <br>
 
- last update date: Feb.13,2021
+ last update date: Feb.18,2021
 
 <br>
 
