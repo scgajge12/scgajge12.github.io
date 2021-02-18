@@ -101,7 +101,7 @@
 
 ## 2021
 ### 　Feb.　SB Technolory Corp.　1day internship
-　　　　　　　　　　　　　(Security work experience)
+　　　　　　　　　　　　　　　(Security work experience)
 
 
 <br><br>
