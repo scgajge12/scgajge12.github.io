@@ -90,6 +90,7 @@ table of contents
 - [Qiita](https://qiita.com/scgajge12)
 - [connpass](https://connpass.com/user/scgajge12)
 - [Doorkeeper](https://www.doorkeeper.jp/users/mvk0vr8s89y3guj1av28h3jk49snd9)
+- [Keybase](https://keybase.io/morioka12)
 
 Contents
 - Bug Bounty
