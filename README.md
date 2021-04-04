@@ -18,7 +18,8 @@ table of contents
   - Grade: 2st, 4-year system
 - Circle: IPFactory
   - information technology circle
-- Job: Security Engineer, internship
+- Job: Security Engineer
+  - internship
 - Area of interest: IT field
   - Web Security
   - Cloud Security, AWS
@@ -115,9 +116,8 @@ Event
 ## Contact
 - My email address
   - morioka1831@gmail.com
-- [google form](https://forms.gle/sGRczQzvvSa76fGx7)
+- [Google form](https://forms.gle/sGRczQzvvSa76fGx7)
 
------
 -----
 
 last updated: Apr. 5, 2021
