@@ -8,6 +8,7 @@ table of contents
 
 ## Profile
 
+### General Information
 - Name: Yuta Morioka
   - Screen Name: morioka12
 - Birthplace: Kanagawa, Japan
@@ -19,34 +20,36 @@ table of contents
   - information technology circle
 - Job: Security Engineer
   - internship
-- Area of interest: IT field
-  - Web Security
-  - Cloud Security
-    - AWS
-  - Container Security
-    - Docker
-  - Penetration Test
-  - Bug Hunt, BugBounty
-  - CTF
-    - Web, (Rev, Pwn)
-  - Hack The Box
-    - Rank: Pro Hacker
-  - Other
-    - Competitive Programming
-    - Reversing
-    - Log Analysis
-    - Mobile Security
-- Programming Language
-  - C
-  - PHP
-  - Python
-  - JavaScript
-  - Golang
-  -   etc.
-- Qualification
+- Qualification (IT)
   - 基本情報技術者試験 (FE- 2018.5)
 
+### Area of Interest (IT field)
+- Web Security
+- Cloud Security
+  - AWS
+- Container Security
+  - Docker
+- Penetration Test
+- Bug Hunt, BugBounty
+- CTF
+  - Web, (Rev, Pwn)
+- Hack The Box
+  - Rank: Pro Hacker
+- Other
+  - Competitive Programming
+  - Reversing
+  - Log Analysis
+  - Mobile Security
 
+### Programming Language
+- C / C++
+- PHP
+- Python
+- JavaScript
+- Golang
+-   etc.
+
+### Other
 - Hobby
   - Swimming
   - Music, Piano
