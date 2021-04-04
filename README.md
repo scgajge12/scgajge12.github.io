@@ -6,8 +6,6 @@ table of contents
  - [Links](#links)
  - [Contact](#contact)
 
-<br>
-
 ## Profile
 
 - Name: Yuta Morioka
@@ -75,7 +73,7 @@ table of contents
   - Flatt Security Inc.
   - Security Engineer
 - Sep. SecHack365 Returns 2020
-- Oct. Security Camp 2020　on-line
+- Oct. Security Camp 2020  on-line
   - Course B : product security track
 
 ### 2021
@@ -100,7 +98,7 @@ Contents
 - [PentesterLab](https://pentesterlab.com/profile/morioka12)
 
 Affiliation
-- [ISC](https://isc.iwasaki.ac.jp)
+- [Information Science College](https://isc.iwasaki.ac.jp)
   - [IPFactory](https://ipfactory.org)
 - [Flatt Security Inc.](https://flatt.tech)
 
@@ -120,5 +118,5 @@ Event
 
 last updated: Apr. 5, 2021
  
-© 2021 scgajge12.github.io  All Rights Reserved.
+   © 2021 scgajge12.github.io  All Rights Reserved.
 
