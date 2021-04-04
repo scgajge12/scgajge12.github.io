@@ -20,18 +20,21 @@ table of contents
   - internship
 - Area of interest: IT field
   - Web Security
-  - Cloud Security, AWS
+  - Cloud Security
+    - AWS
   - Penetration test
   - Bug hunt, BugBounty
   - CTF
+    - Web, (Rev, Pwn)
   - Hack The Box
+    - Rank: Pro Hacker
 - Programming language
   - C
   - PHP
   - Python
   - JavaScript
   - Golang
-  -  etc.
+  -   etc.
 - Qualification
   - 基本情報技術者試験 (FE- 2018.5)
 
@@ -86,6 +89,7 @@ table of contents
 ## Links
 - [Twitter](https://twitter.com/scgajge12)
 - [GitHub](https://github.com/scgajge12)
+  - CTF writeups repository for publication
 - [HatenaBlog](https://scgajge12.hatenablog.com)
 - [Qiita](https://qiita.com/scgajge12)
 - [connpass](https://connpass.com/user/scgajge12)
