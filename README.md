@@ -111,8 +111,6 @@ Event
 - [SECCON](https://www.seccon.jp/)
 - [Security Camp](https://www.security-camp.or.jp/)
 
------
-
 ## Contact
 - My email address
   - morioka1831@gmail.com
