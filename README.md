@@ -102,6 +102,7 @@ Contents
 - Bug Bounty
   - [Intigriti](https://www.intigriti.com/profile/morioka12)
 - [Hack The Box](https://www.hackthebox.eu/profile/503730)
+  - [Pwned Machines](https://github.com/scgajge12/My-HackTheBox)
 - [PentesterLab](https://pentesterlab.com/profile/morioka12)
 
 Affiliation
