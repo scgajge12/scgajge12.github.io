@@ -9,6 +9,7 @@ table of contents
 ## Profile
 
 - Name: Yuta Morioka
+  - Screen Name: morioka12 (@scgajge12)
 - Birthplace: Kanagawa, Japan
 - Affiliation: Information Science College
   - Department: Information Security
