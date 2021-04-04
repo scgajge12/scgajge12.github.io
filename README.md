@@ -25,13 +25,18 @@ table of contents
     - AWS
   - Container Security
     - Docker
-  - Penetration test
-  - Bug hunt, BugBounty
+  - Penetration Test
+  - Bug Hunt, BugBounty
   - CTF
     - Web, (Rev, Pwn)
   - Hack The Box
     - Rank: Pro Hacker
-- Programming language
+  - Other
+    - Competitive Programming
+    - Reversing
+    - Log Analysis
+    - Mobile Security
+- Programming Language
   - C
   - PHP
   - Python
@@ -44,7 +49,7 @@ table of contents
 
 - Hobby
   - Swimming
-  - Music, piano
+  - Music, Piano
   - Mountain-Climbing
   - Fishing
   - Shogi
@@ -65,7 +70,7 @@ table of contents
 - May. SecHack365
   - Thinking drive course
 - Sep. PC Koshien
-  - Programming Division
+  - Programming division
 
 ### 2019
 - Sep. SecHack365 Returns 2019
