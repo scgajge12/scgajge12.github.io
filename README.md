@@ -21,7 +21,9 @@ table of contents
 - Job: Security Engineer
   - internship
 - Qualification (IT)
-  - 基本情報技術者試験 (FE- 2018.5)
+  - 基本情報技術者試験 (FE: 2018.5)
+  - AWS Certified Cloud Practitioner
+    - [Digital Badge](https://www.credly.com/badges/2fcd9bf3-3e50-4430-ae8a-03b84f1ecaa6) (CLF-C01: 2021.6)
 
 ### Area of Interest (IT field)
 - Web Security
@@ -35,6 +37,7 @@ table of contents
   - Web, (Rev, Pwn)
 - Hack The Box
   - Rank: Pro Hacker
+- Tool development
 - Other
   - Competitive Programming
   - Reversing
@@ -100,12 +103,12 @@ table of contents
 ## Links
 - [Twitter](https://twitter.com/scgajge12)
 - [GitHub](https://github.com/scgajge12)
-  - CTF writeups repository for publication
 - [HatenaBlog](https://scgajge12.hatenablog.com)
 - [Qiita](https://qiita.com/scgajge12)
 - [connpass](https://connpass.com/user/scgajge12)
 - [Doorkeeper](https://www.doorkeeper.jp/users/mvk0vr8s89y3guj1av28h3jk49snd9)
 - [Keybase](https://keybase.io/morioka12)
+- [Credly](https://www.credly.com/users/yuta-morioka.9fcde5f4): Digital Badges
 
 Contents
 - Bug Bounty
@@ -133,7 +136,6 @@ Event
 
 -----
 
-last updated: Apr. 5, 2021
+last updated: Jun. 4, 2021
  
    © 2021 scgajge12.github.io  All Rights Reserved.
-
