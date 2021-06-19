@@ -73,16 +73,17 @@ table of contents
 ## Activities
 
 ### 2018
-- May. SecHack365
+- May. [SecHack365 2018](https://sechack365.nict.go.jp/report/2018/)
+  - trainee
   - Thinking drive course
-- Sep. PC Koshien
+- Sep. [PC Koshien](https://web-ext.u-aizu.ac.jp/pc-concours/2018/index.html)
   - Programming division
 
 ### 2019
-- Sep. SecHack365 Returns 2019
-- Oct. CODE BLUE 2019
+- Sep. [SecHack365 Returns 2019](https://sechack365.nict.go.jp/report/2019/report_r2019.html)
+- Oct. [CODE BLUE 2019](https://codeblue.jp/2019/)
   - student staff
-- Dec. SECCON 2019
+- Dec. [SECCON 2019](https://www.seccon.jp/2019/)
   - sponsor staff
 
 ### 2020
@@ -90,14 +91,17 @@ table of contents
   - Flatt Security Inc.
   - Security Engineer
 - Sep. SecHack365 Returns 2020
-- Oct. Security Camp 2020  on-line
+- Oct. [Security Camp 2020  on-line](https://www.ipa.go.jp/jinzai/camp/2020/zenkoku2020_index.html)
+  - attendee
   - Course B : product security track
 
 ### 2021
 - Feb. 1day internship
   - SB Technolory Corp.
   - Security work experience
-
+- Aug. [Security Camp 2021 on-line](https://www.ipa.go.jp/jinzai/camp/2021/zenkoku2021_index.html)
+  - tutor
+  - Course B : product security track
 
 
 ## Links
@@ -136,6 +140,6 @@ Event
 
 -----
 
-last updated: Jun. 4, 2021
+last updated: Jun. 19, 2021
  
    © 2021 scgajge12.github.io  All Rights Reserved.
