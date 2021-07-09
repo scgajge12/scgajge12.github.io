@@ -26,31 +26,35 @@ table of contents
     - [Digital Badge](https://www.credly.com/badges/2fcd9bf3-3e50-4430-ae8a-03b84f1ecaa6) (CLF-C01: 2021.6)
 
 ### Area of Interest (IT field)
-- Web Security
-- Cloud Security
-  - AWS
-- Container Security
-  - Docker
-- Penetration Test
-- Bug Hunt, BugBounty
-- CTF
-  - Web, (Rev, Pwn)
+- Cyber Security
+  - Web Security
+  - Cloud Security
+  - Mobile Security
+  - Container Security
+  - Penetration Test
+- Bug Hunt
+  - Bug Bounty
+- CTF (Capture The Flag)
+  - Web (Rev, Pwn)
 - Hack The Box
   - Rank: Pro Hacker
+- Honeypot
 - Tool development
 - Other
   - Competitive Programming
-  - Reversing
   - Log Analysis
-  - Mobile Security
+  - Reversing
+  - Amazon Web Services (AWS)
+  - Docker
 
 ### Programming Language
 - C / C++
-- PHP
 - Python
+- PHP
 - JavaScript
+- Ruby
 - Golang
--   etc.
+-  etc.
 
 ### Other
 - Hobby
@@ -140,6 +144,6 @@ Event
 
 -----
 
-last updated: Jun. 19, 2021
+last updated: Jul. 10, 2021
  
-   © 2021 scgajge12.github.io  All Rights Reserved.
+   © 2021 scgajge12  All Rights Reserved.
