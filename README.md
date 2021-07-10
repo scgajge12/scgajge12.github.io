@@ -44,17 +44,20 @@ table of contents
   - Competitive Programming
   - Log Analysis
   - Reversing
-  - Amazon Web Services (AWS)
-  - Docker
 
-### Programming Language
+### Main technologies used
+
+#### Programming Language
 - C / C++
 - Python
 - PHP
 - JavaScript
-- Ruby
 - Golang
--  etc.
+- Ruby
+
+#### Cloud / Container
+- Amazon Web Services, AWS
+- Docker
 
 ### Other
 - Hobby
