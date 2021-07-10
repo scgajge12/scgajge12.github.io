@@ -46,18 +46,16 @@ table of contents
   - Reversing
 
 ### Main technologies used
-
-#### Programming Language
-- C / C++
-- Python
-- PHP
-- JavaScript
-- Golang
-- Ruby
-
-#### Cloud / Container
-- Amazon Web Services, AWS
-- Docker
+- Programming Language
+  - C / C++
+  - Python
+  - PHP
+  - JavaScript
+  - Golang
+  - Ruby
+- Cloud / Container
+  - Amazon Web Services, AWS
+  - Docker
 
 ### Other
 - Hobby
