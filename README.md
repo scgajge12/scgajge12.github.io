@@ -56,7 +56,7 @@ table of contents
 - Cloud / Container
   - Amazon Web Services, AWS
   - Docker
-- [Details link](https://github.com/scgajge12/scgajge12#readme)
+- [Details link](https://github.com/scgajge12/scgajge12/blob/master/README.md)
 
 ### Other
 - Hobby
@@ -146,6 +146,6 @@ Event
 
 -----
 
-last updated: Jul. 10, 2021
+last updated: Jul. 11, 2021
  
    © 2021 scgajge12  All Rights Reserved.
