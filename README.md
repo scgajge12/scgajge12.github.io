@@ -56,6 +56,7 @@ table of contents
 - Cloud / Container
   - Amazon Web Services, AWS
   - Docker
+- [Details link](https://github.com/scgajge12/scgajge12#readme)
 
 ### Other
 - Hobby
