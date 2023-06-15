@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ctf on morioka12 site</title>
+    <link>https://scgajge12.github.io/tags/ctf/</link>
+    <description>Recent content in ctf on morioka12 site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 11 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://scgajge12.github.io/tags/ctf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Summary of CTF Cloud attack methods (2021 version)</title>
+      <link>https://scgajge12.github.io/posts/ctf_cloud_2021/</link>
+      <pubDate>Tue, 11 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://scgajge12.github.io/posts/ctf_cloud_2021/</guid>
+      <description>Blog (Japanese) CTF Cloud 問題の攻撃手法まとめ(2021年版) </description>
+    </item>
+    
+  </channel>
+</rss>

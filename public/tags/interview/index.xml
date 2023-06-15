@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>interview on morioka12 site</title>
+    <link>https://scgajge12.github.io/tags/interview/</link>
+    <description>Recent content in interview on morioka12 site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 01 Apr 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://scgajge12.github.io/tags/interview/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SecHack365 Alumni Interview</title>
+      <link>https://scgajge12.github.io/posts/sechack365_interview/</link>
+      <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://scgajge12.github.io/posts/sechack365_interview/</guid>
+      <description>Interview (Japanese) SecHack365 修了生 Interview </description>
+    </item>
+    
+  </channel>
+</rss>
