@@ -1,10 +1,9 @@
 baseURL = "https://scgajge12.github.io/"
 defaultContentLanguage = "en"
 languageCode = "en"
-
 title = "morioka12 site"
-
 theme = "gokarna"
+googleAnalytics = "G-W4JLNVPRX5"
 
 # Automatically generate robots.txt
 enableRobotsTXT = true
