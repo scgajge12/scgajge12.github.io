@@ -4,6 +4,8 @@ type: page
 ---
 
 ## CVE ID
+- [CVE-2023-3445](https://nvd.nist.gov/vuln/detail/CVE-2023-3445)
+  - CWE-79: Cross-site Scripting
 - [CVE-2023-34251](https://nvd.nist.gov/vuln/detail/CVE-2023-34251)
   - CWE-94: Code Injection
 - [CVE-2023-34247](https://nvd.nist.gov/vuln/detail/CVE-2023-34247)
