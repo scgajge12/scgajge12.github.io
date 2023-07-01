@@ -4,6 +4,7 @@ type: page
 ---
 
 ## CVE ID
+Total: 5 CVE IDs
 - [CVE-2023-3445](https://nvd.nist.gov/vuln/detail/CVE-2023-3445)
   - CWE-79: Cross-site Scripting
 - [CVE-2023-34251](https://nvd.nist.gov/vuln/detail/CVE-2023-34251)
