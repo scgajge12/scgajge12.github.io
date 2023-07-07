@@ -4,7 +4,9 @@ type: page
 ---
 
 ## CVE ID
-Total: 6 CVE IDs
+Total: 7 CVE IDs
+- [CVE-2023-37270](https://nvd.nist.gov/vuln/detail/CVE-2023-37270)
+  - CWE-89: SQL Injection
 - [CVE-2023-3521](https://nvd.nist.gov/vuln/detail/CVE-2023-3521)
   - CWE-79: Cross-site Scripting
 - [CVE-2023-3445](https://nvd.nist.gov/vuln/detail/CVE-2023-3445)
