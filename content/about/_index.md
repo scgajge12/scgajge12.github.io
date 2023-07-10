@@ -43,6 +43,7 @@ type: page
   - Capture The Flag
   - Hack The Box ([Profile](https://app.hackthebox.com/profile/503730))
     - Rank: Pro Hacker (Mar.2021)
+    - Highest Ranking (Japan): Top 6 (Jan.2023)
 - Other
   - Web Development
   - Tool Development
