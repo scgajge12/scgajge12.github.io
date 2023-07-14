@@ -3,7 +3,6 @@ title: "CVEs"
 type: page
 ---
 
-## CVE ID
 Total: **7** CVE IDs
 - 2023/07/08: **[CVE-2023-37270](https://nvd.nist.gov/vuln/detail/CVE-2023-37270)**
   - CWE-89: SQL Injection
