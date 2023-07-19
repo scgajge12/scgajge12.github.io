@@ -4,8 +4,8 @@ type: page
 ---
 
 ## Profile
-- Name: Yuta Morioka
-- HN: morioka12 (@scgajge12)
+- Name: **Yuta Morioka**
+- HN: **morioka12** (@**scgajge12**)
 - Birthplace: Kanagawa, Japan
 
 ## Education
@@ -19,7 +19,7 @@ type: page
 ## Work Experience
 - Cyber Security Company
   - Security Enginner
-    - Web Penetration Test
+    - **Web Penetration Test**
     - Source Code Assessment
   - *period: May.2023 - (present)*
 - [Flatt Security Inc.](https://flatt.tech/)
@@ -32,8 +32,8 @@ type: page
 
 ## Interest
 - Security
-  - Web Security
-  - Cloud Security
+  - **Web Security**
+  - **Cloud Security**
   - Container Security
   - Penetration Test
 - Bug Hunt
@@ -43,7 +43,7 @@ type: page
   - Capture The Flag
   - Hack The Box ([Profile](https://app.hackthebox.com/profile/503730))
     - Rank: Pro Hacker (Mar.2021)
-    - Highest Ranking (Japan): Top 6 (Jan.2023)
+    - Highest Ranking (Japan): 6th place (Jan.2023)
 - Other
   - Web Development
   - Tool Development
@@ -79,6 +79,14 @@ type: page
     - All time: 83rd place (Apr.2020)
     - Last 90 days: 26th place (Apr.2020)
     - Last 30 days: 20th place (Apr.2020)
+
+### OSS
+- huntr.dev
+  - join: Nov.2021
+  - Highest Ranking
+    - All time: 96th place (Jul.2023)
+    - Last 90 days: 4th place (Jul.2023)
+    - Last 30 days: 1st place (Jul.2023)
 
 ### CVE ID
 - [CVEs](/cves/)
