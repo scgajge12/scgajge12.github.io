@@ -84,8 +84,8 @@ type: page
 - huntr.dev
   - join: Nov.2021
   - Highest Ranking
-    - All time: 92th place (Jul.2023)
-    - Last 90 days: 3th place (Jul.2023)
+    - All time: 69th place (Jul.2023)
+    - Last 90 days: 2th place (Jul.2023)
     - Last 30 days: 1st place (Jul.2023)
 
 ### CVE ID
