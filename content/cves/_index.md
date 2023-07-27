@@ -3,7 +3,13 @@ title: "CVEs"
 type: page
 ---
 
-Total: **8** CVE IDs
+Total: **11** CVE IDs
+- 2023/07/28: **[CVE-2023-3982](https://nvd.nist.gov/vuln/detail/CVE-2023-3982)**
+  - CWE-79: Cross-site Scripting
+- 2023/07/28: **[CVE-2023-3981](https://nvd.nist.gov/vuln/detail/CVE-2023-3981)**
+  - CWE-918: Server-Side Request Forgery
+- 2023/07/28: **[CVE-2023-3980](https://nvd.nist.gov/vuln/detail/CVE-2023-3980)**
+  - CWE-79: Cross-site Scripting
 - 2023/07/26: **[CVE-2023-38507](https://nvd.nist.gov/vuln/detail/CVE-2023-38507)**
   - CWE-307: Improper Rate Limiting
 - 2023/07/08: **[CVE-2023-37270](https://nvd.nist.gov/vuln/detail/CVE-2023-37270)**
