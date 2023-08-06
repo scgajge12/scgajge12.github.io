@@ -3,7 +3,9 @@ title: "CVEs"
 type: page
 ---
 
-Total: **11** CVE IDs
+Total: **12** CVE IDs
+- 2023/08/06: **[CVE-2023-4187](https://nvd.nist.gov/vuln/detail/CVE-2023-4187)**
+  - CWE-79: Cross-site Scripting
 - 2023/07/28: **[CVE-2023-3982](https://nvd.nist.gov/vuln/detail/CVE-2023-3982)**
   - CWE-79: Cross-site Scripting
 - 2023/07/28: **[CVE-2023-3981](https://nvd.nist.gov/vuln/detail/CVE-2023-3981)**
