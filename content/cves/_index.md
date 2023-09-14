@@ -36,3 +36,4 @@ Total: **13** CVE IDs
 ## Blog
 
 - Strapi's official blog: [Security Disclosure of Vulnerabilities: CVE-2023-38507](https://strapi.io/blog/security-disclosure-of-vulnerabilities-sept-2023)
+- Penetration Testing blog: [CVE-2023-34251: Grav CMS Remote Code Execution Vulnerability](https://securityonline.info/cve-2023-34251-grav-cms-remote-code-execution-vulnerability/)
