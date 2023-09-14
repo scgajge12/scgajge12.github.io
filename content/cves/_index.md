@@ -31,8 +31,8 @@ Total: **13** CVE IDs
 - 2022/05/13: **[CVE-2022-29894](https://nvd.nist.gov/vuln/detail/CVE-2022-29894)**
   - CWE-79: Cross-site Scripting
 
+---
 
+## Blog
 
-
-
-
+- Strapi's official blog: [Security Disclosure of Vulnerabilities: CVE-2023-38507](https://strapi.io/blog/security-disclosure-of-vulnerabilities-sept-2023)
