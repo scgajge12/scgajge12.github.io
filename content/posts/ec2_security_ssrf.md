@@ -1,5 +1,5 @@
 ---
-title: "Security (vulnerability) cases in Amazon EC2"
+title: "⭐︎ Security (vulnerability) cases in Amazon EC2"
 date: 2023-08-31
 tags: ["cloud", "security", "blog"]
 type: post
