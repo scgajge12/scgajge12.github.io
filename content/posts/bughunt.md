@@ -1,5 +1,5 @@
 ---
-title: "Introduction to bug hunting (OSS edition)"
+title: "⭐︎ Introduction to Bug Hunting (OSS edition)"
 date: 2023-09-19
 tags: ["security", "blog"]
 type: post
