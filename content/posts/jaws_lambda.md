@@ -1,5 +1,5 @@
 ---
-title: "Security risks and countermeasures in AWS Lambda"
+title: "⭐︎ Security risks and countermeasures in AWS Lambda"
 date: 2022-05-30
 tags: ["cloud", "security", "slide"]
 type: post
