@@ -1,5 +1,5 @@
 ---
-title: "Serverless Security Risks - Vulnerability Attacks and Countermeasures in AWS Lambda"
+title: "⭐︎ Serverless Security Risks - Vulnerability Attacks and Countermeasures in AWS Lambda"
 date: 2022-03-16
 tags: ["cloud", "security", "blog"]
 type: post
