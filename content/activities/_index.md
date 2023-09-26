@@ -68,3 +68,17 @@ type: page
 ## Other
 - [connpass](https://connpass.com/user/scgajge12)
 - [Doorkeeper](https://www.doorkeeper.jp/users/mvk0vr8s89y3guj1av28h3jk49snd9)
+
+## History
+
+### Security Camp
+- Security Camp 2020 on-line: Attendee
+- Security Camp 2021 on-line: Tutor
+- Security Camp 2022 on-line: Tutor
+- Security Mini Camp 2022 on-line: Lecturer
+
+### JAWS-UG (AWS Users Group – Japan)
+- Security-JAWS #25: Speaker
+- JAWS DAYS 2022: Speaker
+- Security-JAWS #30: AWS CTF Organizer
+
