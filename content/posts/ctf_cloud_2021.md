@@ -1,5 +1,5 @@
 ---
-title: "Summary of CTF Cloud attack methods (2021 version)"
+title: "⭐︎ Summary of CTF Cloud attack methods (2021 version)"
 date: 2022-10-11
 tags: ["cloud", "security", "ctf", "blog"]
 type: post
