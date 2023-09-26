@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Bug Bounty"
+title: "⭐︎ Introduction to Bug Bounty"
 date: 2023-09-25
 tags: ["bugbounty", "security", "blog"]
 type: post
