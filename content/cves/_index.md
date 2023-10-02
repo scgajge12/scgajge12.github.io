@@ -3,7 +3,9 @@ title: "CVEs"
 type: page
 ---
 
-Total: **13** CVE IDs
+Total: **14** CVE IDs
+- 2023/09/30: **[CVE-2023-5318](https://nvd.nist.gov/vuln/detail/CVE-2023-5318)**
+  - CWE-798: Use of Hard-coded Credentials
 - 2023/08/30: **[CVE-2023-4624](https://nvd.nist.gov/vuln/detail/CVE-2023-4624)**
   - CWE-918: Server-Side Request Forgery
 - 2023/08/06: **[CVE-2023-4187](https://nvd.nist.gov/vuln/detail/CVE-2023-4187)**
