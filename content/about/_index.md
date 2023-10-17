@@ -69,6 +69,9 @@ type: page
 
 ## Bug Hunt
 ### Bug Bounty
+- IssueHunt
+  - join: Oct.2023
+  - Report to: Rakuten Group, Inc.
 - Synack Red Team
   - join: Jan.2023
 - YesWeHack
@@ -104,4 +107,5 @@ type: page
 - [Intigriti](https://www.intigriti.com/profile/morioka12)
 - [huntr.dev](https://huntr.dev/users/scgajge12/)
 - [Open Bug Bounty](https://www.openbugbounty.org/researchers/morioka12/)
+- [IssueHunt](https://issuehunt.io/profiles/scgajge12)
 - [Hack The Box](https://www.hackthebox.eu/profile/503730)
