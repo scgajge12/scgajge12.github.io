@@ -56,6 +56,7 @@ type: page
 - [CODE BLUE 2019](https://codeblue.jp/2019/)
   - Student Staff
 - [SecHack365 Returns 2019](https://sechack365.nict.go.jp/report/2019/report_r2019.html)
+- Study abroad
 
 ## 2018
 - [PC Koshien](https://web-ext.u-aizu.ac.jp/pc-concours/2018/index.html)
