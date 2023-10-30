@@ -4,6 +4,7 @@ type: page
 ---
 
 ## 2023
+- SecHack365 Returns 2023
 - [Security-JAWS #30](https://s-jaws.doorkeeper.jp/events/155025)
   - AWS CTF Organizer
 
