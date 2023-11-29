@@ -15,6 +15,7 @@ type: page
 
 - Circle: [IPFactory](https://www.ipfactory.org/)
   - Information Technology Circle
+  - FY2022 Captain
 
 ## Work Experience
 - Cyber Security Company
