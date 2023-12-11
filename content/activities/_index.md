@@ -3,6 +3,10 @@ title: "Activities"
 type: page
 ---
 
+## 2024
+- [P3NFEST Conf 2024 by IssueHunt, Inc.](https://issuehunt.jp/events/2024/p3nfestconf)
+  - Speaker
+
 ## 2023
 - SecHack365 Returns 2023
 - [Security-JAWS #30](https://s-jaws.doorkeeper.jp/events/155025)
