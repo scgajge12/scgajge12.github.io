@@ -1,6 +1,6 @@
 ---
 title: "Job hunting story by a new graduate student who wants to become a Security Engineer"
-date: 2023-01-06
+date: 2024-01-06
 tags: ["blog"]
 type: post
 showTableOfContents: true
