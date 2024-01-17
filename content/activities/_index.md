@@ -4,8 +4,10 @@ type: page
 ---
 
 ## 2024
+- [JAWS DAYS 2024](https://jawsdays2024.jaws-ug.jp/)
+  - Speaker (Panel Discussion)
 - [P3NFEST Conf 2024 by IssueHunt, Inc.](https://issuehunt.jp/events/2024/p3nfestconf)
-  - Speaker
+  - Speaker (Session Talk)
 
 ## 2023
 - SecHack365 Returns 2023
@@ -87,4 +89,5 @@ type: page
 - Security-JAWS #25: Speaker
 - JAWS DAYS 2022: Speaker
 - Security-JAWS #30: AWS CTF Organizer
+- JAWS DAYS 2024: Speaker
 
