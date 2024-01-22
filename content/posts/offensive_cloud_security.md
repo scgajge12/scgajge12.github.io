@@ -7,6 +7,6 @@ showTableOfContents: true
 ---
 
 ## Blog (Japanese)
-- [オフェンシブ視点による Cloud Security 入門 〜AWS 編〜)](https://scgajge12.hatenablog.com/entry/ctf_cloud_2021)
+- [オフェンシブ視点による Cloud Security 入門 〜AWS 編〜](https://scgajge12.hatenablog.com/entry/offensive_cloud_security)
 
 ---
