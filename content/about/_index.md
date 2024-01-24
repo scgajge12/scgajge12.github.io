@@ -37,6 +37,7 @@ type: page
   - **Cloud Security**
   - Container Security
   - Penetration Test
+  - Web3 Security (beginner)
 - Bug Hunt
   - Bug Bounty
   - Open Source Software
