@@ -3,9 +3,12 @@ title: "CVEs"
 type: page
 ---
 
-Total: **15** CVE IDs
-- 2024/01/22: **[CVE-2024-23348](https://nvd.nist.gov/vuln/detail/CVE-2024-23348)**
+Total: **16** CVE IDs
+- 2024/01/22: **[CVE-2024-23782](https://nvd.nist.gov/vuln/detail/CVE-2024-23782)**
   - CWE-79: Cross-site Scripting
+  - CVSS: 5.4 Medium
+- 2024/01/22: **[CVE-2024-23348](https://nvd.nist.gov/vuln/detail/CVE-2024-23348)**
+  - CWE-20: Improper Input Validation
   - CVSS: 5.4 Medium
 - 2023/09/30: **[CVE-2023-5318](https://nvd.nist.gov/vuln/detail/CVE-2023-5318)**
   - CWE-798: Use of Hard-coded Credentials
