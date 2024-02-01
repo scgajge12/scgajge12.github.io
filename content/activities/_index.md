@@ -4,7 +4,7 @@ type: page
 ---
 
 ## 2024
-- [JAWS DAYS 2024](https://jawsdays2024.jaws-ug.jp/)
+- [JAWS DAYS 2024 - LEAP BEYOND -](https://jawsdays2024.jaws-ug.jp/)
   - Speaker (Panel Discussion)
 - [P3NFEST Conf 2024 by IssueHunt, Inc.](https://issuehunt.jp/events/2024/p3nfestconf)
   - Speaker (Session Talk)
