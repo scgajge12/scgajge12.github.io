@@ -3,7 +3,6 @@ defaultContentLanguage = "en"
 languageCode = "en"
 title = "morioka12 site"
 theme = "gokarna"
-googleAnalytics = "G-W4JLNVPRX5"
 
 # Automatically generate robots.txt
 enableRobotsTXT = true
@@ -37,9 +36,9 @@ enableRobotsTXT = true
     </script>
   """
   socialIcons = [
-    {name = "twitter", url = "https://twitter.com/scgajge12"},
+    {name = "x", url = "https://twitter.com/scgajge12"},
     {name = "github", url = "https://github.com/scgajge12"},
-    {name = "linkedin", url = "https://www.linkedin.com/in/yuta-morioka-263591230"},
+    {name = "linkedin", url = "https://www.linkedin.com/in/yuta-morioka-263591230/"},
     {name = "email", url = "mailto:morioka1831@gmail.com"}
   ]
   metaKeywords = ["morioka12", "scgajge12", "portfolio"]
@@ -58,27 +57,27 @@ enableRobotsTXT = true
     weight = 2
 
   [[menu.main]]
-    name = "Activities"
+    name = "Activity"
     pre = "<span data-feather='activity'></span>"
     url = "/activities/"
     weight = 3
 
   [[menu.main]]
-    name = "Posts"
+    name = "Post"
     pre = "<span data-feather='book'></span>"
     url = "/posts/"
     weight = 4
 
   [[menu.main]]
-    name = "CVEs"
-    pre = "<span data-feather='star'></span>"
-    url = "/cves/"
+    name = "BB"
+    pre = "<span data-feather='search'></span>"
+    url = "/bb/"
     weight = 5
 
   [[menu.main]]
-    name = "Gift"
-    pre = "<span data-feather='gift'></span>"
-    url = "https://www.amazon.co.jp/hz/wishlist/ls/3PPY9KHO5FSIS?ref_=wl_share"
+    name = "CVE"
+    pre = "<span data-feather='star'></span>"
+    url = "/cves/"
     weight = 6
 
 [markup]
