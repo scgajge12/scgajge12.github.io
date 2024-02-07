@@ -3,9 +3,52 @@ title: "Bug Bounty"
 type: page
 ---
 
-## hoge
+## Intigriti
+
+> Open Bug Bounty Platform
+
+**Main History**
+- 2020/03/01: Join
+- 2020/03/03: First Accepted
+  - [tweet (post)](https://twitter.com/scgajge12/status/1234845325371695104)
+- 2020/03/23: First Reward (bounty)
+  - [tweet (post)](https://twitter.com/scgajge12/status/1242094314328485888)
+- 2020/04/06: First in the All time Top 100
+  - [tweet (post)](https://twitter.com/scgajge12/status/1247149383092559872)
+- 2022/04/25: First Critical report Accepted
+  - [tweet (post)](https://twitter.com/scgajge12/status/1518578154830323712)
+- 2024/02/06: First Exceptional report Accepted
+  - [tweet (post)](https://twitter.com/scgajge12/status/1754854881373106588)
 
 
+**Highest Ranking (Leaderboard)**
+
+- All time
+  - 83rd place (Apr.2020)
+- Last 90 days
+  - 26th place (Apr.2020)
+- Last 30 days
+  - 20th place (Apr.2020)
+
+
+## Synack Red Team
+
+> Secret Bug Bounty Platform
+
+**History**
+- 2023/01/18: Join (passed)
+  - [tweet (post)](https://twitter.com/scgajge12/status/1697783901970932095)
+
+
+## IssueHunt
+
+> Open Bug Bounty Platform
+
+**History**
+- 2023/08/02: Join
+- 2023/10/02: First Accepted
+  - Report to: Rakuten Group, Inc.
+  - [tweet (post)](https://twitter.com/scgajge12/status/1713728968656818665)
 
 ---
 
