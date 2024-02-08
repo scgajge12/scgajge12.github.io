@@ -15,9 +15,11 @@ type: page
   - [tweet (post)](https://twitter.com/scgajge12/status/1242094314328485888)
 - 2020/04/06: First in the All time Top 100
   - [tweet (post)](https://twitter.com/scgajge12/status/1247149383092559872)
-- 2022/04/25: First Critical report Accepted
+- 2022/04/25: First **Critical** report Accepted
+  - CVSS score 9.1
   - [tweet (post)](https://twitter.com/scgajge12/status/1518578154830323712)
-- 2024/02/06: First Exceptional report Accepted
+- 2024/02/06: First **Exceptional** report Accepted
+  - CVSS score 9.8 (2 reports)
   - [tweet (post)](https://twitter.com/scgajge12/status/1754854881373106588)
 
 
