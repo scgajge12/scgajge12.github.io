@@ -47,12 +47,35 @@ type: page
 > Open Bug Bounty Platform
 
 **History**
+
 - 2023/08/02: Join
 - 2023/10/02: First Accepted
   - Report to: Rakuten Group, Inc.
   - [tweet (post)](https://twitter.com/scgajge12/status/1713728968656818665)
 
+
+## huntr.dev
+
+> Open OSS Bug Bounty Platform (old)
+
+**History**
+
+- join: Nov.2021
+
+**Highest Ranking (Leaderboard)**
+
+- All time: 69th place (Jul.2023)
+- Last 90 days: 2th place (Jul.2023)
+- Last 30 days: 1st place (Jul.2023)
+
 ---
+
+## Link
+
+- [Intigriti](https://www.intigriti.com/profile/morioka12)
+- [huntr.dev](https://huntr.dev/users/scgajge12/)
+- [Open Bug Bounty](https://www.openbugbounty.org/researchers/morioka12/)
+- [IssueHunt](https://issuehunt.io/profiles/scgajge12)
 
 ## Blog "Introduction to Bug Bounty"
 
