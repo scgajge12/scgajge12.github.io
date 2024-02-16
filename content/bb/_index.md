@@ -60,13 +60,17 @@ type: page
 
 **History**
 
-- join: Nov.2021
+- 2021/11: Join
 
 **Highest Ranking (Leaderboard)**
 
-- All time: 69th place (Jul.2023)
-- Last 90 days: 2th place (Jul.2023)
-- Last 30 days: 1st place (Jul.2023)
+- All time
+  - 69th place (Jul.2023)
+- Last 90 days
+  - 2th place (Jul.2023)
+- Last 30 days
+  - 1st place (Jul.2023)
+  - [tweet (post)](https://twitter.com/scgajge12/status/1681589725776474112)
 
 ---
 
