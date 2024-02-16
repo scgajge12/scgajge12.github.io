@@ -69,33 +69,6 @@ type: page
 - 2018
   - Fundamental Information Technology Engineer Examination (FE)
 
-## Bug Hunt
-### Bug Bounty
-- IssueHunt
-  - join: Oct.2023
-  - Report to: Rakuten Group, Inc.
-- Synack Red Team
-  - join: Jan.2023
-- YesWeHack
-  - join: Apr.2020
-- Intigriti
-  - join: Mar.2020
-  - Highest Ranking
-    - All time: 83rd place (Apr.2020)
-    - Last 90 days: 26th place (Apr.2020)
-    - Last 30 days: 20th place (Apr.2020)
-
-### OSS
-- huntr.dev
-  - join: Nov.2021
-  - Highest Ranking
-    - All time: 69th place (Jul.2023)
-    - Last 90 days: 2th place (Jul.2023)
-    - Last 30 days: 1st place (Jul.2023)
-
-### CVE ID
-- [CVEs](/cves/)
-
 ---
 
 ## Link
@@ -106,8 +79,4 @@ type: page
 - [Speacker Deck](https://speakerdeck.com/scgajge12)
 - [Keybase](https://keybase.io/morioka12)
 - [Credly](https://www.credly.com/users/yuta-morioka.9fcde5f4)
-- [Intigriti](https://www.intigriti.com/profile/morioka12)
-- [huntr.dev](https://huntr.dev/users/scgajge12/)
-- [Open Bug Bounty](https://www.openbugbounty.org/researchers/morioka12/)
-- [IssueHunt](https://issuehunt.io/profiles/scgajge12)
 - [Hack The Box](https://www.hackthebox.eu/profile/503730)
