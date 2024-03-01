@@ -13,7 +13,7 @@ type: page
 - Last 90 days
   - 19th place (Feb.2024)
 - Months
-  - 6th place (Feb.2024)
+  - 6th place (Feb.2024), [link](https://app.intigriti.com/leaderboard?severity=1&year=2024&month=2)
 - Quarters
 
 **Main History**
