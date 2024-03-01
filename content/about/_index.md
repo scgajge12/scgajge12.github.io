@@ -18,7 +18,7 @@ type: page
   - FY2022 Captain
 
 ## Work Experience
-- Cyber Security Company
+- [GMO Cybersecurity by Ierae, Inc.](https://gmo-cybersecurity.com/)
   - Security Enginner
     - **Web Penetration Test**
     - Source Code Assessment
