@@ -74,6 +74,11 @@ type: page
 - 2018
   - Fundamental Information Technology Engineer Examination (FE)
 
+## Other
+### AWS Community Builders Program
+- AWS Community Builders
+  - Security & Identity Builder since 2024
+
 ---
 
 ## Link
