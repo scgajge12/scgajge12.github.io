@@ -7,6 +7,11 @@ type: page
 - Name: **Yuta Morioka**
 - HN: **morioka12** (@**scgajge12**)
 - Birthplace: Kanagawa, Japan
+- Position
+  - Security Engineer
+    - Web Penetration Tester
+  - Bug Bounty Hunter
+  - AWS Community Builder (Security)
 
 ## Education
 - [Information Science College](https://isc.iwasaki.ac.jp/)
