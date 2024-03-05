@@ -36,6 +36,12 @@ type: page
   - Cram School Teacher
   - *period: Mar.2019 - Jan.2020*
 
+## AWS Community Builders Program
+- AWS Community Builders
+  - Security & Identity Builder since 2024
+- [AWS Community Builders Directory](https://aws.amazon.com/developer/community/community-builders/community-builders-directory/?nc1=h_ls&cb-cards.sort-by=item.additionalFields.cbName&cb-cards.sort-order=asc&awsf.builder-category=cb-type%23security-identity-compliance&awsf.location=*all&awsf.year=*all&cb-cards.q=japan&cb-cards.q_operator=AND) 
+
+
 ## Interest
 - Security
   - **Web Security**
@@ -73,11 +79,6 @@ type: page
   - AWS Certified Cloud Practitioner (CLF)
 - 2018
   - Fundamental Information Technology Engineer Examination (FE)
-
-## Other
-### AWS Community Builders Program
-- AWS Community Builders
-  - Security & Identity Builder since 2024
 
 ---
 
