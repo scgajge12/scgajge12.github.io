@@ -85,9 +85,10 @@ type: page
 - Security Camp 2022 on-line: Tutor
 - Security Mini Camp 2022 on-line: Lecturer
 
-### JAWS-UG (AWS Users Group – Japan)
+### AWS Community
 - Security-JAWS #25: Speaker
 - JAWS DAYS 2022: Speaker
 - Security-JAWS #30: AWS CTF Organizer
 - JAWS DAYS 2024: Speaker
-
+- AWS Community Builder
+  - Security & Identity Builder since 2024
