@@ -9,7 +9,7 @@ enableRobotsTXT = true
 
 [params]
   footer = "scgajge12"
-  description = "Japanese Student, Security Engineer and Bug Hunter"
+  description = "Security Engineer and Bug Hunter"
   avatarURL = "/images/morioka12.jpg"
   AvatarAltText = "avatar"
   avatarSize = "size-m"
