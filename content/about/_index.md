@@ -18,7 +18,7 @@ type: page
 ## Education
 - [Information Science College](https://isc.iwasaki.ac.jp/)
   - Department of Information Security
-  - *period: Apr.2020 - Mar.2024 (present)*
+  - *period: Apr.2020 - Mar.2024*
 
 - Circle: [IPFactory](https://www.ipfactory.org/)
   - Information Technology Circle
