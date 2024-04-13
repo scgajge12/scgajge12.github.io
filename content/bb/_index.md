@@ -15,10 +15,10 @@ type: page
 - Months
   - 6th place (Feb.2024), [link](https://app.intigriti.com/leaderboard?severity=1&year=2024&month=2)
 - Quarters
-  - 17th place (Q1 2024), [link](https://app.intigriti.com/leaderboard?severity=1&year=2024&quarter=1)
+  - 17th place (Q1 2024), [link](https://app.intigriti.com/leaderboard?severity=1&year=2024&quarter=1), [tweet (post)](https://x.com/scgajge12/status/1775878382221418697)
 
 **Main History**
-- 2024/04/01: Ranked **17th** in Quarterly 2024
+- 2024/04/01: Ranked **17th** in 1st Quarterly 2024
 - 2024/03/01: Ranked **6th** in February 2024
 - 2024/02/06: First **Exceptional** report Accepted
   - CVSS score 9.8 (2 reports) , [tweet (post)](https://twitter.com/scgajge12/status/1754854881373106588)
