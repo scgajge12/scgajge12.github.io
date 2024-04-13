@@ -5,7 +5,7 @@ type: page
 
 ## 2024
 - [Intigriti Absolutely Smashed Q1 2024](https://app.intigriti.com/leaderboard?severity=1&year=2024&quarter=1)
-  - 17th place award (get SWAG voucher)
+  - 17th place award (SWAG Voucher)
 - AWS Community Builders
   - Security & Identity Builder since 2024, ([list](https://aws.amazon.com/developer/community/community-builders/community-builders-directory/?nc1=h_ls&cb-cards.sort-by=item.additionalFields.cbName&cb-cards.sort-order=asc&awsf.builder-category=cb-type%23security-identity-compliance&awsf.location=*all&awsf.year=*all&cb-cards.q=japan&cb-cards.q_operator=AND))
 - [JAWS DAYS 2024 - LEAP BEYOND -](https://jawsdays2024.jaws-ug.jp/)
