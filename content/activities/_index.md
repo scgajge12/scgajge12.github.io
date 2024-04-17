@@ -4,10 +4,14 @@ type: page
 ---
 
 ## 2024
-- [Intigriti Absolutely Smashed Q1 2024](https://app.intigriti.com/leaderboard?severity=1&year=2024&quarter=1)
-  - 17th place Awarded (SWAG Voucher)
-- AWS Community Builders
-  - Security & Identity Builder since 2024, ([list](https://aws.amazon.com/developer/community/community-builders/community-builders-directory/?nc1=h_ls&cb-cards.sort-by=item.additionalFields.cbName&cb-cards.sort-order=asc&awsf.builder-category=cb-type%23security-identity-compliance&awsf.location=*all&awsf.year=*all&cb-cards.q=japan&cb-cards.q_operator=AND))
+- [CMC_Central 2024](https://cmc-central.com/)
+  - Speaker (Panel Discussion)
+- **[Security Mini Camp in Miyagi 2024](https://www.security-camp.or.jp/minicamp/miyagi2024.html)**
+  - **Lecturer: "Introduction to Web Application Bug Hunting learned from CVE"**
+- **[Intigriti Absolutely Smashed Q1 2024](https://app.intigriti.com/leaderboard?severity=1&year=2024&quarter=1)**
+  - **17th place Awarded (SWAG Voucher)**
+- **AWS Community Builders**
+  - **Security & Identity Builder since 2024, ([list](https://aws.amazon.com/developer/community/community-builders/community-builders-directory/?nc1=h_ls&cb-cards.sort-by=item.additionalFields.cbName&cb-cards.sort-order=asc&awsf.builder-category=cb-type%23security-identity-compliance&awsf.location=*all&awsf.year=*all&cb-cards.q=japan&cb-cards.q_operator=AND))**
 - [JAWS DAYS 2024 - LEAP BEYOND -](https://jawsdays2024.jaws-ug.jp/)
   - Speaker (Panel Discussion)
 - [P3NFEST Conf 2024 by IssueHunt, Inc.](https://issuehunt.jp/events/2024/p3nfestconf)
