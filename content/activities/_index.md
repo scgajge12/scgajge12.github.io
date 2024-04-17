@@ -92,6 +92,7 @@ type: page
 - Security Camp 2021 on-line: Tutor
 - Security Camp 2022 on-line: Tutor
 - Security Mini Camp 2022 on-line: Lecturer
+- Security Mini Camp in Miyagi 2024: Lecturer
 
 ### AWS Community
 - Security-JAWS #25: Speaker
