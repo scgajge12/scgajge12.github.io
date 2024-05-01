@@ -1,7 +1,9 @@
 ---
-title: "Bug Bounty JP Podcast (BBJP_Podcast)"
+title: "Bug Bounty JP Podcast"
 type: page
 ---
+
+## Bug Bounty JP Podcast (BBJP_Podcast)
 
 This podcast is a casual security chat by members whose hobby is bug hunting through bug bounties and OSS.
 
