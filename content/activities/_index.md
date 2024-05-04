@@ -4,6 +4,7 @@ type: page
 ---
 
 ## 2024
+- [Hack Fes. 2024](https://www.hacker.or.jp/hack-fes-2024/)
 - [CMC_Central 2024](https://cmc-central.com/)
   - Speaker (Panel Discussion)
 - **[Security Mini Camp in Miyagi 2024](https://www.security-camp.or.jp/minicamp/miyagi2024.html)**
