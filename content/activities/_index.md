@@ -85,7 +85,11 @@ type: page
 - [connpass](https://connpass.com/user/scgajge12)
 - [Doorkeeper](https://www.doorkeeper.jp/users/mvk0vr8s89y3guj1av28h3jk49snd9)
 
+
 ## History
+
+### SecHack365
+- SecHack365 2018: Trainee (Attendee)
 
 ### Security Camp
 - Security Camp 2020 on-line: Attendee
