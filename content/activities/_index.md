@@ -9,6 +9,8 @@ type: page
   - Speaker (Panel Discussion)
 - **[Security Mini Camp in Miyagi 2024](https://www.security-camp.or.jp/minicamp/miyagi2024.html)**
   - **Lecturer: "Introduction to Web Application Bug Hunting learned from CVE"**
+- **SecHack365 2024**
+  - **Assistant (Supporter)**
 - **[Intigriti Absolutely Smashed Q1 2024](https://app.intigriti.com/leaderboard?severity=1&year=2024&quarter=1)**
   - **17th place Awarded (SWAG Voucher)**
 - **AWS Community Builders**
@@ -91,6 +93,7 @@ type: page
 
 ### SecHack365
 - SecHack365 2018: Trainee (Attendee)
+- SecHack365 2024: Assistant (Supporter)
 
 ### Security Camp
 - Security Camp 2020 on-line: Attendee
