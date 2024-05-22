@@ -11,7 +11,8 @@ type: page
   - Security Engineer
     - Web Penetration Tester
   - Bug Bounty Hunter
-  - AWS Community Builder (Security)
+  - AWS Community Builder
+    - Security & Identity Builder since 2024
 
 <br>
 
