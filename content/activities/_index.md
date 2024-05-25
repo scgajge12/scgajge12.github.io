@@ -4,6 +4,7 @@ type: page
 ---
 
 ## 2024
+- ISC2 Japan Chapter Study Group WG
 - **[Hack Fes. 2024](https://www.hacker.or.jp/hack-fes-2024/)**
   - **Lecturer: "Introduction to Bug Bounty ~ Aiming to contribute to society and earn rewards with bug hunting skills ~"**
 - [CMC_Central 2024](https://cmc-central.com/)
