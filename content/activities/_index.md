@@ -5,6 +5,7 @@ type: page
 
 ## 2024
 - ISC2 Japan Chapter Study Group WG
+  - Lecturer
 - **[Hack Fes. 2024](https://www.hacker.or.jp/hack-fes-2024/)**
   - **Lecturer: "Introduction to Bug Bounty ~ Aiming to contribute to society and earn rewards with bug hunting skills ~"**
 - [CMC_Central 2024](https://cmc-central.com/)
@@ -14,7 +15,7 @@ type: page
 - **SecHack365 2024**
   - **Assistant (Supporter)**
 - **[Intigriti Absolutely Smashed Q1 2024](https://app.intigriti.com/leaderboard?severity=1&year=2024&quarter=1)**
-  - **17th place Awarded (SWAG Voucher)**
+  - **17th place Awarded ([Report](https://scgajge12.hatenablog.com/entry/intigriti_q1_2024))**
 - **AWS Community Builders**
   - **Security & Identity Builder since 2024, ([list](https://aws.amazon.com/developer/community/community-builders/community-builders-directory/?nc1=h_ls&cb-cards.sort-by=item.additionalFields.cbName&cb-cards.sort-order=asc&awsf.builder-category=cb-type%23security-identity-compliance&awsf.location=*all&awsf.year=*all&cb-cards.q=japan&cb-cards.q_operator=AND))**
 - [JAWS DAYS 2024 - LEAP BEYOND -](https://jawsdays2024.jaws-ug.jp/)
