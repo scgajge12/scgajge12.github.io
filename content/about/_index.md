@@ -19,7 +19,8 @@ type: page
 ## Education
 - [Information Science College](https://isc.iwasaki.ac.jp/)
   - Department of Information Security
-  - *period: Apr.2020 - Mar.2024*
+  - Research theme: "Current issues and solutions regarding AWS WAF"
+  - *Period: Apr.2020 - Mar.2024*
 
 - Circle: [IPFactory](https://www.ipfactory.org/)
   - Information Technology Circle
@@ -30,14 +31,14 @@ type: page
   - Security Enginner
     - **Web Penetration Test**
     - Source Code Assessment
-  - *period: May.2023 - (present)*
+  - *Period: May.2023 - (present)*
 - [Flatt Security Inc.](https://flatt.tech/)
   - Security Enginner
     - Vulnerability Assessment (Web,Cloud,Platform)
-  - *period: Jul.2020 - Apr.2023*
+  - *Period: Jul.2020 - Apr.2023*
 - [Rinkai Inc.](https://www.rinkaiseminar.co.jp/)
   - Cram School Teacher
-  - *period: Mar.2019 - Jan.2020*
+  - *Period: Mar.2019 - Jan.2020*
 
 ## Interest
 - Security
@@ -60,6 +61,7 @@ type: page
   - Public Cloud (AWS,GCP)
   - Log Analysis (Honeypot)
   - Competitive Programming
+  - WAF Bypass
 
 ### Programming Language
 - Python
