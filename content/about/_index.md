@@ -13,6 +13,8 @@ type: page
   - Bug Bounty Hunter
   - AWS Community Builder
     - Security & Identity Builder
+  - Thinker
+    - Idea, Security
 
 <br>
 
