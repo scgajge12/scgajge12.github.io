@@ -12,8 +12,8 @@ type: page
   - Speaker (Panel Discussion)
 - **[Security Mini Camp in Miyagi 2024](https://www.security-camp.or.jp/minicamp/miyagi2024.html)**
   - **Lecturer: "Introduction to Web Application Bug Hunting learned from CVE"**
-- **SecHack365 2024**
-  - **Assistant (Supporter)**
+- **[SecHack365 2024](https://sechack365.nict.go.jp/)**
+  - **Assistant ([Profile](https://sechack365.nict.go.jp/trainers/assistant2024/morioka.html))**
 - **[Intigriti Absolutely Smashed Q1 2024](https://app.intigriti.com/leaderboard?severity=1&year=2024&quarter=1)**
   - **17th place Awarded ([Report](https://scgajge12.hatenablog.com/entry/intigriti_q1_2024))**
 - **AWS Community Builders**
