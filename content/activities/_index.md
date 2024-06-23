@@ -4,10 +4,10 @@ type: page
 ---
 
 ## 2024
-- **[ISC2 Japan Chapter Study Group WG](https://sites.google.com/isc2chapter.jp/meetup/202407)**
-  - **Lecturer: "Introduction to Cloud Security: Threats and Countermeasures when focusing on AWS environments from an offensive perspective"**
 - **[Hack Fes. 2024](https://www.hacker.or.jp/hack-fes-2024/)**
   - **Lecturer: "Introduction to Bug Bounty ~ Aiming to contribute to society and earn rewards with bug hunting skills ~"**
+- **[ISC2 Japan Chapter Study Group WG](https://sites.google.com/isc2chapter.jp/meetup/202407)**
+  - **Lecturer: "Introduction to Cloud Security: Threats and Countermeasures when focusing on AWS environments from an offensive perspective"**
 - [CMC_Central 2024](https://cmc-central.com/)
   - Speaker (Panel Discussion)
 - **[Security Mini Camp in Miyagi 2024](https://www.security-camp.or.jp/minicamp/miyagi2024.html)**
