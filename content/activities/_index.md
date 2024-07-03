@@ -4,6 +4,8 @@ type: page
 ---
 
 ## 2024
+- **[P3NFEST 2024 Summer](https://issuehunt.jp/events/2024/summer/p3nfest)**
+  - **Lecturer: "Practical Introduction to Bug Bounty"**
 - **[Hack Fes. 2024](https://www.hacker.or.jp/hack-fes-2024/)**
   - **Lecturer: "Introduction to Bug Bounty ~ Aiming to contribute to society and earn rewards with bug hunting skills ~"**
 - **[ISC2 Japan Chapter Study Group WG](https://sites.google.com/isc2chapter.jp/meetup/202407)**
@@ -20,7 +22,7 @@ type: page
   - **Security & Identity Builder since 2024, ([list](https://aws.amazon.com/developer/community/community-builders/community-builders-directory/?nc1=h_ls&cb-cards.sort-by=item.additionalFields.cbName&cb-cards.sort-order=asc&awsf.builder-category=cb-type%23security-identity-compliance&awsf.location=*all&awsf.year=*all&cb-cards.q=japan&cb-cards.q_operator=AND))**
 - [JAWS DAYS 2024 - LEAP BEYOND -](https://jawsdays2024.jaws-ug.jp/)
   - Speaker (Panel Discussion)
-- [P3NFEST Conf 2024 by IssueHunt, Inc.](https://issuehunt.jp/events/2024/p3nfestconf)
+- [P3NFEST Conf 2024](https://issuehunt.jp/events/2024/p3nfestconf)
   - Speaker (Panel Discussion)
 
 ## 2023
