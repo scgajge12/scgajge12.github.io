@@ -1,5 +1,5 @@
 ---
-title: "Why work on the Bug Bounty and What's really exciting about it"
+title: "⭐︎ Why work on the Bug Bounty and What's really exciting about it"
 date: 2024-06-25
 tags: ["bugbounty", "interview"]
 type: post
