@@ -1,5 +1,5 @@
 ---
-title: "⭐︎ Practical Introduction to Bug Bounty"
+title: "⭐︎ Introduction to Practical Bug Bounty"
 date: 2024-08-31
 tags: ["bugbounty", "security", "slide"]
 type: post
