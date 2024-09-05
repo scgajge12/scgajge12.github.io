@@ -15,6 +15,8 @@ type: page
     - Security & Identity Builder
   - Thinker
     - Idea, Security
+- **Interview**
+  - [Why work on the Bug Bounty and What's really exciting about it](https://levtech.jp/media/article/interview/detail_466/)
 
 <br>
 
