@@ -4,6 +4,8 @@ type: page
 ---
 
 ## 2024
+- [Security Wakate Association 1st](https://sec-wakate.connpass.com/event/332518/)
+  - Executive Members
 - **[P3NFEST 2024 Summer](https://issuehunt.jp/events/2024/summer/p3nfest)**
   - **Lecturer: "Introduction to Practical Bug Bounty"**
 - [JAWS PANKRATION 2024](https://jawspankration2024.jaws-ug.jp/)
