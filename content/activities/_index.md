@@ -3,7 +3,10 @@ title: "Activities"
 type: page
 ---
 
+## 2025
+
 ## 2024
+- SecHack365 Returns 2024
 - [The 1s Security Wakate Association (LT & Networking Event)](https://sec-wakate.connpass.com/event/332518/)
   - Organizer Member
 - **[P3NFEST 2024 Summer](https://issuehunt.jp/events/2024/summer/p3nfest)**
@@ -30,7 +33,7 @@ type: page
   - Speaker (Panel Discussion)
 
 ## 2023
-- SecHack365 Returns 2023
+- [SecHack365 Returns 2023](https://sechack365.nict.go.jp/report/2023/report_r2023.html)
 - **[Security-JAWS #30](https://s-jaws.doorkeeper.jp/events/155025)**
   - **AWS CTF Organizer**
 
