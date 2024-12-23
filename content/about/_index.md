@@ -17,6 +17,9 @@ type: page
     - Idea, Security
 - **Interview (Bug Hunter)**
   - [Why work on the Bug Bounty and What's really exciting about it](https://levtech.jp/media/article/interview/detail_466/)
+- **Host**
+  - [Bug Bounty JP Podcast](https://bugbountyjppodcast.notion.site/Bug-Bounty-JP-Podcast-8bf1080383a54c4a8848f10bfeb874b3)
+  - [Security Wakate Association](https://sec-wakate.notion.site/119382dfaec98058902bec703686c43c)
 
 <br>
 
@@ -35,14 +38,15 @@ type: page
   - Security Enginner
     - **Web Penetration Test**
     - Source Code Assessment
-  - *Period: May.2023 - (present)*
+  - *Period: Apr.2024 - Present (Full-time Job)*
+  - *Period: May.2023 - Mar.2024 (Part-time Job)*
 - [Flatt Security Inc.](https://flatt.tech/)
   - Security Enginner
     - Vulnerability Assessment (Web,Cloud,Platform)
-  - *Period: Jul.2020 - Apr.2023*
+  - *Period: Jul.2020 - Apr.2023 (Long-term Internship)*
 - [Rinkai Inc.](https://www.rinkaiseminar.co.jp/)
   - Cram School Teacher
-  - *Period: Mar.2019 - Jan.2020*
+  - *Period: Mar.2019 - Jan.2020 (Part-time Job)*
 
 ## Interest
 - Security
