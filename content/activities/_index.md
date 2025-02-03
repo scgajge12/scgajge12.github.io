@@ -4,10 +4,13 @@ type: page
 ---
 
 ## 2025
+- The 2nd Security Wakate Association (LT & Networking Event)
+- Security Camp Forum 2025
+- P3NFEST 2025 Winter
 
 ## 2024
 - SecHack365 Returns 2024
-- [The 1s Security Wakate Association (LT & Networking Event)](https://sec-wakate.connpass.com/event/332518/)
+- [The 1st Security Wakate Association (LT & Networking Event)](https://sec-wakate.connpass.com/event/332518/)
   - Organizer Member
 - **[P3NFEST 2024 Summer](https://issuehunt.jp/events/2024/summer/p3nfest)**
   - **Lecturer: "Introduction to Practical Bug Bounty"**
