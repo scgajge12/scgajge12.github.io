@@ -38,6 +38,7 @@ type: page
   - Security Enginner
     - **Web Penetration Test**
     - Source Code Assessment
+    - LLM Security Assessment
   - *Period: Apr.2024 - Present (Full-time Job)*
   - *Period: May.2023 - Mar.2024 (Part-time Job)*
 - [Flatt Security Inc.](https://flatt.tech/)
