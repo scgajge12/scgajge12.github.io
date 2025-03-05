@@ -12,7 +12,7 @@ type: page
     - Web Penetration Tester
   - Bug Bounty Hunter
   - AWS Community Builder
-    - Security & Identity Builder
+    - Security Builder since 2024
   - Thinker
     - Idea, Security
 - **Interview (Bug Hunter)**
