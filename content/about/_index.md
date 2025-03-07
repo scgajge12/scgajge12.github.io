@@ -9,7 +9,6 @@ type: page
 - **Birthplace**: Kanagawa, Japan
 - **Position**
   - Security Engineer
-    - Web Penetration Tester
   - Bug Bounty Hunter
   - AWS Community Builder
     - Security Builder since 2024
@@ -34,12 +33,17 @@ type: page
   - FY2022 Captain
 
 ## Work Experience
+- ??? (Security Vendor Company)
+  - Security Enginner
+    - **Business Development (BizDev)**
+    - Vulnerability Assessment
+  - *Period: Apr.2025 -  (Full-time Job)*
 - [GMO Cybersecurity by Ierae, Inc.](https://gmo-cybersecurity.com/)
   - Security Enginner
     - **Web Penetration Test**
     - Source Code Assessment
     - LLM Security Assessment
-  - *Period: Apr.2024 - Present (Full-time Job)*
+  - *Period: Apr.2024 - Mar.2025 (Full-time Job)*
   - *Period: May.2023 - Mar.2024 (Part-time Job)*
 - [Flatt Security Inc.](https://flatt.tech/)
   - Security Enginner
@@ -91,7 +95,7 @@ type: page
 ---
 
 ## Link
-- [Twitter](https://twitter.com/scgajge12)
+- [X(Twitter)](https://twitter.com/scgajge12)
 - [GitHub](https://github.com/scgajge12)
 - [HatenaBlog](https://scgajge12.hatenablog.com/archive)
 - [Qiita](https://qiita.com/scgajge12)
