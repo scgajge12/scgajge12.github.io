@@ -7,7 +7,7 @@ type: page
 - [The 2nd Security Wakate Association (LT & Networking Event)](https://sec-wakate.connpass.com/event/339267/)
   - Organizer Member
 - [Security Camp Forum 2025](https://www.security-camp.or.jp/event/forum2025.html) & [Security Camp Awards 2025](https://www.security-camp.or.jp/event/award2025.html)
-  - Award voting target
+  - Award Voting Target
 - **[P3NFEST 2025 Winter](https://issuehunt.jp/events/2025/winter/p3nfest)**
   - **Lecturer: "Introduction to Practical Bug Bounty (2025 Edition)"**
 
@@ -127,11 +127,11 @@ type: page
 - P3NFEST 2024 Summer: Lecturer
 - P3NFEST 2025 Winter: Lecturer
 
-### AWS Community (by JAWS)
+### AWS Community (JAWS)
 - Security-JAWS #25: Speaker
 - JAWS DAYS 2022: Speaker
 - Security-JAWS #30: AWS CTF Organizer
 - JAWS DAYS 2024: Speaker
 - AWS Community Builder
-  - Security & Identity Builder since 2024
+  - Security Builder since 2024
 - JAWS PANKRATION 2024: Speaker
