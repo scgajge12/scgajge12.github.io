@@ -5,15 +5,20 @@ type: page
 
 ## Bug Bounty JP Podcast (BBJP_Podcast)
 
-This podcast is a casual security chat by members whose hobby is bug hunting through bug bounties and OSS.
+This Podcast is a casual Security Chat by members whose hobby is Bug Hunting through Bug Bounty and OSS. (Japanese Content)
 
-> バグバウンティや OSS などを対象にバグハントすることを趣味とするメンバーによるセキュリティ雑談トークのポッドキャスト
-
-- **Home Page**
+- **Web Page**
   - https://bugbountyjppodcast.notion.site/Bug-Bounty-JP-Podcast-8bf1080383a54c4a8848f10bfeb874b3
-- **Introduction Blog "We have started a podcast Bug Bounty JP Podcast"**
-  - https://scgajge12.hatenablog.com/entry/bbjp_podcast
+- **X (Twitter)**
+  - https://x.com/BBJPPodcast
+
+### Podcast Destinations
+
 - **Spotify for Podcasters**
   - https://podcasters.spotify.com/pod/show/bbjp-podcast
 - **Podcast on Spotify**
   - https://open.spotify.com/show/2EO4HVs4Zm2D7wchOPbKyb
+- **Apple Podcasts**
+  - https://podcasts.apple.com/jp/podcast/bug-bounty-jp-podcast/id1766648561
+- **Amazon Music**
+  - https://music.amazon.co.jp/podcasts/56c636ae-c9bc-45cd-93e4-0edb63e3b220/bug-bounty-jp-podcast
