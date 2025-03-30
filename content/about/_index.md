@@ -5,11 +5,13 @@ type: page
 
 ## Profile
 - **Name**: Yuta Morioka
-- **HN**: morioka12 (@scgajge12)
+- **Handle Name**: morioka12 (@scgajge12)
 - **Birthplace**: Kanagawa, Japan
 - **Position**
   - Security Engineer
+    - Business Development (BizDev)
   - Bug Bounty Hunter
+    - Part Time Bug Bounty Hunter since 2020
   - AWS Community Builder
     - Security Builder since 2024
   - Thinker
