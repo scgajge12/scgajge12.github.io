@@ -14,9 +14,9 @@ This Podcast is a casual Security Chat by members whose hobby is Bug Hunting thr
 
 ### Podcast Destinations
 
-- **Spotify for Podcasters**
-  - https://podcasters.spotify.com/pod/show/bbjp-podcast
-- **Podcast on Spotify**
+- **Spotify for Creators**
+  - https://creators.spotify.com/pod/show/bbjp-podcast
+- **Spotify**
   - https://open.spotify.com/show/2EO4HVs4Zm2D7wchOPbKyb
 - **Apple Podcasts**
   - https://podcasts.apple.com/jp/podcast/bug-bounty-jp-podcast/id1766648561
