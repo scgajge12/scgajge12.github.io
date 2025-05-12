@@ -4,12 +4,14 @@ type: page
 ---
 
 ## 2025
+- [Hack Fes. 2025](https://hackfes2025.hacker.or.jp/)
+  - Lecturer: "Introduction to Bug Bounty ~ The journey to becoming a Bug Hunter ~"
 - [The 2nd Security Wakate Association (LT & Networking Event)](https://sec-wakate.connpass.com/event/339267/)
   - Organizer Member
 - [Security Camp Forum 2025](https://www.security-camp.or.jp/event/forum2025.html) & [Security Camp Awards 2025](https://www.security-camp.or.jp/event/award2025.html)
   - Award Voting Target
-- **[P3NFEST 2025 Winter](https://issuehunt.jp/events/2025/winter/p3nfest)**
-  - **Lecturer: "Introduction to Practical Bug Bounty (2025 Edition)"**
+- [P3NFEST 2025 Winter](https://issuehunt.jp/events/2025/winter/p3nfest)
+  - Lecturer: "Introduction to Practical Bug Bounty (2025 Edition)"
 
 ## 2024
 - SecHack365 Returns 2024
