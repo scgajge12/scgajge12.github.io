@@ -4,6 +4,8 @@ type: page
 ---
 
 ## 2025
+- [The 3rd Security Wakate Association (Workshop & Networking Event)]()
+  - Organizer Member
 - [Hack Fes. 2025](https://hackfes2025.hacker.or.jp/)
   - Lecturer: "Introduction to Bug Bounty ~ The journey to becoming a Bug Hunter ~"
 - [The 2nd Security Wakate Association (LT & Networking Event)](https://sec-wakate.connpass.com/event/339267/)
@@ -131,9 +133,9 @@ type: page
 
 ### AWS Community (JAWS)
 - Security-JAWS #25: Speaker
-- JAWS DAYS 2022: Speaker
-- Security-JAWS #30: AWS CTF Organizer
+- JAWS DAYS 2022: Speaker (CfP)
+- Security-JAWS #30: CTF Organizer
 - JAWS DAYS 2024: Speaker
-- AWS Community Builder
+- AWS Community Builders
   - Security Builder since 2024
-- JAWS PANKRATION 2024: Speaker
+- JAWS PANKRATION 2024: Speaker (CfP)
