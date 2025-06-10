@@ -4,7 +4,7 @@ type: page
 ---
 
 ## 2025
-- [The 3rd Security Wakate Association (Workshop & Networking Event)]()
+- [The 3rd Security Wakate Association (Workshop & Networking Event)](https://sec-wakate.connpass.com/event/357530/)
   - Organizer Member
 - [Hack Fes. 2025](https://hackfes2025.hacker.or.jp/)
   - Lecturer: "Introduction to Bug Bounty ~ The journey to becoming a Bug Hunter ~"
