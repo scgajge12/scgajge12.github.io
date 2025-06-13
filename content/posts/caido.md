@@ -1,5 +1,5 @@
 ---
-title: "Introducing the recommended Rust proxy tool "Caido""
+title: "Introducing the recommended Rust proxy tool Caido"
 date: 2025-06-12
 tags: ["bugbounty", "security", "blog"]
 type: post
