@@ -15,7 +15,7 @@ type: page
   - AWS Community Builder
     - Security Builder since 2024
   - Thinker
-    - Idea, Security
+    - Idea, Cyber Security
 - **Interview (Bug Hunter)**
   - [Why work on the Bug Bounty and What's really exciting about it](https://levtech.jp/media/article/interview/detail_466/)
 - **Host**
@@ -59,9 +59,7 @@ type: page
 - Security
   - **Web Security**
   - **Cloud Security**
-  - Container Security
   - Penetration Test
-  - Web3 Security (beginner)
 - Bug Hunt
   - Bug Bounty
   - Open Source Software
@@ -73,7 +71,6 @@ type: page
 - Other
   - Web Development
   - Tool Development
-  - Public Cloud (AWS,GCP)
   - Log Analysis (Honeypot)
   - Competitive Programming
   - WAF Bypass
