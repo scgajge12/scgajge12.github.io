@@ -38,7 +38,6 @@ enableRobotsTXT = true
   socialIcons = [
     {name = "twitter", url = "https://twitter.com/scgajge12"},
     {name = "github", url = "https://github.com/scgajge12"},
-    {name = "linkedin", url = "https://www.linkedin.com/in/yuta-morioka-263591230/"},
     {name = "email", url = "mailto:morioka1831@gmail.com"}
   ]
   metaKeywords = ["morioka12", "scgajge12", "portfolio"]
