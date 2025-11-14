@@ -4,6 +4,10 @@ type: page
 ---
 
 ## 2025
+- [Findy TECH BATON "Security LT Night"](https://findy.connpass.com/event/375960/)
+  - LT: "Vulnerabilities in the Supply Chain from a Bug Hunter's Perspective"
+- [The 4th Security Wakate Association (LT & Networking Event)](https://sec-wakate.connpass.com/event/369404/)
+  - Organizer Member
 - [The 3rd Security Wakate Association (Workshop & Networking Event)](https://sec-wakate.connpass.com/event/357530/)
   - Organizer Member
 - [Hack Fes. 2025](https://hackfes2025.hacker.or.jp/)
