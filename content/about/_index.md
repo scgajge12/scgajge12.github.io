@@ -11,16 +11,14 @@ type: page
   - Security Engineer
     - Business Development (BizDev)
   - Bug Bounty Hunter
-    - Part Time Bug Bounty Hunter since 2020
+    - Part-time Bug Bounty Hunter since 2020
   - AWS Community Builder
     - Security Builder since 2024
-  - Thinker
-    - Idea, Cyber Security
-- **Interview (Bug Hunter)**
-  - [Why work on the Bug Bounty and What's really exciting about it](https://levtech.jp/media/article/interview/detail_466/)
+- **Media Interview**
+  - Bug Hunter: [Why work on the Bug Bounty and What's really exciting about it](https://levtech.jp/media/article/interview/detail_466/)
 - **Host**
   - [Bug Bounty JP Podcast](https://bugbountyjppodcast.notion.site/Bug-Bounty-JP-Podcast-8bf1080383a54c4a8848f10bfeb874b3)
-  - [Security Wakate Association](https://sec-wakate.notion.site/119382dfaec98058902bec703686c43c)
+  - [Security Wakate Association](https://sec-wakate.connpass.com/)
 
 <br>
 
@@ -35,10 +33,10 @@ type: page
   - FY2022 Captain
 
 ## Work Experience
-- ??? (Security Vendor Company)
+- (Cyber Security Vendor Company)
   - Security Enginner
     - **Business Development (BizDev)**
-    - Vulnerability Assessment
+    - Security Consulting
   - *Period: Apr.2025 -  (Full-time Job)*
 - [GMO Cybersecurity by Ierae, Inc.](https://gmo-cybersecurity.com/)
   - Security Enginner
