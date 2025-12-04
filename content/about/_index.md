@@ -15,7 +15,7 @@ type: page
   - AWS Community Builder
     - Security Builder since 2024
 - **Media Interview**
-  - Bug Hunter: [Why work on the Bug Bounty and What's really exciting about it](https://levtech.jp/media/article/interview/detail_466/)
+  - [The Hope of the Bug Hunter World: Why I Tackle Bug Bounty and Their True Appeal](https://levtech.jp/media/article/interview/detail_466/) (Levtech LAB)
 - **Host**
   - [Bug Bounty JP Podcast](https://bugbountyjppodcast.notion.site/Bug-Bounty-JP-Podcast-8bf1080383a54c4a8848f10bfeb874b3)
   - [Security Wakate Association](https://sec-wakate.connpass.com/)
