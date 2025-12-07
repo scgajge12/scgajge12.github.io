@@ -14,6 +14,8 @@ type: page
     - Part-time Bug Bounty Hunter since 2020
   - AWS Community Builder
     - Security Builder since 2024
+- **Book**
+  - *coming soon (2026)*
 - **Media Interview**
   - [The Hope of the Bug Hunter World: Why I Tackle Bug Bounty and Their True Appeal](https://levtech.jp/media/article/interview/detail_466/) (Levtech LAB)
 - **Host**
