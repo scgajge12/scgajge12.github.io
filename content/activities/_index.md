@@ -3,6 +3,8 @@ title: "Activities"
 type: page
 ---
 
+## 2026
+
 ## 2025
 - [Findy TECH BATON "Security LT Night"](https://findy.connpass.com/event/375960/)
   - LT: "Vulnerabilities in the Supply Chain from a Bug Hunter's Perspective"
@@ -117,11 +119,11 @@ type: page
 
 ## History
 
-### SecHack365 (by NICT)
+### SecHack365 (NICT)
 - SecHack365 2018: Trainee (Attendee)
 - SecHack365 2024: Assistant (Supporter)
 
-### Security Camp (by IPA)
+### Security Camp (IPA)
 - Security Camp 2020 on-line: Attendee
 - Security Camp 2021 on-line: Tutor
 - Security Camp 2022 on-line: Tutor
@@ -130,7 +132,11 @@ type: page
 - Security Camp Awards 2025: Award Judging
 - Security Camp Forum 2025: Final Announcement
 
-### P3NFEST (by IssueHunt)
+### Hack Fes. (Japan Hackers Association)
+- Hack Fes. 2024: Lecturer
+- Hack Fes. 2025: Lecturer
+
+### P3NFEST (IssueHunt)
 - P3NFEST Conf 2024: Speaker
 - P3NFEST 2024 Summer: Lecturer
 - P3NFEST 2025 Winter: Lecturer
