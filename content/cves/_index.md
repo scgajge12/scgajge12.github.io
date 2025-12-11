@@ -62,10 +62,10 @@ Total: **16** CVE IDs
   - Vulnerability: Stored XSS (CVE-2022-29894), Improper Rate Limiting (CVE-2023-38507)
 - [BookStack](https://github.com/BookStackApp/BookStack) (Documentation/Wiki)
   - GitHub Star: 17.8k
-  - Vulnerability: SSRF (CVE-2023-4624)
+  - Vulnerability: Blind SSRF (CVE-2023-4624)
 - [Grav](https://github.com/getgrav/grav) (Flat-File CMS)
   - GitHub Star: 15.3k
-  - Vulnerability: SSTI (CVE-2023-34251)
+  - Vulnerability: SSTI to RCE (CVE-2023-34251)
 
 ## Blog
 
