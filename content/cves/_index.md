@@ -55,6 +55,18 @@ Total: **16** CVE IDs
 
 ---
 
+## Top3 GitHub OSS
+
+- [Strapi](https://github.com/strapi/strapi) (Headless CMS)
+  - GitHub Star: 70.6k
+  - Vulnerability: Stored XSS (CVE-2022-29894), Improper Rate Limiting (CVE-2023-38507)
+- [BookStack](https://github.com/BookStackApp/BookStack) (Documentation/Wiki)
+  - GitHub Star: 17.8k
+  - Vulnerability: SSRF (CVE-2023-4624)
+- [Grav](https://github.com/getgrav/grav) (Flat-File CMS)
+  - GitHub Star: 15.3k
+  - Vulnerability: SSTI (CVE-2023-34251)
+
 ## Blog
 
 - Strapi's official blog: [Security Disclosure of Vulnerabilities: CVE-2023-38507](https://strapi.io/blog/security-disclosure-of-vulnerabilities-sept-2023)
