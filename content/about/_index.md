@@ -19,8 +19,8 @@ type: page
 - **Media Interview**
   - [The Hope of the Bug Hunter World: Why I Tackle Bug Bounty and Their True Appeal](https://levtech.jp/media/article/interview/detail_466/) (Levtech LAB)
 - **Host**
-  - [Bug Bounty JP Podcast](https://bugbountyjppodcast.notion.site/Bug-Bounty-JP-Podcast-8bf1080383a54c4a8848f10bfeb874b3) (Feb.2024 - )
-  - Retired: [Security Wakate Association](https://sec-wakate.connpass.com/) (Co-Founder, Oct.2024 - Dec.2025)
+  - [Bug Bounty JP Podcast](https://bugbountyjppodcast.notion.site/Bug-Bounty-JP-Podcast-8bf1080383a54c4a8848f10bfeb874b3) (*Feb.2024 -*)
+  - Retired: [Security Wakate Association](https://sec-wakate.connpass.com/) (*Co-Founder, Oct.2024 - Dec.2025*)
 
 <br>
 
