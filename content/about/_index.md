@@ -15,7 +15,8 @@ type: page
   - AWS Community Builder
     - Security Builder since 2024
 - **Book**
-  - *coming soon (2026)*
+  - Publication: *coming soon (2026)*
+  - Zenn Book: [Announcement blog](https://zenn.dev/scgajge12/articles/dbb419497ebdbd) *(2026)*
 - **Media Interview**
   - [The Hope of the Bug Hunter World: Why I Tackle Bug Bounty and Their True Appeal](https://levtech.jp/media/article/interview/detail_466/) (Levtech LAB)
 - **Host**
