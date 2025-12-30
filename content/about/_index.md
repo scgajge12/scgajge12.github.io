@@ -17,6 +17,7 @@ type: page
 - **Book**
   - Publication: *coming soon (2026)*
   - Zenn Book: [Announcement blog](https://zenn.dev/scgajge12/articles/dbb419497ebdbd) *(2026)*
+  - Zenn Book: [30日でCVE取得! OSSバグハント入門](https://zenn.dev/scgajge12/books/6f6ab44df405b2) *(2025)*
 - **Media Interview**
   - [The Hope of the Bug Hunter World: Why I Tackle Bug Bounty and Their True Appeal](https://levtech.jp/media/article/interview/detail_466/) (Levtech LAB)
 - **Host**
