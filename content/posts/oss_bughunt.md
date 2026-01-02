@@ -1,5 +1,5 @@
 ---
-title: "Get Your First CVE in 30 Days: An Introduction to OSS Bug Hunting"
+title: "⭐️ Get Your First CVE in 30 Days: An Introduction to OSS Bug Hunting"
 date: 2025-12-31
 tags: ["bugbounty", "security", "book"]
 type: post
