@@ -16,9 +16,10 @@ type: page
     - Security Builder since 2024
 - **Book**
   - Publication: *coming soon (2026)*
-  - Zenn Book: [[予告] 脱初心者のための実践バグバウンティ登竜門](https://zenn.dev/scgajge12/articles/dbb419497ebdbd) *(2026)*
+  - Zenn Book: [脱初心者のための実践バグバウンティ登竜門](https://zenn.dev/scgajge12/books/06d5b176dfe0d7) *(2026)*
+    - [[English] Beyond the Basics: Practical Bug Bounty Hunting](https://leanpub.com/beyond_bugbountyhunting)
   - Zenn Book: [30日でCVE取得! OSSバグハント入門](https://zenn.dev/scgajge12/books/6f6ab44df405b2) *(2025)*
-    - [[English] A Practical Introduction to OSS Bug Hunting](https://leanpub.com/ossbughunting)
+    - [[English] Practical Introduction to OSS Bug Hunting](https://leanpub.com/ossbughunting)
 - **Media Interview**
   - [The Hope of the Bug Hunter World: Why I Tackle Bug Bounty and Their True Appeal](https://levtech.jp/media/article/interview/detail_466/) (Levtech LAB)
 - **Host**
@@ -42,7 +43,7 @@ type: page
   - Security Enginner
     - **Business Development (BizDev)**
     - Security Consulting
-  - *Period: Apr.2025 -  (Full-time Job)*
+  - *Period: Apr.2025 -  Jan.2026*
 - [GMO Cybersecurity by Ierae, Inc.](https://gmo-cybersecurity.com/)
   - Security Enginner
     - **Web Penetration Test**
