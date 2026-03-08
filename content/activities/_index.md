@@ -5,6 +5,10 @@ type: page
 
 ## 2026
 
+- [P3NFEST 2026 Spring](https://issuehunt.jp/p3nfest/2026/spring)
+  - Lecturer: "Introduction to Practical Bug Bounty (2026 Edition)"
+  - Speaker (Panel Discussion)
+
 ## 2025
 - [Findy TECH BATON "Security LT Night"](https://findy.connpass.com/event/375960/)
   - LT: "Vulnerabilities in the Supply Chain from a Bug Hunter's Perspective"
