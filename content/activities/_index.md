@@ -144,6 +144,7 @@ type: page
 - P3NFEST Conf 2024: Speaker
 - P3NFEST 2024 Summer: Lecturer
 - P3NFEST 2025 Winter: Lecturer
+- P3NFEST 2026 Spring: Lecturer, Speaker
 
 ### AWS Community (JAWS)
 - Security-JAWS #25: Speaker
