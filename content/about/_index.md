@@ -28,22 +28,12 @@ type: page
 
 <br>
 
-## Education
-- [Information Science College](https://isc.iwasaki.ac.jp/)
-  - Department of Information Security
-  - Research theme: "Current issues and solutions regarding AWS WAF"
-  - *Period: Apr.2020 - Mar.2024*
-
-- Circle: [IPFactory](https://www.ipfactory.org/)
-  - Information Technology Circle
-  - FY2022 Captain
-
 ## Work Experience
 - (Cyber Security Vendor Company)
   - Security Enginner
     - **Business Development (BizDev)**
     - Security Consulting
-  - *Period: Apr.2025 -  Jan.2026*
+  - *Period: Apr.2025 -*
 - [GMO Cybersecurity by Ierae, Inc.](https://gmo-cybersecurity.com/)
   - Security Enginner
     - **Web Penetration Test**
@@ -59,11 +49,22 @@ type: page
   - Cram School Teacher
   - *Period: Mar.2019 - Jan.2020 (Part-time Job)*
 
+## Education
+- [Information Science College](https://isc.iwasaki.ac.jp/)
+  - Department of Information Security
+  - Research theme: "Current issues and solutions regarding AWS WAF"
+  - *Period: Apr.2020 - Mar.2024*
+
+- Circle: [IPFactory](https://www.ipfactory.org/)
+  - Information Technology Circle
+  - FY2022 Captain
+
 ## Interest
 - Security
   - **Web Security**
   - **Cloud Security**
   - Penetration Test
+  - DevSecOps
 - Bug Hunt
   - Bug Bounty
   - Open Source Software
@@ -80,8 +81,8 @@ type: page
   - WAF Bypass
 
 ### Programming Language
-- Python
 - Go
+- Python
 - JavaScript
 - PHP
 - C
@@ -98,7 +99,7 @@ type: page
 ---
 
 ## Link
-- [X(Twitter)](https://twitter.com/scgajge12)
+- [X(Twitter)](https://x.com/scgajge12)
 - [GitHub](https://github.com/scgajge12)
 - Blogs / Slide
   - [Medium](https://medium.com/@scgajge12)
