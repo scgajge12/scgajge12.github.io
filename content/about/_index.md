@@ -52,7 +52,7 @@ type: page
 ## Education
 - [Information Science College](https://isc.iwasaki.ac.jp/)
   - Department of Information Security
-  - Research theme: "Current issues and solutions regarding AWS WAF"
+  - Research theme: "Current Issues and Solutions Regarding AWS WAF"
   - *Period: Apr.2020 - Mar.2024*
 
 - Circle: [IPFactory](https://www.ipfactory.org/)
@@ -75,7 +75,7 @@ type: page
     - Highest Ranking (Japan): 6th place (Jan.2023)
 - Other
   - Web Development
-  - Tool Development
+  - CLI Tool Development
   - Log Analysis (Honeypot)
   - Competitive Programming
   - WAF Bypass
@@ -90,11 +90,11 @@ type: page
 
 ## Qualificatio
 - 2022
-  - AWS Certified Solutions Architect – Associate (SAA)
+  - AWS Certified Solutions Architect – Associate (AWS SAA)
 - 2021
-  - AWS Certified Cloud Practitioner (CLF)
+  - AWS Certified Cloud Practitioner (AWS CLF)
 - 2018
-  - Fundamental Information Technology Engineer Examination (FE)
+  - Information Technology Passport Examination (IPA FE)
 
 ---
 
