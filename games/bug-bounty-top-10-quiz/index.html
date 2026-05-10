@@ -7,6 +7,7 @@
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#04111e" />
     <title>
       バグバウンティ脆弱性ランキング・クイズ | Bug Bounty Top 10 Quiz
     </title>
@@ -2199,7 +2200,7 @@
             acc +
             "%）\n" +
             "HackerOne Hacktivity 2023〜2025 のバグハンター・トリビアに挑戦してみよう！\n\n" +
-            "#BugBountyQuizM"
+            "#BugBountyJPGame"
           );
         }
         return (
@@ -2211,7 +2212,7 @@
           acc +
           "%) on the Bug Bounty Top 10 Quiz \n" +
           "Try the bug-hunter trivia from HackerOne Hacktivity 2023–2025!\n\n" +
-          "#BugBountyQuizM"
+          "#BugBountyJPGame"
         );
       }
 
@@ -2219,7 +2220,11 @@
         const correct = answers.filter((a) => a.selected === a.correct).length;
         const acc = Math.round((correct / QUIZ.length) * 100);
         const text = buildShareText(correct, QUIZ.length, acc);
-        const url = location.href.split("#")[0];
+        // スコア別シェアページ（OGP 画像にスコアが焼き込まれる）へリンクを向ける。
+        // share/<score>/index.html は事前に静的生成されており、og:image が
+        // /images/games/<slug>/score-<score>.png を指している。
+        const base = location.href.split("#")[0].replace(/[^/]*$/, "");
+        const url = base + "share/" + correct + "/";
         const intent =
           "https://x.com/intent/tweet?text=" +
           encodeURIComponent(text) +

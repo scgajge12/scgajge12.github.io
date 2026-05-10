@@ -7,6 +7,7 @@
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#04111e" />
     <title>morioka12 game site</title>
     <meta
       name="description"
@@ -913,7 +914,7 @@
       <div class="about">
         <div class="about-grid">
           <div class="about-stat">
-            <div class="about-num" id="stat-games-num">1</div>
+            <div class="about-num" id="stat-games-num"></div>
             <div class="about-label" id="stat-games-label"></div>
           </div>
           <div class="about-stat">
@@ -947,7 +948,7 @@
       <div class="links">
         <a
           class="link-item"
-          href="https://x.com/hashtag/BugBountyQuizM?src=hashtag_click"
+          href="https://x.com/hashtag/BugBountyJPGame?src=hashtag_click"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -966,7 +967,7 @@
             <line x1="10" y1="3" x2="8" y2="21" />
             <line x1="16" y1="3" x2="14" y2="21" />
           </svg>
-          <span class="link-label">#BugBountyQuizM</span>
+          <span class="link-label">#BugBountyJPGame</span>
           <span class="link-arrow">→</span>
         </a>
         <a
@@ -1034,349 +1035,367 @@
          全ロジックを IIFE で閉じてグローバル汚染を防止する。
          ========================================================= */
       (function () {
-      /* =========================================================
+        /* =========================================================
          I18N - 日本語 / 英語の文字列辞書
          ========================================================= */
-      const I18N = {
-        ja: {
-          pageTitle: "morioka12 game site",
-          heroTag: "ONLINE GAME COLLECTION",
-          heroSub:
-            "セキュリティ・バグバウンティをテーマにした、無料で遊べるオンラインゲーム集。ブラウザだけで遊べます。",
-          statGamesLabel: "公開中",
-          statFreeLabel: "無料 / 登録不要",
-          statLangLabel: "言語切替",
-          statWebLabel: "ブラウザ動作",
-          gamesHead: "GAMES",
-          linksHead: "LINKS",
-          countSuffix: function (n, total) {
-            return n + " / " + total;
+        const I18N = {
+          ja: {
+            pageTitle: "morioka12 game site",
+            heroTag: "ONLINE GAME COLLECTION",
+            heroSub:
+              "セキュリティ・バグバウンティをテーマにした、無料で遊べるオンラインゲーム集。ブラウザだけで遊べます。",
+            statGamesLabel: "公開中",
+            statFreeLabel: "無料 / 登録不要",
+            statLangLabel: "言語切替",
+            statWebLabel: "ブラウザ動作",
+            gamesHead: "GAMES",
+            linksHead: "LINKS",
+            countSuffix: function (n, total) {
+              return n + " / " + total;
+            },
+            play: "PLAY",
+            soon: "COMING SOON",
+            footerBy: "Created by ",
           },
-          play: "PLAY",
-          soon: "COMING SOON",
-          footerBy: "Created by ",
-        },
-        en: {
-          pageTitle: "morioka12 game site",
-          heroTag: "ONLINE GAME COLLECTION",
-          heroSub:
-            "A collection of free, browser-based online games on security and bug bounty topics — no install, no signup.",
-          statGamesLabel: "AVAILABLE",
-          statFreeLabel: "FREE / NO SIGNUP",
-          statLangLabel: "LANGUAGE TOGGLE",
-          statWebLabel: "WORKS IN BROWSER",
-          gamesHead: "GAMES",
-          linksHead: "LINKS",
-          countSuffix: function (n, total) {
-            return n + " / " + total;
+          en: {
+            pageTitle: "morioka12 game site",
+            heroTag: "ONLINE GAME COLLECTION",
+            heroSub:
+              "A collection of free, browser-based online games on security and bug bounty topics — no install, no signup.",
+            statGamesLabel: "AVAILABLE",
+            statFreeLabel: "FREE / NO SIGNUP",
+            statLangLabel: "LANGUAGE TOGGLE",
+            statWebLabel: "WORKS IN BROWSER",
+            gamesHead: "GAMES",
+            linksHead: "LINKS",
+            countSuffix: function (n, total) {
+              return n + " / " + total;
+            },
+            play: "PLAY",
+            soon: "COMING SOON",
+            footerBy: "Created by ",
           },
-          play: "PLAY",
-          soon: "COMING SOON",
-          footerBy: "Created by ",
-        },
-      };
+        };
 
-      /* =========================================================
+        /* =========================================================
          ゲーム一覧データ
          ========================================================= */
-      const GAMES = [
-        {
-          id: "BBTQ",
-          status: "playable",
-          href: "./bug-bounty-top-10-quiz/",
-          emblem: "BBTQ",
-          tag: "QUIZ · 4-CHOICE",
-          ja: {
-            title: "バグバウンティ脆弱性ランキング・クイズ",
-            desc: "HackerOne Hacktivity 2023〜2025 の人気脆弱性レポート Top10 から出題する、バグハンター視点の4択クイズ。",
-            meta: ["10問", "約5分", "JA / EN"],
+        const GAMES = [
+          {
+            id: "BBTQ",
+            status: "playable",
+            href: "./bug-bounty-top-10-quiz/",
+            emblem: "BBTQ",
+            tag: "QUIZ · 4-CHOICE",
+            ja: {
+              title: "バグバウンティ脆弱性ランキング・クイズ",
+              desc: "HackerOne Hacktivity 2023〜2025 の人気脆弱性レポート Top10 から出題する、バグハンター視点の4択クイズ。",
+              meta: ["10問", "約5分", "JA / EN"],
+            },
+            en: {
+              title: "Bug Bounty Top 10 Vulnerability Quiz",
+              desc: "A 4-choice quiz from the most popular vulnerability reports on HackerOne Hacktivity (2023–2025), from a bug hunter's point of view.",
+              meta: ["10 Q", "~5 min", "JA / EN"],
+            },
           },
-          en: {
-            title: "Bug Bounty Top 10 Vulnerability Quiz",
-            desc: "A 4-choice quiz from the most popular vulnerability reports on HackerOne Hacktivity (2023–2025), from a bug hunter's point of view.",
-            meta: ["10 Q", "~5 min", "JA / EN"],
+          {
+            id: "OSS",
+            status: "soon",
+            emblem: "OSS",
+            tag: "QUIZ",
+            ja: {
+              title: "OSSバグハント入門 クイズ",
+              desc: "本「30日でCVE取得! OSSバグハント入門」を題材にした、理解度テストクイズ（準備中）。",
+              meta: ["準備中"],
+            },
+            en: {
+              title: "OSS Bug Hunting 101 Quiz",
+              desc: "A comprehension quiz based on the content of 'Get Your CVE in 30 Days! An Introduction to OSS Bug Hunting' (coming soon).",
+              meta: ["WIP"],
+            },
           },
-        },
-        {
-          id: "OSS",
-          status: "soon",
-          emblem: "OSS",
-          tag: "QUIZ",
-          ja: {
-            title: "OSSバグハント入門 クイズ",
-            desc: "本「30日でCVE取得! OSSバグハント入門」を題材にした、理解度テストクイズ（準備中）。",
-            meta: ["準備中"],
+          {
+            id: "BBP",
+            status: "soon",
+            emblem: "BBP",
+            tag: "QUIZ",
+            ja: {
+              title: "実践バグバウンティ登竜門 クイズ",
+              desc: "本「脱初心者のための実践バグバウンティ登竜門」を題材にした、理解度テストクイズ（準備中）。",
+              meta: ["準備中"],
+            },
+            en: {
+              title: "Practical Bug Bounty Quiz",
+              desc: "A comprehension quiz based on the content of 'Breaking into Bug Bounty: A Practical Guide for Beginners' (coming soon).",
+              meta: ["WIP"],
+            },
           },
-          en: {
-            title: "OSS Bug Hunting 101 Quiz",
-            desc: "A comprehension quiz based on the content of 'Get Your CVE in 30 Days! An Introduction to OSS Bug Hunting' (coming soon).",
-            meta: ["WIP"],
+          {
+            id: "KTB",
+            status: "playable",
+            href: "./kaiten-bounty/",
+            emblem: "KTB",
+            tag: "ARCADE · KAITEN",
+            ja: {
+              title: "回転バウンティ（Sushi Bounty）",
+              desc: "回転寿司レーンを流れる「脆弱そうな機能」に正しい攻撃手法をぶつけて捌く、バグハンター向けアーケードゲーム。",
+              meta: ["アーケード", "コンボ", "JA / EN"],
+            },
+            en: {
+              title: "Sushi Bounty — Kaiten Bug Bounty",
+              desc: "An arcade for bug hunters: pick the right attack to carve each vulnerable feature flowing down the kaiten-sushi belt.",
+              meta: ["ARCADE", "COMBO", "JA / EN"],
+            },
           },
-        },
-        {
-          id: "BBP",
-          status: "soon",
-          emblem: "BBP",
-          tag: "QUIZ",
-          ja: {
-            title: "実践バグバウンティ登竜門 クイズ",
-            desc: "本「脱初心者のための実践バグバウンティ登竜門」を題材にした、理解度テストクイズ（準備中）。",
-            meta: ["準備中"],
+          {
+            id: "BKJ",
+            status: "playable",
+            href: "./bug-kanji/",
+            emblem: "BKJ",
+            tag: "QUIZ · KANJI",
+            ja: {
+              title: "Bug Kanji（バグ漢字クイズ）",
+              desc: "脆弱性カテゴリを漢字の手がかりから当てる、タイムアタック式の4択クイズ。Easy / Hard / Extreme の3難易度。",
+              meta: ["タイムアタック", "難易度3種", "JA / EN"],
+            },
+            en: {
+              title: "Bug Kanji — Vulnerability Kanji Quiz",
+              desc: "A time-attack 4-choice quiz: read kanji clues to identify the right vulnerability class. Three difficulties: Easy / Hard / Extreme.",
+              meta: ["TIME ATTACK", "3 LEVELS", "JA / EN"],
+            },
           },
-          en: {
-            title: "Practical Bug Bounty Quiz",
-            desc: "A comprehension quiz based on the content of 'Breaking into Bug Bounty: A Practical Guide for Beginners' (coming soon).",
-            meta: ["WIP"],
+          {
+            id: "CBB",
+            status: "playable",
+            href: "./claude-bug-bounty/",
+            emblem: "CBB",
+            tag: "QUIZ · 4-CHOICE",
+            ja: {
+              title: "Claude Bug Bounty 機能クイズ",
+              desc: "Claude Code 用バグバウンティ拡張「claude-bug-bounty」のスラッシュコマンド・エージェント・メモリ機能から出題する4択クイズ。",
+              meta: ["10問", "約5分", "JA / EN"],
+            },
+            en: {
+              title: "Claude Bug Bounty Capability Quiz",
+              desc: "A 4-choice quiz on the slash commands, agents, and memory model of `claude-bug-bounty`, the AI-driven bug-bounty extension for Claude Code.",
+              meta: ["10 Q", "~5 min", "JA / EN"],
+            },
           },
-        },
-        {
-          id: "ESC",
-          status: "soon",
-          emblem: "ESC",
-          tag: "ESCAPE",
-          ja: {
-            title: "セキュリティ脱出ゲーム",
-            desc: "Web アプリの脆弱性を見つけて脱出を目指す、ブラウザ完結の脱出ゲーム（構想中）。",
-            meta: ["準備中"],
-          },
-          en: {
-            title: "Security Escape Room",
-            desc: "A browser-based escape game where you discover web app vulnerabilities to break out (concept).",
-            meta: ["CONCEPT"],
-          },
-        },
-        {
-          id: "CBB",
-          status: "playable",
-          href: "./claude-bug-bounty/",
-          emblem: "CBB",
-          tag: "QUIZ · 4-CHOICE",
-          ja: {
-            title: "Claude Bug Bounty 機能クイズ",
-            desc: "Claude Code 用バグバウンティ拡張「claude-bug-bounty」のスラッシュコマンド・エージェント・メモリ機能から出題する4択クイズ。",
-            meta: ["10問", "約5分", "JA / EN"],
-          },
-          en: {
-            title: "Claude Bug Bounty Capability Quiz",
-            desc: "A 4-choice quiz on the slash commands, agents, and memory model of `claude-bug-bounty`, the AI-driven bug-bounty extension for Claude Code.",
-            meta: ["10 Q", "~5 min", "JA / EN"],
-          },
-        },
-      ];
+        ];
 
-      /* =========================================================
+        /* =========================================================
          状態
          ========================================================= */
-      let currentLang = "ja";
+        let currentLang = "ja";
 
-      /* =========================================================
+        /* =========================================================
          DOM ヘルパ：要素を生成して属性／テキストを安全にセット
          （innerHTML を使わずに XSS リスクを避ける）
          ========================================================= */
-      function el(tag, className, text) {
-        const e = document.createElement(tag);
-        if (className) e.className = className;
-        if (text !== undefined && text !== null) e.textContent = text;
-        return e;
-      }
+        function el(tag, className, text) {
+          const e = document.createElement(tag);
+          if (className) e.className = className;
+          if (text !== undefined && text !== null) e.textContent = text;
+          return e;
+        }
 
-      /* =========================================================
+        /* =========================================================
          レンダリング
          ========================================================= */
-      function renderGames() {
-        const grid = document.getElementById("game-grid");
-        // 既存ノードを安全にクリア
-        while (grid.firstChild) grid.removeChild(grid.firstChild);
-        const dict = I18N[currentLang];
+        function renderGames() {
+          const grid = document.getElementById("game-grid");
+          // 既存ノードを安全にクリア
+          while (grid.firstChild) grid.removeChild(grid.firstChild);
+          const dict = I18N[currentLang];
 
-        // 公開中のゲームを上位、Coming Soon を下位に並べる（同ステータス内は元順序を維持）
-        const sortedGames = GAMES.slice().sort(function (a, b) {
-          const rank = function (g) {
-            return g.status === "playable" ? 0 : 1;
-          };
-          return rank(a) - rank(b);
-        });
-
-        sortedGames.forEach(function (g) {
-          const local = g[currentLang];
-          const isPlayable = g.status === "playable";
-
-          // playable は <a>、それ以外は <div>
-          const card = document.createElement(isPlayable ? "a" : "div");
-          card.className =
-            "game-card " + (isPlayable ? "is-playable" : "is-soon");
-          if (isPlayable) {
-            card.href = g.href;
-            card.setAttribute("aria-label", local.title);
-          } else {
-            card.setAttribute("aria-disabled", "true");
-          }
-
-          // カバー（キービジュアル）
-          const cover = el("div", "game-cover");
-          cover.appendChild(el("div", "game-cover-grid"));
-          cover.appendChild(el("div", "game-cover-glow gw-blue"));
-          cover.appendChild(el("div", "game-cover-glow gw-orange"));
-          cover.appendChild(el("div", "game-cover-emblem", g.emblem));
-          cover.appendChild(
-            el(
-              "div",
-              "game-cover-tag" + (isPlayable ? "" : " is-soon"),
-              isPlayable ? g.tag : dict.soon,
-            ),
-          );
-
-          // 本体
-          const body = el("div", "game-body");
-          body.appendChild(el("div", "game-title", local.title));
-          body.appendChild(el("p", "game-desc", local.desc));
-
-          const meta = el("div", "game-meta");
-          local.meta.forEach(function (m) {
-            meta.appendChild(el("span", "game-meta-item", m));
+          // 公開中のゲームを上位、Coming Soon を下位に並べる（同ステータス内は元順序を維持）
+          const sortedGames = GAMES.slice().sort(function (a, b) {
+            const rank = function (g) {
+              return g.status === "playable" ? 0 : 1;
+            };
+            return rank(a) - rank(b);
           });
-          body.appendChild(meta);
 
-          body.appendChild(
-            el(
-              "span",
-              "game-cta" + (isPlayable ? "" : " is-soon"),
-              isPlayable ? dict.play + " →" : dict.soon,
-            ),
-          );
+          sortedGames.forEach(function (g) {
+            const local = g[currentLang];
+            const isPlayable = g.status === "playable";
 
-          card.appendChild(cover);
-          card.appendChild(body);
-          grid.appendChild(card);
-        });
-      }
+            // playable は <a>、それ以外は <div>
+            const card = document.createElement(isPlayable ? "a" : "div");
+            card.className =
+              "game-card " + (isPlayable ? "is-playable" : "is-soon");
+            if (isPlayable) {
+              card.href = g.href;
+              card.setAttribute("aria-label", local.title);
+            } else {
+              card.setAttribute("aria-disabled", "true");
+            }
 
-      function applyI18n() {
-        const dict = I18N[currentLang];
-        document.documentElement.lang = currentLang;
-        document.title = dict.pageTitle;
-        document.getElementById("hero-tag-text").textContent = dict.heroTag;
-        document.getElementById("hero-sub").textContent = dict.heroSub;
-        document.getElementById("stat-games-label").textContent =
-          dict.statGamesLabel;
-        document.getElementById("stat-free-label").textContent =
-          dict.statFreeLabel;
-        document.getElementById("stat-lang-label").textContent =
-          dict.statLangLabel;
-        document.getElementById("stat-web-label").textContent =
-          dict.statWebLabel;
-        document.getElementById("games-head-title").textContent =
-          dict.gamesHead;
-        document.getElementById("links-head-title").textContent =
-          dict.linksHead;
-        document.getElementById("footer-by").textContent = dict.footerBy;
+            // カバー（キービジュアル）
+            const cover = el("div", "game-cover");
+            cover.appendChild(el("div", "game-cover-grid"));
+            cover.appendChild(el("div", "game-cover-glow gw-blue"));
+            cover.appendChild(el("div", "game-cover-glow gw-orange"));
+            cover.appendChild(el("div", "game-cover-emblem", g.emblem));
+            cover.appendChild(
+              el(
+                "div",
+                "game-cover-tag" + (isPlayable ? "" : " is-soon"),
+                isPlayable ? g.tag : dict.soon,
+              ),
+            );
 
-        // 公開中ゲーム数 / 全体
-        const total = GAMES.length;
-        const playable = GAMES.filter(function (g) {
-          return g.status === "playable";
-        }).length;
-        document.getElementById("stat-games-num").textContent = playable;
-        document.getElementById("games-head-count").textContent =
-          dict.countSuffix(playable, total);
+            // 本体
+            const body = el("div", "game-body");
+            body.appendChild(el("div", "game-title", local.title));
+            body.appendChild(el("p", "game-desc", local.desc));
 
-        renderGames();
-      }
+            const meta = el("div", "game-meta");
+            local.meta.forEach(function (m) {
+              meta.appendChild(el("span", "game-meta-item", m));
+            });
+            body.appendChild(meta);
 
-      /* =========================================================
+            body.appendChild(
+              el(
+                "span",
+                "game-cta" + (isPlayable ? "" : " is-soon"),
+                isPlayable ? dict.play + " →" : dict.soon,
+              ),
+            );
+
+            card.appendChild(cover);
+            card.appendChild(body);
+            grid.appendChild(card);
+          });
+        }
+
+        function applyI18n() {
+          const dict = I18N[currentLang];
+          document.documentElement.lang = currentLang;
+          document.title = dict.pageTitle;
+          document.getElementById("hero-tag-text").textContent = dict.heroTag;
+          document.getElementById("hero-sub").textContent = dict.heroSub;
+          document.getElementById("stat-games-label").textContent =
+            dict.statGamesLabel;
+          document.getElementById("stat-free-label").textContent =
+            dict.statFreeLabel;
+          document.getElementById("stat-lang-label").textContent =
+            dict.statLangLabel;
+          document.getElementById("stat-web-label").textContent =
+            dict.statWebLabel;
+          document.getElementById("games-head-title").textContent =
+            dict.gamesHead;
+          document.getElementById("links-head-title").textContent =
+            dict.linksHead;
+          document.getElementById("footer-by").textContent = dict.footerBy;
+
+          // 公開中ゲーム数 / 全体
+          const total = GAMES.length;
+          const playable = GAMES.filter(function (g) {
+            return g.status === "playable";
+          }).length;
+          document.getElementById("stat-games-num").textContent = playable;
+          document.getElementById("games-head-count").textContent =
+            dict.countSuffix(playable, total);
+
+          renderGames();
+        }
+
+        /* =========================================================
          言語トグル
          ========================================================= */
-      const langButtons = document.querySelectorAll(".lang-toggle button");
-      const langPill = document.getElementById("lang-pill");
+        const langButtons = document.querySelectorAll(".lang-toggle button");
+        const langPill = document.getElementById("lang-pill");
 
-      function updateLangPill() {
-        const active = document.querySelector(".lang-toggle button.active");
-        if (!active) return;
-        langPill.style.width = active.offsetWidth + "px";
-        langPill.style.transform =
-          "translateX(" + (active.offsetLeft - 3) + "px)";
-      }
+        function updateLangPill() {
+          const active = document.querySelector(".lang-toggle button.active");
+          if (!active) return;
+          langPill.style.width = active.offsetWidth + "px";
+          langPill.style.transform =
+            "translateX(" + (active.offsetLeft - 3) + "px)";
+        }
 
-      langButtons.forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          const lang = btn.dataset.lang;
-          if (lang === currentLang) return;
-          currentLang = lang;
-          langButtons.forEach(function (b) {
-            b.classList.toggle("active", b === btn);
+        langButtons.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            const lang = btn.dataset.lang;
+            if (lang === currentLang) return;
+            currentLang = lang;
+            langButtons.forEach(function (b) {
+              b.classList.toggle("active", b === btn);
+            });
+            updateLangPill();
+            applyI18n();
           });
-          updateLangPill();
-          applyI18n();
         });
-      });
 
-      /* =========================================================
+        /* =========================================================
          パーティクル背景（カワセミ風 青 × 橙）
          ========================================================= */
-      (function initParticles() {
-        const canvas = document.getElementById("particles");
-        const ctx = canvas.getContext("2d");
-        let w = 0;
-        let h = 0;
-        let particles = [];
-        const reduce =
-          window.matchMedia &&
-          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        (function initParticles() {
+          const canvas = document.getElementById("particles");
+          const ctx = canvas.getContext("2d");
+          let w = 0;
+          let h = 0;
+          let particles = [];
+          const reduce =
+            window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-        function resize() {
-          w = canvas.width = window.innerWidth;
-          h = canvas.height = window.innerHeight;
-        }
-
-        function create() {
-          particles = [];
-          const count = Math.max(28, Math.floor((w * h) / 32000));
-          for (let i = 0; i < count; i++) {
-            particles.push({
-              x: Math.random() * w,
-              y: Math.random() * h,
-              r: Math.random() * 1.6 + 0.4,
-              vx: (Math.random() - 0.5) * 0.18,
-              vy: (Math.random() - 0.5) * 0.18,
-              alpha: Math.random() * 0.5 + 0.15,
-              hue: Math.random() < 0.5 ? "14, 165, 233" : "251, 146, 60",
-            });
+          function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
           }
-        }
 
-        function draw() {
-          ctx.clearRect(0, 0, w, h);
-          for (let i = 0; i < particles.length; i++) {
-            const p = particles[i];
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = "rgba(" + p.hue + ", " + p.alpha + ")";
-            ctx.fill();
-            p.x += p.vx;
-            p.y += p.vy;
-            if (p.x < 0) p.x = w;
-            if (p.x > w) p.x = 0;
-            if (p.y < 0) p.y = h;
-            if (p.y > h) p.y = 0;
+          function create() {
+            particles = [];
+            const count = Math.max(28, Math.floor((w * h) / 32000));
+            for (let i = 0; i < count; i++) {
+              particles.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                r: Math.random() * 1.6 + 0.4,
+                vx: (Math.random() - 0.5) * 0.18,
+                vy: (Math.random() - 0.5) * 0.18,
+                alpha: Math.random() * 0.5 + 0.15,
+                hue: Math.random() < 0.5 ? "14, 165, 233" : "251, 146, 60",
+              });
+            }
           }
-          if (!reduce) requestAnimationFrame(draw);
-        }
 
-        resize();
-        create();
-        draw();
-        window.addEventListener("resize", function () {
+          function draw() {
+            ctx.clearRect(0, 0, w, h);
+            for (let i = 0; i < particles.length; i++) {
+              const p = particles[i];
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+              ctx.fillStyle = "rgba(" + p.hue + ", " + p.alpha + ")";
+              ctx.fill();
+              p.x += p.vx;
+              p.y += p.vy;
+              if (p.x < 0) p.x = w;
+              if (p.x > w) p.x = 0;
+              if (p.y < 0) p.y = h;
+              if (p.y > h) p.y = 0;
+            }
+            if (!reduce) requestAnimationFrame(draw);
+          }
+
           resize();
           create();
-        });
-      })();
+          draw();
+          window.addEventListener("resize", function () {
+            resize();
+            create();
+          });
+        })();
 
-      /* =========================================================
+        /* =========================================================
          初期化
          ========================================================= */
-      applyI18n();
-      requestAnimationFrame(updateLangPill);
-      window.addEventListener("resize", updateLangPill);
+        applyI18n();
+        requestAnimationFrame(updateLangPill);
+        window.addEventListener("resize", updateLangPill);
       })();
     </script>
   </body>
