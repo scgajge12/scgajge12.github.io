@@ -7,10 +7,9 @@
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <meta name="color-scheme" content="dark" />
-    <meta name="robots" content="noindex,follow" />
     <title>Sランク・エリート — Bug Kanji（バグ漢字クイズ） | morioka12 game site</title>
     <meta name="description" content="脆弱性を漢字で見抜く達人。 A master at reading vulnerabilities through kanji. — ★ S RANK · ELITE HUNTER on Bug Kanji — Vulnerability Kanji Quiz." />
-    <link rel="canonical" href="https://scgajge12.github.io/games/bug-kanji/" />
+    <link rel="canonical" href="https://scgajge12.github.io/games/bug-kanji/share/s/" />
 
     <!-- ===== OGP / Twitter Card（スコア／ランク別画像） ===== -->
     <meta property="og:type" content="website" />
@@ -159,8 +158,27 @@
       footer a { color: var(--text-muted); text-decoration: none; }
     </style>
 
-    <!-- 4 秒後にゲーム本体へ遷移（クローラには影響しない） -->
-    <meta http-equiv="refresh" content="4;url=https://scgajge12.github.io/games/bug-kanji/" />
+    <!--
+      4 秒後にゲーム本体へ遷移する。
+      meta http-equiv="refresh" は使わない理由：
+        Twitterbot 等のクローラがリダイレクトと解釈し、遷移先 URL の
+        OGP を見に行く挙動があるため、スコア別 og:image が反映されない。
+      JS で navigator.userAgent を確認し、ボットでない場合のみ遷移する。
+    -->
+    <script>
+      (function () {
+        try {
+          var ua = (navigator && navigator.userAgent) || "";
+          var isBot = /bot|crawl|spider|slurp|twitterbot|discordbot|facebookexternalhit|slackbot|linkedinbot|embedly|telegrambot|whatsapp|skypeuripreview|preview|fetch|http|google|bing|duckduckgo|baidu|yandex/i.test(ua);
+          if (isBot) return;
+          window.setTimeout(function () {
+            window.location.replace("https://scgajge12.github.io/games/bug-kanji/");
+          }, 4000);
+        } catch (e) {
+          // 失敗時はシェアページに留まる
+        }
+      })();
+    </script>
   </head>
   <body>
     <header>
