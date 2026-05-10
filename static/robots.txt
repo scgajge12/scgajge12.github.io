@@ -1,0 +1,6 @@
+# Default: 全てのクローラに対する明示的な許可なし／拒否なし
+User-agent: *
+
+# 非公開 admin ページ（解答キー）はクロール対象外
+# ※ GitHub Pages 全公開のため obscurity に過ぎない点に注意
+Disallow: /games/triage-sim/admin/

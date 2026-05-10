@@ -4,14 +4,16 @@
     <meta charset="utf-8" />
     <title>Generate top & rank OGP images (Kaiten Bounty / Bug Kanji)</title>
     <!--
-      新規ゲーム（Kaiten Bounty / Bug Kanji）用の OGP 画像生成ツール。
+      新規ゲーム（Kaiten Bounty / Bug Kanji / Triage Sim）用の OGP 画像生成ツール。
       - ブラウザで本ファイルを開き「Save into static/images/」を押すと、
         File System Access API で選んだディレクトリ（リポジトリの static/images/）に
         以下を書き出す。
           kaiten-bounty-ogp.png
           bug-kanji-ogp.png
+          triage-sim-ogp.png
           games/kaiten-bounty/rank-{shirouto|joren|itamae|taisho|legendary}.png
           games/bug-kanji/rank-{c|b|a|s}.png
+          games/triage-sim/rank-{do-not-submit|major-rewrite|needs-work|almost-ready|submit-ready}.png
       - File System Access API 非対応の場合は「Download all」で順次ダウンロード。
       - デザインは既存 OGP（ダークティール基調・カワセミ配色）と統一。
 
@@ -494,6 +496,64 @@
         ],
       };
 
+      const TRIAGE = {
+        slug: "triage-sim",
+        subBadge: "TRG · TRIAGE SIMULATOR",
+        url: "scgajge12.github.io/games/triage-sim",
+        titleJa: "トリアージ・シミュレーション",
+        titleEn: "Bug Bounty Triage Simulator",
+        tagline:
+          "BBR-Review 13 軸 100 点法に準拠して、欠陥のあるレポートを「トリアージ担当」目線で添削するシミュレーション。",
+        pills: ["13シナリオ", "100点法", "JA / EN"],
+        ranks: [
+          {
+            key: "do-not-submit",
+            tag: "★ DO NOT SUBMIT",
+            bigJa: "Do not submit",
+            bigEn: "Do not submit",
+            copyJa: "BBR-Review 0–39。提出は控え、まず 13 軸を読み直す段階。",
+            copyEn: "BBR-Review 0–39. Don't submit; start by re-reading the frame.",
+            accent: "#fb7185",
+          },
+          {
+            key: "major-rewrite",
+            tag: "★ MAJOR REWRITE",
+            bigJa: "Major rewrite",
+            bigEn: "Major rewrite",
+            copyJa: "BBR-Review 40–59。構造から書き直し、Informative リスクあり。",
+            copyEn: "BBR-Review 40–59. Heavy rewrite; risk of Informative.",
+            accent: "#f97316",
+          },
+          {
+            key: "needs-work",
+            tag: "★ NEEDS WORK",
+            bigJa: "Needs work",
+            bigEn: "Needs work",
+            copyJa: "BBR-Review 60–74。トリアージから 1〜2 ラウンド質問が来る水準。",
+            copyEn: "BBR-Review 60–74. Expect 1–2 rounds of triage questions.",
+            accent: "#fbbf24",
+          },
+          {
+            key: "almost-ready",
+            tag: "★ ALMOST READY",
+            bigJa: "Almost ready",
+            bigEn: "Almost ready",
+            copyJa: "BBR-Review 75–89。微修正で提出可。",
+            copyEn: "BBR-Review 75–89. A small revision away.",
+            accent: "#fbbf24",
+          },
+          {
+            key: "submit-ready",
+            tag: "★ SUBMIT-READY",
+            bigJa: "Submit-ready",
+            bigEn: "Submit-ready",
+            copyJa: "BBR-Review 90–100。即提出可能。13 軸を読みこなしている。",
+            copyEn: "BBR-Review 90–100. Ships straight to triage.",
+            accent: "#22d3ee",
+          },
+        ],
+      };
+
       // ===== プレビュー描画 =====
       const grid = document.getElementById("grid");
       const items = [];
@@ -522,6 +582,11 @@
         (cv) => drawTopOgp(cv, KANJI),
         ["bug-kanji-ogp.png"],
       );
+      addItem(
+        "triage-sim-ogp.png",
+        (cv) => drawTopOgp(cv, TRIAGE),
+        ["triage-sim-ogp.png"],
+      );
 
       // ランク別 OGP（kaiten-bounty）
       for (const rank of KAITEN.ranks) {
@@ -538,6 +603,15 @@
           `${KANJI.slug} / rank-${rank.key}.png`,
           (cv) => drawRankOgp(cv, KANJI, rank),
           ["games", KANJI.slug, `rank-${rank.key}.png`],
+        );
+      }
+
+      // ランク別 OGP（triage-sim）— BBR-Review 5 readiness bands
+      for (const rank of TRIAGE.ranks) {
+        addItem(
+          `${TRIAGE.slug} / rank-${rank.key}.png`,
+          (cv) => drawRankOgp(cv, TRIAGE, rank),
+          ["games", TRIAGE.slug, `rank-${rank.key}.png`],
         );
       }
 

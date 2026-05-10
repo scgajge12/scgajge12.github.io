@@ -42,7 +42,7 @@ const SCORE_GAMES = [
 const RANK_GAMES = [
   {
     slug: "kaiten-bounty",
-    titleJa: "回転バウンティ（Sushi Bounty）",
+    titleJa: "Sushi Bounty（回転寿司バウンティ）",
     titleEn: "Sushi Bounty — Kaiten Bug Bounty Arcade",
     ranks: [
       {
@@ -140,6 +140,66 @@ const RANK_GAMES = [
         tagEn: "★ S RANK · ELITE HUNTER",
         copyJa: "脆弱性を漢字で見抜く達人。",
         copyEn: "A master at reading vulnerabilities through kanji.",
+        accent: "#22d3ee",
+      },
+    ],
+  },
+  // トリアージ・シミュレーションは BBR-Review 100 点法に準拠して
+  // 5 つの readiness band（Submit-ready / Almost / Needs work /
+  // Major rewrite / Do not submit）を使う。
+  {
+    slug: "triage-sim",
+    titleJa: "トリアージ・シミュレーション",
+    titleEn: "Bug Bounty Triage Simulator",
+    ranks: [
+      {
+        key: "do-not-submit",
+        labelJa: "Do not submit",
+        labelEn: "Do not submit",
+        tagJa: "★ DO NOT SUBMIT",
+        tagEn: "★ DO NOT SUBMIT",
+        copyJa: "BBR-Review 0–39。提出は控え、まず 13 軸を読み直す段階。",
+        copyEn: "BBR-Review 0–39. Don't submit — re-read the 13-axis frame first.",
+        accent: "#fb7185",
+      },
+      {
+        key: "major-rewrite",
+        labelJa: "Major rewrite",
+        labelEn: "Major rewrite",
+        tagJa: "★ MAJOR REWRITE",
+        tagEn: "★ MAJOR REWRITE",
+        copyJa: "BBR-Review 40–59。構造から書き直し。Informative リスクあり。",
+        copyEn: "BBR-Review 40–59. Heavy rewrite needed; risk of Informative closure.",
+        accent: "#f97316",
+      },
+      {
+        key: "needs-work",
+        labelJa: "Needs work",
+        labelEn: "Needs work",
+        tagJa: "★ NEEDS WORK",
+        tagEn: "★ NEEDS WORK",
+        copyJa: "BBR-Review 60–74。トリアージから 1〜2 ラウンド質問が来る水準。",
+        copyEn: "BBR-Review 60–74. Expect 1–2 rounds of triage questions.",
+        accent: "#fbbf24",
+      },
+      {
+        key: "almost-ready",
+        labelJa: "Almost ready",
+        labelEn: "Almost ready",
+        tagJa: "★ ALMOST READY",
+        tagEn: "★ ALMOST READY",
+        copyJa: "BBR-Review 75–89。微修正で提出可。",
+        copyEn: "BBR-Review 75–89. Minor revisions away from submission.",
+        accent: "#fbbf24",
+      },
+      {
+        key: "submit-ready",
+        labelJa: "Submit-ready",
+        labelEn: "Submit-ready",
+        tagJa: "★ SUBMIT-READY",
+        tagEn: "★ SUBMIT-READY",
+        copyJa: "BBR-Review 90–100。即提出可能なクオリティ。13 軸を読みこなしている。",
+        copyEn: "BBR-Review 90–100. Ships straight to triage; you read all 13 axes fluently.",
         accent: "#22d3ee",
       },
     ],
