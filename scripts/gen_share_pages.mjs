@@ -254,10 +254,9 @@ function renderTemplate(opts) {
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <meta name="color-scheme" content="dark" />
-    <meta name="robots" content="noindex,follow" />
     <title>${escapeHtml(ogTitle)}</title>
     <meta name="description" content="${escapeHtml(ogDesc)}" />
-    <link rel="canonical" href="${escapeHtml(quizUrl)}" />
+    <link rel="canonical" href="${escapeHtml(shareUrl)}" />
 
     <!-- ===== OGP / Twitter Card（スコア／ランク別画像） ===== -->
     <meta property="og:type" content="website" />
@@ -406,8 +405,27 @@ function renderTemplate(opts) {
       footer a { color: var(--text-muted); text-decoration: none; }
     </style>
 
-    <!-- 4 秒後にゲーム本体へ遷移（クローラには影響しない） -->
-    <meta http-equiv="refresh" content="4;url=${escapeHtml(quizUrl)}" />
+    <!--
+      4 秒後にゲーム本体へ遷移する。
+      meta http-equiv="refresh" は使わない理由：
+        Twitterbot 等のクローラがリダイレクトと解釈し、遷移先 URL の
+        OGP を見に行く挙動があるため、スコア別 og:image が反映されない。
+      JS で navigator.userAgent を確認し、ボットでない場合のみ遷移する。
+    -->
+    <script>
+      (function () {
+        try {
+          var ua = (navigator && navigator.userAgent) || "";
+          var isBot = /bot|crawl|spider|slurp|twitterbot|discordbot|facebookexternalhit|slackbot|linkedinbot|embedly|telegrambot|whatsapp|skypeuripreview|preview|fetch|http|google|bing|duckduckgo|baidu|yandex/i.test(ua);
+          if (isBot) return;
+          window.setTimeout(function () {
+            window.location.replace(${JSON.stringify(quizUrl)});
+          }, 4000);
+        } catch (e) {
+          // 失敗時はシェアページに留まる
+        }
+      })();
+    </script>
   </head>
   <body>
     <header>
