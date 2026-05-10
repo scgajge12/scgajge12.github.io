@@ -85,6 +85,12 @@ enableRobotsTXT = true
     url = "/podcast/"
     weight = 7
 
+  [[menu.main]]
+    name = "Game"
+    pre = "<span data-feather='play-circle'></span>"
+    url = "/games/"
+    weight = 8
+
 [markup]
   [markup.tableOfContents]
     startLevel = 2

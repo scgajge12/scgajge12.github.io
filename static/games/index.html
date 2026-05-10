@@ -1,0 +1,1348 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark" />
+    <title>morioka12 game site</title>
+    <meta
+      name="description"
+      content="morioka12 が制作したセキュリティ系オンラインゲームのコレクション。バグバウンティ・脆弱性をテーマにしたクイズなど、無料で遊べます。"
+    />
+    <style>
+      :root {
+        /* カワセミ（kingfisher）配色：コバルトブルー × バーントオレンジ */
+        --bg: #04111e;
+        --bg2: #082336;
+        --bg3: #0e3149;
+        --surface: #103e58;
+        --surface-2: #154d6d;
+        --line: rgba(14, 165, 233, 0.2);
+        --line-strong: rgba(14, 165, 233, 0.5);
+
+        --text: #e6f4f9;
+        --text-muted: #93c5d8;
+        --text-dim: #5b8597;
+
+        --primary: #0891b2;
+        --primary-light: #22d3ee;
+        --primary-deep: #155e75;
+        --secondary: #f97316;
+        --secondary-light: #fb923c;
+        --accent: #fbbf24;
+        --gold: #fbbf24;
+        --success: #34d399;
+        --danger: #fb7185;
+
+        --radius: 14px;
+        --radius-sm: 8px;
+        --shadow: 0 12px 40px rgba(14, 165, 233, 0.22);
+        --shadow-strong: 0 0 60px rgba(14, 165, 233, 0.4);
+
+        /* スマホ／safe-area 用 */
+        --pad-x: 20px;
+        --pad-bottom: max(80px, env(safe-area-inset-bottom));
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        height: 100%;
+      }
+
+      html,
+      body {
+        overflow-x: hidden;
+        max-width: 100%;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+
+      body {
+        font-family:
+          "Inter", "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic",
+          "Noto Sans JP", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100dvh;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        /* セーフエリア（iPhone ノッチ／ホームインジケータ）対応 */
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      /* 背景レイヤー（カワセミ風グロー＋格子＋パーティクル） */
+      .bg-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .bg-grid {
+        background-image:
+          linear-gradient(
+            to right,
+            rgba(14, 165, 233, 0.04) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(14, 165, 233, 0.04) 1px,
+            transparent 1px
+          );
+        background-size: 56px 56px;
+        mask-image: radial-gradient(
+          ellipse at center,
+          rgba(0, 0, 0, 0.85) 0%,
+          rgba(0, 0, 0, 0.2) 70%,
+          transparent 100%
+        );
+      }
+      .bg-glow1 {
+        background: radial-gradient(
+          circle at 18% 12%,
+          rgba(14, 165, 233, 0.18),
+          transparent 55%
+        );
+      }
+      .bg-glow2 {
+        background: radial-gradient(
+          circle at 82% 88%,
+          rgba(251, 146, 60, 0.14),
+          transparent 60%
+        );
+      }
+      #particles {
+        z-index: 0;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 1040px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 28px var(--pad-x) var(--pad-bottom);
+      }
+
+      /* ヘッダー（ブランド + 言語切替） */
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 32px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: 800;
+        font-size: 18px;
+        box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+      }
+      .brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.15;
+      }
+      .brand-name {
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: var(--text);
+      }
+      .brand-sub {
+        font-size: 10.5px;
+        color: var(--text-dim);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .lang-toggle {
+        display: inline-flex;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 3px;
+        position: relative;
+        overflow: hidden;
+      }
+      .lang-toggle button {
+        background: transparent;
+        border: 0;
+        color: var(--text-muted);
+        padding: 7px 14px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        border-radius: 999px;
+        transition: color 0.2s;
+        position: relative;
+        z-index: 1;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .lang-toggle button.active {
+        color: #fff;
+      }
+      .lang-toggle .lang-pill {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        height: calc(100% - 6px);
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        border-radius: 999px;
+        transition:
+          transform 0.28s ease,
+          width 0.28s ease;
+        z-index: 0;
+        box-shadow: 0 0 16px rgba(14, 165, 233, 0.4);
+      }
+
+      /* ヒーロー */
+      .hero {
+        text-align: center;
+        margin-bottom: 36px;
+        animation: fadeIn 0.6s ease;
+      }
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        font-size: 11px;
+        letter-spacing: 2.5px;
+        color: var(--secondary-light);
+        background: rgba(251, 146, 60, 0.08);
+        border: 1px solid rgba(251, 146, 60, 0.3);
+        border-radius: 999px;
+        font-weight: 700;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .hero-tag-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--secondary);
+        box-shadow: 0 0 8px var(--secondary);
+        animation: blink 1.4s infinite;
+      }
+      .hero-title {
+        font-size: clamp(28px, 7vw, 52px);
+        font-weight: 900;
+        letter-spacing: -0.5px;
+        line-height: 1.18;
+        background: linear-gradient(
+          120deg,
+          var(--primary-light) 10%,
+          var(--secondary-light) 55%,
+          var(--accent) 95%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 14px;
+        font-family:
+          "Inter", "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic",
+          "Noto Sans JP", system-ui, sans-serif;
+      }
+      .hero-sub {
+        color: var(--text-muted);
+        font-size: clamp(13.5px, 2vw, 16px);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* セクション見出し */
+      .section-head {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 8px 0 20px;
+      }
+      .section-head-line {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(to right, var(--line-strong), transparent);
+      }
+      .section-head-title {
+        font-size: 12px;
+        letter-spacing: 3px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .section-head-count {
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        color: var(--text-dim);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      /* ゲームカードグリッド */
+      .game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 18px;
+        margin-bottom: 40px;
+      }
+
+      .game-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        text-decoration: none;
+        color: inherit;
+        overflow: hidden;
+        transition:
+          transform 0.25s ease,
+          border-color 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+      .game-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at top right,
+          rgba(14, 165, 233, 0.1),
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+      .game-card.is-playable:hover {
+        transform: translateY(-3px);
+        border-color: var(--primary);
+        box-shadow: var(--shadow);
+      }
+      .game-card.is-playable:hover .game-cta {
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--primary)
+        );
+        box-shadow: 0 0 16px rgba(34, 211, 238, 0.5);
+      }
+      .game-card.is-playable:hover .game-cover {
+        transform: scale(1.04);
+      }
+
+      /* カバー（カードの上部・キービジュアル） */
+      .game-cover {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        background: linear-gradient(
+          135deg,
+          var(--primary-deep),
+          var(--bg3) 60%,
+          rgba(251, 146, 60, 0.25)
+        );
+        overflow: hidden;
+        transition: transform 0.5s ease;
+      }
+      .game-cover-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(
+            to right,
+            rgba(34, 211, 238, 0.18) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(34, 211, 238, 0.18) 1px,
+            transparent 1px
+          );
+        background-size: 28px 28px;
+        mask-image: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.9),
+          transparent 90%
+        );
+      }
+      .game-cover-glow {
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        filter: blur(40px);
+        opacity: 0.55;
+      }
+      .game-cover-glow.gw-blue {
+        background: var(--primary-light);
+        top: -40px;
+        left: -30px;
+      }
+      .game-cover-glow.gw-orange {
+        background: var(--secondary);
+        bottom: -50px;
+        right: -30px;
+        opacity: 0.45;
+      }
+      .game-cover-emblem {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-weight: 900;
+        font-size: clamp(36px, 8vw, 56px);
+        letter-spacing: 4px;
+        color: rgba(255, 255, 255, 0.92);
+        text-shadow: 0 0 28px rgba(14, 165, 233, 0.6);
+      }
+      .game-cover-tag {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        padding: 4px 10px;
+        font-size: 10.5px;
+        letter-spacing: 1.5px;
+        font-weight: 800;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        background: rgba(4, 17, 30, 0.6);
+        backdrop-filter: blur(6px);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--primary-light);
+        text-transform: uppercase;
+      }
+      .game-cover-tag.is-soon {
+        color: var(--secondary-light);
+        border-color: rgba(251, 146, 60, 0.35);
+      }
+
+      /* カード本体 */
+      .game-body {
+        position: relative;
+        padding: 18px 20px 22px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        gap: 10px;
+      }
+      .game-title {
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 1.4;
+        color: var(--text);
+        letter-spacing: -0.2px;
+      }
+      .game-desc {
+        font-size: 13px;
+        color: var(--text-muted);
+        line-height: 1.65;
+        flex: 1;
+      }
+      .game-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 4px;
+      }
+      .game-meta-item {
+        font-size: 10.5px;
+        letter-spacing: 1px;
+        padding: 4px 9px;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--text-dim);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        text-transform: uppercase;
+      }
+      .game-cta {
+        margin-top: 6px;
+        align-self: flex-start;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 18px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        color: #fff;
+        font-size: 12.5px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        border-radius: 999px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        transition: all 0.25s ease;
+        box-shadow: 0 6px 20px rgba(14, 165, 233, 0.28);
+      }
+
+      /* Coming Soon 状態 */
+      .game-card.is-soon {
+        opacity: 0.72;
+        cursor: default;
+      }
+      .game-card.is-soon .game-cover {
+        filter: grayscale(0.35) brightness(0.7);
+      }
+      .game-card.is-soon .game-cover-emblem {
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .game-card.is-soon:hover {
+        opacity: 0.85;
+      }
+      .game-cta.is-soon {
+        background: transparent;
+        border: 1px dashed rgba(251, 146, 60, 0.5);
+        color: var(--secondary-light);
+        box-shadow: none;
+      }
+
+      /* About カード */
+      .about {
+        background: linear-gradient(160deg, var(--bg2), var(--surface));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 24px 26px;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+      }
+      .about::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at top right,
+          rgba(251, 146, 60, 0.08),
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+      .about-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 16px;
+        position: relative;
+      }
+      .about-stat {
+        text-align: center;
+      }
+      .about-num {
+        font-size: 26px;
+        font-weight: 900;
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--secondary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        font-feature-settings: "tnum";
+      }
+      .about-label {
+        font-size: 11px;
+        color: var(--text-dim);
+        margin-top: 6px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      /* リンクリスト（プロフィール／外部リンク） */
+      .links {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-bottom: 30px;
+      }
+      .link-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 13px;
+        transition: all 0.2s;
+      }
+      .link-item:hover {
+        border-color: var(--primary);
+        color: var(--primary-light);
+        transform: translateX(2px);
+      }
+      .link-icon {
+        width: 22px;
+        height: 22px;
+        flex-shrink: 0;
+        color: var(--secondary-light);
+      }
+      .link-label {
+        flex: 1;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 12.5px;
+        letter-spacing: 0.5px;
+      }
+      .link-arrow {
+        color: var(--text-dim);
+      }
+
+      /* フッター */
+      .footer {
+        margin-top: 60px;
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-dim);
+      }
+      .footer a {
+        color: var(--text-muted);
+        text-decoration: none;
+        border-bottom: 1px dotted var(--text-dim);
+      }
+      .footer a:hover {
+        color: var(--primary-light);
+        border-color: var(--primary-light);
+      }
+
+      /* アニメーション */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      /* タブレット（768px 以下）：縦長スマホ／中間サイズの調整 */
+      @media (max-width: 768px) {
+        .page {
+          padding: 24px 18px 70px;
+        }
+        .game-grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+      }
+
+      /* スマホ（560px 以下）：1 カラム化と余白／フォントの圧縮 */
+      @media (max-width: 560px) {
+        :root {
+          --pad-x: 14px;
+        }
+        .page {
+          padding-top: 18px;
+        }
+        .top-bar {
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-bottom: 22px;
+        }
+        .brand {
+          gap: 10px;
+        }
+        .brand-name {
+          font-size: 12.5px;
+        }
+        .hero {
+          margin-bottom: 28px;
+        }
+        .hero-tag {
+          letter-spacing: 1.6px;
+          padding: 5px 12px;
+          font-size: 10.5px;
+        }
+        .section-head {
+          gap: 10px;
+        }
+        .section-head-title {
+          letter-spacing: 2px;
+          font-size: 11.5px;
+        }
+        .section-head-count {
+          letter-spacing: 1px;
+          font-size: 10.5px;
+        }
+        .game-grid {
+          grid-template-columns: 1fr;
+          gap: 14px;
+        }
+        .about {
+          padding: 20px 18px;
+          margin-bottom: 22px;
+        }
+        .about-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 16px;
+        }
+        .about-num {
+          font-size: 22px;
+        }
+        .about-label {
+          font-size: 10.5px;
+          letter-spacing: 0.8px;
+        }
+        .game-body {
+          padding: 16px 16px 20px;
+          gap: 8px;
+        }
+        .game-title {
+          font-size: 15.5px;
+        }
+        .game-desc {
+          font-size: 12.5px;
+        }
+        .game-cta {
+          padding: 8px 16px;
+          font-size: 12px;
+          letter-spacing: 1.2px;
+        }
+        .game-cover-tag {
+          top: 10px;
+          left: 10px;
+          padding: 3px 9px;
+          font-size: 10px;
+        }
+        .links {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+        .link-item {
+          padding: 11px 14px;
+        }
+        .footer {
+          margin-top: 44px;
+          font-size: 11.5px;
+        }
+      }
+
+      /* 380px 級（iPhone SE / 小型 Android）へのさらなる追い込み */
+      @media (max-width: 380px) {
+        :root {
+          --pad-x: 12px;
+        }
+        .page {
+          padding-top: 16px;
+        }
+        .brand-sub {
+          display: none;
+        }
+        .brand-mark {
+          width: 32px;
+          height: 32px;
+          font-size: 16px;
+          border-radius: 8px;
+        }
+        .brand-name {
+          font-size: 12px;
+          letter-spacing: 0.3px;
+        }
+        .lang-toggle button {
+          padding: 6px 11px;
+          font-size: 11px;
+        }
+        .hero-tag {
+          letter-spacing: 1.2px;
+          font-size: 10px;
+          padding: 5px 10px;
+        }
+        .hero-sub {
+          font-size: 13px;
+        }
+        .about {
+          padding: 18px 14px;
+        }
+        .about-num {
+          font-size: 20px;
+        }
+        .about-label {
+          font-size: 10px;
+          letter-spacing: 0.5px;
+        }
+        .game-body {
+          padding: 14px 14px 18px;
+        }
+        .game-meta-item {
+          font-size: 10px;
+          padding: 3px 8px;
+          letter-spacing: 0.6px;
+        }
+      }
+
+      /* 細かい横はみ出し対策（長文 URL／タグの保険） */
+      .link-label,
+      .game-title,
+      .game-desc,
+      .hero-sub,
+      .hero-title {
+        word-break: break-word;
+      }
+
+      /* 動きを抑える設定（OS 設定）の尊重 */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-layer bg-grid"></div>
+    <div class="bg-layer bg-glow1"></div>
+    <div class="bg-layer bg-glow2"></div>
+    <canvas id="particles" class="bg-layer"></canvas>
+
+    <div class="page">
+      <header class="top-bar">
+        <a class="brand" href="./">
+          <div class="brand-mark">M</div>
+          <div class="brand-text">
+            <span class="brand-name">morioka12 game site</span>
+            <span class="brand-sub">SECURITY · GAMES · QUIZ</span>
+          </div>
+        </a>
+        <div class="lang-toggle" role="tablist" aria-label="Language">
+          <span class="lang-pill" id="lang-pill"></span>
+          <button data-lang="ja" class="active" role="tab">日本語</button>
+          <button data-lang="en" role="tab">EN</button>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-tag">
+          <span class="hero-tag-dot"></span>
+          <span id="hero-tag-text"></span>
+        </div>
+        <h1 class="hero-title">morioka12 game site</h1>
+        <p class="hero-sub" id="hero-sub"></p>
+      </section>
+
+      <div class="about">
+        <div class="about-grid">
+          <div class="about-stat">
+            <div class="about-num" id="stat-games-num">1</div>
+            <div class="about-label" id="stat-games-label"></div>
+          </div>
+          <div class="about-stat">
+            <div class="about-num">FREE</div>
+            <div class="about-label" id="stat-free-label"></div>
+          </div>
+          <div class="about-stat">
+            <div class="about-num">JA / EN</div>
+            <div class="about-label" id="stat-lang-label"></div>
+          </div>
+          <div class="about-stat">
+            <div class="about-num">WEB</div>
+            <div class="about-label" id="stat-web-label"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <span class="section-head-title" id="games-head-title"></span>
+        <span class="section-head-line"></span>
+        <span class="section-head-count" id="games-head-count"></span>
+      </div>
+
+      <div class="game-grid" id="game-grid"></div>
+
+      <div class="section-head">
+        <span class="section-head-title" id="links-head-title"></span>
+        <span class="section-head-line"></span>
+      </div>
+
+      <div class="links">
+        <a
+          class="link-item"
+          href="https://x.com/hashtag/BugBountyQuizM?src=hashtag_click"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg
+            class="link-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="4" y1="9" x2="20" y2="9" />
+            <line x1="4" y1="15" x2="20" y2="15" />
+            <line x1="10" y1="3" x2="8" y2="21" />
+            <line x1="16" y1="3" x2="14" y2="21" />
+          </svg>
+          <span class="link-label">#BugBountyQuizM</span>
+          <span class="link-arrow">→</span>
+        </a>
+        <a
+          class="link-item"
+          href="https://x.com/scgajge12"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg
+            class="link-icon"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631Zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+            />
+          </svg>
+          <span class="link-label">@scgajge12</span>
+          <span class="link-arrow">→</span>
+        </a>
+        <a
+          class="link-item"
+          href="https://scgajge12.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg
+            class="link-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path
+              d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20"
+            />
+          </svg>
+          <span class="link-label">scgajge12.github.io</span>
+          <span class="link-arrow">→</span>
+        </a>
+      </div>
+
+      <footer class="footer">
+        <p>
+          <span id="footer-by"></span>
+          <a
+            href="https://x.com/scgajge12"
+            target="_blank"
+            rel="noopener noreferrer"
+            >@scgajge12</a
+          >
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      "use strict";
+
+      /* =========================================================
+         全ロジックを IIFE で閉じてグローバル汚染を防止する。
+         ========================================================= */
+      (function () {
+      /* =========================================================
+         I18N - 日本語 / 英語の文字列辞書
+         ========================================================= */
+      const I18N = {
+        ja: {
+          pageTitle: "morioka12 game site",
+          heroTag: "ONLINE GAME COLLECTION",
+          heroSub:
+            "セキュリティ・バグバウンティをテーマにした、無料で遊べるオンラインゲーム集。ブラウザだけで遊べます。",
+          statGamesLabel: "公開中",
+          statFreeLabel: "無料 / 登録不要",
+          statLangLabel: "言語切替",
+          statWebLabel: "ブラウザ動作",
+          gamesHead: "GAMES",
+          linksHead: "LINKS",
+          countSuffix: function (n, total) {
+            return n + " / " + total;
+          },
+          play: "PLAY",
+          soon: "COMING SOON",
+          footerBy: "Created by ",
+        },
+        en: {
+          pageTitle: "morioka12 game site",
+          heroTag: "ONLINE GAME COLLECTION",
+          heroSub:
+            "A collection of free, browser-based online games on security and bug bounty topics — no install, no signup.",
+          statGamesLabel: "AVAILABLE",
+          statFreeLabel: "FREE / NO SIGNUP",
+          statLangLabel: "LANGUAGE TOGGLE",
+          statWebLabel: "WORKS IN BROWSER",
+          gamesHead: "GAMES",
+          linksHead: "LINKS",
+          countSuffix: function (n, total) {
+            return n + " / " + total;
+          },
+          play: "PLAY",
+          soon: "COMING SOON",
+          footerBy: "Created by ",
+        },
+      };
+
+      /* =========================================================
+         ゲーム一覧データ
+         ========================================================= */
+      const GAMES = [
+        {
+          id: "BBTQ",
+          status: "playable",
+          href: "./bug-bounty-top-10-quiz/",
+          emblem: "BBTQ",
+          tag: "QUIZ · 4-CHOICE",
+          ja: {
+            title: "バグバウンティ脆弱性ランキング・クイズ",
+            desc: "HackerOne Hacktivity 2023〜2025 の人気脆弱性レポート Top10 から出題する、バグハンター視点の4択クイズ。",
+            meta: ["10問", "約5分", "JA / EN"],
+          },
+          en: {
+            title: "Bug Bounty Top 10 Vulnerability Quiz",
+            desc: "A 4-choice quiz from the most popular vulnerability reports on HackerOne Hacktivity (2023–2025), from a bug hunter's point of view.",
+            meta: ["10 Q", "~5 min", "JA / EN"],
+          },
+        },
+        {
+          id: "OSS",
+          status: "soon",
+          emblem: "OSS",
+          tag: "QUIZ",
+          ja: {
+            title: "OSSバグハント入門 クイズ",
+            desc: "本「30日でCVE取得! OSSバグハント入門」を題材にした、理解度テストクイズ（準備中）。",
+            meta: ["準備中"],
+          },
+          en: {
+            title: "OSS Bug Hunting 101 Quiz",
+            desc: "A comprehension quiz based on the content of 'Get Your CVE in 30 Days! An Introduction to OSS Bug Hunting' (coming soon).",
+            meta: ["WIP"],
+          },
+        },
+        {
+          id: "BBP",
+          status: "soon",
+          emblem: "BBP",
+          tag: "QUIZ",
+          ja: {
+            title: "実践バグバウンティ登竜門 クイズ",
+            desc: "本「脱初心者のための実践バグバウンティ登竜門」を題材にした、理解度テストクイズ（準備中）。",
+            meta: ["準備中"],
+          },
+          en: {
+            title: "Practical Bug Bounty Quiz",
+            desc: "A comprehension quiz based on the content of 'Breaking into Bug Bounty: A Practical Guide for Beginners' (coming soon).",
+            meta: ["WIP"],
+          },
+        },
+        {
+          id: "ESC",
+          status: "soon",
+          emblem: "ESC",
+          tag: "ESCAPE",
+          ja: {
+            title: "セキュリティ脱出ゲーム",
+            desc: "Web アプリの脆弱性を見つけて脱出を目指す、ブラウザ完結の脱出ゲーム（構想中）。",
+            meta: ["準備中"],
+          },
+          en: {
+            title: "Security Escape Room",
+            desc: "A browser-based escape game where you discover web app vulnerabilities to break out (concept).",
+            meta: ["CONCEPT"],
+          },
+        },
+        {
+          id: "CBB",
+          status: "playable",
+          href: "./claude-bug-bounty/",
+          emblem: "CBB",
+          tag: "QUIZ · 4-CHOICE",
+          ja: {
+            title: "Claude Bug Bounty 機能クイズ",
+            desc: "Claude Code 用バグバウンティ拡張「claude-bug-bounty」のスラッシュコマンド・エージェント・メモリ機能から出題する4択クイズ。",
+            meta: ["10問", "約5分", "JA / EN"],
+          },
+          en: {
+            title: "Claude Bug Bounty Capability Quiz",
+            desc: "A 4-choice quiz on the slash commands, agents, and memory model of `claude-bug-bounty`, the AI-driven bug-bounty extension for Claude Code.",
+            meta: ["10 Q", "~5 min", "JA / EN"],
+          },
+        },
+      ];
+
+      /* =========================================================
+         状態
+         ========================================================= */
+      let currentLang = "ja";
+
+      /* =========================================================
+         DOM ヘルパ：要素を生成して属性／テキストを安全にセット
+         （innerHTML を使わずに XSS リスクを避ける）
+         ========================================================= */
+      function el(tag, className, text) {
+        const e = document.createElement(tag);
+        if (className) e.className = className;
+        if (text !== undefined && text !== null) e.textContent = text;
+        return e;
+      }
+
+      /* =========================================================
+         レンダリング
+         ========================================================= */
+      function renderGames() {
+        const grid = document.getElementById("game-grid");
+        // 既存ノードを安全にクリア
+        while (grid.firstChild) grid.removeChild(grid.firstChild);
+        const dict = I18N[currentLang];
+
+        // 公開中のゲームを上位、Coming Soon を下位に並べる（同ステータス内は元順序を維持）
+        const sortedGames = GAMES.slice().sort(function (a, b) {
+          const rank = function (g) {
+            return g.status === "playable" ? 0 : 1;
+          };
+          return rank(a) - rank(b);
+        });
+
+        sortedGames.forEach(function (g) {
+          const local = g[currentLang];
+          const isPlayable = g.status === "playable";
+
+          // playable は <a>、それ以外は <div>
+          const card = document.createElement(isPlayable ? "a" : "div");
+          card.className =
+            "game-card " + (isPlayable ? "is-playable" : "is-soon");
+          if (isPlayable) {
+            card.href = g.href;
+            card.setAttribute("aria-label", local.title);
+          } else {
+            card.setAttribute("aria-disabled", "true");
+          }
+
+          // カバー（キービジュアル）
+          const cover = el("div", "game-cover");
+          cover.appendChild(el("div", "game-cover-grid"));
+          cover.appendChild(el("div", "game-cover-glow gw-blue"));
+          cover.appendChild(el("div", "game-cover-glow gw-orange"));
+          cover.appendChild(el("div", "game-cover-emblem", g.emblem));
+          cover.appendChild(
+            el(
+              "div",
+              "game-cover-tag" + (isPlayable ? "" : " is-soon"),
+              isPlayable ? g.tag : dict.soon,
+            ),
+          );
+
+          // 本体
+          const body = el("div", "game-body");
+          body.appendChild(el("div", "game-title", local.title));
+          body.appendChild(el("p", "game-desc", local.desc));
+
+          const meta = el("div", "game-meta");
+          local.meta.forEach(function (m) {
+            meta.appendChild(el("span", "game-meta-item", m));
+          });
+          body.appendChild(meta);
+
+          body.appendChild(
+            el(
+              "span",
+              "game-cta" + (isPlayable ? "" : " is-soon"),
+              isPlayable ? dict.play + " →" : dict.soon,
+            ),
+          );
+
+          card.appendChild(cover);
+          card.appendChild(body);
+          grid.appendChild(card);
+        });
+      }
+
+      function applyI18n() {
+        const dict = I18N[currentLang];
+        document.documentElement.lang = currentLang;
+        document.title = dict.pageTitle;
+        document.getElementById("hero-tag-text").textContent = dict.heroTag;
+        document.getElementById("hero-sub").textContent = dict.heroSub;
+        document.getElementById("stat-games-label").textContent =
+          dict.statGamesLabel;
+        document.getElementById("stat-free-label").textContent =
+          dict.statFreeLabel;
+        document.getElementById("stat-lang-label").textContent =
+          dict.statLangLabel;
+        document.getElementById("stat-web-label").textContent =
+          dict.statWebLabel;
+        document.getElementById("games-head-title").textContent =
+          dict.gamesHead;
+        document.getElementById("links-head-title").textContent =
+          dict.linksHead;
+        document.getElementById("footer-by").textContent = dict.footerBy;
+
+        // 公開中ゲーム数 / 全体
+        const total = GAMES.length;
+        const playable = GAMES.filter(function (g) {
+          return g.status === "playable";
+        }).length;
+        document.getElementById("stat-games-num").textContent = playable;
+        document.getElementById("games-head-count").textContent =
+          dict.countSuffix(playable, total);
+
+        renderGames();
+      }
+
+      /* =========================================================
+         言語トグル
+         ========================================================= */
+      const langButtons = document.querySelectorAll(".lang-toggle button");
+      const langPill = document.getElementById("lang-pill");
+
+      function updateLangPill() {
+        const active = document.querySelector(".lang-toggle button.active");
+        if (!active) return;
+        langPill.style.width = active.offsetWidth + "px";
+        langPill.style.transform =
+          "translateX(" + (active.offsetLeft - 3) + "px)";
+      }
+
+      langButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          const lang = btn.dataset.lang;
+          if (lang === currentLang) return;
+          currentLang = lang;
+          langButtons.forEach(function (b) {
+            b.classList.toggle("active", b === btn);
+          });
+          updateLangPill();
+          applyI18n();
+        });
+      });
+
+      /* =========================================================
+         パーティクル背景（カワセミ風 青 × 橙）
+         ========================================================= */
+      (function initParticles() {
+        const canvas = document.getElementById("particles");
+        const ctx = canvas.getContext("2d");
+        let w = 0;
+        let h = 0;
+        let particles = [];
+        const reduce =
+          window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function resize() {
+          w = canvas.width = window.innerWidth;
+          h = canvas.height = window.innerHeight;
+        }
+
+        function create() {
+          particles = [];
+          const count = Math.max(28, Math.floor((w * h) / 32000));
+          for (let i = 0; i < count; i++) {
+            particles.push({
+              x: Math.random() * w,
+              y: Math.random() * h,
+              r: Math.random() * 1.6 + 0.4,
+              vx: (Math.random() - 0.5) * 0.18,
+              vy: (Math.random() - 0.5) * 0.18,
+              alpha: Math.random() * 0.5 + 0.15,
+              hue: Math.random() < 0.5 ? "14, 165, 233" : "251, 146, 60",
+            });
+          }
+        }
+
+        function draw() {
+          ctx.clearRect(0, 0, w, h);
+          for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(" + p.hue + ", " + p.alpha + ")";
+            ctx.fill();
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0) p.x = w;
+            if (p.x > w) p.x = 0;
+            if (p.y < 0) p.y = h;
+            if (p.y > h) p.y = 0;
+          }
+          if (!reduce) requestAnimationFrame(draw);
+        }
+
+        resize();
+        create();
+        draw();
+        window.addEventListener("resize", function () {
+          resize();
+          create();
+        });
+      })();
+
+      /* =========================================================
+         初期化
+         ========================================================= */
+      applyI18n();
+      requestAnimationFrame(updateLangPill);
+      window.addEventListener("resize", updateLangPill);
+      })();
+    </script>
+  </body>
+</html>

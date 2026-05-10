@@ -1,0 +1,2559 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark" />
+    <title>
+      Claude Bug Bounty 機能クイズ | Claude Bug Bounty Capability Quiz
+    </title>
+    <meta
+      name="description"
+      content="Claude Code 用バグバウンティ拡張 claude-bug-bounty のスラッシュコマンド・エージェント・メモリ機能を題材にしたバグハンター視点のクイズ"
+    />
+    <style>
+      :root {
+        /* カワセミ（kingfisher）配色：コバルトブルー × バーントオレンジ */
+        --bg: #04111e;
+        --bg2: #082336;
+        --bg3: #0e3149;
+        --surface: #103e58;
+        --surface-2: #154d6d;
+        --line: rgba(14, 165, 233, 0.2);
+        --line-strong: rgba(14, 165, 233, 0.5);
+
+        --text: #e6f4f9;
+        --text-muted: #93c5d8;
+        --text-dim: #5b8597;
+
+        --primary: #0891b2;
+        --primary-light: #22d3ee;
+        --primary-deep: #155e75;
+        --secondary: #f97316;
+        --secondary-light: #fb923c;
+        --accent: #fbbf24;
+        --gold: #fbbf24;
+        --success: #34d399;
+        --danger: #fb7185;
+
+        --radius: 14px;
+        --radius-sm: 8px;
+        --shadow: 0 12px 40px rgba(14, 165, 233, 0.22);
+        --shadow-strong: 0 0 60px rgba(14, 165, 233, 0.4);
+
+        /* スマホ／safe-area 用 */
+        --pad-x: 20px;
+        --pad-bottom: max(80px, env(safe-area-inset-bottom));
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        /* iOS でのキーボード出現時の高さズレに強い動的ビューポート単位 */
+        height: 100%;
+      }
+
+      html,
+      body {
+        /* 横スクロールを完全に殺す */
+        overflow-x: hidden;
+        max-width: 100%;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+
+      body {
+        font-family:
+          "Inter", "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic",
+          "Noto Sans JP", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100dvh;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        /* 長い英数字（URL・base64 等）が幅を突き破らないように */
+        word-wrap: break-word;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        /* セーフエリア（iPhone ノッチ／ホームインジケータ）対応 */
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+      }
+
+      .bg-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .bg-grid {
+        background-image:
+          linear-gradient(
+            to right,
+            rgba(14, 165, 233, 0.04) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(14, 165, 233, 0.04) 1px,
+            transparent 1px
+          );
+        background-size: 56px 56px;
+        mask-image: radial-gradient(
+          ellipse at center,
+          rgba(0, 0, 0, 0.85) 0%,
+          rgba(0, 0, 0, 0.2) 70%,
+          transparent 100%
+        );
+      }
+      .bg-glow1 {
+        background: radial-gradient(
+          circle at 18% 12%,
+          rgba(14, 165, 233, 0.18),
+          transparent 55%
+        );
+      }
+      .bg-glow2 {
+        background: radial-gradient(
+          circle at 82% 88%,
+          rgba(251, 146, 60, 0.14),
+          transparent 60%
+        );
+      }
+      #particles {
+        z-index: 0;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 880px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 28px var(--pad-x) var(--pad-bottom);
+      }
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+        min-width: 0;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        min-width: 0;
+        flex: 1 1 auto;
+      }
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: 800;
+        font-size: 18px;
+        box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+        flex-shrink: 0;
+      }
+      .brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.15;
+        min-width: 0;
+        overflow: hidden;
+      }
+      .brand-name {
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: var(--text);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .brand-sub {
+        font-size: 10.5px;
+        color: var(--text-dim);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .lang-toggle {
+        display: inline-flex;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 3px;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+      .lang-toggle button {
+        background: transparent;
+        border: 0;
+        color: var(--text-muted);
+        /* タップ領域を 44px 程度確保（iOS HIG） */
+        padding: 8px 14px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        border-radius: 999px;
+        transition: color 0.2s;
+        position: relative;
+        z-index: 1;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        -webkit-tap-highlight-color: transparent;
+        min-height: 32px;
+      }
+      .lang-toggle button.active {
+        color: #fff;
+      }
+      .lang-toggle .lang-pill {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        height: calc(100% - 6px);
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        border-radius: 999px;
+        transition:
+          transform 0.28s ease,
+          width 0.28s ease;
+        z-index: 0;
+        box-shadow: 0 0 16px rgba(14, 165, 233, 0.4);
+      }
+
+      .screen {
+        display: none;
+        animation: fadeIn 0.45s ease;
+      }
+      .screen.active {
+        display: block;
+      }
+
+      .start-hero {
+        text-align: center;
+        margin-top: 6px;
+        margin-bottom: 28px;
+      }
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        font-size: 11px;
+        letter-spacing: 2.5px;
+        color: var(--secondary-light);
+        background: rgba(251, 146, 60, 0.08);
+        border: 1px solid rgba(251, 146, 60, 0.3);
+        border-radius: 999px;
+        font-weight: 700;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        max-width: 100%;
+      }
+      .hero-tag-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--secondary);
+        box-shadow: 0 0 8px var(--secondary);
+        animation: blink 1.4s infinite;
+        flex-shrink: 0;
+      }
+      .hero-title {
+        /* 320px 端末でも 1 行に収まる最小値 */
+        font-size: clamp(20px, 5.6vw, 44px);
+        font-weight: 900;
+        letter-spacing: -0.5px;
+        line-height: 1.22;
+        background: linear-gradient(
+          120deg,
+          var(--primary-light) 10%,
+          var(--secondary-light) 55%,
+          var(--accent) 95%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 12px;
+      }
+      .hero-sub {
+        color: var(--text-muted);
+        font-size: clamp(13px, 2vw, 15.5px);
+        max-width: 560px;
+        margin: 0 auto;
+      }
+
+      .info-card {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 22px 26px;
+        margin-bottom: 22px;
+        position: relative;
+        overflow: hidden;
+      }
+      .info-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at top right,
+          rgba(14, 165, 233, 0.1),
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+      .info-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 16px;
+        position: relative;
+      }
+      .info-stat {
+        text-align: center;
+        min-width: 0;
+      }
+      .info-stat-num {
+        font-size: 26px;
+        font-weight: 900;
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--secondary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        font-feature-settings: "tnum";
+      }
+      .info-stat-label {
+        font-size: 11px;
+        color: var(--text-dim);
+        margin-top: 6px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .sources {
+        background: linear-gradient(160deg, var(--bg2), var(--surface));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        margin-bottom: 26px;
+      }
+      .sources-title {
+        font-size: 12px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .source-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .source-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 13px;
+        transition: all 0.2s;
+        min-width: 0;
+      }
+      .source-item:hover {
+        border-color: var(--primary);
+        color: var(--primary-light);
+        transform: translateX(2px);
+      }
+      .source-year {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--secondary-light);
+        background: rgba(251, 146, 60, 0.1);
+        padding: 3px 8px;
+        border-radius: 4px;
+        flex-shrink: 0;
+      }
+      .source-title {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .source-arrow {
+        color: var(--text-dim);
+        flex-shrink: 0;
+      }
+
+      .start-btn-wrap {
+        text-align: center;
+      }
+      .btn-start {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 36px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        color: #fff;
+        border: 0;
+        border-radius: 999px;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+        transition: all 0.25s;
+        font-family: inherit;
+        text-transform: uppercase;
+        min-height: 48px;
+        max-width: 100%;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-strong);
+        filter: brightness(1.1);
+      }
+      .start-note {
+        margin-top: 12px;
+        font-size: 11px;
+        color: var(--text-dim);
+        letter-spacing: 1px;
+      }
+
+      .quiz-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+        gap: 12px;
+        flex-wrap: wrap;
+        min-width: 0;
+      }
+      .quiz-counter {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 13px;
+        color: var(--text-muted);
+        letter-spacing: 1px;
+        flex-shrink: 0;
+      }
+      .quiz-counter strong {
+        color: var(--primary-light);
+        font-size: 16px;
+      }
+      .quiz-tag {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 11px;
+        color: var(--secondary-light);
+        background: rgba(251, 146, 60, 0.08);
+        border: 1px solid rgba(251, 146, 60, 0.25);
+        padding: 4px 12px;
+        border-radius: 4px;
+        letter-spacing: 1px;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .progress {
+        height: 4px;
+        background: var(--surface);
+        border-radius: 999px;
+        margin-bottom: 26px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 999px;
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+
+      .question-card {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 28px 30px;
+        margin-bottom: 22px;
+        box-shadow: var(--shadow);
+      }
+      .question-text {
+        font-size: clamp(15px, 2.4vw, 18.5px);
+        font-weight: 700;
+        line-height: 1.65;
+        color: var(--text);
+      }
+
+      .choices {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+      .choice {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        background: var(--surface);
+        border: 1.5px solid var(--line);
+        color: var(--text);
+        padding: 14px 18px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        text-align: left;
+        font-size: 14.5px;
+        line-height: 1.6;
+        font-family: inherit;
+        transition: all 0.2s;
+        position: relative;
+        -webkit-tap-highlight-color: transparent;
+        min-width: 0;
+        min-height: 48px;
+        width: 100%;
+      }
+      .choice:hover:not(:disabled) {
+        border-color: var(--primary);
+        background: var(--surface-2);
+        transform: translateX(3px);
+      }
+      .choice:disabled {
+        cursor: default;
+      }
+      .choice-key {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--primary-light);
+        background: rgba(14, 165, 233, 0.15);
+        border: 1px solid rgba(14, 165, 233, 0.3);
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .choice-text {
+        flex: 1;
+        min-width: 0;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+      .choice-icon {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-weight: 800;
+        font-size: 18px;
+        margin-left: auto;
+        align-self: center;
+        opacity: 0;
+        transition: opacity 0.2s;
+        flex-shrink: 0;
+      }
+      .choice.correct {
+        border-color: var(--success);
+        background: rgba(52, 211, 153, 0.08);
+      }
+      .choice.correct .choice-key {
+        color: var(--success);
+        background: rgba(52, 211, 153, 0.15);
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .choice.correct .choice-icon {
+        color: var(--success);
+        opacity: 1;
+      }
+      .choice.wrong {
+        border-color: var(--danger);
+        background: rgba(251, 113, 133, 0.1);
+      }
+      .choice.wrong .choice-key {
+        color: var(--danger);
+        background: rgba(251, 113, 133, 0.15);
+        border-color: rgba(251, 113, 133, 0.4);
+      }
+      .choice.wrong .choice-icon {
+        color: var(--danger);
+        opacity: 1;
+      }
+      .choice.dim {
+        opacity: 0.45;
+      }
+
+      .feedback {
+        background: linear-gradient(160deg, var(--bg2), var(--surface));
+        border-left: 3px solid var(--primary);
+        border-radius: var(--radius-sm);
+        padding: 16px 20px;
+        margin-bottom: 18px;
+        font-size: 13.5px;
+        line-height: 1.75;
+        color: var(--text-muted);
+      }
+      .feedback strong {
+        color: var(--text);
+      }
+      .feedback.correct-fb {
+        border-color: var(--success);
+        background: rgba(52, 211, 153, 0.05);
+      }
+      .feedback.wrong-fb {
+        border-color: var(--danger);
+        background: rgba(251, 113, 133, 0.06);
+      }
+      .feedback-title {
+        font-weight: 800;
+        color: var(--text);
+        margin-bottom: 6px;
+        font-size: 14px;
+      }
+      .feedback.correct-fb .feedback-title {
+        color: var(--success);
+      }
+      .feedback.wrong-fb .feedback-title {
+        color: var(--danger);
+      }
+      .feedback-correct-row {
+        margin-top: 10px;
+        font-size: 12.5px;
+        color: var(--text-muted);
+        line-height: 1.7;
+      }
+      .feedback-correct-row .fc-tag {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 10.5px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: var(--success);
+        background: rgba(52, 211, 153, 0.12);
+        border: 1px solid rgba(52, 211, 153, 0.35);
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-right: 8px;
+      }
+
+      .next-btn {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        color: #fff;
+        border: 0;
+        border-radius: var(--radius-sm);
+        font-size: 14.5px;
+        font-weight: 800;
+        cursor: pointer;
+        letter-spacing: 0.5px;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-family: inherit;
+        box-shadow: 0 4px 14px rgba(14, 165, 233, 0.3);
+        min-height: 48px;
+      }
+      .next-btn:hover {
+        filter: brightness(1.1);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(14, 165, 233, 0.45);
+      }
+
+      /* 結果画面 */
+      .result {
+        text-align: center;
+        padding: 16px 0;
+      }
+      .result-rank-tag {
+        display: inline-block;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 11.5px;
+        letter-spacing: 3px;
+        color: var(--gold);
+        background: rgba(251, 191, 36, 0.1);
+        border: 1px solid rgba(251, 191, 36, 0.4);
+        padding: 6px 14px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        font-weight: 800;
+      }
+      .result-title {
+        font-size: clamp(22px, 5vw, 36px);
+        font-weight: 900;
+        background: linear-gradient(
+          120deg,
+          var(--primary-light),
+          var(--accent),
+          var(--secondary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 10px;
+        line-height: 1.2;
+      }
+      .result-sub {
+        color: var(--text-muted);
+        font-size: 14px;
+        max-width: 480px;
+        margin: 0 auto 24px;
+      }
+
+      .score-display {
+        display: flex;
+        justify-content: center;
+        margin: 28px 0 22px;
+      }
+      .score-ring {
+        --pct: 0;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: conic-gradient(
+          from -90deg,
+          var(--primary) 0%,
+          var(--secondary) calc(var(--pct) * 0.5%),
+          var(--accent) calc(var(--pct) * 1%),
+          var(--surface-2) calc(var(--pct) * 1%)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-shadow: var(--shadow-strong);
+      }
+      .score-ring::before {
+        content: "";
+        position: absolute;
+        inset: 14px;
+        background: var(--bg);
+        border-radius: 50%;
+      }
+      .score-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+      }
+      .score-num {
+        font-size: 56px;
+        font-weight: 900;
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--secondary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        font-feature-settings: "tnum";
+      }
+      .score-total {
+        font-size: 14px;
+        color: var(--text-dim);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        margin-top: 4px;
+      }
+
+      .result-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 22px;
+      }
+      .result-stat {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        padding: 14px 8px;
+        text-align: center;
+        min-width: 0;
+      }
+      .result-stat-num {
+        font-size: 22px;
+        font-weight: 900;
+        color: var(--primary-light);
+        line-height: 1;
+        font-feature-settings: "tnum";
+      }
+      .result-stat-label {
+        font-size: 10.5px;
+        color: var(--text-dim);
+        margin-top: 5px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .result-comment {
+        background: linear-gradient(160deg, var(--bg2), var(--surface));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 18px 22px;
+        font-size: 13.5px;
+        line-height: 1.8;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+        text-align: left;
+      }
+      .result-comment strong {
+        color: var(--text);
+      }
+
+      .result-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 28px;
+      }
+      .btn-share-x {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        background: #000;
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 999px;
+        font-size: 13.5px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+        min-height: 44px;
+      }
+      .btn-share-x:hover {
+        background: #181818;
+        transform: translateY(-1px);
+      }
+      .btn-secondary {
+        padding: 12px 24px;
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        font-size: 13.5px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+        min-height: 44px;
+      }
+      .btn-secondary:hover {
+        border-color: var(--primary);
+        color: var(--primary-light);
+      }
+
+      .review {
+        margin-top: 28px;
+        text-align: left;
+      }
+      .review-title {
+        font-size: 12px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .review-grid {
+        display: grid;
+        gap: 10px;
+      }
+      .review-item {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        padding: 12px 16px;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        font-size: 13px;
+        min-width: 0;
+      }
+      .review-mark {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 16px;
+        font-weight: 800;
+        line-height: 1.4;
+        flex-shrink: 0;
+      }
+      .review-mark.ok {
+        color: var(--success);
+      }
+      .review-mark.ng {
+        color: var(--danger);
+      }
+      .review-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .review-q {
+        color: var(--text);
+        font-weight: 700;
+        margin-bottom: 6px;
+        line-height: 1.5;
+      }
+      .review-a {
+        color: var(--text-muted);
+        font-size: 12.5px;
+        line-height: 1.55;
+      }
+      .review-a-tag {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 10.5px;
+        letter-spacing: 1px;
+        margin-right: 6px;
+      }
+
+      .footer {
+        margin-top: 60px;
+        padding-top: 26px;
+        border-top: 1px solid var(--line);
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-dim);
+      }
+      .footer a {
+        color: var(--primary-light);
+        text-decoration: none;
+      }
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+
+      /* タブレット以下 */
+      @media (max-width: 720px) {
+        :root {
+          --pad-x: 16px;
+        }
+        .page {
+          padding-top: 22px;
+        }
+        .question-card {
+          padding: 22px 20px;
+        }
+        .info-card {
+          padding: 18px 18px;
+        }
+        .sources {
+          padding: 16px 16px;
+        }
+        .score-ring {
+          width: 150px;
+          height: 150px;
+        }
+        .score-num {
+          font-size: 44px;
+        }
+      }
+
+      /* スマホ（〜480px） */
+      @media (max-width: 480px) {
+        .top-bar {
+          gap: 8px;
+        }
+        .brand-mark {
+          width: 32px;
+          height: 32px;
+          font-size: 16px;
+        }
+        .brand-name {
+          font-size: 12px;
+        }
+        .brand-sub {
+          font-size: 9.5px;
+          letter-spacing: 1.2px;
+        }
+        .lang-toggle button {
+          padding: 7px 12px;
+          font-size: 11.5px;
+        }
+        .info-card-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 14px;
+        }
+        .info-stat-num {
+          font-size: 22px;
+        }
+        .question-card {
+          padding: 18px 16px;
+        }
+        .choice {
+          padding: 12px 14px;
+          font-size: 13.5px;
+          gap: 12px;
+        }
+        .feedback {
+          padding: 14px 16px;
+          font-size: 13px;
+        }
+        .result-stats {
+          gap: 8px;
+        }
+        .result-stat-num {
+          font-size: 20px;
+        }
+        .btn-start {
+          padding: 14px 28px;
+          font-size: 14px;
+        }
+        .quiz-meta {
+          gap: 8px;
+        }
+        .quiz-tag {
+          font-size: 10.5px;
+          padding: 3px 10px;
+        }
+      }
+
+      /* 小型スマホ（〜380px） */
+      @media (max-width: 380px) {
+        :root {
+          --pad-x: 12px;
+        }
+        .brand-sub {
+          /* 小型端末ではサブテキストを切る */
+          display: none;
+        }
+        .lang-toggle button {
+          padding: 7px 11px;
+          font-size: 11px;
+        }
+        .info-card-grid {
+          gap: 10px;
+        }
+        .info-stat-num {
+          font-size: 20px;
+        }
+        .question-card {
+          padding: 16px 14px;
+        }
+        .choice {
+          padding: 11px 12px;
+          font-size: 13px;
+        }
+        .choice-key {
+          width: 24px;
+          height: 24px;
+          font-size: 11px;
+        }
+        .result-stats {
+          gap: 6px;
+        }
+        .result-stat {
+          padding: 12px 4px;
+        }
+        .result-stat-num {
+          font-size: 18px;
+        }
+        .result-stat-label {
+          font-size: 9.5px;
+          letter-spacing: 0.5px;
+        }
+        .btn-share-x,
+        .btn-secondary {
+          padding: 11px 18px;
+          font-size: 12.5px;
+        }
+        .score-ring {
+          width: 130px;
+          height: 130px;
+        }
+        .score-num {
+          font-size: 38px;
+        }
+      }
+
+      /* 横向きスマホでの圧縮 */
+      @media (max-height: 480px) and (orientation: landscape) {
+        .start-hero {
+          margin-bottom: 18px;
+        }
+        .info-card,
+        .sources {
+          padding: 14px 18px;
+          margin-bottom: 14px;
+        }
+        .score-ring {
+          width: 120px;
+          height: 120px;
+        }
+        .score-num {
+          font-size: 34px;
+        }
+      }
+
+      /* 動きを抑える設定の尊重 */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-layer bg-grid"></div>
+    <div class="bg-layer bg-glow1"></div>
+    <div class="bg-layer bg-glow2"></div>
+    <canvas id="particles" class="bg-layer"></canvas>
+
+    <div class="page">
+      <header class="top-bar">
+        <a class="brand" href="../" title="morioka12 game site">
+          <div class="brand-mark">C</div>
+          <div class="brand-text">
+            <span class="brand-name" id="brand-name"></span>
+            <span class="brand-sub">CLAUDE-CODE · AI BUG BOUNTY</span>
+          </div>
+        </a>
+        <div class="lang-toggle" role="tablist" aria-label="Language">
+          <span class="lang-pill" id="lang-pill"></span>
+          <button data-lang="ja" class="active" role="tab">日本語</button>
+          <button data-lang="en" role="tab">EN</button>
+        </div>
+      </header>
+
+      <section id="screen-start" class="screen active">
+        <div class="start-hero">
+          <div class="hero-tag">
+            <span class="hero-tag-dot"></span>
+            <span id="hero-tag-text"></span>
+          </div>
+          <h1 class="hero-title" id="hero-title"></h1>
+          <p class="hero-sub" id="hero-sub"></p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-grid">
+            <div class="info-stat">
+              <div class="info-stat-num">10</div>
+              <div class="info-stat-label" id="stat-label-q"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">15</div>
+              <div class="info-stat-label" id="stat-label-cmd"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">8</div>
+              <div class="info-stat-label" id="stat-label-agent"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">4-Choice</div>
+              <div class="info-stat-label" id="stat-label-f"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sources">
+          <div class="sources-title" id="sources-title"></div>
+          <div class="source-list">
+            <a
+              class="source-item"
+              href="https://github.com/shuvonsec/claude-bug-bounty"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="source-year">REPO</span>
+              <span class="source-title" id="src-repo"></span>
+              <span class="source-arrow">→</span>
+            </a>
+            <a
+              class="source-item"
+              href="https://github.com/shuvonsec/claude-bug-bounty#readme"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="source-year">README</span>
+              <span class="source-title" id="src-readme"></span>
+              <span class="source-arrow">→</span>
+            </a>
+            <a
+              class="source-item"
+              href="https://github.com/shuvonsec/claude-bug-bounty/blob/main/FAQ.md"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="source-year">FAQ</span>
+              <span class="source-title" id="src-faq"></span>
+              <span class="source-arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="start-btn-wrap">
+          <button class="btn-start" id="btn-start">
+            <span id="btn-start-text"></span>
+            <span aria-hidden="true">→</span>
+          </button>
+          <div class="start-note" id="start-note"></div>
+        </div>
+      </section>
+
+      <section id="screen-quiz" class="screen">
+        <div class="quiz-meta">
+          <div class="quiz-counter">
+            <span id="qm-q-label"></span>
+            <strong id="q-current">1</strong>
+            <span style="color: var(--text-dim)">/</span>
+            <span id="q-total">10</span>
+          </div>
+          <span class="quiz-tag" id="q-tag"></span>
+        </div>
+        <div class="progress">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="question-card" id="question-card">
+          <p class="question-text" id="question-text"></p>
+        </div>
+
+        <div class="choices" id="choices"></div>
+
+        <div id="feedback-area"></div>
+
+        <button class="next-btn" id="btn-next" style="display: none"></button>
+      </section>
+
+      <section id="screen-result" class="screen">
+        <div class="result">
+          <div class="result-rank-tag" id="result-rank">★ HUNTER RANK</div>
+          <h2 class="result-title" id="result-title"></h2>
+          <p class="result-sub" id="result-sub"></p>
+
+          <div class="score-display">
+            <div class="score-ring" id="score-ring">
+              <div class="score-content">
+                <div class="score-num" id="score-num">0</div>
+                <div class="score-total">/ 10</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-stats">
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-correct">0</div>
+              <div class="result-stat-label" id="stat-lbl-correct"></div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-wrong">0</div>
+              <div class="result-stat-label" id="stat-lbl-wrong"></div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-acc">0%</div>
+              <div class="result-stat-label" id="stat-lbl-acc"></div>
+            </div>
+          </div>
+
+          <div class="result-comment" id="result-comment"></div>
+
+          <div class="result-actions">
+            <button class="btn-share-x" id="btn-share">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631Zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                />
+              </svg>
+              <span id="btn-share-text"></span>
+            </button>
+            <button class="btn-secondary" id="btn-retry">
+              <span id="btn-retry-text"></span>
+            </button>
+          </div>
+
+          <div class="review">
+            <div class="review-title" id="review-title"></div>
+            <div class="review-grid" id="review-grid"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>
+          <span id="footer-by"></span>
+          <a
+            href="https://x.com/scgajge12"
+            target="_blank"
+            rel="noopener noreferrer"
+            >@scgajge12</a
+          >
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      "use strict";
+
+      /* =========================================================
+         全ロジックを IIFE で閉じてグローバル汚染を防止する。
+         （DevTools の console から QUIZ / 正解 にアクセスできない）
+         ========================================================= */
+      (function () {
+        /* =========================================================
+           I18N
+           ========================================================= */
+        const I18N = {
+          ja: {
+            brandName: "Claude Bug Bounty Quiz",
+            heroTag: "クロード × バグバウンティ",
+            heroTitleLine1: "Claude Bug Bounty",
+            heroTitleLine2: "機能クイズ",
+            heroSub:
+              "Claude Code 用バグバウンティ拡張「claude-bug-bounty」のスラッシュコマンド・エージェント・メモリ機能から出題する 10 問。",
+            statQuestions: "問題数",
+            statCommands: "Slash Commands",
+            statAgents: "AI Agents",
+            statFormat: "出題形式",
+            sourcesTitle: "// 出典リソース",
+            srcRepo: "shuvonsec/claude-bug-bounty（GitHub リポジトリ）",
+            srcReadme: "README · 機能・コマンド一覧・v4.2.0 解説",
+            srcFaq: "FAQ.md · 設計上の判断と既知の挙動",
+            startBtn: "挑戦する",
+            startNote: "※ 最後にスコアと X(Twitter) シェアボタンが表示されます",
+            quizQ: "Question",
+            quizNext: "次の問題へ",
+            quizLast: "結果を見る",
+            quizCorrect: "正解！",
+            quizWrong: "不正解",
+            correctAnswerTag: "正解",
+            resultCorrect: "正解",
+            resultWrong: "不正解",
+            resultAcc: "正答率",
+            resultShare: "X (Twitter) でシェア",
+            resultRetry: "もう一度挑戦",
+            resultReview: "// 解答レビュー",
+            resultYour: "あなたの解答",
+            resultAnswer: "正解",
+            footerBy: "Created by ",
+          },
+          en: {
+            brandName: "Claude Bug Bounty Quiz",
+            heroTag: "Claude × Bug Bounty",
+            heroTitleLine1: "Claude Bug Bounty",
+            heroTitleLine2: "Capability Quiz",
+            heroSub:
+              "10 questions on the slash commands, agents, and memory model of `claude-bug-bounty`, the AI-driven bug-bounty extension for Claude Code.",
+            statQuestions: "Questions",
+            statCommands: "Slash Commands",
+            statAgents: "AI Agents",
+            statFormat: "Format",
+            sourcesTitle: "// Source Resources",
+            srcRepo: "shuvonsec/claude-bug-bounty (GitHub repo)",
+            srcReadme: "README · features, commands, v4.2.0 details",
+            srcFaq: "FAQ.md · design decisions and known behaviors",
+            startBtn: "Start Challenge",
+            startNote:
+              "* Your score and an X (Twitter) share button appear at the end.",
+            quizQ: "Question",
+            quizNext: "Next →",
+            quizLast: "See Results →",
+            quizCorrect: "Correct!",
+            quizWrong: "Incorrect",
+            correctAnswerTag: "Correct answer",
+            resultCorrect: "Correct",
+            resultWrong: "Wrong",
+            resultAcc: "Accuracy",
+            resultShare: "Share on X",
+            resultRetry: "Try again",
+            resultReview: "// Answer Review",
+            resultYour: "Your answer",
+            resultAnswer: "Correct answer",
+            footerBy: "Created by ",
+          },
+        };
+
+        /* =========================================================
+           暗号化されたクイズデータ（QUIZ オブジェクト全体）
+           - 3 段 XOR + Base64
+           - 鍵 A : 平文文字列
+           - 鍵 B : Base64 で擬装
+           - 鍵 C : 32 バイトのバイト列を Base64 で擬装
+           - QUIZ の正解（c フラグ）も含めてまとめて暗号化
+           ========================================================= */
+        const _kA = "cl4udeBB42";
+        const _kB = (function () {
+          // "DEVTOOLS-cannot-cheat-2026" の Base64
+          return atob("REVWVE9PTFMtY2Fubm90LWNoZWF0LTIwMjY=");
+        })();
+        const _kC = (function () {
+          // SHA-256("phoenix-amber-bug-bounty") の 32 バイト
+          const b64 = "TEVmSFUQZJg8e6eFar4VxNpuaJiuK7e6hvhole/VTRQ=";
+          return Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+        })();
+
+        // ペイロードを多数のチャンクに分割して保持。実行時に join("") で結合。
+        const _PAYLOAD = [
+          "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",
+        ].join("");
+
+        /* =========================================================
+           復号
+           ========================================================= */
+        function _decryptQuiz(payload) {
+          const bin = atob(payload);
+          const out = new Uint8Array(bin.length);
+          for (let i = 0; i < bin.length; i++) {
+            let x = bin.charCodeAt(i);
+            x ^= _kA.charCodeAt(i % _kA.length);
+            x ^= _kB.charCodeAt(i % _kB.length);
+            x ^= _kC[i % _kC.length];
+            out[i] = x;
+          }
+          return JSON.parse(new TextDecoder().decode(out));
+        }
+
+        /* =========================================================
+           Fisher-Yates シャッフル（呼ぶたびに別の順序）
+           - 各問題の choices 配列の順序をランダム化することで、
+             DevTools で復号後 QUIZ を覗いても「画面上の A〜D が
+             配列インデックスのどれに対応するか」が一定にならない
+           ========================================================= */
+        function _shuffleInPlace(arr) {
+          for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+          }
+          return arr;
+        }
+
+        // 復号 → クロージャ内に保持（window には載せない）
+        const QUIZ = _decryptQuiz(_PAYLOAD);
+        // 各問題の choices をシャッフル
+        for (const q of QUIZ) {
+          _shuffleInPlace(q.choices);
+        }
+
+        /* =========================================================
+           セグメント配列を <strong> 込みで安全に DOM へ描画
+           ========================================================= */
+        function renderSegments(target, segments) {
+          target.textContent = "";
+          if (!segments) return;
+          for (const seg of segments) {
+            if (seg.b) {
+              const strong = document.createElement("strong");
+              strong.textContent = seg.t;
+              target.appendChild(strong);
+            } else {
+              target.appendChild(document.createTextNode(seg.t));
+            }
+          }
+        }
+
+        /* =========================================================
+           状態
+           ========================================================= */
+        let lang = "ja";
+        try {
+          const stored = localStorage.getItem("cbb_quiz_lang");
+          if (stored === "ja" || stored === "en") lang = stored;
+        } catch (e) {}
+
+        let qIndex = 0;
+        let answers = []; // [{ selected: idx, correctIdx: idx }]
+
+        function t(key) {
+          return I18N[lang][key] !== undefined ? I18N[lang][key] : key;
+        }
+
+        function correctIdxOf(qIdx) {
+          const choices = QUIZ[qIdx].choices;
+          for (let i = 0; i < choices.length; i++) {
+            if (choices[i].c) return i;
+          }
+          return -1;
+        }
+
+        /* =========================================================
+           I18N - プレーン文字列のみ textContent でセット
+           ========================================================= */
+        function applyI18n() {
+          document.documentElement.lang = lang;
+
+          document.getElementById("brand-name").textContent = t("brandName");
+          document.getElementById("hero-tag-text").textContent = t("heroTag");
+
+          const heroTitle = document.getElementById("hero-title");
+          heroTitle.textContent = "";
+          heroTitle.appendChild(document.createTextNode(t("heroTitleLine1")));
+          heroTitle.appendChild(document.createElement("br"));
+          heroTitle.appendChild(document.createTextNode(t("heroTitleLine2")));
+
+          document.getElementById("hero-sub").textContent = t("heroSub");
+          document.getElementById("stat-label-q").textContent =
+            t("statQuestions");
+          document.getElementById("stat-label-cmd").textContent =
+            t("statCommands");
+          document.getElementById("stat-label-agent").textContent =
+            t("statAgents");
+          document.getElementById("stat-label-f").textContent = t("statFormat");
+
+          document.getElementById("sources-title").textContent =
+            t("sourcesTitle");
+          document.getElementById("src-repo").textContent = t("srcRepo");
+          document.getElementById("src-readme").textContent = t("srcReadme");
+          document.getElementById("src-faq").textContent = t("srcFaq");
+
+          document.getElementById("btn-start-text").textContent = t("startBtn");
+          document.getElementById("start-note").textContent = t("startNote");
+
+          document.getElementById("qm-q-label").textContent = t("quizQ");
+
+          document.getElementById("stat-lbl-correct").textContent =
+            t("resultCorrect");
+          document.getElementById("stat-lbl-wrong").textContent =
+            t("resultWrong");
+          document.getElementById("stat-lbl-acc").textContent = t("resultAcc");
+          document.getElementById("btn-share-text").textContent =
+            t("resultShare");
+          document.getElementById("btn-retry-text").textContent =
+            t("resultRetry");
+          document.getElementById("review-title").textContent =
+            t("resultReview");
+          document.getElementById("footer-by").textContent = t("footerBy");
+        }
+
+        function updateLangPill() {
+          const pill = document.getElementById("lang-pill");
+          const buttons = document.querySelectorAll(".lang-toggle button");
+          const active = document.querySelector(
+            '.lang-toggle button[data-lang="' + lang + '"]',
+          );
+          if (!active || !pill) return;
+          buttons.forEach((b) => b.classList.toggle("active", b === active));
+          pill.style.width = active.offsetWidth + "px";
+          pill.style.transform =
+            "translateX(" + (active.offsetLeft - 3) + "px)";
+        }
+
+        function setLanguage(next) {
+          if (lang === next) return;
+          lang = next;
+          try {
+            localStorage.setItem("cbb_quiz_lang", lang);
+          } catch (e) {}
+          applyI18n();
+          updateLangPill();
+          if (
+            document.getElementById("screen-quiz").classList.contains("active")
+          ) {
+            renderQuestion();
+          }
+          if (
+            document
+              .getElementById("screen-result")
+              .classList.contains("active")
+          ) {
+            renderResult();
+          }
+        }
+
+        /* =========================================================
+           画面切り替え
+           ========================================================= */
+        function showScreen(id) {
+          document
+            .querySelectorAll(".screen")
+            .forEach((s) => s.classList.remove("active"));
+          document.getElementById(id).classList.add("active");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        /* =========================================================
+           クイズ
+           ========================================================= */
+        function startQuiz() {
+          qIndex = 0;
+          answers = [];
+          // 再挑戦の度に choices を再シャッフル
+          for (const q of QUIZ) {
+            _shuffleInPlace(q.choices);
+          }
+          document.getElementById("q-total").textContent = QUIZ.length;
+          showScreen("screen-quiz");
+          renderQuestion();
+        }
+
+        function renderQuestion() {
+          const item = QUIZ[qIndex];
+          const answered = !!answers[qIndex];
+
+          document.getElementById("q-current").textContent = qIndex + 1;
+          document.getElementById("q-tag").textContent = item.tag[lang];
+          document.getElementById("question-text").textContent = item.q[lang];
+
+          const pct = (qIndex / QUIZ.length) * 100;
+          document.getElementById("progress-fill").style.width = pct + "%";
+
+          const choicesEl = document.getElementById("choices");
+          choicesEl.textContent = "";
+
+          const keys = ["A", "B", "C", "D"];
+          item.choices.forEach((c, idx) => {
+            const btn = document.createElement("button");
+            btn.className = "choice";
+            btn.type = "button";
+
+            const key = document.createElement("span");
+            key.className = "choice-key";
+            key.textContent = keys[idx];
+
+            const text = document.createElement("span");
+            text.className = "choice-text";
+            text.textContent = c[lang];
+
+            const icon = document.createElement("span");
+            icon.className = "choice-icon";
+            icon.setAttribute("aria-hidden", "true");
+
+            btn.appendChild(key);
+            btn.appendChild(text);
+            btn.appendChild(icon);
+
+            btn.addEventListener("click", () => onAnswer(idx));
+            choicesEl.appendChild(btn);
+          });
+
+          document.getElementById("feedback-area").textContent = "";
+          document.getElementById("btn-next").style.display = "none";
+
+          if (answered) {
+            applyAnswerVisual(answers[qIndex].selected);
+            showFeedback(answers[qIndex].selected);
+          }
+        }
+
+        function onAnswer(selectedIdx) {
+          if (answers[qIndex]) return;
+          const correctIdx = correctIdxOf(qIndex);
+          answers[qIndex] = { selected: selectedIdx, correctIdx };
+
+          applyAnswerVisual(selectedIdx);
+          showFeedback(selectedIdx);
+        }
+
+        function applyAnswerVisual(selectedIdx) {
+          const correctIdx = correctIdxOf(qIndex);
+          const btns = document.querySelectorAll(".choice");
+          btns.forEach((b, idx) => {
+            b.disabled = true;
+            const icon = b.querySelector(".choice-icon");
+            if (idx === correctIdx) {
+              b.classList.add("correct");
+              icon.textContent = "✓";
+            } else if (idx === selectedIdx) {
+              b.classList.add("wrong");
+              icon.textContent = "✕";
+            } else {
+              b.classList.add("dim");
+            }
+          });
+        }
+
+        function showFeedback(selectedIdx) {
+          const item = QUIZ[qIndex];
+          const correctIdx = correctIdxOf(qIndex);
+          const isCorrect = selectedIdx === correctIdx;
+          const keys = ["A", "B", "C", "D"];
+
+          const fb = document.createElement("div");
+          fb.className = "feedback " + (isCorrect ? "correct-fb" : "wrong-fb");
+
+          const title = document.createElement("div");
+          title.className = "feedback-title";
+          title.textContent =
+            (isCorrect ? "✓ " : "✕ ") +
+            (isCorrect ? t("quizCorrect") : t("quizWrong"));
+          fb.appendChild(title);
+
+          // 選んだ選択肢の why（個別解説）
+          const body = document.createElement("div");
+          body.className = "feedback-body";
+          renderSegments(body, item.choices[selectedIdx].why[lang]);
+          fb.appendChild(body);
+
+          // 不正解時のみ「正解はこれ」を補足表示
+          if (!isCorrect) {
+            const cRow = document.createElement("div");
+            cRow.className = "feedback-correct-row";
+            const tag = document.createElement("span");
+            tag.className = "fc-tag";
+            tag.textContent =
+              "[" + t("correctAnswerTag") + "] " + keys[correctIdx];
+            cRow.appendChild(tag);
+            cRow.appendChild(
+              document.createTextNode(item.choices[correctIdx][lang]),
+            );
+            fb.appendChild(cRow);
+          }
+
+          const fbArea = document.getElementById("feedback-area");
+          fbArea.textContent = "";
+          fbArea.appendChild(fb);
+
+          const nextBtn = document.getElementById("btn-next");
+          nextBtn.textContent =
+            qIndex >= QUIZ.length - 1 ? t("quizLast") : t("quizNext");
+          nextBtn.style.display = "flex";
+          nextBtn.onclick = onNext;
+        }
+
+        function onNext() {
+          if (qIndex >= QUIZ.length - 1) {
+            finishQuiz();
+          } else {
+            qIndex++;
+            renderQuestion();
+          }
+        }
+
+        /* =========================================================
+           結果
+           ========================================================= */
+        function finishQuiz() {
+          document.getElementById("progress-fill").style.width = "100%";
+          renderResult();
+          showScreen("screen-result");
+        }
+
+        function getRank(score, total) {
+          const pct = (score / total) * 100;
+          const isJa = lang === "ja";
+          if (pct === 100) {
+            return {
+              tag: "★ ELITE OPERATOR",
+              title: isJa ? "完全制覇！" : "Flawless Run!",
+              sub: isJa
+                ? "claude-bug-bounty の設計図が頭の中で動いている人。"
+                : "You can already run the claude-bug-bounty mental model in your head.",
+              comment: isJa
+                ? [
+                    { t: "10/10、お見事です。", b: true },
+                    {
+                      t: " コマンド／エージェント／メモリの3層構造を完全に把握しています。次は手元のClaude Codeに実際にこの拡張を入れて、自分のターゲットで `/recon → /hunt → /validate → /report` を 1 周してみると、暗黙知が一気に経験知に変わります。",
+                    },
+                  ]
+                : [
+                    { t: "10/10. ", b: true },
+                    {
+                      t: "You've internalized the three-layer model of commands / agents / memory. Drop the extension into your own Claude Code, run a real `/recon → /hunt → /validate → /report` loop on a target, and tacit knowledge becomes lived experience.",
+                    },
+                  ],
+            };
+          }
+          if (pct >= 80) {
+            return {
+              tag: "★ SENIOR OPERATOR",
+              title: isJa ? "シニア級！" : "Senior Operator!",
+              sub: isJa
+                ? "コマンドとエージェントの責務分担をほぼ正確に押さえています。"
+                : "You're tracking the command / agent split pretty accurately.",
+              comment: isJa
+                ? [
+                    { t: "正答率 80% 以上は" },
+                    { t: "メンタルモデルが組み上がっている層", b: true },
+                    {
+                      t: "。あとはメモリ層（v4.2.0 のローテーション・並行書込）と Web3 監査の細部を1〜2回読み直せば、自分でこのリポジトリの README が書ける状態に近づきます。",
+                    },
+                  ]
+                : [
+                    {
+                      t: "80%+ means your mental model is in place. ",
+                      b: true,
+                    },
+                    {
+                      t: "Re-read the memory layer (v4.2.0 rotation & concurrency) and the Web3 audit details once or twice and you'll be close to being able to write this README yourself.",
+                    },
+                  ],
+            };
+          }
+          if (pct >= 60) {
+            return {
+              tag: "★ JUNIOR OPERATOR",
+              title: isJa ? "ジュニア級" : "Junior Operator",
+              sub: isJa
+                ? "全体像は掴めています。あと一歩。"
+                : "You see the shape. One more pass to go.",
+              comment: isJa
+                ? [
+                    { t: "「コマンド」「エージェント」「ルール」の" },
+                    { t: "3 つの層をそれぞれ独立に整理", b: true },
+                    {
+                      t: " するのが効きます。README の目次を眺めるだけでも 30 分かからないので、もう 1 周読んでから挑戦すると 80% 越えが見えてきます。",
+                    },
+                  ]
+                : [
+                    { t: "Separate the three layers — " },
+                    { t: "commands, agents, rules", b: true },
+                    {
+                      t: " — and re-organize them independently. The README outline alone is a 30-min read; one more pass gets you over 80%.",
+                    },
+                  ],
+            };
+          }
+          if (pct >= 30) {
+            return {
+              tag: "★ ROOKIE",
+              title: isJa ? "ルーキー" : "Rookie",
+              sub: isJa
+                ? "ここからの伸びしろが大きいフェーズ。"
+                : "Plenty of room to grow.",
+              comment: isJa
+                ? [
+                    { t: "まずは" },
+                    { t: "/recon → /hunt → /validate → /report", b: true },
+                    {
+                      t: " という 4 コマンドの直線フローを覚えるだけでも一気に景色が変わります。エージェント名はそのフローに 1 つずつ「専門担当」を貼り付ける形で覚えると忘れません。",
+                    },
+                  ]
+                : [
+                    { t: "Start by memorizing the linear flow " },
+                    { t: "/recon → /hunt → /validate → /report", b: true },
+                    {
+                      t: ". Then attach one specialist agent to each step — that mnemonic sticks.",
+                    },
+                  ],
+            };
+          }
+          return {
+            tag: "★ NEWCOMER",
+            title: isJa ? "ニューカマー" : "Newcomer",
+            sub: isJa
+              ? "リポジトリ README から始めるのがおすすめ。"
+              : "Start with the repo README.",
+            comment: isJa
+              ? [
+                  { t: "まずは " },
+                  { t: "GitHub の README を流し読み", b: true },
+                  {
+                    t: "して、`/recon`・`/hunt`・`/validate`・`/report` の 4 コマンドが何をする道具なのかだけ把握すれば十分。それを基準にもう一度クイズを試すと、急に当たり始めます。",
+                  },
+                ]
+              : [
+                  {
+                    t: "Skim the GitHub README first — just understand what the four commands ",
+                  },
+                  {
+                    t: "/recon, /hunt, /validate, /report",
+                    b: true,
+                  },
+                  {
+                    t: " do. Re-take the quiz from that anchor and your hit rate will jump.",
+                  },
+                ],
+          };
+        }
+
+        function renderResult() {
+          const correctCount = answers.filter(
+            (a) => a.selected === a.correctIdx,
+          ).length;
+          const wrongCount = QUIZ.length - correctCount;
+          const acc = Math.round((correctCount / QUIZ.length) * 100);
+          const rank = getRank(correctCount, QUIZ.length);
+
+          document.getElementById("result-rank").textContent = rank.tag;
+          document.getElementById("result-title").textContent = rank.title;
+          document.getElementById("result-sub").textContent = rank.sub;
+          document.getElementById("score-num").textContent = correctCount;
+          document.getElementById("score-ring").style.setProperty("--pct", acc);
+          document.getElementById("stat-correct").textContent = correctCount;
+          document.getElementById("stat-wrong").textContent = wrongCount;
+          document.getElementById("stat-acc").textContent = acc + "%";
+          renderSegments(
+            document.getElementById("result-comment"),
+            rank.comment,
+          );
+
+          const reviewGrid = document.getElementById("review-grid");
+          reviewGrid.textContent = "";
+          const keys = ["A", "B", "C", "D"];
+          QUIZ.forEach((item, i) => {
+            const ans = answers[i];
+            const isOk = ans && ans.selected === ans.correctIdx;
+            const row = document.createElement("div");
+            row.className = "review-item";
+
+            const mark = document.createElement("div");
+            mark.className = "review-mark " + (isOk ? "ok" : "ng");
+            mark.textContent = isOk ? "✓" : "✕";
+
+            const content = document.createElement("div");
+            content.className = "review-content";
+
+            const qLine = document.createElement("div");
+            qLine.className = "review-q";
+            qLine.textContent = "Q" + (i + 1) + ". " + item.q[lang];
+            content.appendChild(qLine);
+
+            if (ans) {
+              const aLine = document.createElement("div");
+              aLine.className = "review-a";
+              const yourTag = document.createElement("span");
+              yourTag.className = "review-a-tag";
+              yourTag.style.color = isOk ? "var(--success)" : "var(--danger)";
+              yourTag.textContent =
+                "[" + t("resultYour") + "] " + keys[ans.selected];
+              aLine.appendChild(yourTag);
+              aLine.appendChild(
+                document.createTextNode(item.choices[ans.selected][lang]),
+              );
+              content.appendChild(aLine);
+
+              if (!isOk) {
+                const cLine = document.createElement("div");
+                cLine.className = "review-a";
+                cLine.style.marginTop = "4px";
+                const cTag = document.createElement("span");
+                cTag.className = "review-a-tag";
+                cTag.style.color = "var(--success)";
+                cTag.textContent =
+                  "[" + t("resultAnswer") + "] " + keys[ans.correctIdx];
+                cLine.appendChild(cTag);
+                cLine.appendChild(
+                  document.createTextNode(item.choices[ans.correctIdx][lang]),
+                );
+                content.appendChild(cLine);
+              }
+            }
+
+            row.appendChild(mark);
+            row.appendChild(content);
+            reviewGrid.appendChild(row);
+          });
+        }
+
+        /* =========================================================
+           X (Twitter) シェア
+           ========================================================= */
+        function buildShareText(correct, total, acc) {
+          if (lang === "ja") {
+            return (
+              "「Claude Bug Bounty 機能クイズ」全 " +
+              total +
+              " 問中 " +
+              correct +
+              " 問正解（正答率 " +
+              acc +
+              "%）\n" +
+              "Claude Code 用バグバウンティ拡張 claude-bug-bounty の機能クイズに挑戦してみよう！\n\n" +
+              "#BugBountyQuizM"
+            );
+          }
+          return (
+            "I scored " +
+            correct +
+            "/" +
+            total +
+            " (" +
+            acc +
+            "%) on the Claude Bug Bounty Capability Quiz \n" +
+            "Try the trivia on the AI bug-bounty extension `claude-bug-bounty` for Claude Code!\n\n" +
+            "#BugBountyQuizM"
+          );
+        }
+
+        function onShare() {
+          const correct = answers.filter(
+            (a) => a.selected === a.correctIdx,
+          ).length;
+          const acc = Math.round((correct / QUIZ.length) * 100);
+          const text = buildShareText(correct, QUIZ.length, acc);
+          const url = location.href.split("#")[0];
+          const intent =
+            "https://x.com/intent/tweet?text=" +
+            encodeURIComponent(text) +
+            "&url=" +
+            encodeURIComponent(url);
+          window.open(intent, "_blank", "noopener,noreferrer");
+        }
+
+        /* =========================================================
+           イベントバインド
+           ========================================================= */
+        document.querySelectorAll(".lang-toggle button").forEach((btn) => {
+          btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+        });
+        document
+          .getElementById("btn-start")
+          .addEventListener("click", startQuiz);
+        document.getElementById("btn-share").addEventListener("click", onShare);
+        document
+          .getElementById("btn-retry")
+          .addEventListener("click", startQuiz);
+
+        /* =========================================================
+           パーティクル背景
+           ========================================================= */
+        (function initParticles() {
+          const canvas = document.getElementById("particles");
+          const ctx = canvas.getContext("2d");
+          let w = 0;
+          let h = 0;
+          let particles = [];
+          const reduce =
+            window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+          function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+          }
+
+          function create() {
+            particles = [];
+            const count = Math.max(28, Math.floor((w * h) / 32000));
+            for (let i = 0; i < count; i++) {
+              particles.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                r: Math.random() * 1.6 + 0.4,
+                vx: (Math.random() - 0.5) * 0.18,
+                vy: (Math.random() - 0.5) * 0.18,
+                alpha: Math.random() * 0.5 + 0.15,
+                hue: Math.random() < 0.5 ? "14, 165, 233" : "251, 146, 60",
+              });
+            }
+          }
+
+          function draw() {
+            ctx.clearRect(0, 0, w, h);
+            for (let i = 0; i < particles.length; i++) {
+              const p = particles[i];
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+              ctx.fillStyle = "rgba(" + p.hue + ", " + p.alpha + ")";
+              ctx.fill();
+              p.x += p.vx;
+              p.y += p.vy;
+              if (p.x < 0) p.x = w;
+              if (p.x > w) p.x = 0;
+              if (p.y < 0) p.y = h;
+              if (p.y > h) p.y = 0;
+            }
+            if (!reduce) requestAnimationFrame(draw);
+          }
+
+          resize();
+          create();
+          draw();
+          window.addEventListener("resize", () => {
+            resize();
+            create();
+          });
+        })();
+
+        /* =========================================================
+           初期化
+           ========================================================= */
+        applyI18n();
+        requestAnimationFrame(updateLangPill);
+        window.addEventListener("resize", updateLangPill);
+      })();
+    </script>
+  </body>
+</html>
