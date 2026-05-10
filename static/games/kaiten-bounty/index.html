@@ -1,0 +1,3668 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#04111e" />
+    <title>
+      回転バウンティ（Sushi Bounty）| Kaiten Bug Bounty Arcade
+    </title>
+    <meta
+      name="description"
+      content="回転寿司レーンを流れる「脆弱そうな機能」に正しい攻撃手法をぶつけて捌く、バグハンター向けアーケードゲーム『回転バウンティ（Sushi Bounty）』。"
+    />
+
+    <!-- ===== OGP / Twitter Card ===== -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="回転バウンティ（Sushi Bounty）| morioka12 game site"
+    />
+    <meta
+      property="og:description"
+      content="回転寿司レーンを流れる「脆弱そうな機能」に正しい攻撃手法をぶつけて捌く、バグハンター向けアーケードゲーム。"
+    />
+    <meta
+      property="og:url"
+      content="https://scgajge12.github.io/games/kaiten-bounty/"
+    />
+    <meta
+      property="og:image"
+      content="https://scgajge12.github.io/images/kaiten-bounty-ogp.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="回転バウンティ（Sushi Bounty）- morioka12 game site"
+    />
+    <meta property="og:site_name" content="morioka12 game site" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@scgajge12" />
+    <meta name="twitter:creator" content="@scgajge12" />
+    <meta
+      name="twitter:title"
+      content="回転バウンティ（Sushi Bounty）| morioka12 game site"
+    />
+    <meta
+      name="twitter:description"
+      content="回転寿司レーンを流れる「脆弱そうな機能」に正しい攻撃手法をぶつけて捌く、バグハンター向けアーケードゲーム。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://scgajge12.github.io/images/kaiten-bounty-ogp.png"
+    />
+    <style>
+      :root {
+        /* カワセミ（kingfisher）配色：BBH と統一 */
+        --bg: #04111e;
+        --bg2: #082336;
+        --bg3: #0e3149;
+        --surface: #103e58;
+        --surface-2: #154d6d;
+        --line: rgba(14, 165, 233, 0.2);
+        --line-strong: rgba(14, 165, 233, 0.5);
+
+        --text: #e6f4f9;
+        --text-muted: #93c5d8;
+        --text-dim: #5b8597;
+
+        --primary: #0891b2;
+        --primary-light: #22d3ee;
+        --primary-deep: #155e75;
+        --secondary: #f97316;
+        --secondary-light: #fb923c;
+        --accent: #fbbf24;
+        --gold: #fbbf24;
+        --success: #34d399;
+        --danger: #fb7185;
+
+        /* 寿司テーマのアクセント（醤油・木目） */
+        --shoyu: #3b1d09;
+        --wood: #6b3a1c;
+        --wood-light: #a05a2c;
+
+        --radius: 14px;
+        --radius-sm: 8px;
+        --shadow: 0 12px 40px rgba(14, 165, 233, 0.22);
+        --shadow-strong: 0 0 60px rgba(14, 165, 233, 0.4);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        height: 100%;
+        overflow-x: hidden;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+
+      body {
+        font-family:
+          "Inter", "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic",
+          "Noto Sans JP", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        /* セーフエリア（iPhone ノッチ／ホームインジケータ）対応 */
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+      }
+
+      /* 背景レイヤー（BBH と同等のカワセミ風） */
+      .bg-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .bg-grid {
+        background-image:
+          linear-gradient(
+            to right,
+            rgba(14, 165, 233, 0.04) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(14, 165, 233, 0.04) 1px,
+            transparent 1px
+          );
+        background-size: 56px 56px;
+        mask-image: radial-gradient(
+          ellipse at center,
+          rgba(0, 0, 0, 0.85) 0%,
+          rgba(0, 0, 0, 0.2) 70%,
+          transparent 100%
+        );
+      }
+      .bg-glow1 {
+        background: radial-gradient(
+          circle at 18% 12%,
+          rgba(14, 165, 233, 0.18),
+          transparent 55%
+        );
+      }
+      .bg-glow2 {
+        background: radial-gradient(
+          circle at 82% 88%,
+          rgba(251, 146, 60, 0.14),
+          transparent 60%
+        );
+      }
+      #particles {
+        z-index: 0;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 920px;
+        margin: 0 auto;
+        /* セーフエリア（iPhone ホームインジケータ）下部に追従 */
+        padding: 28px 20px max(80px, env(safe-area-inset-bottom));
+      }
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+        background: linear-gradient(135deg, var(--secondary), var(--accent));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #2a1402;
+        font-weight: 800;
+        font-size: 18px;
+        box-shadow: 0 0 20px rgba(251, 146, 60, 0.45);
+      }
+      .brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.15;
+      }
+      .brand-name {
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: var(--text);
+      }
+      .brand-sub {
+        font-size: 10.5px;
+        color: var(--text-dim);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .lang-toggle {
+        display: inline-flex;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 3px;
+        position: relative;
+        overflow: hidden;
+      }
+      .lang-toggle button {
+        background: transparent;
+        border: 0;
+        color: var(--text-muted);
+        padding: 7px 14px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        border-radius: 999px;
+        transition: color 0.2s;
+        position: relative;
+        z-index: 1;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .lang-toggle button.active {
+        color: #fff;
+      }
+      .lang-toggle .lang-pill {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        height: calc(100% - 6px);
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        border-radius: 999px;
+        transition:
+          transform 0.28s ease,
+          width 0.28s ease;
+        z-index: 0;
+        box-shadow: 0 0 16px rgba(14, 165, 233, 0.4);
+      }
+
+      .screen {
+        display: none;
+        animation: fadeIn 0.45s ease;
+      }
+      .screen.active {
+        display: block;
+      }
+
+      /* ============ START SCREEN ============ */
+      .start-hero {
+        text-align: center;
+        margin-top: 6px;
+        margin-bottom: 28px;
+      }
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        font-size: 11px;
+        letter-spacing: 2.5px;
+        color: var(--secondary-light);
+        background: rgba(251, 146, 60, 0.08);
+        border: 1px solid rgba(251, 146, 60, 0.3);
+        border-radius: 999px;
+        font-weight: 700;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .hero-tag-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--secondary);
+        box-shadow: 0 0 8px var(--secondary);
+        animation: blink 1.4s infinite;
+      }
+      .hero-title {
+        font-size: clamp(24px, 6.4vw, 46px);
+        font-weight: 900;
+        letter-spacing: -0.5px;
+        line-height: 1.18;
+        background: linear-gradient(
+          120deg,
+          var(--primary-light) 10%,
+          var(--secondary-light) 55%,
+          var(--accent) 95%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 12px;
+      }
+      .hero-sub {
+        color: var(--text-muted);
+        font-size: clamp(13.5px, 2vw, 15.5px);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .info-card {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 22px 26px;
+        margin-bottom: 22px;
+        position: relative;
+        overflow: hidden;
+      }
+      .info-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at top right,
+          rgba(14, 165, 233, 0.08),
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+      .info-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 16px;
+        position: relative;
+      }
+      .info-stat {
+        text-align: center;
+      }
+      .info-stat-num {
+        font-size: 26px;
+        font-weight: 900;
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--secondary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        font-feature-settings: "tnum";
+      }
+      .info-stat-label {
+        font-size: 11px;
+        color: var(--text-dim);
+        margin-top: 6px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      /* モード選択 */
+      .mode-select {
+        background: linear-gradient(160deg, var(--bg2), var(--surface));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        margin-bottom: 22px;
+      }
+      .mode-title {
+        font-size: 12px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .mode-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+      }
+      .mode-card {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 14px 16px;
+        background: var(--bg);
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        cursor: pointer;
+        text-align: left;
+        font-family: inherit;
+        transition: all 0.2s;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .mode-card:hover {
+        border-color: var(--primary);
+        color: var(--text);
+        transform: translateY(-1px);
+      }
+      .mode-card.selected {
+        border-color: var(--secondary);
+        background: rgba(251, 146, 60, 0.08);
+        color: var(--text);
+        box-shadow: 0 0 18px rgba(251, 146, 60, 0.2);
+      }
+      .mode-card-name {
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+      }
+      .mode-card-name .mode-icon {
+        margin-right: 6px;
+      }
+      .mode-card-desc {
+        font-size: 12px;
+        color: var(--text-dim);
+        line-height: 1.5;
+      }
+      .mode-card.selected .mode-card-desc {
+        color: var(--text-muted);
+      }
+
+      .start-btn-wrap {
+        text-align: center;
+      }
+      .btn-start {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 36px;
+        background: linear-gradient(135deg, var(--secondary), var(--accent));
+        border: 0;
+        color: #2a1402;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        box-shadow: 0 8px 32px rgba(251, 146, 60, 0.4);
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-start::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          120deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.25) 50%,
+          transparent 70%
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 40px rgba(251, 146, 60, 0.55);
+      }
+      .btn-start:hover::after {
+        transform: translateX(100%);
+      }
+      .start-note {
+        margin-top: 14px;
+        color: var(--text-dim);
+        font-size: 12px;
+      }
+
+      .howto {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        margin-bottom: 26px;
+      }
+      .howto-title {
+        font-size: 12px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .howto-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 13px;
+        color: var(--text-muted);
+        line-height: 1.65;
+      }
+      .howto-list li {
+        padding-left: 22px;
+        position: relative;
+      }
+      .howto-list li::before {
+        content: "▸";
+        position: absolute;
+        left: 6px;
+        top: 0;
+        color: var(--primary-light);
+        font-weight: 700;
+      }
+      .howto-list code {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 11.5px;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        padding: 1px 6px;
+        border-radius: 4px;
+        color: var(--accent);
+      }
+
+      /* ============ GAME SCREEN ============ */
+      .hud {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+      .hud-cell {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+        text-align: center;
+      }
+      .hud-label {
+        font-size: 9.5px;
+        color: var(--text-dim);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .hud-value {
+        font-size: 19px;
+        font-weight: 900;
+        color: var(--text);
+        font-feature-settings: "tnum";
+        margin-top: 3px;
+        line-height: 1.1;
+      }
+      .hud-value.score {
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--secondary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .hud-value.combo {
+        color: var(--accent);
+      }
+      .hud-value.combo.boost {
+        animation: comboBoost 0.4s ease;
+      }
+      .hud-value.timer.warn {
+        color: var(--danger);
+        animation: pulse 0.6s infinite;
+      }
+      .hud-lives {
+        font-size: 18px;
+        margin-top: 1px;
+        line-height: 1.1;
+        letter-spacing: 2px;
+      }
+      .hud-life {
+        display: inline-block;
+        transition:
+          opacity 0.3s,
+          transform 0.3s;
+      }
+      .hud-life.lost {
+        opacity: 0.18;
+        transform: scale(0.7);
+      }
+
+      /* タイマーバー */
+      .game-progress {
+        height: 5px;
+        background: var(--surface);
+        border-radius: 999px;
+        overflow: hidden;
+        margin-bottom: 18px;
+        border: 1px solid var(--line);
+      }
+      .game-progress-fill {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--primary),
+          var(--secondary),
+          var(--accent)
+        );
+        background-size: 200% 100%;
+        animation: shimmer 4s linear infinite;
+        transition: width 0.2s linear;
+        border-radius: 999px;
+        box-shadow: 0 0 12px rgba(14, 165, 233, 0.5);
+      }
+      .game-progress-fill.warn {
+        background: linear-gradient(90deg, var(--danger), var(--secondary));
+      }
+
+      /* 寿司レーン全体 */
+      .lane-stage {
+        position: relative;
+        margin-bottom: 16px;
+      }
+      .countdown {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: clamp(80px, 18vw, 140px);
+        font-weight: 900;
+        background: linear-gradient(
+          120deg,
+          var(--primary-light),
+          var(--secondary-light),
+          var(--accent)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        z-index: 5;
+        pointer-events: none;
+        animation: countdownPulse 0.7s ease;
+      }
+
+      /* 現在のターゲット皿 */
+      .target-stage {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 22px 26px;
+        position: relative;
+        overflow: hidden;
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .target-stage::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at top right,
+          rgba(251, 146, 60, 0.08),
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+      .target-card {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        animation: slideInFromRight 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .target-card.exit-correct {
+        animation: slideOutLeft 0.4s ease forwards;
+      }
+      .target-card.exit-wrong {
+        animation: shakeOut 0.5s ease forwards;
+      }
+      .target-card.exit-miss {
+        animation: dropOut 0.45s ease forwards;
+      }
+      .plate {
+        flex-shrink: 0;
+        position: relative;
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 30% 28%,
+          #e8e8ec 0%,
+          #c7c8cd 45%,
+          #8b8d94 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 56px;
+        line-height: 1;
+        box-shadow:
+          inset 0 -6px 14px rgba(0, 0, 0, 0.18),
+          inset 0 6px 14px rgba(255, 255, 255, 0.32),
+          0 8px 22px rgba(0, 0, 0, 0.4);
+        border: 3px solid #5a5d65;
+      }
+      .plate.gold {
+        background: radial-gradient(
+          circle at 30% 28%,
+          #fff5c2 0%,
+          #fbbf24 45%,
+          #b3760a 100%
+        );
+        border-color: #7a4f06;
+        box-shadow:
+          inset 0 -6px 14px rgba(122, 79, 6, 0.4),
+          inset 0 6px 14px rgba(255, 255, 255, 0.45),
+          0 0 28px rgba(251, 191, 36, 0.55);
+        animation: goldShine 1.4s ease-in-out infinite;
+      }
+      .plate.trap {
+        background: radial-gradient(
+          circle at 30% 28%,
+          #4a4a55 0%,
+          #1f1f28 50%,
+          #0a0a10 100%
+        );
+        border-color: #000;
+        box-shadow:
+          inset 0 -6px 14px rgba(0, 0, 0, 0.6),
+          inset 0 6px 14px rgba(255, 255, 255, 0.05),
+          0 0 22px rgba(251, 113, 133, 0.25);
+      }
+      .plate-timer {
+        position: absolute;
+        inset: -8px;
+        border-radius: 50%;
+        pointer-events: none;
+        background: conic-gradient(
+          from -90deg,
+          var(--primary-light) calc(var(--ptime) * 1%),
+          rgba(14, 165, 233, 0.15) calc(var(--ptime) * 1%)
+        );
+        -webkit-mask: radial-gradient(
+          circle,
+          transparent 53%,
+          black 53%,
+          black 60%,
+          transparent 60%
+        );
+        mask: radial-gradient(
+          circle,
+          transparent 53%,
+          black 53%,
+          black 60%,
+          transparent 60%
+        );
+        --ptime: 100;
+        transition: background 0.2s linear;
+      }
+      .plate-timer.warn {
+        background: conic-gradient(
+          from -90deg,
+          var(--danger) calc(var(--ptime) * 1%),
+          rgba(251, 113, 133, 0.15) calc(var(--ptime) * 1%)
+        );
+      }
+
+      .target-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .target-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 3px 10px;
+        background: rgba(251, 146, 60, 0.08);
+        border: 1px solid rgba(251, 146, 60, 0.25);
+        border-radius: 999px;
+        color: var(--secondary-light);
+        font-size: 10.5px;
+        letter-spacing: 1px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        margin-bottom: 8px;
+      }
+      .target-tag.gold {
+        color: var(--accent);
+        background: rgba(251, 191, 36, 0.1);
+        border-color: rgba(251, 191, 36, 0.4);
+      }
+      .target-tag.trap {
+        color: var(--text-muted);
+        background: rgba(0, 0, 0, 0.4);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+      .target-name {
+        font-size: 13px;
+        color: var(--text-dim);
+        letter-spacing: 1px;
+        margin-bottom: 4px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .target-func {
+        font-size: clamp(15px, 2.4vw, 18px);
+        line-height: 1.55;
+        color: var(--text);
+        font-weight: 700;
+      }
+      .target-func code {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 0.86em;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        padding: 1px 6px;
+        border-radius: 4px;
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      /* レーン（next 表示） */
+      .lane-belt {
+        position: relative;
+        background: repeating-linear-gradient(
+          90deg,
+          var(--shoyu) 0,
+          var(--shoyu) 28px,
+          var(--wood) 28px,
+          var(--wood) 32px
+        );
+        border: 1px solid rgba(160, 90, 44, 0.4);
+        border-radius: var(--radius-sm);
+        padding: 12px 14px;
+        overflow: hidden;
+        box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.45);
+      }
+      .lane-belt::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.35) 0%,
+          transparent 30%,
+          transparent 70%,
+          rgba(0, 0, 0, 0.45) 100%
+        );
+        pointer-events: none;
+      }
+      .lane-belt.move::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          90deg,
+          transparent 0,
+          transparent 28px,
+          rgba(255, 255, 255, 0.05) 28px,
+          rgba(255, 255, 255, 0.05) 32px
+        );
+        animation: beltMove 1.2s linear infinite;
+      }
+      .lane-next-row {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .lane-next-row::-webkit-scrollbar {
+        display: none;
+      }
+      .lane-arrow {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 14px;
+        flex-shrink: 0;
+      }
+      .lane-next-label {
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        color: rgba(255, 255, 255, 0.55);
+        text-transform: uppercase;
+        margin-right: 4px;
+        flex-shrink: 0;
+      }
+      .lane-mini {
+        flex-shrink: 0;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 28%, #d8d8dc 0%, #a0a1a8 70%);
+        border: 2px solid #4d4f55;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        line-height: 1;
+        box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.25);
+      }
+      .lane-mini.gold-mini {
+        background: radial-gradient(circle at 30% 28%, #fff0a8 0%, #d99405 70%);
+        border-color: #6a4304;
+      }
+      .lane-mini.trap-mini {
+        background: radial-gradient(circle at 30% 28%, #2d2d36 0%, #0a0a10 70%);
+        border-color: #000;
+      }
+
+      /* 攻撃選択ボタン */
+      .choices {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .choice {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px 16px;
+        background: var(--surface);
+        border: 1.5px solid var(--line);
+        color: var(--text);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        text-align: left;
+        font-size: 13.5px;
+        line-height: 1.5;
+        transition: all 0.18s;
+        position: relative;
+        font-family: inherit;
+        word-break: break-word;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .choice:hover:not(:disabled) {
+        border-color: var(--primary);
+        background: var(--surface-2);
+        transform: translateY(-1px);
+      }
+      .choice:disabled {
+        cursor: default;
+      }
+      .choice-key {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 7px;
+        background: rgba(14, 165, 233, 0.15);
+        border: 1px solid rgba(14, 165, 233, 0.3);
+        color: var(--primary-light);
+        font-size: 11px;
+        font-weight: 800;
+        flex-shrink: 0;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        margin-top: 1px;
+      }
+      .choice-text {
+        flex: 1;
+        font-weight: 600;
+      }
+      .choice.correct {
+        border-color: var(--success);
+        background: rgba(52, 211, 153, 0.12);
+        animation: correctFlash 0.5s ease;
+      }
+      .choice.correct .choice-key {
+        background: var(--success);
+        color: #04261b;
+        border-color: var(--success);
+      }
+      .choice.wrong {
+        border-color: var(--danger);
+        background: rgba(251, 113, 133, 0.12);
+        animation: wrongShake 0.4s ease;
+      }
+      .choice.wrong .choice-key {
+        background: var(--danger);
+        color: #2a0710;
+        border-color: var(--danger);
+      }
+      .choice.dim {
+        opacity: 0.45;
+      }
+
+      .pass-row {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .btn-pass {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 13px 16px;
+        background: var(--bg2);
+        border: 1.5px dashed var(--line-strong);
+        color: var(--text-muted);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        font-family: inherit;
+        transition: all 0.2s;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .btn-pass:hover:not(:disabled) {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: rgba(251, 191, 36, 0.06);
+      }
+      .btn-pass:disabled {
+        cursor: default;
+      }
+      .btn-pass.correct {
+        border: 1.5px solid var(--success);
+        background: rgba(52, 211, 153, 0.12);
+        color: var(--success);
+        animation: correctFlash 0.5s ease;
+      }
+      .btn-pass.wrong {
+        border: 1.5px solid var(--danger);
+        background: rgba(251, 113, 133, 0.12);
+        color: var(--danger);
+        animation: wrongShake 0.4s ease;
+      }
+      .btn-pass-key {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 28px;
+        height: 22px;
+        padding: 0 8px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        font-size: 10.5px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      /* 一時フィードバック吹き出し */
+      .toast {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--success);
+        border-radius: var(--radius-sm);
+        padding: 8px 14px;
+        font-size: 12.5px;
+        font-weight: 800;
+        color: var(--success);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        animation:
+          toastIn 0.25s ease,
+          toastOut 0.4s ease 0.9s forwards;
+        pointer-events: none;
+        z-index: 6;
+      }
+      .toast.wrong {
+        border-left-color: var(--danger);
+        color: var(--danger);
+      }
+      .toast.miss {
+        border-left-color: var(--text-dim);
+        color: var(--text-muted);
+      }
+      .toast.gold {
+        border-left-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* 退出ボタン */
+      .game-actions {
+        text-align: center;
+        margin-top: 18px;
+      }
+      .btn-quit {
+        background: transparent;
+        border: 1px dashed var(--text-dim);
+        color: var(--text-dim);
+        padding: 7px 18px;
+        border-radius: 999px;
+        font-size: 11.5px;
+        cursor: pointer;
+        font-family: inherit;
+        letter-spacing: 0.5px;
+      }
+      .btn-quit:hover {
+        color: var(--danger);
+        border-color: var(--danger);
+      }
+
+      /* ============ RESULT SCREEN ============ */
+      .result {
+        text-align: center;
+        max-width: 660px;
+        margin: 0 auto;
+      }
+      .result-rank-tag {
+        display: inline-block;
+        padding: 6px 18px;
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: var(--gold);
+        background: rgba(251, 191, 36, 0.08);
+        border: 1px solid rgba(251, 191, 36, 0.3);
+        border-radius: 999px;
+        font-weight: 700;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .result-title {
+        font-size: clamp(22px, 6vw, 44px);
+        font-weight: 900;
+        background: linear-gradient(
+          120deg,
+          var(--primary-light),
+          var(--secondary-light),
+          var(--accent)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.2;
+        margin-bottom: 10px;
+      }
+      .result-sub {
+        color: var(--text-muted);
+        margin-bottom: 30px;
+        font-size: 14px;
+      }
+
+      .score-display {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 24px;
+      }
+      .score-ring {
+        --pct: 0;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: conic-gradient(
+          from -90deg,
+          var(--primary) 0%,
+          var(--secondary) calc(var(--pct) * 0.5%),
+          var(--accent) calc(var(--pct) * 1%),
+          var(--surface-2) calc(var(--pct) * 1%)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-shadow: var(--shadow-strong);
+      }
+      .score-ring::before {
+        content: "";
+        position: absolute;
+        inset: 14px;
+        border-radius: 50%;
+        background: var(--bg);
+      }
+      .score-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+      }
+      .score-num {
+        font-size: 44px;
+        font-weight: 900;
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--secondary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        font-feature-settings: "tnum";
+      }
+      .score-label {
+        color: var(--text-dim);
+        font-size: 11px;
+        margin-top: 6px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .result-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-bottom: 28px;
+      }
+      .result-stat {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        padding: 14px 10px;
+      }
+      .result-stat-num {
+        font-size: 20px;
+        font-weight: 800;
+        color: var(--primary-light);
+        font-feature-settings: "tnum";
+      }
+      .result-stat-num.combo {
+        color: var(--accent);
+      }
+      .result-stat-num.acc {
+        color: var(--secondary-light);
+      }
+      .result-stat-num.miss {
+        color: var(--danger);
+      }
+      .result-stat-label {
+        font-size: 10px;
+        color: var(--text-dim);
+        letter-spacing: 1px;
+        margin-top: 4px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .result-comment {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        margin-bottom: 26px;
+        text-align: left;
+        font-size: 14px;
+        line-height: 1.75;
+        color: var(--text-muted);
+      }
+      .result-comment strong {
+        color: var(--text);
+      }
+
+      .result-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+      .btn-share-x {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 28px;
+        background: #000;
+        border: 1.5px solid #2a2a2a;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 800;
+        border-radius: 999px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+      .btn-share-x:hover {
+        background: #111;
+        border-color: #555;
+        transform: translateY(-2px);
+      }
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 28px;
+        background: transparent;
+        color: var(--primary-light);
+        font-size: 14px;
+        font-weight: 800;
+        border-radius: 999px;
+        border: 1.5px solid var(--primary);
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+      .btn-secondary:hover {
+        background: rgba(14, 165, 233, 0.12);
+        transform: translateY(-2px);
+      }
+
+      .review {
+        margin-top: 36px;
+        text-align: left;
+      }
+      .review-title {
+        font-size: 14px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        text-align: center;
+      }
+      .review-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .review-item {
+        display: flex;
+        gap: 12px;
+        padding: 14px 18px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+      }
+      .review-mark {
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 14px;
+      }
+      .review-mark.ok {
+        background: rgba(52, 211, 153, 0.18);
+        color: var(--success);
+      }
+      .review-mark.ng {
+        background: rgba(251, 113, 133, 0.18);
+        color: var(--danger);
+      }
+      .review-mark.miss {
+        background: rgba(91, 133, 151, 0.2);
+        color: var(--text-dim);
+      }
+      .review-content {
+        flex: 1;
+      }
+      .review-q {
+        color: var(--text);
+        font-weight: 600;
+        margin-bottom: 6px;
+        line-height: 1.5;
+      }
+      .review-q .review-icon {
+        margin-right: 6px;
+      }
+      .review-a {
+        color: var(--text-muted);
+        font-size: 12.5px;
+      }
+      .review-a-tag {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-weight: 700;
+        margin-right: 6px;
+      }
+
+      .footer {
+        margin-top: 60px;
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-dim);
+      }
+      .footer a {
+        color: var(--text-muted);
+        text-decoration: none;
+        border-bottom: 1px dotted var(--text-dim);
+      }
+      .footer a:hover {
+        color: var(--primary-light);
+        border-color: var(--primary-light);
+      }
+
+      /* ============ ANIMATIONS ============ */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: 0% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+      @keyframes comboBoost {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.25);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      @keyframes slideInFromRight {
+        from {
+          opacity: 0;
+          transform: translateX(80px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      @keyframes slideOutLeft {
+        to {
+          opacity: 0;
+          transform: translateX(-100px);
+        }
+      }
+      @keyframes shakeOut {
+        0% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-12px) rotate(-2deg);
+        }
+        40% {
+          transform: translateX(10px) rotate(2deg);
+        }
+        60% {
+          transform: translateX(-8px) rotate(-1deg);
+        }
+        80% {
+          transform: translateX(6px) rotate(1deg);
+        }
+        100% {
+          transform: translateX(0) rotate(0);
+          opacity: 0.4;
+        }
+      }
+      @keyframes dropOut {
+        to {
+          opacity: 0;
+          transform: translateY(40px) rotate(-12deg);
+        }
+      }
+      @keyframes correctFlash {
+        0%,
+        100% {
+          box-shadow: 0 0 0 rgba(52, 211, 153, 0);
+        }
+        50% {
+          box-shadow: 0 0 24px rgba(52, 211, 153, 0.55);
+        }
+      }
+      @keyframes wrongShake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-4px);
+        }
+        75% {
+          transform: translateX(4px);
+        }
+      }
+      @keyframes goldShine {
+        0%,
+        100% {
+          box-shadow:
+            inset 0 -6px 14px rgba(122, 79, 6, 0.4),
+            inset 0 6px 14px rgba(255, 255, 255, 0.45),
+            0 0 22px rgba(251, 191, 36, 0.45);
+        }
+        50% {
+          box-shadow:
+            inset 0 -6px 14px rgba(122, 79, 6, 0.4),
+            inset 0 6px 14px rgba(255, 255, 255, 0.55),
+            0 0 38px rgba(251, 191, 36, 0.85);
+        }
+      }
+      @keyframes beltMove {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-32px);
+        }
+      }
+      @keyframes countdownPulse {
+        0% {
+          transform: scale(1.6);
+          opacity: 0;
+        }
+        40% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(0.7);
+          opacity: 0;
+        }
+      }
+      @keyframes toastIn {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes toastOut {
+        to {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+      }
+      @keyframes plusScoreRise {
+        from {
+          opacity: 0;
+          transform: translate(-50%, 0) scale(0.7);
+        }
+        20% {
+          opacity: 1;
+          transform: translate(-50%, -10px) scale(1.1);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -60px) scale(1);
+        }
+      }
+
+      .plus-score {
+        position: absolute;
+        left: 50%;
+        top: 30%;
+        transform: translate(-50%, 0);
+        font-size: 22px;
+        font-weight: 900;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--accent)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        pointer-events: none;
+        animation: plusScoreRise 1s ease-out forwards;
+        z-index: 7;
+      }
+
+      /* ============ RESPONSIVE ============ */
+      /* タブレット〜スマホ：HUD と Result stats を 2x2 へ。Toast の位置調整。*/
+      @media (max-width: 520px) {
+        .hud {
+          grid-template-columns: 1fr 1fr;
+          gap: 6px;
+        }
+        .result-stats {
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }
+        .toast {
+          /* 縦積みカードのとき右上だと plate と被るので右下へ退避 */
+          top: auto;
+          bottom: 12px;
+          right: 12px;
+          font-size: 11.5px;
+          padding: 6px 12px;
+        }
+        .target-stage {
+          /* 縦積み時、Toast 用のスペースを下部に確保 */
+          padding-bottom: 44px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          padding: 22px 14px 60px;
+        }
+        .target-stage {
+          padding: 18px 18px;
+        }
+        .target-card {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+        .plate {
+          width: 90px;
+          height: 90px;
+          font-size: 44px;
+        }
+        .info-card,
+        .mode-select,
+        .howto {
+          padding: 18px 16px;
+        }
+        .top-bar {
+          flex-wrap: wrap;
+        }
+        .choices {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+        .choice {
+          padding: 13px 14px;
+          font-size: 13px;
+        }
+        .hud {
+          gap: 6px;
+        }
+        .hud-cell {
+          padding: 8px 6px;
+        }
+        .hud-value {
+          font-size: 16px;
+        }
+        .hud-lives {
+          font-size: 15px;
+        }
+        .lane-mini {
+          width: 32px;
+          height: 32px;
+          font-size: 18px;
+        }
+        .lane-next-label {
+          display: none;
+        }
+        .review-item {
+          padding: 12px 14px;
+          font-size: 12.5px;
+        }
+        .btn-share-x,
+        .btn-secondary {
+          padding: 13px 22px;
+          font-size: 13.5px;
+        }
+        .result-stats {
+          gap: 6px;
+        }
+        .result-stat-num {
+          font-size: 17px;
+        }
+        .result-stat-label {
+          font-size: 9.5px;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .page {
+          padding: 18px 12px 56px;
+        }
+        .brand-sub {
+          letter-spacing: 1px;
+          font-size: 9.5px;
+        }
+        .hero-tag {
+          letter-spacing: 1.5px;
+          font-size: 10.5px;
+          padding: 5px 12px;
+        }
+        .hero-sub {
+          font-size: 13px;
+        }
+        .target-func {
+          font-size: 14.5px;
+          line-height: 1.5;
+        }
+        .btn-start {
+          padding: 14px 28px;
+          font-size: 14px;
+        }
+        .info-stat-num {
+          font-size: 22px;
+        }
+        .score-ring {
+          width: 160px;
+          height: 160px;
+        }
+        .score-ring::before {
+          inset: 12px;
+        }
+        .score-num {
+          font-size: 36px;
+        }
+      }
+
+      @media (max-width: 340px) {
+        .brand-sub {
+          display: none;
+        }
+        .brand-name {
+          font-size: 12px;
+        }
+        .lang-toggle button {
+          padding: 6px 11px;
+          font-size: 11px;
+        }
+        .score-ring {
+          width: 140px;
+          height: 140px;
+        }
+        .score-ring::before {
+          inset: 11px;
+        }
+        .score-num {
+          font-size: 32px;
+        }
+        .hud-value {
+          font-size: 14.5px;
+        }
+        .hud-lives {
+          font-size: 14px;
+          letter-spacing: 1px;
+        }
+        .hud-cell {
+          padding: 7px 4px;
+        }
+        .target-stage {
+          padding: 16px 14px;
+        }
+        .target-stage {
+          padding-bottom: 40px;
+        }
+        .plate {
+          width: 78px;
+          height: 78px;
+          font-size: 36px;
+        }
+        .lane-mini {
+          width: 28px;
+          height: 28px;
+          font-size: 16px;
+        }
+        .lane-arrow {
+          font-size: 12px;
+        }
+        .choice {
+          padding: 11px 11px;
+          font-size: 12.5px;
+        }
+        .choice-key {
+          width: 22px;
+          height: 22px;
+          font-size: 10.5px;
+        }
+        .btn-pass {
+          font-size: 12px;
+          padding: 11px 12px;
+        }
+        .target-func {
+          font-size: 13.5px;
+          line-height: 1.5;
+        }
+        .target-name {
+          font-size: 12px;
+        }
+        .target-tag {
+          font-size: 10px;
+          padding: 2px 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-layer bg-grid"></div>
+    <div class="bg-layer bg-glow1"></div>
+    <div class="bg-layer bg-glow2"></div>
+    <canvas id="particles" class="bg-layer"></canvas>
+
+    <div class="page">
+      <header class="top-bar">
+        <a class="brand" href="../" title="morioka12 game site">
+          <div class="brand-mark">回</div>
+          <div class="brand-text">
+            <span class="brand-name" id="brand-name"></span>
+            <span class="brand-sub">KAITEN · SUSHI · BOUNTY</span>
+          </div>
+        </a>
+        <div class="lang-toggle" role="tablist" aria-label="Language">
+          <span class="lang-pill" id="lang-pill"></span>
+          <button data-lang="ja" class="active" role="tab">日本語</button>
+          <button data-lang="en" role="tab">EN</button>
+        </div>
+      </header>
+
+      <!-- ============ START SCREEN ============ -->
+      <section id="screen-start" class="screen active">
+        <div class="start-hero">
+          <div class="hero-tag">
+            <span class="hero-tag-dot"></span>
+            <span id="hero-tag-text"></span>
+          </div>
+          <h1 class="hero-title" id="hero-title"></h1>
+          <p class="hero-sub" id="hero-sub"></p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-grid">
+            <div class="info-stat">
+              <div class="info-stat-num">20</div>
+              <div class="info-stat-label" id="stat-label-vuln"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">60s</div>
+              <div class="info-stat-label" id="stat-label-time"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">3</div>
+              <div class="info-stat-label" id="stat-label-lives"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">x3.0</div>
+              <div class="info-stat-label" id="stat-label-combo"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mode-select">
+          <div class="mode-title" id="mode-title"></div>
+          <div class="mode-grid">
+            <button
+              class="mode-card selected"
+              data-mode="timeattack"
+              type="button"
+            >
+              <span class="mode-card-name">
+                <span class="mode-icon">⏱</span>
+                <span data-i18n="modeTimeName"></span>
+              </span>
+              <span class="mode-card-desc" data-i18n="modeTimeDesc"></span>
+            </button>
+            <button class="mode-card" data-mode="endless" type="button">
+              <span class="mode-card-name">
+                <span class="mode-icon">♾</span>
+                <span data-i18n="modeEndlessName"></span>
+              </span>
+              <span class="mode-card-desc" data-i18n="modeEndlessDesc"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="howto">
+          <div class="howto-title" id="howto-title"></div>
+          <ul class="howto-list" id="howto-list"></ul>
+        </div>
+
+        <div class="start-btn-wrap">
+          <button class="btn-start" id="btn-start">
+            <span id="btn-start-text"></span>
+            <span aria-hidden="true">→</span>
+          </button>
+          <div class="start-note" id="start-note"></div>
+        </div>
+      </section>
+
+      <!-- ============ GAME SCREEN ============ -->
+      <section id="screen-game" class="screen">
+        <div class="hud">
+          <div class="hud-cell">
+            <div class="hud-label" id="hud-label-time"></div>
+            <div class="hud-value timer" id="hud-time">--</div>
+          </div>
+          <div class="hud-cell">
+            <div class="hud-label" id="hud-label-lives"></div>
+            <div class="hud-lives" id="hud-lives">❤❤❤</div>
+          </div>
+          <div class="hud-cell">
+            <div class="hud-label" id="hud-label-score"></div>
+            <div class="hud-value score" id="hud-score">0</div>
+          </div>
+          <div class="hud-cell">
+            <div class="hud-label" id="hud-label-combo"></div>
+            <div class="hud-value combo" id="hud-combo">x1.0</div>
+          </div>
+        </div>
+
+        <div class="game-progress">
+          <div class="game-progress-fill" id="game-progress-fill"></div>
+        </div>
+
+        <div class="lane-stage">
+          <div class="target-stage" id="target-stage">
+            <div class="target-card" id="target-card">
+              <div class="plate" id="plate">
+                <div class="plate-timer" id="plate-timer"></div>
+                <span id="plate-icon">🍣</span>
+              </div>
+              <div class="target-info">
+                <span class="target-tag" id="target-tag"></span>
+                <div class="target-name" id="target-name"></div>
+                <div class="target-func" id="target-func"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lane-belt move">
+          <div class="lane-next-row">
+            <span class="lane-next-label" id="next-label"></span>
+            <span class="lane-arrow">←</span>
+            <div class="lane-mini" id="next-1">🍣</div>
+            <span class="lane-arrow">←</span>
+            <div class="lane-mini" id="next-2">🍣</div>
+            <span class="lane-arrow">←</span>
+            <div class="lane-mini" id="next-3">🍣</div>
+            <span class="lane-arrow">←</span>
+          </div>
+        </div>
+
+        <div class="choices" id="choices"></div>
+        <div class="pass-row">
+          <button class="btn-pass" id="btn-pass" type="button">
+            <span class="btn-pass-key">SPACE</span>
+            <span id="btn-pass-text"></span>
+          </button>
+        </div>
+
+        <div class="game-actions">
+          <button class="btn-quit" id="btn-quit" type="button">
+            <span id="btn-quit-text"></span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ============ RESULT SCREEN ============ -->
+      <section id="screen-result" class="screen">
+        <div class="result">
+          <div class="result-rank-tag" id="result-rank">★ HUNTER RANK</div>
+          <h2 class="result-title" id="result-title"></h2>
+          <p class="result-sub" id="result-sub"></p>
+
+          <div class="score-display">
+            <div class="score-ring" id="score-ring">
+              <div class="score-content">
+                <div class="score-num" id="score-num">0</div>
+                <div class="score-label" id="score-label">SCORE</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-stats">
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-caught">0</div>
+              <div class="result-stat-label" id="stat-lbl-caught"></div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat-num miss" id="stat-missed">0</div>
+              <div class="result-stat-label" id="stat-lbl-missed"></div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat-num combo" id="stat-maxcombo">0</div>
+              <div class="result-stat-label" id="stat-lbl-maxcombo"></div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat-num acc" id="stat-acc">0%</div>
+              <div class="result-stat-label" id="stat-lbl-acc"></div>
+            </div>
+          </div>
+
+          <div class="result-comment" id="result-comment"></div>
+
+          <div class="result-actions">
+            <button class="btn-share-x" id="btn-share">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631Zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                />
+              </svg>
+              <span id="btn-share-text"></span>
+            </button>
+            <button class="btn-secondary" id="btn-retry">
+              <span id="btn-retry-text"></span>
+            </button>
+          </div>
+
+          <div class="review">
+            <div class="review-title" id="review-title"></div>
+            <div class="review-grid" id="review-grid"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>
+          <span id="footer-by"></span>
+          <a
+            href="https://x.com/scgajge12"
+            target="_blank"
+            rel="noopener noreferrer"
+            >@scgajge12</a
+          >
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      "use strict";
+
+      /* =========================================================
+         I18N
+         ========================================================= */
+      const I18N = {
+        ja: {
+          brandName: "Sushi Bounty",
+          heroTag: "回転寿司 × バグバウンティ",
+          heroTitleLine1: "Sushi Bounty",
+          heroTitleLine2: "脆弱性を、捌け。",
+          heroSub:
+            "回転寿司レーンを流れる「脆弱そうな機能」に、正しい攻撃手法をぶつけて捌くアーケードゲーム。バグハンターが新しいスコープを開いた瞬間の「最初の一手」を、テンポよく擬似体験できます。",
+          statVuln: "脆弱性カテゴリ",
+          statTime: "プレイ時間",
+          statLives: "ライフ",
+          statCombo: "最大コンボ",
+          modeTitle: "// モード選択",
+          modeTimeName: "タイム・アタック",
+          modeTimeDesc:
+            "60 秒以内にできる限り多くの皿を捌く。誤答で残機減少（3 機）、時間切れで終了。",
+          modeEndlessName: "サバイバル",
+          modeEndlessDesc:
+            "時間制限なし。誤答 3 回でゲーム終了。皿の流れは徐々に速くなる。",
+          howtoTitle: "// 遊び方",
+          howto1:
+            "皿には「脆弱そうな機能」が貼られている。正しい攻撃手法を素早くタップ／クリック",
+          howto2:
+            "脆弱性が無い皿（黒い皿）には ___SPACE___ または「Pass」ボタンで見送り",
+          howto3:
+            "連続正解で ___COMBO___（最大 ×3.0）。金の皿は +500 点ボーナス",
+          howto4: "キーボードは ___K1234___ で 4 択、___SPACE___ で Pass",
+          startBtn: "挑戦する",
+          startNote: "※ 最後にスコアと X(Twitter) シェアボタンが表示されます",
+          hudTime: "残り時間",
+          hudLives: "ライフ",
+          hudScore: "スコア",
+          hudCombo: "コンボ",
+          passText: "Pass（脆弱性なし）",
+          quitText: "中断する",
+          nextLabel: "NEXT",
+          toastWrong: "MISS",
+          toastMiss: "TIMEOUT",
+          toastGold: "GOLD +500",
+          resultCaught: "捌いた皿",
+          resultMissed: "見逃し",
+          resultMaxCombo: "最大コンボ",
+          resultAcc: "正答率",
+          resultShare: "X (Twitter) でシェア",
+          resultRetry: "もう一度挑戦",
+          resultReview: "// 解答レビュー",
+          resultYour: "あなたの選択",
+          resultAnswer: "正解",
+          resultMissTag: "[見逃し]",
+          footerBy: "Created by ",
+          scoreLabel: "SCORE",
+        },
+        en: {
+          brandName: "Sushi Bounty",
+          heroTag: "Kaiten-Sushi × Bug Bounty",
+          heroTitleLine1: "Sushi Bounty",
+          heroTitleLine2: "Carve the bugs.",
+          heroSub:
+            "An arcade game where you hit each suspicious feature on the conveyor belt with the right attack class. Trains the gut feeling a bug hunter uses on a fresh scope — the very first move.",
+          statVuln: "Vuln categories",
+          statTime: "Playtime",
+          statLives: "Lives",
+          statCombo: "Max combo",
+          modeTitle: "// Mode select",
+          modeTimeName: "Time Attack",
+          modeTimeDesc:
+            "Carve as many plates as possible in 60s. 3 lives — game ends on timeout.",
+          modeEndlessName: "Survival",
+          modeEndlessDesc:
+            "No time limit. Game ends after 3 misses. Belt speeds up over time.",
+          howtoTitle: "// How to play",
+          howto1:
+            "Each plate carries a suspicious feature. Tap/click the right attack class quickly.",
+          howto2:
+            "Black plates have no vulnerability — pass with ___SPACE___ or the Pass button.",
+          howto3:
+            "Streaks build ___COMBO___ (up to x3.0). Gold plates give a +500 bonus.",
+          howto4:
+            "Keyboard: ___K1234___ for the 4 choices, ___SPACE___ to pass.",
+          startBtn: "Start",
+          startNote:
+            "* Your score and an X (Twitter) share button appear at the end.",
+          hudTime: "Time",
+          hudLives: "Lives",
+          hudScore: "Score",
+          hudCombo: "Combo",
+          passText: "Pass (no vuln)",
+          quitText: "Quit",
+          nextLabel: "NEXT",
+          toastWrong: "MISS",
+          toastMiss: "TIMEOUT",
+          toastGold: "GOLD +500",
+          resultCaught: "Caught",
+          resultMissed: "Missed",
+          resultMaxCombo: "Max combo",
+          resultAcc: "Accuracy",
+          resultShare: "Share on X",
+          resultRetry: "Try again",
+          resultReview: "// Plate review",
+          resultYour: "Your pick",
+          resultAnswer: "Correct",
+          resultMissTag: "[missed]",
+          footerBy: "Created by ",
+          scoreLabel: "SCORE",
+        },
+      };
+
+      /* =========================================================
+         攻撃カテゴリ（4 択ボタンに表示する正式名）
+         ========================================================= */
+      const ATTACKS = {
+        sqli: { ja: "SQL Injection", en: "SQL Injection" },
+        nosql: { ja: "NoSQL Injection", en: "NoSQL Injection" },
+        xss: {
+          ja: "Cross-Site Scripting (XSS)",
+          en: "Cross-Site Scripting (XSS)",
+        },
+        csrf: {
+          ja: "Cross-Site Request Forgery (CSRF)",
+          en: "Cross-Site Request Forgery (CSRF)",
+        },
+        ssrf: {
+          ja: "Server-Side Request Forgery (SSRF)",
+          en: "Server-Side Request Forgery (SSRF)",
+        },
+        idor: {
+          ja: "IDOR / Authorization Bypass",
+          en: "IDOR / Authorization Bypass",
+        },
+        rce: {
+          ja: "Remote Code Execution (RCE)",
+          en: "Remote Code Execution (RCE)",
+        },
+        rceUpload: {
+          ja: "RCE via File Upload",
+          en: "RCE via File Upload",
+        },
+        rceImage: {
+          ja: "RCE via ImageMagick (ImageTragick)",
+          en: "RCE via ImageMagick (ImageTragick)",
+        },
+        deser: {
+          ja: "Insecure Deserialization",
+          en: "Insecure Deserialization",
+        },
+        lfi: { ja: "Path Traversal / LFI", en: "Path Traversal / LFI" },
+        xxe: {
+          ja: "XML External Entity (XXE)",
+          en: "XML External Entity (XXE)",
+        },
+        oauth: {
+          ja: "OAuth Token Theft (redirect_uri)",
+          en: "OAuth Token Theft (redirect_uri)",
+        },
+        redirect: { ja: "Open Redirect", en: "Open Redirect" },
+        jwt: { ja: "JWT alg=none Bypass", en: "JWT alg=none Bypass" },
+        graphql: {
+          ja: "GraphQL Introspection 経由の情報漏洩",
+          en: "GraphQL Introspection Leak",
+        },
+        host: {
+          ja: "Host Header Injection",
+          en: "Host Header Injection",
+        },
+        brute: {
+          ja: "Brute Force (2FA Bypass)",
+          en: "Brute Force (2FA Bypass)",
+        },
+        clickjack: { ja: "Clickjacking", en: "Clickjacking" },
+        cookie: {
+          ja: "Cookie 窃取（XSS 連鎖）",
+          en: "Cookie Theft (XSS chain)",
+        },
+        atoToken: {
+          ja: "Account Takeover（トークン推測）",
+          en: "Account Takeover (Predictable Token)",
+        },
+        pass: { ja: "Pass — 脆弱性なし", en: "Pass — no vulnerability" },
+      };
+
+      /* =========================================================
+         正解難読化
+           - 各皿の正解 / 不正解選択肢は XOR + Base64 で隠蔽
+           - DevTools で `correct: "sqli"` のような形では読めなくする
+         ========================================================= */
+      const _CK = "K41T3nB0unTy42";
+      function _decodeChoices(payload) {
+        const bin = atob(payload);
+        const out = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) {
+          out[i] = bin.charCodeAt(i) ^ _CK.charCodeAt(i % _CK.length);
+        }
+        return JSON.parse(new TextDecoder().decode(out));
+      }
+      // 同じ皿に対して何度もデコードしないようキャッシュ
+      const _choicesCache = new WeakMap();
+      function getChoices(plate) {
+        let v = _choicesCache.get(plate);
+        if (!v) {
+          v = _decodeChoices(plate.cEnc);
+          _choicesCache.set(plate, v);
+        }
+        return v; // { c: "<correct>", w: [<wrong>...] }
+      }
+
+      /* =========================================================
+         寿司皿（脆弱性プール）
+         ========================================================= */
+      const PLATES = [
+        {
+          icon: "🍣",
+          name: { ja: "マグロ", en: "Tuna" },
+          func: {
+            ja: "検索フォーム：入力値を `SELECT * FROM items WHERE name='$q'` にそのまま埋め込み",
+            en: "Search form: input concatenated into `SELECT * FROM items WHERE name='$q'`",
+          },
+          cEnc: "MBZSdglMMUEZB3ZVFkVpDmp2XQExQRlMeFtMQTgWHXZAHTBWVzMp",
+        },
+        {
+          icon: "🍤",
+          name: { ja: "エビ", en: "Shrimp" },
+          func: {
+            ja: "コメント欄：投稿された本文を `innerHTML` で表示",
+            en: "Comment field: posted content rendered via `innerHTML`",
+          },
+          cEnc: "MBZSdglMOkMGTHhbQxBxbxMnQgIrEllMLAFREGcWQzFXBzBVFhp2JEk=",
+        },
+        {
+          icon: "🦑",
+          name: { ja: "イカ", en: "Squid" },
+          func: {
+            ja: "プロフィール画像アップロード：MIME タイプ検証のみで拡張子は素通し。`.php` を `Content-Type: image/jpeg` で送ると Web ルート配下に保存される",
+            en: "Profile-image upload: MIME-only check, extension not validated. `.php` sent as `Content-Type: image/jpeg` lands under the web root",
+          },
+          cEnc: "MBZSdglMMFMQOyQVW1MvFh12REx4a1cCMhAWHmlHQiZVTG4SHAo7CxZvNg==",
+        },
+        {
+          icon: "🐟",
+          name: { ja: "サーモン", en: "Salmon" },
+          func: {
+            ja: "URL プレビュー：サーバ側から任意 URL を fetch（内部 IP 制限なし）",
+            en: "URL preview: server-side fetch of any URL (no private-IP filter)",
+          },
+          cEnc: "MBZSdglMMUMHCHZVFkVpDmp2SxYnEllMJhxQWzlRUiARQmBTBhwyW2lP",
+        },
+        {
+          icon: "🥚",
+          name: { ja: "玉子", en: "Tamago" },
+          func: {
+            ja: "セッション Cookie：`HttpOnly` 未設定。XSS と組み合わせると…？",
+            en: "Session cookie: `HttpOnly` flag missing. Combined with XSS…?",
+          },
+          cEnc: "MBZSdglMIV8aBT0cFh5pQxNuaEwhQwcIdlUWUSddUj9ZDyFbV0J2CkVeIhZsKQ==",
+        },
+        {
+          icon: "🦀",
+          name: { ja: "カニ", en: "Crab" },
+          func: {
+            ja: "パスワードリセット：トークンが連番（`reset?token=10001`）",
+            en: "Password reset: sequential reset token (`reset?token=10001`)",
+          },
+          cEnc: "MBZSdglMI0QaOjsSUVxpGBMjEVQZEhwKOwsWHmlHQiZVTG4SDRYxW2lP",
+        },
+        {
+          icon: "🐙",
+          name: { ja: "タコ", en: "Octopus" },
+          func: {
+            ja: "退会 POST フォーム：CSRF トークン検証なし、Cookie 認証のみ",
+            en: "Account-delete POST: no CSRF token, Cookie auth only",
+          },
+          cEnc: "MBZSdglMIUMHCHZVFkVpDmp2Sx0xEllMJwpGVGkYEyZWCitCEA0gW2lP",
+        },
+        {
+          icon: "🥒",
+          name: { ja: "きゅうり巻き", en: "Cucumber Roll" },
+          func: {
+            ja: "XML 受付 API：外部実体参照（DOCTYPE）を許可",
+            en: "XML-accepting API: external entity references (DOCTYPE) allowed",
+          },
+          cEnc: "MBZSdglMOkgQTHhbQxBxbxMnQBwkEllMJwhYW2kYEzBWHSdCVzMp",
+        },
+        {
+          icon: "🍱",
+          name: { ja: "ちらし", en: "Chirashi" },
+          func: {
+            ja: "ユーザー API：`/api/users/{id}` で他ユーザーのプロフィール・設定を ID 直指定で取得／更新でき、所有者チェックなし",
+            en: "User API: `/api/users/{id}` lets you read/update other users' profiles by ID, no ownership check",
+          },
+          cEnc: "MBZSdglMK1QaHHZVFkVpDmp2QQ0nEllMJwhYW2kYEydAHCQSKBM=",
+        },
+        {
+          icon: "🍣",
+          name: { ja: "ウニ", en: "Sea Urchin" },
+          func: {
+            ja: "サーバが受け取ったバイナリ列を、検証なしで直接オブジェクト復元",
+            en: "Server reconstructs objects from a received binary blob with no validation",
+          },
+          cEnc: "MBZSdglMJlUGCyZbGBA8FgsPERwhVVdCdgpHQC0WHXZLFicSKBM=",
+        },
+        {
+          icon: "🍣",
+          name: { ja: "イクラ", en: "Salmon Roe" },
+          func: {
+            ja: "ログイン後リダイレクト：`?next=` の値をそのまま `Location:` ヘッダに",
+            en: "Post-login redirect: `?next=` echoed verbatim into `Location:`",
+          },
+          cEnc: "MBZSdglMMFURByYcV0ZpGBMjEVQZEgYdJh8WHmlXQiZVTG4SDR0nW2lP",
+        },
+        {
+          icon: "🥢",
+          name: { ja: "おしぼり", en: "Hand Towel" },
+          func: {
+            ja: "ファイルダウンローダ：`?file=../../etc/passwd` でも止まらない",
+            en: "File downloader: `?file=../../etc/passwd` is not blocked",
+          },
+          cEnc: "MBZSdglMLlYcTHhbQxBxbxMmUAtgHFcdJwtSEGcWQiVfB2BtCA==",
+        },
+        {
+          icon: "🍵",
+          name: { ja: "お茶", en: "Green Tea" },
+          func: {
+            ja: "JWT 認証：`alg: none` を許可しトークン署名を検証していない",
+            en: "JWT auth: `alg: none` accepted, token signature not verified",
+          },
+          cEnc: "MBZSdglMKEcBTHhbQxBxbxM9VwEwEllMNwpGVGkYEyxAHWBtCA==",
+        },
+        {
+          icon: "🍣",
+          name: { ja: "アジ", en: "Horse Mackerel" },
+          func: {
+            ja: "GraphQL エンドポイント：本番で `__schema` イントロスペクションが有効、隠しミューテーション（`deleteUser`、`internalDebugLog` 等）が外部から列挙できる",
+            en: "GraphQL endpoint: `__schema` introspection live in prod — hidden mutations (`deleteUser`, `internalDebugLog`, ...) are externally enumerable",
+          },
+          cEnc: "MBZSdglMJUIUHjwIWBBnFkZ2CTVgQwQCPVsYEDhHQzIRQmBIBh12JEk=",
+        },
+        {
+          icon: "🦐",
+          name: { ja: "甘エビ", en: "Sweet Shrimp" },
+          func: {
+            ja: "画像変換サーバ：ImageMagick に MVG／SVG 入力を許可",
+            en: "Image conversion server: ImageMagick accepts MVG/SVG inputs",
+          },
+          cEnc: "MBZSdglMMFMQJzkYU1dpGBMjEVQZEg0WMVsYEDhHQzIRQmBcEwd2JEk=",
+        },
+        {
+          icon: "🐡",
+          name: { ja: "フグ", en: "Pufferfish" },
+          func: {
+            ja: "OAuth 認可：`redirect_uri` が前方一致のみで完全一致検証なし",
+            en: "OAuth authz: `redirect_uri` only prefix-matched, no exact check",
+          },
+          cEnc: "MBZSdglMLVEAGjxbGBA8FgsPEQ0xQhNMeFtGVy9dQzFQGmAcVxYnChZvNg==",
+        },
+        {
+          icon: "🍣",
+          name: { ja: "ホタテ", en: "Scallop" },
+          func: {
+            ja: "パスワードリセットメール：`Host` ヘッダを信用してリンクを生成",
+            en: "Password-reset mail: link built from the trusted `Host` header",
+          },
+          cEnc: "MBZSdglMKl8GGnZVFkVpDmp2QB0wVldCdgtRViJGVDdHTG4SDR0nW2lP",
+        },
+        {
+          icon: "🍣",
+          name: { ja: "トロ", en: "Fatty Tuna" },
+          func: {
+            ja: "MongoDB ログイン：`{user, pass}` を JSON でそのまま受け、`$ne` を渡せる",
+            en: "MongoDB login: accepts `{user, pass}` JSON as-is, `$ne` operator passes",
+          },
+          cEnc: "MBZSdglMLF8GHzhbGBA8FgsPER0zXBxMeFtHQTlSE3gRFjFDVzMp",
+        },
+        {
+          icon: "🍣",
+          name: { ja: "サバ", en: "Mackerel" },
+          func: {
+            ja: "2FA コード入力：レートリミットなしで何度でも試行可能",
+            en: "2FA code input: no rate limit, unlimited retries",
+          },
+          cEnc: "MBZSdglMIEIAGjFbGBA8FgsPEQcmXwdMeFtXQTlSE3gRFjFDVzMp",
+        },
+        {
+          icon: "🐟",
+          name: { ja: "タイ", en: "Sea Bream" },
+          func: {
+            ja: "コメント欄：DOMPurify で適切にサニタイズ済み、CSP 適用、Cookie は `HttpOnly` + `Secure` + `SameSite`",
+            en: "Comments: sanitized via DOMPurify, CSP applied, cookies are `HttpOnly` + `Secure` + `SameSite`",
+          },
+          cEnc: "MBZSdglMMlEGHXZVFkVpDmp2Sx0xEllMNwpGVGkYEydCAisSWUw3FV1RIF5QN1hMH00=",
+          isTrap: true,
+        },
+      ];
+
+      const PLATE_EXPLAIN = {
+        sqli: {
+          ja: "クエリ文字列がそのまま SQL に展開されるため、`' OR 1=1--`（boolean）や `'; SLEEP(5)--`（time-based）が刺さる。第一手は `'` を 1 つ注入し、エラー応答 / 結果件数 / 応答時間の差分を観測すること。WAF で 500 が握り潰される現場も多いので、500 だけを当てにしない。",
+          en: "The query is concatenated into SQL verbatim — classics like `' OR 1=1--` (boolean) or `'; SLEEP(5)--` (time-based) land. First move: inject a single quote and watch for differences in errors, row counts, or response time. Don't rely on 500s alone — WAFs often swallow them.",
+        },
+        xss: {
+          ja: "投稿が `innerHTML` 経由で展開されるので、`<img src=x onerror=alert(1)>` や `<svg onload=alert(1)>` で任意 JS が走る Stored XSS。同一オリジンの Cookie / API トークンが盗まれる前提で評価する。CSP が無ければ即チェーン可。",
+          en: "Posts go through `innerHTML`, so `<img src=x onerror=alert(1)>` or `<svg onload=alert(1)>` lands stored XSS. Assume same-origin cookies/tokens are exfiltrable; if there's no CSP, it chains immediately.",
+        },
+        rceUpload: {
+          ja: "拡張子か MIME のどちらか片方しか見ていない実装は鉄板で抜ける。`.php.jpg` / 二重拡張子 / マジックバイト偽装（GIF89a 先頭 + PHP コード）が定番。保存先が Web ルート配下で `.php` がインタプリタに渡れば即 RCE。",
+          en: "Implementations that check only extension OR only MIME fall predictably. Classic tricks: `.php.jpg`, double extensions, magic-byte spoof (GIF89a header + PHP body). If the file lands under a web root and `.php` reaches the interpreter, it's RCE.",
+        },
+        ssrf: {
+          ja: "サーバから任意 URL を取りに行くので、`http://169.254.169.254/`（クラウドメタデータ）や `http://localhost:` でアタックサーフェスが内側へ広がる。",
+          en: "The server fetches any URL — `http://169.254.169.254/` (cloud metadata) or `http://localhost:` pivots you to the internal attack surface.",
+        },
+        cookie: {
+          ja: "`HttpOnly` 無しの Cookie は JS から `document.cookie` で読める。XSS と連鎖して即セッション窃取に化ける。",
+          en: "Cookies without `HttpOnly` are readable from JS via `document.cookie`. Chain it with XSS for instant session theft.",
+        },
+        atoToken: {
+          ja: "リセットトークンが連番だと、自分宛にリクエスト → 隣の値で他人のアカウントを乗っ取れる典型 ATO パターン。",
+          en: "Sequential reset tokens are a classic ATO: request your own, then walk the value to take over the next account.",
+        },
+        csrf: {
+          ja: "CSRF トークン or Origin/Referer 検証が無く Cookie 認証だけ、かつ **Cookie の SameSite が None または未設定**だと、悪性ページからの自動 POST で退会・送金が刺さる。SameSite=Lax は cross-site の POST に Cookie を付けないので、それ自体が緩和になる（ただしサブドメイン信頼や副作用 GET には依然弱い）。",
+          en: "Cookie auth without a CSRF token or Origin/Referer check, **with SameSite=None or unset**, lets a malicious page auto-POST account-delete or money-move. SameSite=Lax actually strips the cookie on cross-site POST — it is a real mitigation. Watch for subdomain trust and side-effecting GETs.",
+        },
+        xxe: {
+          ja: '外部実体参照（`<!ENTITY xxe SYSTEM "file:///etc/passwd">`）でローカルファイル読み出しや内部スキャン（XXE-SSRF）。XML パーサ側で外部実体を切るのが鉄則。',
+          en: 'External entities (`<!ENTITY xxe SYSTEM "file:///etc/passwd">`) leak local files or pivot internally (XXE-SSRF). Disable external entities at the parser.',
+        },
+        idor: {
+          ja: "ID をパスにそのまま渡し、所有者チェックが無い古典 IDOR。`/api/users/{me_id+1}` で隣人のレコードが返ってきたら勝ち確。UUID 化されていても、別エンドポイントから ID が漏れていれば結局通る。",
+          en: "Classic IDOR — IDs in the path with no ownership check. If `/api/users/{me+1}` returns the neighbor's record, you've already won. Even with UUIDs, if any other endpoint leaks them, you're back in business.",
+        },
+        deser: {
+          ja: "外部入力を直接オブジェクト復元すると、ガジェットチェーン経由で RCE まで一直線。Java／Ruby／Python／PHP どれでも該当。",
+          en: "Reconstructing objects from untrusted input maps directly to RCE via gadget chains — Java, Ruby, Python, PHP all in scope.",
+        },
+        redirect: {
+          ja: "`?next=https://evil.example` をそのまま `Location:` に入れると Open Redirect。フィッシングや OAuth トークン窃取の踏み台になる。",
+          en: "Echoing `?next=https://evil.example` into `Location:` is Open Redirect — a stepping stone for phishing and OAuth token theft.",
+        },
+        lfi: {
+          ja: "`../../etc/passwd` などで Web ルート外を読めると LFI。PHP なら `php://filter` ラッパや log poisoning で RCE まで化けることがある。",
+          en: "Reading outside the web root via `../../etc/passwd` is LFI. On PHP, `php://filter` wrappers or log poisoning can escalate to RCE.",
+        },
+        jwt: {
+          ja: '`alg: none` 受け入れは古典的な JWT バイパス。`{"alg":"none"}.<payload>.` で署名なしのトークンが通れば、任意ユーザに化けられる。',
+          en: 'Accepting `alg: none` is the classic JWT bypass — `{"alg":"none"}.<payload>.` lets you impersonate any user.',
+        },
+        graphql: {
+          ja: "introspection 単体は info disclosure だが、`deleteUser` のような認可漏れミューテーションや隠しフィールドが芋づる式に見える。攻撃面の地図を相手から渡されている状態。`graphql-voyager` などでビジュアライズし、手薄なミューテーションを順に叩く。",
+          en: "Introspection alone is just info disclosure, but it surfaces authz-broken mutations like `deleteUser` and hidden fields — you've been handed the attack-surface map. Run it through `graphql-voyager` and walk every mutation that lacks proper authz.",
+        },
+        rceImage: {
+          ja: "ImageMagick に MVG/SVG を食わせる ImageTragick (CVE-2016-3714) 系。`fill 'url(\"|cmd\")'` のようなコマンド注入や、`label:@/etc/passwd` でのファイル読み出しが定番。policy.xml で MVG / EPHEMERAL / URL coder を切るのが正攻法。",
+          en: "Feeding MVG/SVG to ImageMagick is ImageTragick (CVE-2016-3714). Standard payloads: `fill 'url(\"|cmd\")'` for command injection, `label:@/etc/passwd` for file reads. The fix is disabling MVG / EPHEMERAL / URL coders in policy.xml.",
+        },
+        oauth: {
+          ja: "trailing slash の検証が無い prefix match だと、`https://victim.example.com.attacker.example/cb` のような派生ホストが `startsWith('https://victim.example.com')` を素通りし、認可コードを奪える。**path まで含めた完全一致**が原則。OAuth の `state` 漏洩や implicit flow の `#` フラグメント露出も併せてチェック。",
+          en: "Prefix matching without a trailing-slash check lets `https://victim.example.com.attacker.example/cb` pass `startsWith('https://victim.example.com')` and steal the auth code. **Exact match including the path** is the rule. Also check `state` leakage and implicit-flow `#` fragment exposure.",
+        },
+        host: {
+          ja: "`Host` ヘッダを信頼してリセットリンクを組み立てると、攻撃者が `Host: attacker.example` で送り、被害者がそのリンクを踏んだ瞬間に乗っ取り。",
+          en: "Trusting `Host` to build reset links lets an attacker send `Host: attacker.example` — the victim clicks the link and gets taken over.",
+        },
+        nosql: {
+          ja: '`{user: "a", pass: {$ne: null}}` のような演算子が JSON 経由で通ると認証回避。MongoDB／CouchDB 系で常識的なペイロード。',
+          en: 'Operators like `{user: "a", pass: {$ne: null}}` slipping through JSON bypass auth — bread-and-butter on MongoDB / CouchDB.',
+        },
+        brute: {
+          ja: "2FA がレートリミットなしなら 6 桁 = 100 万通りを総当たりで割れる。実装の落とし穴の中でも報奨に直結しやすい。",
+          en: "Without rate limiting, a 6-digit 2FA code is just 1M tries. One of the highest-paid implementation slips around.",
+        },
+        pass: {
+          ja: "サニタイズ・CSP・Cookie 強化が揃った皿は触らないのが正解。**誤検知を出さない**のもプロハンターの腕。",
+          en: "When sanitization, CSP, and cookie hardening are all in place — leave it alone. **Avoiding false positives** is half the craft.",
+        },
+      };
+
+      /* =========================================================
+         状態
+         ========================================================= */
+      const TIME_ATTACK_DURATION = 60;
+      const PLATE_TIME_BASE = 8.0;
+      const PLATE_TIME_MIN = 4.5;
+      const ENDLESS_LIVES = 3;
+      const TIME_ATTACK_LIVES = 3;
+      const GOLD_PROBABILITY = 0.07;
+
+      let lang = "ja";
+      try {
+        const stored = localStorage.getItem("str_lang");
+        if (stored === "ja" || stored === "en") lang = stored;
+      } catch (e) {}
+
+      let mode = "timeattack";
+      let session = null;
+      let rafId = null;
+      let plateRafId = null;
+      let countdownTimerId = null;
+
+      function t(key) {
+        return I18N[lang][key] !== undefined ? I18N[lang][key] : key;
+      }
+
+      /* =========================================================
+         I18N 適用
+         ========================================================= */
+      function applyI18n() {
+        document.documentElement.lang = lang;
+
+        document.getElementById("brand-name").textContent = t("brandName");
+        document.getElementById("hero-tag-text").textContent = t("heroTag");
+
+        const heroTitle = document.getElementById("hero-title");
+        heroTitle.textContent = "";
+        heroTitle.appendChild(document.createTextNode(t("heroTitleLine1")));
+        heroTitle.appendChild(document.createElement("br"));
+        heroTitle.appendChild(document.createTextNode(t("heroTitleLine2")));
+
+        document.getElementById("hero-sub").textContent = t("heroSub");
+        document.getElementById("stat-label-vuln").textContent = t("statVuln");
+        document.getElementById("stat-label-time").textContent = t("statTime");
+        document.getElementById("stat-label-lives").textContent =
+          t("statLives");
+        document.getElementById("stat-label-combo").textContent =
+          t("statCombo");
+
+        document.getElementById("mode-title").textContent = t("modeTitle");
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          el.textContent = t(el.dataset.i18n);
+        });
+
+        document.getElementById("howto-title").textContent = t("howtoTitle");
+        renderHowto();
+
+        document.getElementById("btn-start-text").textContent = t("startBtn");
+        document.getElementById("start-note").textContent = t("startNote");
+
+        document.getElementById("hud-label-time").textContent = t("hudTime");
+        document.getElementById("hud-label-lives").textContent = t("hudLives");
+        document.getElementById("hud-label-score").textContent = t("hudScore");
+        document.getElementById("hud-label-combo").textContent = t("hudCombo");
+        document.getElementById("btn-pass-text").textContent = t("passText");
+        document.getElementById("btn-quit-text").textContent = t("quitText");
+        document.getElementById("next-label").textContent = t("nextLabel");
+
+        document.getElementById("score-label").textContent = t("scoreLabel");
+        document.getElementById("stat-lbl-caught").textContent =
+          t("resultCaught");
+        document.getElementById("stat-lbl-missed").textContent =
+          t("resultMissed");
+        document.getElementById("stat-lbl-maxcombo").textContent =
+          t("resultMaxCombo");
+        document.getElementById("stat-lbl-acc").textContent = t("resultAcc");
+        document.getElementById("btn-share-text").textContent =
+          t("resultShare");
+        document.getElementById("btn-retry-text").textContent =
+          t("resultRetry");
+        document.getElementById("review-title").textContent = t("resultReview");
+        document.getElementById("footer-by").textContent = t("footerBy");
+
+        if (
+          !session &&
+          !document.getElementById("screen-game").classList.contains("active")
+        ) {
+          document.getElementById("hud-time").textContent =
+            mode === "timeattack" ? TIME_ATTACK_DURATION + "s" : "∞";
+        }
+      }
+
+      /* 遊び方の li を構築 */
+      function renderHowto() {
+        const ul = document.getElementById("howto-list");
+        ul.textContent = "";
+        ["howto1", "howto2", "howto3", "howto4"].forEach((k) => {
+          const li = document.createElement("li");
+          renderTokenized(li, t(k));
+          ul.appendChild(li);
+        });
+      }
+
+      /* ___SPACE___ ___COMBO___ ___K1234___ をスタイル付き要素に置換（split ベース） */
+      function renderTokenized(target, text) {
+        const parts = text.split(/(___SPACE___|___COMBO___|___K1234___)/g);
+        for (const part of parts) {
+          if (part === "___SPACE___") {
+            target.appendChild(makeKbd("Space"));
+          } else if (part === "___COMBO___") {
+            target.appendChild(
+              makeStrong("×1.5 → ×2.0 → ×3.0", "var(--accent)"),
+            );
+          } else if (part === "___K1234___") {
+            ["1", "2", "3", "4"].forEach((k, i) => {
+              if (i > 0) target.appendChild(document.createTextNode(" "));
+              target.appendChild(makeKbd(k));
+            });
+          } else if (part) {
+            target.appendChild(document.createTextNode(part));
+          }
+        }
+      }
+
+      function makeKbd(label) {
+        const k = document.createElement("code");
+        k.textContent = label;
+        return k;
+      }
+      function makeStrong(label, color) {
+        const span = document.createElement("strong");
+        span.style.color = color;
+        span.textContent = label;
+        return span;
+      }
+
+      /* バッククォート区間を <code> に展開（split ベース） */
+      function renderFuncText(target, text) {
+        target.textContent = "";
+        const parts = text.split("`");
+        for (let i = 0; i < parts.length; i++) {
+          if (i % 2 === 0) {
+            if (parts[i]) target.appendChild(document.createTextNode(parts[i]));
+          } else {
+            const code = document.createElement("code");
+            code.textContent = parts[i];
+            target.appendChild(code);
+          }
+        }
+      }
+
+      function updateLangPill() {
+        const pill = document.getElementById("lang-pill");
+        const buttons = document.querySelectorAll(".lang-toggle button");
+        const active = document.querySelector(
+          '.lang-toggle button[data-lang="' + lang + '"]',
+        );
+        if (!active || !pill) return;
+        buttons.forEach((b) => b.classList.toggle("active", b === active));
+        pill.style.width = active.offsetWidth + "px";
+        pill.style.transform = "translateX(" + (active.offsetLeft - 3) + "px)";
+      }
+
+      function setLanguage(next) {
+        if (lang === next) return;
+        lang = next;
+        try {
+          localStorage.setItem("str_lang", lang);
+        } catch (e) {}
+        applyI18n();
+        updateLangPill();
+        if (session && !session.ended) {
+          renderActivePlate();
+        }
+        if (
+          document.getElementById("screen-result").classList.contains("active")
+        ) {
+          renderResult();
+        }
+      }
+
+      /* =========================================================
+         画面切り替え
+         ========================================================= */
+      function showScreen(id) {
+        document
+          .querySelectorAll(".screen")
+          .forEach((s) => s.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      /* =========================================================
+         プール抽選
+         ========================================================= */
+      function pickPlate(prevIcon) {
+        const wantTrap = Math.random() < 0.13;
+        const pool = PLATES.filter((p) => {
+          if (wantTrap) return p.isTrap === true;
+          return !p.isTrap && p.icon !== prevIcon;
+        });
+        const list = pool.length > 0 ? pool : PLATES;
+        return list[Math.floor(Math.random() * list.length)];
+      }
+
+      function buildQueue() {
+        const q = [];
+        let prev = null;
+        for (let i = 0; i < 4; i++) {
+          const p = pickPlate(prev ? prev.plate.icon : null);
+          q.push({
+            plate: p,
+            isGold: !p.isTrap && Math.random() < GOLD_PROBABILITY,
+          });
+          prev = q[q.length - 1];
+        }
+        return q;
+      }
+
+      function shuffleArray(arr) {
+        const a = arr.slice();
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const tmp = a[i];
+          a[i] = a[j];
+          a[j] = tmp;
+        }
+        return a;
+      }
+
+      /* =========================================================
+         ゲーム開始
+         ========================================================= */
+      function startGame() {
+        cancelAnimationFrame(rafId);
+        cancelAnimationFrame(plateRafId);
+        clearTimeout(countdownTimerId);
+
+        session = {
+          mode: mode,
+          startedAt: 0,
+          remainingTime:
+            mode === "timeattack" ? TIME_ATTACK_DURATION : Infinity,
+          lives: mode === "timeattack" ? TIME_ATTACK_LIVES : ENDLESS_LIVES,
+          score: 0,
+          combo: 1.0,
+          consecutiveCorrect: 0,
+          maxCombo: 1.0,
+          caught: 0,
+          missed: 0,
+          history: [],
+          queue: buildQueue(),
+          activeStartedAt: 0,
+          activeDuration: 0,
+          choiceKeys: [],
+          answered: false,
+          paused: true,
+          ended: false,
+          plateIndex: 0,
+        };
+
+        document.getElementById("hud-score").textContent = "0";
+        document.getElementById("hud-combo").textContent = "x1.0";
+        document.getElementById("hud-time").textContent =
+          mode === "timeattack" ? TIME_ATTACK_DURATION + "s" : "∞";
+        document.getElementById("hud-time").classList.remove("warn");
+        const fill = document.getElementById("game-progress-fill");
+        fill.style.width = "100%";
+        fill.classList.remove("warn");
+        renderLives();
+
+        showScreen("screen-game");
+        runCountdown(() => {
+          session.startedAt = performance.now();
+          session.paused = false;
+          renderActivePlate();
+          startMainLoop();
+        });
+      }
+
+      function runCountdown(done) {
+        const stage = document.getElementById("target-stage");
+        const card = document.getElementById("target-card");
+        card.style.visibility = "hidden";
+
+        const labels = ["3", "2", "1", "GO!"];
+        let idx = 0;
+        const tick = () => {
+          const exist = stage.querySelector(".countdown");
+          if (exist) exist.remove();
+          if (idx >= labels.length) {
+            card.style.visibility = "";
+            done();
+            return;
+          }
+          const el = document.createElement("div");
+          el.className = "countdown";
+          el.textContent = labels[idx];
+          stage.appendChild(el);
+          idx++;
+          countdownTimerId = setTimeout(tick, 700);
+        };
+        tick();
+      }
+
+      /* =========================================================
+         皿の表示
+         ========================================================= */
+      function currentPlateTimeAllowance() {
+        if (mode === "timeattack") {
+          const ratio = Math.min(
+            1,
+            (TIME_ATTACK_DURATION - session.remainingTime) /
+              TIME_ATTACK_DURATION,
+          );
+          return PLATE_TIME_BASE - (PLATE_TIME_BASE - PLATE_TIME_MIN) * ratio;
+        }
+        const ratio = Math.min(1, session.plateIndex / 25);
+        return PLATE_TIME_BASE - (PLATE_TIME_BASE - PLATE_TIME_MIN) * ratio;
+      }
+
+      function renderActivePlate() {
+        if (!session || session.ended) return;
+        const head = session.queue[0];
+        const item = head.plate;
+        const isGold = head.isGold;
+        const isTrap = !!item.isTrap;
+
+        const plateEl = document.getElementById("plate");
+        plateEl.classList.remove("gold", "trap");
+        if (isGold) plateEl.classList.add("gold");
+        if (isTrap) plateEl.classList.add("trap");
+        document.getElementById("plate-icon").textContent = item.icon;
+
+        const tagEl = document.getElementById("target-tag");
+        tagEl.classList.remove("gold", "trap");
+        if (isGold) {
+          tagEl.classList.add("gold");
+          tagEl.textContent = "GOLD · +500";
+        } else if (isTrap) {
+          tagEl.classList.add("trap");
+          tagEl.textContent = lang === "ja" ? "BLACK · 罠" : "BLACK · trap";
+        } else {
+          tagEl.textContent = "PLATE #" + (session.plateIndex + 1);
+        }
+
+        document.getElementById("target-name").textContent = item.name[lang];
+        renderFuncText(document.getElementById("target-func"), item.func[lang]);
+
+        // Pass プレートの場合、4 択ボタンには pass を含めず wrong のみ表示。
+        // 正解は Pass ボタン側で取る。
+        const ans = getChoices(item);
+        const choiceKeys =
+          ans.c === "pass"
+            ? shuffleArray(ans.w).slice(0, 4)
+            : shuffleArray([ans.c, ...ans.w]);
+        session.choiceKeys = choiceKeys;
+        const choicesEl = document.getElementById("choices");
+        choicesEl.textContent = "";
+        const labels = ["1", "2", "3", "4"];
+        choiceKeys.forEach((k, idx) => {
+          const btn = document.createElement("button");
+          btn.className = "choice";
+          btn.type = "button";
+
+          const key = document.createElement("span");
+          key.className = "choice-key";
+          key.textContent = labels[idx];
+
+          const text = document.createElement("span");
+          text.className = "choice-text";
+          text.textContent = ATTACKS[k][lang];
+
+          btn.appendChild(key);
+          btn.appendChild(text);
+
+          btn.addEventListener("click", () => onAnswer(idx));
+          choicesEl.appendChild(btn);
+        });
+        const passBtn = document.getElementById("btn-pass");
+        passBtn.classList.remove("correct", "wrong");
+        passBtn.disabled = false;
+
+        const minis = ["next-1", "next-2", "next-3"];
+        for (let i = 0; i < 3; i++) {
+          const el = document.getElementById(minis[i]);
+          const next = session.queue[i + 1];
+          el.classList.remove("gold-mini", "trap-mini");
+          if (!next) {
+            el.textContent = "";
+            continue;
+          }
+          el.textContent = next.plate.icon;
+          if (next.isGold) el.classList.add("gold-mini");
+          if (next.plate.isTrap) el.classList.add("trap-mini");
+        }
+
+        const allowance = currentPlateTimeAllowance();
+        session.activeStartedAt = performance.now();
+        session.activeDuration = allowance * 1000;
+        session.answered = false;
+        const ringEl = document.getElementById("plate-timer");
+        ringEl.classList.remove("warn");
+        ringEl.style.setProperty("--ptime", "100");
+
+        const card = document.getElementById("target-card");
+        card.classList.remove("exit-correct", "exit-wrong", "exit-miss");
+        card.style.animation = "none";
+        // eslint-disable-next-line no-unused-expressions
+        void card.offsetWidth;
+        card.style.animation = "";
+
+        runPlateTimer();
+      }
+
+      /* =========================================================
+         皿の制限時間（リング）
+         ========================================================= */
+      function runPlateTimer() {
+        cancelAnimationFrame(plateRafId);
+        const ringEl = document.getElementById("plate-timer");
+        const tick = () => {
+          if (!session || session.paused || session.ended || session.answered) {
+            return;
+          }
+          const elapsed = performance.now() - session.activeStartedAt;
+          const remain = Math.max(0, session.activeDuration - elapsed);
+          const pct = (remain / session.activeDuration) * 100;
+          ringEl.style.setProperty("--ptime", pct.toFixed(1));
+          if (pct < 30) ringEl.classList.add("warn");
+          else ringEl.classList.remove("warn");
+          if (remain <= 0) {
+            onTimeout();
+            return;
+          }
+          plateRafId = requestAnimationFrame(tick);
+        };
+        plateRafId = requestAnimationFrame(tick);
+      }
+
+      /* =========================================================
+         メインループ（残り時間 / HUD 更新）
+         ========================================================= */
+      function startMainLoop() {
+        cancelAnimationFrame(rafId);
+        const tick = () => {
+          if (!session || session.ended) return;
+          if (!session.paused) {
+            if (mode === "timeattack") {
+              const elapsed = (performance.now() - session.startedAt) / 1000;
+              session.remainingTime = Math.max(
+                0,
+                TIME_ATTACK_DURATION - elapsed,
+              );
+              const tt = session.remainingTime;
+              const tEl = document.getElementById("hud-time");
+              tEl.textContent = tt.toFixed(1) + "s";
+              if (tt <= 10) tEl.classList.add("warn");
+              else tEl.classList.remove("warn");
+              const fill = document.getElementById("game-progress-fill");
+              fill.style.width = (tt / TIME_ATTACK_DURATION) * 100 + "%";
+              if (tt <= 10) fill.classList.add("warn");
+              else fill.classList.remove("warn");
+              if (tt <= 0) {
+                endGame("time");
+                return;
+              }
+            } else {
+              const livesPct = (session.lives / ENDLESS_LIVES) * 100;
+              const fill = document.getElementById("game-progress-fill");
+              fill.style.width = livesPct + "%";
+              if (session.lives <= 1) fill.classList.add("warn");
+              else fill.classList.remove("warn");
+              document.getElementById("hud-time").textContent = "∞";
+            }
+          }
+          rafId = requestAnimationFrame(tick);
+        };
+        rafId = requestAnimationFrame(tick);
+      }
+
+      /* =========================================================
+         回答
+         ========================================================= */
+      function onAnswer(choiceIdx) {
+        if (!session || session.answered || session.paused || session.ended)
+          return;
+        session.answered = true;
+        const head = session.queue[0];
+        const correctKey = getChoices(head.plate).c;
+        const pickedKey = session.choiceKeys[choiceIdx];
+        const isCorrect = pickedKey === correctKey;
+        applyResult(isCorrect, "answer", choiceIdx, pickedKey);
+      }
+
+      function onPass() {
+        if (!session || session.answered || session.paused || session.ended)
+          return;
+        session.answered = true;
+        const head = session.queue[0];
+        const isCorrect = getChoices(head.plate).c === "pass";
+        applyResult(isCorrect, "pass", -1, "pass");
+      }
+
+      function onTimeout() {
+        if (!session || session.answered || session.paused || session.ended)
+          return;
+        session.answered = true;
+        applyResult(false, "timeout", -1, null);
+      }
+
+      function applyResult(isCorrect, mode2, choiceIdx, pickedKey) {
+        const head = session.queue[0];
+        const plate = head.plate;
+        const isGold = head.isGold;
+        const correctKey = getChoices(plate).c;
+
+        const choiceBtns = document.querySelectorAll(".choice");
+        const correctIdx = session.choiceKeys.indexOf(correctKey);
+        const passBtn = document.getElementById("btn-pass");
+        choiceBtns.forEach((b, i) => {
+          b.disabled = true;
+          if (correctKey === "pass") {
+            // pass 正解の場合はボタン側に正解表示はしない
+          } else if (i === correctIdx) {
+            b.classList.add("correct");
+          }
+          if (mode2 === "answer" && i === choiceIdx && !isCorrect) {
+            b.classList.add("wrong");
+          }
+          if (
+            i !== correctIdx &&
+            !(mode2 === "answer" && i === choiceIdx && !isCorrect)
+          ) {
+            b.classList.add("dim");
+          }
+        });
+        passBtn.disabled = true;
+        if (mode2 === "pass") {
+          if (isCorrect) passBtn.classList.add("correct");
+          else passBtn.classList.add("wrong");
+        } else if (correctKey === "pass") {
+          passBtn.classList.add("correct");
+        }
+
+        let gained = 0;
+        if (isCorrect) {
+          session.consecutiveCorrect += 1;
+          session.combo = computeCombo(session.consecutiveCorrect);
+          if (session.combo > session.maxCombo)
+            session.maxCombo = session.combo;
+          gained = Math.round(100 * session.combo);
+          if (isGold) gained += 500;
+          session.score += gained;
+          session.caught += 1;
+          showToast(
+            isGold ? t("toastGold") : "+" + gained,
+            isGold ? "gold" : "correct",
+          );
+          showFloatingPlus("+" + gained);
+        } else {
+          session.consecutiveCorrect = 0;
+          session.combo = 1.0;
+          session.lives -= 1;
+          session.missed += 1;
+          if (mode2 === "timeout") showToast(t("toastMiss"), "miss");
+          else showToast(t("toastWrong"), "wrong");
+        }
+
+        document.getElementById("hud-score").textContent =
+          session.score.toLocaleString();
+        const comboEl = document.getElementById("hud-combo");
+        comboEl.textContent = "x" + session.combo.toFixed(1);
+        if (isCorrect && session.combo > 1.0) {
+          comboEl.classList.remove("boost");
+          // eslint-disable-next-line no-unused-expressions
+          void comboEl.offsetWidth;
+          comboEl.classList.add("boost");
+        }
+        renderLives();
+
+        session.history.push({
+          plate: plate,
+          isGold: isGold,
+          isTrap: !!plate.isTrap,
+          picked: pickedKey,
+          correct: correctKey,
+          isCorrect: isCorrect,
+          isMiss: mode2 === "timeout",
+          gained: gained,
+        });
+        session.plateIndex += 1;
+
+        const card = document.getElementById("target-card");
+        if (mode2 === "timeout") card.classList.add("exit-miss");
+        else if (isCorrect) card.classList.add("exit-correct");
+        else card.classList.add("exit-wrong");
+
+        if (session.lives <= 0) {
+          setTimeout(() => endGame("lives"), 600);
+          return;
+        }
+
+        setTimeout(() => {
+          if (!session || session.ended) return;
+          session.queue.shift();
+          const lastIcon =
+            session.queue[session.queue.length - 1] &&
+            session.queue[session.queue.length - 1].plate.icon;
+          const newPlate = pickPlate(lastIcon);
+          session.queue.push({
+            plate: newPlate,
+            isGold: !newPlate.isTrap && Math.random() < GOLD_PROBABILITY,
+          });
+          renderActivePlate();
+        }, 650);
+      }
+
+      function computeCombo(streak) {
+        if (streak >= 7) return 3.0;
+        if (streak >= 5) return 2.0;
+        if (streak >= 3) return 1.5;
+        return 1.0;
+      }
+
+      function renderLives() {
+        if (!session) return;
+        const max = mode === "timeattack" ? TIME_ATTACK_LIVES : ENDLESS_LIVES;
+        const el = document.getElementById("hud-lives");
+        el.textContent = "";
+        for (let i = 0; i < max; i++) {
+          const span = document.createElement("span");
+          span.className = "hud-life";
+          span.textContent = "❤";
+          if (i >= session.lives) span.classList.add("lost");
+          el.appendChild(span);
+        }
+      }
+
+      function showToast(text, kind) {
+        const stage = document.getElementById("target-stage");
+        const old = stage.querySelector(".toast");
+        if (old) old.remove();
+        const el = document.createElement("div");
+        el.className = "toast " + (kind || "");
+        el.textContent = text;
+        stage.appendChild(el);
+        setTimeout(() => el.remove(), 1400);
+      }
+
+      function showFloatingPlus(text) {
+        const stage = document.getElementById("target-stage");
+        const el = document.createElement("div");
+        el.className = "plus-score";
+        el.textContent = text;
+        stage.appendChild(el);
+        setTimeout(() => el.remove(), 1100);
+      }
+
+      /* =========================================================
+         ゲーム終了
+         ========================================================= */
+      function endGame() {
+        if (!session || session.ended) return;
+        session.ended = true;
+        session.paused = true;
+        cancelAnimationFrame(rafId);
+        cancelAnimationFrame(plateRafId);
+        renderResult();
+        showScreen("screen-result");
+      }
+
+      function quitGame() {
+        if (!session) return;
+        session.ended = true;
+        session.paused = true;
+        cancelAnimationFrame(rafId);
+        cancelAnimationFrame(plateRafId);
+        clearTimeout(countdownTimerId);
+        showScreen("screen-start");
+      }
+
+      /* =========================================================
+         結果表示
+         ========================================================= */
+      function getRank(score) {
+        const isJa = lang === "ja";
+        if (score >= 6000) {
+          return {
+            tag: "★ LEGENDARY HUNTER",
+            title: isJa ? "伝説のバグハンター" : "Legendary Hunter",
+            sub: isJa
+              ? "回転寿司を一周する前に、レーンが折れます。"
+              : "The belt gives up before you do.",
+            comment: isJa
+              ? [
+                  { t: "圧巻のスコア。", b: true },
+                  {
+                    t: " 機能 → 第一手の対応が「条件反射」になっているレベルで、誤検知（黒い皿）も拾えています。次は同じ精度を「実物のスコープ」へ。トリアージしながら CVSS 9.x を 1 件ずつ積む段階です。",
+                  },
+                ]
+              : [
+                  { t: "Outstanding. ", b: true },
+                  {
+                    t: "Feature-to-attack mapping is reflex-level, and you're not biting on traps. Take this same precision to a real scope — you're at the stage of stacking CVSS 9.x one by one.",
+                  },
+                ],
+          };
+        }
+        if (score >= 3500) {
+          return {
+            tag: "★ TAISHO",
+            title: isJa ? "大将" : "Taisho (Master)",
+            sub: isJa
+              ? "板場を任せても安心の腕前。"
+              : "You can run the kitchen.",
+            comment: isJa
+              ? [
+                  { t: "脆弱性カテゴリと「最初の一手」の対応が確実", b: true },
+                  {
+                    t: "。XSS / SQLi のような王道だけでなく、SSRF / IDOR / OAuth といった、自動化が効きにくい領域もスムーズに見極められています。あとは速度勝負。",
+                  },
+                ]
+              : [
+                  {
+                    t: "Solid mapping between vulnerability classes and first moves",
+                    b: true,
+                  },
+                  {
+                    t: ". You're not just nailing XSS/SQLi but also SSRF, IDOR, OAuth — the manual-first stuff. From here it's pure speed.",
+                  },
+                ],
+          };
+        }
+        if (score >= 1800) {
+          return {
+            tag: "★ ITAMAE",
+            title: isJa ? "板前見習い" : "Apprentice Itamae",
+            sub: isJa
+              ? "基礎は固まりつつ、応用に挑む段階。"
+              : "Fundamentals are landing, time for the harder stuff.",
+            comment: isJa
+              ? [
+                  { t: "王道の脆弱性カテゴリは身についています。", b: true },
+                  {
+                    t: " 苦戦したのは OAuth・JWT・Host Header・Deserialization など、「実装の細部」に踏み込む系統。出題された機能カードを見直すだけでも、実スコープでの一次切り分けが速くなります。",
+                  },
+                ]
+              : [
+                  { t: "Core categories are in your hands. ", b: true },
+                  {
+                    t: "The wobble is on implementation-detail bugs (OAuth, JWT, Host header, deserialization). Re-reading the plate prompts alone will sharpen your real-scope triage.",
+                  },
+                ],
+          };
+        }
+        if (score >= 600) {
+          return {
+            tag: "★ JOREN",
+            title: isJa ? "常連" : "Regular",
+            sub: isJa
+              ? "感覚は掴めてきた。次は速度を。"
+              : "You feel the rhythm. Time to push speed.",
+            comment: isJa
+              ? [
+                  { t: "考えれば解ける状態", b: true },
+                  {
+                    t: " から、「見た瞬間に手が動く」段階に入ると、報奨金につながる速度になります。誤った皿は解答レビューで分類を再確認しましょう。",
+                  },
+                ]
+              : [
+                  {
+                    t: "You can think your way to most answers. ",
+                    b: true,
+                  },
+                  {
+                    t: "Push past it into reflex territory and you'll be at bounty pace. Use the review below to rebuild the wrong ones by category.",
+                  },
+                ],
+          };
+        }
+        return {
+          tag: "★ SHIROUTO",
+          title: isJa ? "素人客" : "Newcomer",
+          sub: isJa ? "ここからが伸びしろ。" : "Plenty of room to grow.",
+          comment: isJa
+            ? [
+                { t: "脆弱性カテゴリと「機能の見た目」の対応" },
+                { t: "（IDOR・SSRF・XXE・JWT など）", b: true },
+                {
+                  t: " を一周整理すると、得点は急に伸びます。下のレビューで自分の引っかかりやすいパターンを把握すると次回の伸びが大きいです。",
+                },
+              ]
+            : [
+                { t: "Mapping feature shapes to vulnerability classes " },
+                { t: "(IDOR, SSRF, XXE, JWT, …)", b: true },
+                {
+                  t: " for one full round will shoot your score up. The review below shows you which patterns trip you up.",
+                },
+              ],
+        };
+      }
+
+      function renderResult() {
+        const score = session ? session.score : 0;
+        const caught = session ? session.caught : 0;
+        const missed = session ? session.missed : 0;
+        const total = caught + missed;
+        const acc = total === 0 ? 0 : Math.round((caught / total) * 100);
+        const maxCombo = session ? session.maxCombo : 1.0;
+        const rank = getRank(score);
+
+        document.getElementById("result-rank").textContent = rank.tag;
+        document.getElementById("result-title").textContent = rank.title;
+        document.getElementById("result-sub").textContent = rank.sub;
+        document.getElementById("score-num").textContent =
+          score.toLocaleString();
+        document
+          .getElementById("score-ring")
+          .style.setProperty("--pct", Math.min(100, score / 80));
+        document.getElementById("stat-caught").textContent = caught;
+        document.getElementById("stat-missed").textContent = missed;
+        document.getElementById("stat-maxcombo").textContent =
+          "x" + maxCombo.toFixed(1);
+        document.getElementById("stat-acc").textContent = acc + "%";
+
+        renderSegments(document.getElementById("result-comment"), rank.comment);
+        renderReview();
+      }
+
+      function renderSegments(target, segments) {
+        target.textContent = "";
+        for (const seg of segments) {
+          if (seg.b) {
+            const strong = document.createElement("strong");
+            strong.textContent = seg.t;
+            target.appendChild(strong);
+          } else {
+            target.appendChild(document.createTextNode(seg.t));
+          }
+        }
+      }
+
+      function renderReview() {
+        const grid = document.getElementById("review-grid");
+        grid.textContent = "";
+        if (!session) return;
+        const items = session.history;
+        if (items.length === 0) {
+          const empty = document.createElement("div");
+          empty.className = "review-item";
+          empty.style.justifyContent = "center";
+          empty.style.color = "var(--text-dim)";
+          empty.textContent =
+            lang === "ja" ? "（解答履歴なし）" : "(no plate history)";
+          grid.appendChild(empty);
+          return;
+        }
+        items.forEach((h, i) => {
+          const row = document.createElement("div");
+          row.className = "review-item";
+          const mark = document.createElement("div");
+          if (h.isMiss) {
+            mark.className = "review-mark miss";
+            mark.textContent = "—";
+          } else if (h.isCorrect) {
+            mark.className = "review-mark ok";
+            mark.textContent = "✓";
+          } else {
+            mark.className = "review-mark ng";
+            mark.textContent = "✕";
+          }
+          const content = document.createElement("div");
+          content.className = "review-content";
+
+          const qLine = document.createElement("div");
+          qLine.className = "review-q";
+          const ic = document.createElement("span");
+          ic.className = "review-icon";
+          ic.textContent = h.plate.icon;
+          qLine.appendChild(ic);
+          qLine.appendChild(
+            document.createTextNode(
+              "Q" + (i + 1) + ". " + h.plate.name[lang] + " — ",
+            ),
+          );
+          const funcSpan = document.createElement("span");
+          renderFuncText(funcSpan, h.plate.func[lang]);
+          qLine.appendChild(funcSpan);
+          content.appendChild(qLine);
+
+          if (h.isMiss) {
+            const yLine = document.createElement("div");
+            yLine.className = "review-a";
+            const yt = document.createElement("span");
+            yt.className = "review-a-tag";
+            yt.style.color = "var(--text-dim)";
+            yt.textContent = t("resultMissTag");
+            yLine.appendChild(yt);
+            yLine.appendChild(
+              document.createTextNode(
+                lang === "ja" ? "見逃しました。" : "you ran out of time.",
+              ),
+            );
+            content.appendChild(yLine);
+          } else {
+            const yLine = document.createElement("div");
+            yLine.className = "review-a";
+            const yt = document.createElement("span");
+            yt.className = "review-a-tag";
+            yt.style.color = h.isCorrect ? "var(--success)" : "var(--danger)";
+            yt.textContent = "[" + t("resultYour") + "]";
+            yLine.appendChild(yt);
+            yLine.appendChild(
+              document.createTextNode(" " + ATTACKS[h.picked][lang]),
+            );
+            content.appendChild(yLine);
+          }
+
+          if (!h.isCorrect) {
+            const cLine = document.createElement("div");
+            cLine.className = "review-a";
+            cLine.style.marginTop = "4px";
+            const ct = document.createElement("span");
+            ct.className = "review-a-tag";
+            ct.style.color = "var(--success)";
+            ct.textContent = "[" + t("resultAnswer") + "]";
+            cLine.appendChild(ct);
+            cLine.appendChild(
+              document.createTextNode(" " + ATTACKS[h.correct][lang]),
+            );
+            content.appendChild(cLine);
+
+            const ex = PLATE_EXPLAIN[h.correct];
+            if (ex) {
+              const eLine = document.createElement("div");
+              eLine.className = "review-a";
+              eLine.style.marginTop = "6px";
+              eLine.style.color = "var(--text-dim)";
+              renderFuncText(eLine, ex[lang]);
+              content.appendChild(eLine);
+            }
+          }
+
+          row.appendChild(mark);
+          row.appendChild(content);
+          grid.appendChild(row);
+        });
+      }
+
+      /* =========================================================
+         X (Twitter) シェア
+         ========================================================= */
+      // スコアからランクキー（share/{key}/ パスに使う）を返す
+      function getRankKey(score) {
+        if (score >= 6000) return "legendary";
+        if (score >= 3500) return "taisho";
+        if (score >= 1800) return "itamae";
+        if (score >= 600) return "joren";
+        return "shirouto";
+      }
+
+      function buildShareText() {
+        if (!session) return "";
+        const score = session.score;
+        const caught = session.caught;
+        const maxCombo = session.maxCombo.toFixed(1);
+        const rank = getRank(score);
+        if (lang === "ja") {
+          return (
+            "🍣 回転バウンティ（Sushi Bounty）\n" +
+            "Score: " +
+            score.toLocaleString() +
+            " / 捌いた皿: " +
+            caught +
+            " / 最大コンボ: x" +
+            maxCombo +
+            " / 称号: " +
+            rank.title +
+            "\n" +
+            "回転寿司レーンで脆弱性を捌いてみよう！\n\n" +
+            "#BugBountyJPGame"
+          );
+        }
+        return (
+          "🍣 Sushi Bounty (Kaiten Bug Bounty)\n" +
+          "Score: " +
+          score.toLocaleString() +
+          " / Plates: " +
+          caught +
+          " / Max combo: x" +
+          maxCombo +
+          " / Rank: " +
+          rank.title +
+          "\n" +
+          "Carve vulnerabilities on the kaiten-sushi belt!\n\n" +
+          "#BugBountyJPGame"
+        );
+      }
+
+      function onShare() {
+        const text = buildShareText();
+        // スコアに応じたランク別シェアページを向き先にする（OGP がランクごとに焼ける）。
+        // share/<rank>/index.html は事前に静的生成されている。
+        const rankKey = getRankKey(session ? session.score : 0);
+        const base = location.href.split("#")[0].replace(/[^/]*$/, "");
+        const url = base + "share/" + rankKey + "/";
+        const intent =
+          "https://x.com/intent/tweet?text=" +
+          encodeURIComponent(text) +
+          "&url=" +
+          encodeURIComponent(url);
+        window.open(intent, "_blank", "noopener,noreferrer");
+      }
+
+      /* =========================================================
+         キーボード
+         ========================================================= */
+      function onKeyDown(e) {
+        if (
+          !document.getElementById("screen-game").classList.contains("active")
+        )
+          return;
+        if (!session || session.ended || session.paused) return;
+        if (session.answered) return;
+        if (e.key === " " || e.code === "Space") {
+          e.preventDefault();
+          onPass();
+          return;
+        }
+        if (["1", "2", "3", "4"].indexOf(e.key) >= 0) {
+          const idx = parseInt(e.key, 10) - 1;
+          const btns = document.querySelectorAll(".choice");
+          if (btns[idx]) onAnswer(idx);
+        }
+      }
+
+      /* =========================================================
+         イベントバインド
+         ========================================================= */
+      document.querySelectorAll(".lang-toggle button").forEach((btn) => {
+        btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+      });
+      document.querySelectorAll(".mode-card").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          mode = btn.dataset.mode;
+          document
+            .querySelectorAll(".mode-card")
+            .forEach((c) => c.classList.toggle("selected", c === btn));
+        });
+      });
+      document.getElementById("btn-start").addEventListener("click", startGame);
+      document.getElementById("btn-pass").addEventListener("click", onPass);
+      document.getElementById("btn-quit").addEventListener("click", quitGame);
+      document.getElementById("btn-share").addEventListener("click", onShare);
+      document.getElementById("btn-retry").addEventListener("click", startGame);
+      window.addEventListener("keydown", onKeyDown);
+
+      /* =========================================================
+         パーティクル背景（BBH と同等）
+         ========================================================= */
+      (function initParticles() {
+        const canvas = document.getElementById("particles");
+        const ctx = canvas.getContext("2d");
+        let w = 0;
+        let h = 0;
+        let particles = [];
+        const reduce =
+          window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function resize() {
+          w = canvas.width = window.innerWidth;
+          h = canvas.height = window.innerHeight;
+        }
+
+        function create() {
+          particles = [];
+          const count = Math.max(28, Math.floor((w * h) / 32000));
+          for (let i = 0; i < count; i++) {
+            particles.push({
+              x: Math.random() * w,
+              y: Math.random() * h,
+              r: Math.random() * 1.6 + 0.4,
+              vx: (Math.random() - 0.5) * 0.18,
+              vy: (Math.random() - 0.5) * 0.18,
+              alpha: Math.random() * 0.5 + 0.15,
+              hue: Math.random() < 0.5 ? "14, 165, 233" : "251, 146, 60",
+            });
+          }
+        }
+
+        function draw() {
+          ctx.clearRect(0, 0, w, h);
+          for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(" + p.hue + ", " + p.alpha + ")";
+            ctx.fill();
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0) p.x = w;
+            if (p.x > w) p.x = 0;
+            if (p.y < 0) p.y = h;
+            if (p.y > h) p.y = 0;
+          }
+          if (!reduce) requestAnimationFrame(draw);
+        }
+
+        resize();
+        create();
+        draw();
+        window.addEventListener("resize", () => {
+          resize();
+          create();
+        });
+      })();
+
+      /* =========================================================
+         初期化
+         ========================================================= */
+      applyI18n();
+      requestAnimationFrame(updateLangPill);
+      window.addEventListener("resize", updateLangPill);
+    </script>
+  </body>
+</html>
