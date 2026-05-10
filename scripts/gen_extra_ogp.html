@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Generate top & rank OGP images (Kaiten Bounty / Bug Kanji)</title>
+    <!--
+      新規ゲーム（Kaiten Bounty / Bug Kanji）用の OGP 画像生成ツール。
+      - ブラウザで本ファイルを開き「Save into static/images/」を押すと、
+        File System Access API で選んだディレクトリ（リポジトリの static/images/）に
+        以下を書き出す。
+          kaiten-bounty-ogp.png
+          bug-kanji-ogp.png
+          games/kaiten-bounty/rank-{shirouto|joren|itamae|taisho|legendary}.png
+          games/bug-kanji/rank-{c|b|a|s}.png
+      - File System Access API 非対応の場合は「Download all」で順次ダウンロード。
+      - デザインは既存 OGP（ダークティール基調・カワセミ配色）と統一。
+
+      使い方:
+        open /Users/yutamorioka/scgajge12/Private/External/scgajge12.github.io/scripts/gen_extra_ogp.html
+        画面の「Save into static/images/」ボタンを押し、
+        リポジトリの static/images フォルダを選択する。
+    -->
+    <style>
+      :root {
+        --bg: #0b1622;
+        --panel: #12283b;
+        --text: #e6f4f9;
+        --muted: #93c5d8;
+        --accent: #22d3ee;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          -apple-system, "Hiragino Sans", "Helvetica Neue", Arial, sans-serif;
+      }
+      header {
+        padding: 24px 32px;
+        border-bottom: 1px solid #1f3a52;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      h1 {
+        font-size: 18px;
+        margin: 0;
+        flex: 1 1 auto;
+      }
+      button {
+        font: inherit;
+        padding: 10px 16px;
+        border-radius: 8px;
+        border: 1px solid #2a4d6c;
+        background: var(--panel);
+        color: var(--text);
+        cursor: pointer;
+      }
+      button.primary {
+        background: var(--accent);
+        color: #04111e;
+        border-color: var(--accent);
+        font-weight: 700;
+      }
+      #log {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 12px;
+        color: var(--muted);
+        margin-left: 16px;
+      }
+      main {
+        padding: 24px 32px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .card {
+        background: var(--panel);
+        border-radius: 10px;
+        padding: 12px;
+      }
+      .card h2 {
+        margin: 0 0 8px 0;
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      canvas {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 6px;
+        background: #04111e;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Top &amp; Rank OGP image generator (Kaiten Bounty / Bug Kanji)</h1>
+      <button id="save" class="primary">Save into static/images/</button>
+      <button id="download">Download all</button>
+      <span id="log"></span>
+    </header>
+    <main id="grid"></main>
+
+    <script>
+      "use strict";
+
+      // ===== Canvas プリミティブ =====
+      function roundRect(ctx, x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+      }
+
+      // letter-spacing 風の描画（左揃え）
+      function drawSpacedLeft(ctx, text, x, y, gap) {
+        let cx = x;
+        for (const ch of text) {
+          ctx.fillText(ch, cx, y);
+          cx += ctx.measureText(ch).width + gap;
+        }
+      }
+
+      // 背景・枠などの共通装飾
+      function drawBackdrop(ctx, W, H) {
+        const bg = ctx.createLinearGradient(0, 0, W, H);
+        bg.addColorStop(0, "#04111e");
+        bg.addColorStop(0.55, "#082336");
+        bg.addColorStop(1, "#0e3149");
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, W, H);
+
+        const g1 = ctx.createRadialGradient(220, 180, 30, 220, 180, 480);
+        g1.addColorStop(0, "rgba(34,211,238,0.18)");
+        g1.addColorStop(1, "rgba(34,211,238,0)");
+        ctx.fillStyle = g1;
+        ctx.fillRect(0, 0, W, H);
+
+        const g2 = ctx.createRadialGradient(980, 480, 30, 980, 480, 480);
+        g2.addColorStop(0, "rgba(251,191,36,0.12)");
+        g2.addColorStop(1, "rgba(251,191,36,0)");
+        ctx.fillStyle = g2;
+        ctx.fillRect(0, 0, W, H);
+
+        const padding = 30;
+        ctx.strokeStyle = "rgba(148,197,216,0.14)";
+        ctx.lineWidth = 1;
+        roundRect(ctx, padding, padding, W - padding * 2, H - padding * 2, 24);
+        ctx.stroke();
+      }
+
+      // 上段：ロゴ + サブテキスト + 右肩ピル
+      function drawHeader(ctx, opts) {
+        const W = opts.W;
+        const subText = opts.sub;
+        const pillText = opts.pill;
+        const pillColor = opts.pillColor || "#fbbf24";
+
+        const topY = 86;
+        const logoX = 76,
+          logoY = topY - 18,
+          logoSize = 56;
+        const lg = ctx.createLinearGradient(
+          logoX,
+          logoY,
+          logoX + logoSize,
+          logoY + logoSize,
+        );
+        lg.addColorStop(0, "#155e75");
+        lg.addColorStop(1, "#0891b2");
+        ctx.fillStyle = lg;
+        roundRect(ctx, logoX, logoY, logoSize, logoSize, 14);
+        ctx.fill();
+        ctx.strokeStyle = "rgba(148,197,216,0.25)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.fillStyle = "#e6f4f9";
+        ctx.font = "800 28px -apple-system, Helvetica, sans-serif";
+        ctx.textBaseline = "middle";
+        ctx.textAlign = "center";
+        ctx.fillText("M", logoX + logoSize / 2, logoY + logoSize / 2 + 1);
+
+        ctx.textAlign = "left";
+        ctx.fillStyle = "#e6f4f9";
+        ctx.font = "700 22px -apple-system, Helvetica, sans-serif";
+        ctx.fillText("morioka12 game site", logoX + logoSize + 16, logoY + 16);
+        ctx.fillStyle = "#93c5d8";
+        ctx.font = "600 12px -apple-system, Helvetica, sans-serif";
+        drawSpacedLeft(ctx, subText, logoX + logoSize + 16, logoY + 40, 3);
+
+        // 右肩ピル
+        ctx.font = "700 13px -apple-system, Helvetica, sans-serif";
+        const pillW = ctx.measureText(pillText).width + 70;
+        const pillH = 36;
+        const pillX = W - 76 - pillW;
+        const pillY = topY - pillH / 2;
+        ctx.fillStyle = "rgba(251,191,36,0.12)";
+        roundRect(ctx, pillX, pillY, pillW, pillH, pillH / 2);
+        ctx.fill();
+        ctx.strokeStyle = "rgba(251,191,36,0.45)";
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+        ctx.fillStyle = pillColor;
+        ctx.beginPath();
+        ctx.arc(pillX + 18, pillY + pillH / 2, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = pillColor;
+        ctx.textBaseline = "middle";
+        let tx = pillX + 32;
+        const ty = pillY + pillH / 2;
+        for (const ch of pillText) {
+          ctx.fillText(ch, tx, ty);
+          tx += ctx.measureText(ch).width + 2;
+        }
+      }
+
+      // 下段：左に小ピル群、右に URL
+      function drawFooter(ctx, W, H, opts) {
+        const bottomY = H - 76;
+        ctx.textBaseline = "middle";
+        const pills = opts.pills;
+        let px = 76;
+        for (const label of pills) {
+          ctx.font = "500 13px -apple-system, Helvetica, sans-serif";
+          const w = ctx.measureText(label).width + 28;
+          ctx.fillStyle = "rgba(14,49,73,0.6)";
+          roundRect(ctx, px, bottomY - 14, w, 28, 14);
+          ctx.fill();
+          ctx.strokeStyle = "rgba(148,197,216,0.22)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.fillStyle = "#93c5d8";
+          ctx.textAlign = "center";
+          ctx.fillText(label, px + w / 2, bottomY);
+          px += w + 10;
+        }
+        ctx.textAlign = "right";
+        ctx.font = "500 14px -apple-system, Helvetica, sans-serif";
+        const handle = "@scgajge12";
+        ctx.fillStyle = "#e6f4f9";
+        const handleW = ctx.measureText(handle).width;
+        ctx.fillText(handle, W - 76, bottomY);
+        ctx.fillStyle = "#93c5d8";
+        ctx.fillText(opts.urlPart + " · ", W - 76 - handleW, bottomY);
+      }
+
+      // ===== トップ OGP（ゲーム紹介） =====
+      function drawTopOgp(canvas, game) {
+        const W = 1200,
+          H = 630;
+        canvas.width = W;
+        canvas.height = H;
+        const ctx = canvas.getContext("2d");
+        drawBackdrop(ctx, W, H);
+        drawHeader(ctx, {
+          W,
+          sub: game.subBadge,
+          pill: "GAME",
+          pillColor: "#fbbf24",
+        });
+
+        // 大型タイトル（中央揃え）
+        ctx.textAlign = "left";
+        ctx.textBaseline = "alphabetic";
+        ctx.fillStyle = "#e6f4f9";
+        ctx.font = "800 60px -apple-system, Helvetica, sans-serif";
+        ctx.fillText(game.titleJa, 76, 320);
+
+        ctx.fillStyle = "#22d3ee";
+        ctx.font = "600 26px -apple-system, Helvetica, sans-serif";
+        ctx.fillText(game.titleEn, 76, 360);
+
+        ctx.fillStyle = "#93c5d8";
+        ctx.font = "500 20px -apple-system, Helvetica, sans-serif";
+        const lines = wrapLines(ctx, game.tagline, 1048);
+        let ly = 410;
+        for (const line of lines) {
+          ctx.fillText(line, 76, ly);
+          ly += 28;
+        }
+
+        drawFooter(ctx, W, H, { pills: game.pills, urlPart: game.url });
+      }
+
+      // テキスト折返し（簡易）
+      function wrapLines(ctx, text, maxW) {
+        const out = [];
+        let line = "";
+        for (const ch of text) {
+          const test = line + ch;
+          if (ctx.measureText(test).width > maxW && line.length > 0) {
+            out.push(line);
+            line = ch;
+          } else {
+            line = test;
+          }
+        }
+        if (line) out.push(line);
+        return out;
+      }
+
+      // ===== ランク別 OGP =====
+      function drawRankOgp(canvas, game, rank) {
+        const W = 1200,
+          H = 630;
+        canvas.width = W;
+        canvas.height = H;
+        const ctx = canvas.getContext("2d");
+        drawBackdrop(ctx, W, H);
+        drawHeader(ctx, {
+          W,
+          sub: game.subBadge + " · YOUR RANK",
+          pill: "RANK RESULT",
+          pillColor: "#fbbf24",
+        });
+
+        const accent = rank.accent;
+
+        // 中段左：大きなランクタグ
+        ctx.textAlign = "left";
+        ctx.textBaseline = "alphabetic";
+        ctx.fillStyle = accent;
+        ctx.font = "800 90px -apple-system, Helvetica, sans-serif";
+        ctx.fillText(rank.bigJa, 76, 300);
+
+        ctx.fillStyle = "#93c5d8";
+        ctx.font = "600 24px -apple-system, Helvetica, sans-serif";
+        ctx.fillText(rank.bigEn, 76, 340);
+
+        // ランクバッジ
+        const rankText = rank.tag;
+        ctx.font = "700 18px -apple-system, Helvetica, sans-serif";
+        const rTextW = ctx.measureText(rankText).width;
+        const rBadgeW = rTextW + 40;
+        const rBadgeH = 44;
+        const rBadgeX = 76;
+        const rBadgeY = 380;
+        ctx.fillStyle = "rgba(8,35,54,0.7)";
+        roundRect(ctx, rBadgeX, rBadgeY, rBadgeW, rBadgeH, 12);
+        ctx.fill();
+        ctx.strokeStyle = accent;
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+        ctx.fillStyle = accent;
+        ctx.textBaseline = "middle";
+        let rtx = rBadgeX + 20;
+        const rty = rBadgeY + rBadgeH / 2;
+        for (const ch of rankText) {
+          ctx.fillText(ch, rtx, rty);
+          rtx += ctx.measureText(ch).width + 1.4;
+        }
+
+        // 右ブロック：ゲームタイトル + サマリ
+        ctx.textBaseline = "alphabetic";
+        const metaX = 580;
+        let metaY = 200;
+        ctx.fillStyle = "#e6f4f9";
+        ctx.font = "700 30px -apple-system, Helvetica, sans-serif";
+        ctx.fillText(game.titleJa, metaX, metaY);
+        metaY += 36;
+        ctx.fillStyle = "#93c5d8";
+        ctx.font = "500 18px -apple-system, Helvetica, sans-serif";
+        ctx.fillText(game.titleEn, metaX, metaY);
+
+        metaY += 56;
+        ctx.fillStyle = accent;
+        ctx.font = "700 22px -apple-system, Helvetica, sans-serif";
+        ctx.fillText(rank.copyJa, metaX, metaY);
+        metaY += 30;
+        ctx.fillStyle = "#93c5d8";
+        ctx.font = "500 18px -apple-system, Helvetica, sans-serif";
+        const lines = wrapLines(ctx, rank.copyEn, 540);
+        for (const line of lines) {
+          ctx.fillText(line, metaX, metaY);
+          metaY += 26;
+        }
+
+        drawFooter(ctx, W, H, { pills: game.pills, urlPart: game.url });
+      }
+
+      // ===== 設定 =====
+      const KAITEN = {
+        slug: "kaiten-bounty",
+        subBadge: "KTB · KAITEN BOUNTY",
+        url: "scgajge12.github.io/games/kaiten-bounty",
+        titleJa: "回転バウンティ",
+        titleEn: "Sushi Bounty — Kaiten Bug Bounty Arcade",
+        tagline:
+          "回転寿司レーンを流れる「脆弱そうな機能」に正しい攻撃手法をぶつけて捌く、バグハンター向けアーケード。",
+        pills: ["アーケード", "コンボ", "JA / EN"],
+        ranks: [
+          {
+            key: "shirouto",
+            tag: "★ SHIROUTO",
+            bigJa: "素人客",
+            bigEn: "Newcomer",
+            copyJa: "ここからが伸びしろ。",
+            copyEn: "Plenty of room to grow — keep building reflexes.",
+            accent: "#f97316",
+          },
+          {
+            key: "joren",
+            tag: "★ JOREN",
+            bigJa: "常連",
+            bigEn: "Regular",
+            copyJa: "感覚は掴めてきた。",
+            copyEn: "You feel the rhythm — push speed next.",
+            accent: "#fbbf24",
+          },
+          {
+            key: "itamae",
+            tag: "★ ITAMAE",
+            bigJa: "板前見習い",
+            bigEn: "Apprentice Itamae",
+            copyJa: "基礎は固まりつつ、応用に挑む段階。",
+            copyEn: "Fundamentals landing — onto the harder stuff.",
+            accent: "#fbbf24",
+          },
+          {
+            key: "taisho",
+            tag: "★ TAISHO",
+            bigJa: "大将",
+            bigEn: "Taisho (Master)",
+            copyJa: "板場を任せても安心の腕前。",
+            copyEn: "You can run the kitchen.",
+            accent: "#22d3ee",
+          },
+          {
+            key: "legendary",
+            tag: "★ LEGENDARY HUNTER",
+            bigJa: "伝説のバグハンター",
+            bigEn: "Legendary Hunter",
+            copyJa: "回転寿司を一周する前にレーンが折れます。",
+            copyEn: "The belt gives up before you do.",
+            accent: "#22d3ee",
+          },
+        ],
+      };
+
+      const KANJI = {
+        slug: "bug-kanji",
+        subBadge: "BKJ · BUG KANJI",
+        url: "scgajge12.github.io/games/bug-kanji",
+        titleJa: "Bug Kanji — バグ漢字クイズ",
+        titleEn: "Vulnerability Kanji Quiz",
+        tagline:
+          "脆弱性カテゴリを漢字の手がかりから当てる、タイムアタック式の4択クイズ。Easy / Hard / Extreme の3難易度。",
+        pills: ["タイムアタック", "難易度3種", "JA / EN"],
+        ranks: [
+          {
+            key: "c",
+            tag: "★ C RANK · ROOKIE",
+            bigJa: "Cランク・ルーキー",
+            bigEn: "C Rank · Rookie",
+            copyJa: "ここから伸びる時期です。",
+            copyEn: "Plenty of room to grow.",
+            accent: "#f97316",
+          },
+          {
+            key: "b",
+            tag: "★ B RANK · JUNIOR",
+            bigJa: "Bランク・ジュニア",
+            bigEn: "B Rank · Junior Hunter",
+            copyJa: "基礎は固まりつつあります。",
+            copyEn: "Solid foundation in place.",
+            accent: "#fbbf24",
+          },
+          {
+            key: "a",
+            tag: "★ A RANK · SENIOR",
+            bigJa: "Aランク・シニア",
+            bigEn: "A Rank · Senior Hunter",
+            copyJa: "業界の主要脆弱性を確実に押さえています。",
+            copyEn: "You've got the major vuln classes locked down.",
+            accent: "#fbbf24",
+          },
+          {
+            key: "s",
+            tag: "★ S RANK · ELITE",
+            bigJa: "Sランク・エリート",
+            bigEn: "S Rank · Elite Hunter",
+            copyJa: "脆弱性を漢字で見抜く達人。",
+            copyEn: "A master at reading vulns through kanji.",
+            accent: "#22d3ee",
+          },
+        ],
+      };
+
+      // ===== プレビュー描画 =====
+      const grid = document.getElementById("grid");
+      const items = [];
+
+      function addItem(label, drawer, savePath) {
+        const card = document.createElement("div");
+        card.className = "card";
+        const h2 = document.createElement("h2");
+        h2.textContent = label;
+        card.appendChild(h2);
+        const cv = document.createElement("canvas");
+        card.appendChild(cv);
+        grid.appendChild(card);
+        drawer(cv);
+        items.push({ canvas: cv, savePath });
+      }
+
+      // トップ OGP（ゲーム紹介）
+      addItem(
+        "kaiten-bounty-ogp.png",
+        (cv) => drawTopOgp(cv, KAITEN),
+        ["kaiten-bounty-ogp.png"],
+      );
+      addItem(
+        "bug-kanji-ogp.png",
+        (cv) => drawTopOgp(cv, KANJI),
+        ["bug-kanji-ogp.png"],
+      );
+
+      // ランク別 OGP（kaiten-bounty）
+      for (const rank of KAITEN.ranks) {
+        addItem(
+          `${KAITEN.slug} / rank-${rank.key}.png`,
+          (cv) => drawRankOgp(cv, KAITEN, rank),
+          ["games", KAITEN.slug, `rank-${rank.key}.png`],
+        );
+      }
+
+      // ランク別 OGP（bug-kanji）
+      for (const rank of KANJI.ranks) {
+        addItem(
+          `${KANJI.slug} / rank-${rank.key}.png`,
+          (cv) => drawRankOgp(cv, KANJI, rank),
+          ["games", KANJI.slug, `rank-${rank.key}.png`],
+        );
+      }
+
+      // ===== 保存系 =====
+      const log = (msg) => {
+        document.getElementById("log").textContent = msg;
+      };
+
+      function canvasToBlob(canvas) {
+        return new Promise((resolve) =>
+          canvas.toBlob((b) => resolve(b), "image/png"),
+        );
+      }
+
+      async function saveAll() {
+        if (!window.showDirectoryPicker) {
+          alert(
+            "このブラウザは File System Access API 非対応です。Download all を使ってください。",
+          );
+          return;
+        }
+        try {
+          const dir = await window.showDirectoryPicker({ mode: "readwrite" });
+          let i = 0;
+          for (const item of items) {
+            // パスを順にディレクトリ作成しながら降りる
+            const segs = item.savePath;
+            let cur = dir;
+            for (let k = 0; k < segs.length - 1; k++) {
+              cur = await cur.getDirectoryHandle(segs[k], { create: true });
+            }
+            const filename = segs[segs.length - 1];
+            const fh = await cur.getFileHandle(filename, { create: true });
+            const ws = await fh.createWritable();
+            const blob = await canvasToBlob(item.canvas);
+            await ws.write(blob);
+            await ws.close();
+            i++;
+            log(`saved ${i}/${items.length}: ${segs.join("/")}`);
+          }
+          log(`done: saved ${items.length} files into ${dir.name}/`);
+        } catch (e) {
+          log(`error: ${e.message}`);
+          console.error(e);
+        }
+      }
+
+      async function downloadAll() {
+        let i = 0;
+        for (const item of items) {
+          const blob = await canvasToBlob(item.canvas);
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = item.savePath.join("__");
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+          i++;
+          log(`downloaded ${i}/${items.length}`);
+          await new Promise((r) => setTimeout(r, 80));
+        }
+        log(`done: downloaded ${items.length} files`);
+      }
+
+      document.getElementById("save").addEventListener("click", saveAll);
+      document
+        .getElementById("download")
+        .addEventListener("click", downloadAll);
+    </script>
+  </body>
+</html>

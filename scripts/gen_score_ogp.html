@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Generate score OGP images</title>
+    <!--
+      スコア別 OGP 画像（1200×630 PNG）生成ツール。
+      - ブラウザで本ファイルを開き「Generate & Save」を押すと、
+        File System Access API で選んだディレクトリ（リポジトリの
+        static/images/games/）配下に
+          bug-bounty-top-10-quiz/score-{0..10}.png
+          claude-bug-bounty/score-{0..10}.png
+        を書き出す。
+      - File System Access API 非対応ブラウザの場合は「Download all」で
+        22 ファイルを順次ダウンロードする。
+      - デザインは既存 OGP（ダークティール基調）と統一。
+
+      使い方:
+        open /Users/yutamorioka/scgajge12/Private/External/scgajge12.github.io/scripts/gen_score_ogp.html
+        画面の「Save into static/images/games/」ボタンを押し、
+        リポジトリの static/images/games フォルダを選択する。
+    -->
+    <style>
+      :root {
+        --bg: #0b1622;
+        --panel: #12283b;
+        --text: #e6f4f9;
+        --muted: #93c5d8;
+        --accent: #22d3ee;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          -apple-system,
+          "Hiragino Sans",
+          "Helvetica Neue",
+          Arial,
+          sans-serif;
+      }
+      header {
+        padding: 24px 32px;
+        border-bottom: 1px solid #1f3a52;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      h1 {
+        font-size: 18px;
+        margin: 0;
+        flex: 1 1 auto;
+      }
+      button {
+        font:
+          inherit;
+        padding: 10px 16px;
+        border-radius: 8px;
+        border: 1px solid #2a4d6c;
+        background: var(--panel);
+        color: var(--text);
+        cursor: pointer;
+      }
+      button.primary {
+        background: var(--accent);
+        color: #04111e;
+        border-color: var(--accent);
+        font-weight: 700;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      #log {
+        font-family:
+          ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 12px;
+        color: var(--muted);
+        margin-left: 16px;
+      }
+      main {
+        padding: 24px 32px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .card {
+        background: var(--panel);
+        border-radius: 10px;
+        padding: 12px;
+      }
+      .card h2 {
+        margin: 0 0 8px 0;
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      canvas {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 6px;
+        background: #04111e;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Score OGP image generator</h1>
+      <button id="save" class="primary">Save into static/images/games/</button>
+      <button id="download">Download all (.png x 22)</button>
+      <span id="log"></span>
+    </header>
+    <main id="grid"></main>
+
+    <script>
+      // 各ゲームの設定。total = 問題数
+      const GAMES = [
+        {
+          slug: "bug-bounty-top-10-quiz",
+          badgeId: "BBTQ",
+          titleJa: "バグバウンティ脆弱性ランキング・クイズ",
+          titleEn: "Bug Bounty Top 10 Quiz",
+          siteUrl: "scgajge12.github.io/games/bug-bounty-top-10-quiz",
+          total: 10,
+        },
+        {
+          slug: "claude-bug-bounty",
+          badgeId: "CBB",
+          titleJa: "Claude Bug Bounty 機能クイズ",
+          titleEn: "Claude Bug Bounty Capability Quiz",
+          siteUrl: "scgajge12.github.io/games/claude-bug-bounty",
+          total: 10,
+        },
+      ];
+
+      // スコアに応じた称号（バッジ風コピー）
+      function rank(score, total) {
+        const pct = (score / total) * 100;
+        if (pct === 100)
+          return { ja: "PERFECT！全問正解", en: "PERFECT — flawless run" };
+        if (pct >= 80) return { ja: "EXCELLENT", en: "EXCELLENT" };
+        if (pct >= 60) return { ja: "GOOD JOB", en: "GOOD JOB" };
+        if (pct >= 40) return { ja: "もう一歩！", en: "ALMOST THERE" };
+        if (pct >= 20) return { ja: "まずは挑戦", en: "WARMING UP" };
+        return { ja: "リトライしよう", en: "TRY AGAIN" };
+      }
+
+      // 角丸塗りつぶし矩形
+      function roundRect(ctx, x, y, w, h, r) {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + w, y, x + w, y + h, r);
+        ctx.arcTo(x + w, y + h, x, y + h, r);
+        ctx.arcTo(x, y + h, x, y, r);
+        ctx.arcTo(x, y, x + w, y, r);
+        ctx.closePath();
+      }
+
+      // 1枚のOGPを Canvas に描画
+      function draw(canvas, game, score) {
+        const W = 1200,
+          H = 630;
+        canvas.width = W;
+        canvas.height = H;
+        const ctx = canvas.getContext("2d");
+
+        // 背景：ダークティールのグラデ + 装飾発光
+        const bg = ctx.createLinearGradient(0, 0, W, H);
+        bg.addColorStop(0, "#04111e");
+        bg.addColorStop(0.55, "#082336");
+        bg.addColorStop(1, "#0e3149");
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, W, H);
+
+        // 左上の柔らかいシアン光
+        const g1 = ctx.createRadialGradient(220, 180, 30, 220, 180, 480);
+        g1.addColorStop(0, "rgba(34,211,238,0.18)");
+        g1.addColorStop(1, "rgba(34,211,238,0)");
+        ctx.fillStyle = g1;
+        ctx.fillRect(0, 0, W, H);
+
+        // 右下の柔らかい琥珀光
+        const g2 = ctx.createRadialGradient(980, 480, 30, 980, 480, 480);
+        g2.addColorStop(0, "rgba(251,191,36,0.12)");
+        g2.addColorStop(1, "rgba(251,191,36,0)");
+        ctx.fillStyle = g2;
+        ctx.fillRect(0, 0, W, H);
+
+        // 内側の枠（既存OGPに合わせた角丸カード風）
+        const padding = 30;
+        ctx.strokeStyle = "rgba(148,197,216,0.14)";
+        ctx.lineWidth = 1;
+        roundRect(ctx, padding, padding, W - padding * 2, H - padding * 2, 24);
+        ctx.stroke();
+
+        // === 上段: ロゴと右肩のピル ===
+        const topY = 86;
+
+        // 左：ロゴ（角丸の青グラデ）
+        const logoX = 76,
+          logoY = topY - 18,
+          logoSize = 56;
+        const lg = ctx.createLinearGradient(
+          logoX,
+          logoY,
+          logoX + logoSize,
+          logoY + logoSize,
+        );
+        lg.addColorStop(0, "#155e75");
+        lg.addColorStop(1, "#0891b2");
+        ctx.fillStyle = lg;
+        roundRect(ctx, logoX, logoY, logoSize, logoSize, 14);
+        ctx.fill();
+        ctx.strokeStyle = "rgba(148,197,216,0.25)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.fillStyle = "#e6f4f9";
+        ctx.font = "800 28px -apple-system, Helvetica, sans-serif";
+        ctx.textBaseline = "middle";
+        ctx.textAlign = "center";
+        ctx.fillText("M", logoX + logoSize / 2, logoY + logoSize / 2 + 1);
+
+        // ロゴ右側：サイト名と小ラベル
+        ctx.textAlign = "left";
+        ctx.fillStyle = "#e6f4f9";
+        ctx.font = "700 22px -apple-system, Helvetica, sans-serif";
+        ctx.fillText("morioka12 game site", logoX + logoSize + 16, logoY + 16);
+        ctx.fillStyle = "#93c5d8";
+        ctx.font = "600 12px -apple-system, Helvetica, sans-serif";
+        const sub = `${game.badgeId} · YOUR SCORE`;
+        // letter-spacing 風に1文字ずつ少し広めに描画
+        let lx = logoX + logoSize + 16;
+        const ly = logoY + 40;
+        for (const ch of sub) {
+          ctx.fillText(ch, lx, ly);
+          lx += ctx.measureText(ch).width + 3;
+        }
+
+        // 右肩：QUIZ RESULT ピル
+        const pillText = "QUIZ RESULT";
+        ctx.font = "700 13px -apple-system, Helvetica, sans-serif";
+        const pillW = ctx.measureText(pillText).width + 70;
+        const pillH = 36;
+        const pillX = W - 76 - pillW;
+        const pillY = topY - pillH / 2;
+        ctx.fillStyle = "rgba(251,191,36,0.12)";
+        roundRect(ctx, pillX, pillY, pillW, pillH, pillH / 2);
+        ctx.fill();
+        ctx.strokeStyle = "rgba(251,191,36,0.45)";
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+        // ドット
+        ctx.fillStyle = "#fbbf24";
+        ctx.beginPath();
+        ctx.arc(pillX + 18, pillY + pillH / 2, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowColor = "rgba(251,191,36,0.7)";
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        // ラベル（letter-spacing 0.16em 相当）
+        ctx.fillStyle = "#fbbf24";
+        let tx = pillX + 32;
+        const ty = pillY + pillH / 2;
+        ctx.textBaseline = "middle";
+        for (const ch of pillText) {
+          ctx.fillText(ch, tx, ty);
+          tx += ctx.measureText(ch).width + 2;
+        }
+
+        // === 中段: スコア大数字 + メタ情報 ===
+        const pct = Math.round((score / game.total) * 100);
+        const accent = pct >= 80 ? "#22d3ee" : pct >= 50 ? "#fbbf24" : "#f97316";
+        const r = rank(score, game.total);
+
+        // スコア「N / 10」
+        const scoreBaseY = 330;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "alphabetic";
+        ctx.fillStyle = accent;
+        ctx.font =
+          "800 220px -apple-system, Helvetica Neue, Arial, sans-serif";
+        const numText = String(score);
+        ctx.fillText(numText, 88, scoreBaseY);
+        const numW = ctx.measureText(numText).width;
+        // セパレータ
+        ctx.fillStyle = "#5b8597";
+        ctx.font =
+          "300 96px -apple-system, Helvetica Neue, Arial, sans-serif";
+        const sepX = 88 + numW + 14;
+        ctx.fillText("/", sepX, scoreBaseY);
+        const sepW = ctx.measureText("/").width;
+        // total
+        ctx.fillStyle = "#93c5d8";
+        ctx.font =
+          "600 96px -apple-system, Helvetica Neue, Arial, sans-serif";
+        ctx.fillText(String(game.total), sepX + sepW + 12, scoreBaseY);
+
+        // 右側：ゲームタイトル
+        const metaX = 580;
+        let metaY = 200;
+        ctx.fillStyle = "#e6f4f9";
+        ctx.font = "700 28px -apple-system, Helvetica, sans-serif";
+        ctx.fillText(game.titleJa, metaX, metaY);
+        metaY += 36;
+        ctx.fillStyle = "#93c5d8";
+        ctx.font = "500 18px -apple-system, Helvetica, sans-serif";
+        ctx.fillText(game.titleEn, metaX, metaY);
+
+        // 正答率
+        metaY += 56;
+        ctx.fillStyle = "#93c5d8";
+        ctx.font = "500 18px -apple-system, Helvetica, sans-serif";
+        ctx.fillText("正答率 ", metaX, metaY);
+        const pctLabelW = ctx.measureText("正答率 ").width;
+        ctx.fillStyle = accent;
+        ctx.font = "700 22px -apple-system, Helvetica, sans-serif";
+        ctx.fillText(`${pct}%`, metaX + pctLabelW, metaY);
+        const pctW = ctx.measureText(`${pct}%`).width;
+        ctx.fillStyle = "#93c5d8";
+        ctx.font = "500 18px -apple-system, Helvetica, sans-serif";
+        ctx.fillText(
+          `  ·  ${score} correct out of ${game.total}`,
+          metaX + pctLabelW + pctW,
+          metaY,
+        );
+
+        // ランクバッジ
+        metaY += 30;
+        const rankText = `${r.ja} / ${r.en}`;
+        ctx.font = "700 16px -apple-system, Helvetica, sans-serif";
+        const rTextW = ctx.measureText(rankText).width;
+        const rBadgeW = rTextW + 36;
+        const rBadgeH = 38;
+        const rBadgeX = metaX;
+        const rBadgeY = metaY;
+        ctx.fillStyle = "rgba(8,35,54,0.7)";
+        roundRect(ctx, rBadgeX, rBadgeY, rBadgeW, rBadgeH, 10);
+        ctx.fill();
+        ctx.strokeStyle = accent;
+        ctx.lineWidth = 1.2;
+        ctx.stroke();
+        ctx.fillStyle = accent;
+        // letter-spacing 0.12em 相当
+        ctx.textBaseline = "middle";
+        let rtx = rBadgeX + 18;
+        const rty = rBadgeY + rBadgeH / 2;
+        for (const ch of rankText) {
+          ctx.fillText(ch, rtx, rty);
+          rtx += ctx.measureText(ch).width + 1.4;
+        }
+
+        // === 下段: 情報ピルと URL ===
+        const bottomY = H - 76;
+        ctx.textBaseline = "middle";
+        // 左：3つのピル
+        const pills = ["10問", "約5分", "JA / EN"];
+        let px = 76;
+        for (const label of pills) {
+          ctx.font = "500 13px -apple-system, Helvetica, sans-serif";
+          const w = ctx.measureText(label).width + 28;
+          ctx.fillStyle = "rgba(14,49,73,0.6)";
+          roundRect(ctx, px, bottomY - 14, w, 28, 14);
+          ctx.fill();
+          ctx.strokeStyle = "rgba(148,197,216,0.22)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.fillStyle = "#93c5d8";
+          ctx.textAlign = "center";
+          ctx.fillText(label, px + w / 2, bottomY);
+          px += w + 10;
+        }
+        // 右：URL + handle
+        ctx.textAlign = "right";
+        ctx.font = "500 14px -apple-system, Helvetica, sans-serif";
+        const urlPart = `${game.siteUrl} · `;
+        const handlePart = "@scgajge12";
+        ctx.fillStyle = "#e6f4f9";
+        const handleW = ctx.measureText(handlePart).width;
+        ctx.fillText(handlePart, W - 76, bottomY);
+        ctx.fillStyle = "#93c5d8";
+        ctx.fillText(urlPart, W - 76 - handleW, bottomY);
+      }
+
+      // === プレビュー描画 ===
+      const grid = document.getElementById("grid");
+      const items = [];
+      for (const game of GAMES) {
+        for (let s = 0; s <= game.total; s++) {
+          const card = document.createElement("div");
+          card.className = "card";
+          const h2 = document.createElement("h2");
+          h2.textContent = `${game.slug} / score-${s}.png`;
+          card.appendChild(h2);
+          const cv = document.createElement("canvas");
+          card.appendChild(cv);
+          grid.appendChild(card);
+          draw(cv, game, s);
+          items.push({
+            canvas: cv,
+            slug: game.slug,
+            score: s,
+            filename: `score-${s}.png`,
+          });
+        }
+      }
+
+      // === 保存系 ===
+      const log = (msg) => {
+        document.getElementById("log").textContent = msg;
+      };
+
+      // Canvas → Blob (Promise)
+      function canvasToBlob(canvas) {
+        return new Promise((resolve) =>
+          canvas.toBlob((b) => resolve(b), "image/png"),
+        );
+      }
+
+      // 1. File System Access API でディレクトリに直接保存
+      async function saveAll() {
+        if (!window.showDirectoryPicker) {
+          alert(
+            "このブラウザは File System Access API 非対応です。Download all を使ってください。",
+          );
+          return;
+        }
+        try {
+          const dir = await window.showDirectoryPicker({ mode: "readwrite" });
+          let i = 0;
+          for (const item of items) {
+            const sub = await dir.getDirectoryHandle(item.slug, {
+              create: true,
+            });
+            const fh = await sub.getFileHandle(item.filename, { create: true });
+            const ws = await fh.createWritable();
+            const blob = await canvasToBlob(item.canvas);
+            await ws.write(blob);
+            await ws.close();
+            i++;
+            log(`saved ${i}/${items.length}: ${item.slug}/${item.filename}`);
+          }
+          log(`done: saved ${items.length} files into ${dir.name}/`);
+        } catch (e) {
+          log(`error: ${e.message}`);
+          console.error(e);
+        }
+      }
+
+      // 2. Fallback: 22ファイル順次ダウンロード
+      async function downloadAll() {
+        let i = 0;
+        for (const item of items) {
+          const blob = await canvasToBlob(item.canvas);
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `${item.slug}__${item.filename}`;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+          i++;
+          log(`downloaded ${i}/${items.length}`);
+          await new Promise((r) => setTimeout(r, 80));
+        }
+        log(`done: downloaded ${items.length} files (prefix = slug)`);
+      }
+
+      document.getElementById("save").addEventListener("click", saveAll);
+      document
+        .getElementById("download")
+        .addEventListener("click", downloadAll);
+    </script>
+  </body>
+</html>
