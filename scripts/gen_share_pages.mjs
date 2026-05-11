@@ -36,6 +36,18 @@ const SCORE_GAMES = [
     titleEn: "Claude Bug Bounty Capability Quiz",
     total: 10,
   },
+  {
+    slug: "oss-bug-hunt-quiz",
+    titleJa: "OSSバグハント入門 クイズ",
+    titleEn: "OSS Bug Hunting 101 Quiz",
+    total: 20,
+  },
+  {
+    slug: "bug-hunter-exam",
+    titleJa: "バグハンター試験",
+    titleEn: "Bug Hunter Exam",
+    total: 20,
+  },
 ];
 
 // ランク系：固定数のランクごと

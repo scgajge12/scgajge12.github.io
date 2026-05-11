@@ -10,9 +10,11 @@
         static/images/games/）配下に
           bug-bounty-top-10-quiz/score-{0..10}.png
           claude-bug-bounty/score-{0..10}.png
-        を書き出す。
+          oss-bug-hunt-quiz/score-{0..20}.png
+          bug-hunter-exam/score-{0..20}.png
+        を書き出す（合計 64 枚）。
       - File System Access API 非対応ブラウザの場合は「Download all」で
-        22 ファイルを順次ダウンロードする。
+        64 ファイルを順次ダウンロードする。
       - デザインは既存 OGP（ダークティール基調）と統一。
 
       使い方:
@@ -111,7 +113,7 @@
     <header>
       <h1>Score OGP image generator</h1>
       <button id="save" class="primary">Save into static/images/games/</button>
-      <button id="download">Download all (.png x 22)</button>
+      <button id="download">Download all</button>
       <span id="log"></span>
     </header>
     <main id="grid"></main>
@@ -126,6 +128,7 @@
           titleEn: "Bug Bounty Top 10 Quiz",
           siteUrl: "scgajge12.github.io/games/bug-bounty-top-10-quiz",
           total: 10,
+          pills: ["10問", "約5分", "JA / EN"],
         },
         {
           slug: "claude-bug-bounty",
@@ -134,6 +137,25 @@
           titleEn: "Claude Bug Bounty Capability Quiz",
           siteUrl: "scgajge12.github.io/games/claude-bug-bounty",
           total: 10,
+          pills: ["10問", "約5分", "JA / EN"],
+        },
+        {
+          slug: "oss-bug-hunt-quiz",
+          badgeId: "OSS",
+          titleJa: "OSSバグハント入門 クイズ",
+          titleEn: "OSS Bug Hunting 101 Quiz",
+          siteUrl: "scgajge12.github.io/games/oss-bug-hunt-quiz",
+          total: 20,
+          pills: ["20問", "約10分", "JA / EN"],
+        },
+        {
+          slug: "bug-hunter-exam",
+          badgeId: "試",
+          titleJa: "バグハンター試験",
+          titleEn: "Bug Hunter Exam",
+          siteUrl: "scgajge12.github.io/games/bug-hunter-exam",
+          total: 20,
+          pills: ["20問", "5次試験", "JA / EN"],
         },
       ];
 
@@ -357,8 +379,8 @@
         // === 下段: 情報ピルと URL ===
         const bottomY = H - 76;
         ctx.textBaseline = "middle";
-        // 左：3つのピル
-        const pills = ["10問", "約5分", "JA / EN"];
+        // 左：3つのピル（ゲームごとの設定値を使用）
+        const pills = game.pills || ["10問", "約5分", "JA / EN"];
         let px = 76;
         for (const label of pills) {
           ctx.font = "500 13px -apple-system, Helvetica, sans-serif";

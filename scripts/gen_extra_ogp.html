@@ -2,13 +2,15 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <title>Generate top & rank OGP images (Kaiten / Bug Kanji / Triage / Caido Ninja / Bonsai Recon)</title>
+    <title>Generate top & rank OGP images (OSS / Bug Hunter Exam / Kaiten / Bug Kanji / Triage / Caido Ninja / Bonsai Recon)</title>
     <!--
-      ランク系ゲーム（Kaiten Bounty / Bug Kanji / Triage Sim / Caido Ninja / Bonsai Recon）の
-      OGP 画像生成ツール。
+      ランク系ゲーム（Kaiten Bounty / Bug Kanji / Triage Sim / Caido Ninja / Bonsai Recon）と、
+      クイズ系（OSS バグハント入門クイズ / バグハンター試験）のメイン OGP 画像生成ツール。
       - ブラウザで本ファイルを開き「Save into static/images/」を押すと、
         File System Access API で選んだディレクトリ（リポジトリの static/images/）に
         以下を書き出す。
+          oss-bug-hunt-quiz-ogp.png
+          bug-hunter-exam-ogp.png
           kaiten-bounty-ogp.png
           bug-kanji-ogp.png
           triage-sim-ogp.png
@@ -106,7 +108,7 @@
   </head>
   <body>
     <header>
-      <h1>Top &amp; Rank OGP image generator (Kaiten / Bug Kanji / Triage / Caido Ninja)</h1>
+      <h1>Top &amp; Rank OGP image generator (Kaiten / Bug Kanji / Triage / Caido Ninja / OSS / Bug Hunter Exam)</h1>
       <button id="save" class="primary">Save into static/images/</button>
       <button id="download">Download all</button>
       <span id="log"></span>
@@ -684,6 +686,30 @@
         ],
       };
 
+      // OSS バグハント入門クイズ（メイン OGP のみ。スコア別は gen_score_ogp.html 側で生成）
+      const OSS = {
+        slug: "oss-bug-hunt-quiz",
+        subBadge: "OSS · 30-DAY CVE PLAYBOOK",
+        url: "scgajge12.github.io/games/oss-bug-hunt-quiz",
+        titleJa: "OSSバグハント入門 クイズ",
+        titleEn: "OSS Bug Hunting 101 Quiz",
+        tagline:
+          "Zenn 書籍『30日でCVE取得! OSSバグハント入門』の 30 日ロードマップを 20 問のシナリオに圧縮した、CVE 取得志向の4択クイズ。",
+        pills: ["20問", "約10分", "JA / EN"],
+      };
+
+      // バグハンター試験（メイン OGP のみ。スコア別は gen_score_ogp.html 側で生成）
+      const BHE = {
+        slug: "bug-hunter-exam",
+        subBadge: "BHE · 5-PHASE HUNTER EXAM",
+        url: "scgajge12.github.io/games/bug-hunter-exam",
+        titleJa: "バグハンター試験",
+        titleEn: "Bug Hunter Exam",
+        tagline:
+          "Zenn 書籍『脱初心者のための実践バグバウンティ登竜門』を題材にした 5 次試験式のシナリオ 4 択クイズ。ハンターライセンスを発行しよう。",
+        pills: ["20問", "約12分", "JA / EN"],
+      };
+
       // ===== プレビュー描画 =====
       const grid = document.getElementById("grid");
       const items = [];
@@ -702,6 +728,16 @@
       }
 
       // トップ OGP（ゲーム紹介）
+      addItem(
+        "oss-bug-hunt-quiz-ogp.png",
+        (cv) => drawTopOgp(cv, OSS),
+        ["oss-bug-hunt-quiz-ogp.png"],
+      );
+      addItem(
+        "bug-hunter-exam-ogp.png",
+        (cv) => drawTopOgp(cv, BHE),
+        ["bug-hunter-exam-ogp.png"],
+      );
       addItem(
         "kaiten-bounty-ogp.png",
         (cv) => drawTopOgp(cv, KAITEN),
