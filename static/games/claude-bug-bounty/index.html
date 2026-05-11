@@ -310,6 +310,85 @@
         margin-top: 6px;
         margin-bottom: 28px;
       }
+
+      /* スタートヒーロー：ターミナル + Claude オレンジ AI オーブ + スラッシュコマンド */
+      .terminal-illustration {
+        display: block;
+        width: clamp(220px, 42vw, 320px);
+        height: auto;
+        margin: 0 auto 14px;
+        filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.55))
+          drop-shadow(0 0 18px rgba(251, 146, 60, 0.18));
+      }
+      /* AI オーブが脈動 */
+      .terminal-illustration .ai-orb {
+        animation: orbPulse 2.2s ease-in-out infinite;
+        transform-origin: center;
+      }
+      .terminal-illustration .orb-ring {
+        animation: orbRing 3.5s ease-in-out infinite;
+        transform-origin: center;
+      }
+      @keyframes orbPulse {
+        0%,
+        100% {
+          opacity: 0.85;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.06);
+        }
+      }
+      @keyframes orbRing {
+        0% {
+          opacity: 0.35;
+          transform: scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(1.6);
+        }
+      }
+      /* ターミナルのカーソルが点滅 */
+      .terminal-illustration .term-cursor {
+        animation: termCursor 1s steps(1) infinite;
+      }
+      @keyframes termCursor {
+        0%,
+        50% {
+          opacity: 1;
+        }
+        51%,
+        100% {
+          opacity: 0;
+        }
+      }
+      /* 出力行がタイプされていくようにスライド */
+      .terminal-illustration .term-line-b {
+        animation: typeIn 4s ease-in-out infinite;
+      }
+      .terminal-illustration .term-line-c {
+        animation: typeIn 4s ease-in-out infinite;
+        animation-delay: 1.2s;
+      }
+      @keyframes typeIn {
+        0%,
+        20% {
+          opacity: 0;
+          transform: translateX(-4px);
+        }
+        30%,
+        90% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(0);
+        }
+      }
+
       .hero-tag {
         display: inline-flex;
         align-items: center;
@@ -1237,6 +1316,119 @@
 
       <section id="screen-start" class="screen active">
         <div class="start-hero">
+          <!--
+            ターミナル × Claude オレンジ AI オーブ × スラッシュコマンドのヒーロー。
+            装飾用、aria-hidden。AIオーブは脈動、ターミナル行は時差でタイプイン。
+          -->
+          <svg
+            class="terminal-illustration"
+            viewBox="0 0 320 190"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="termFrame" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#1c1917" />
+                <stop offset="1" stop-color="#0a0a10" />
+              </linearGradient>
+              <radialGradient id="orbGrad" cx="0.4" cy="0.35" r="0.8">
+                <stop offset="0" stop-color="#fed7aa" />
+                <stop offset="0.35" stop-color="#fb923c" />
+                <stop offset="0.7" stop-color="#c2410c" />
+                <stop offset="1" stop-color="#451a03" />
+              </radialGradient>
+              <radialGradient id="orbHalo" cx="0.5" cy="0.5" r="0.5">
+                <stop offset="0" stop-color="#fb923c" stop-opacity="0.5" />
+                <stop offset="1" stop-color="#fb923c" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+
+            <!-- AIオーブの後光 -->
+            <circle class="ai-orb" cx="252" cy="48" r="55" fill="url(#orbHalo)" />
+            <!-- 拡散する波紋 -->
+            <circle class="orb-ring" cx="252" cy="48" r="30" fill="none" stroke="#fb923c" stroke-width="1.4" />
+
+            <!-- AIオーブ本体 -->
+            <g class="ai-orb">
+              <circle cx="252" cy="48" r="28" fill="url(#orbGrad)" stroke="#7c2d12" stroke-width="1" />
+              <!-- ハイライト -->
+              <ellipse cx="244" cy="38" rx="9" ry="7" fill="#ffffff" opacity="0.5" />
+              <ellipse cx="244" cy="38" rx="4" ry="3" fill="#ffffff" opacity="0.8" />
+              <!-- 内部のスラッシュ '/' -->
+              <text
+                x="252"
+                y="56"
+                text-anchor="middle"
+                font-size="26"
+                font-weight="900"
+                fill="#451a03"
+                font-family="JetBrains Mono, monospace"
+              >/</text>
+            </g>
+
+            <!-- ターミナルウィンドウ -->
+            <g>
+              <!-- 影 -->
+              <rect x="22" y="60" width="240" height="115" rx="8" fill="#000" opacity="0.4" />
+              <!-- 枠 -->
+              <rect x="20" y="58" width="240" height="115" rx="8" fill="url(#termFrame)" stroke="#3f3f46" stroke-width="1" />
+              <!-- タイトルバー -->
+              <rect x="20" y="58" width="240" height="22" rx="8" fill="#27272a" />
+              <rect x="20" y="74" width="240" height="6" fill="#27272a" />
+              <!-- 信号ボタン（赤・黄・緑） -->
+              <circle cx="34" cy="69" r="4" fill="#fb7185" />
+              <circle cx="46" cy="69" r="4" fill="#fbbf24" />
+              <circle cx="58" cy="69" r="4" fill="#34d399" />
+              <!-- タイトル -->
+              <text
+                x="140"
+                y="73"
+                text-anchor="middle"
+                font-size="9"
+                fill="#71717a"
+                font-family="JetBrains Mono, monospace"
+                letter-spacing="0.6"
+              >claude-bug-bounty</text>
+
+              <!-- 出力行 1: プロンプト + スラッシュコマンド -->
+              <g font-family="JetBrains Mono, monospace" font-size="10">
+                <text x="32" y="100" fill="#34d399">$</text>
+                <text x="44" y="100" fill="#fb923c">claude</text>
+                <text x="82" y="100" fill="#22d3ee">/bb-recon</text>
+                <rect class="term-cursor" x="138" y="92" width="6" height="10" fill="#22d3ee" />
+
+                <!-- 出力行 2 -->
+                <text class="term-line-b" x="32" y="120" fill="#71717a">→ enumerating subdomains...</text>
+
+                <!-- 出力行 3 -->
+                <text class="term-line-c" x="32" y="138" fill="#22d3ee">✓ </text>
+                <text class="term-line-c" x="42" y="138" fill="#e6f4f9">found 47 hosts</text>
+
+                <!-- 出力行 4: 次のプロンプト -->
+                <text class="term-line-c" x="32" y="158" fill="#34d399">$</text>
+                <text class="term-line-c" x="44" y="158" fill="#fb923c">claude</text>
+                <text class="term-line-c" x="82" y="158" fill="#22d3ee">/bb-triage</text>
+              </g>
+            </g>
+
+            <!-- スラッシュコマンドの泡（オーブから流れ出す） -->
+            <g
+              font-family="JetBrains Mono, monospace"
+              font-size="9"
+              font-weight="700"
+              fill="#fb923c"
+              opacity="0.85"
+            >
+              <text class="term-line-b" x="282" y="100" letter-spacing="0.4">/bb-poc</text>
+              <text class="term-line-c" x="276" y="118" letter-spacing="0.4">/bb-report</text>
+            </g>
+            <g fill="#fb923c" opacity="0.6">
+              <circle class="ai-orb" cx="288" cy="92" r="1.6" />
+              <circle class="orb-ring" cx="282" cy="124" r="1.4" />
+              <circle class="ai-orb" cx="270" cy="78" r="1.2" />
+            </g>
+          </svg>
+
           <div class="hero-tag">
             <span class="hero-tag-dot"></span>
             <span id="hero-tag-text"></span>

@@ -284,6 +284,48 @@
         margin-top: 6px;
         margin-bottom: 28px;
       }
+
+      /* スタートヒーローの寿司ゲタイラスト（湯気つき・舟が揺れる感じ） */
+      .sushi-illustration {
+        display: block;
+        width: clamp(200px, 38vw, 280px);
+        height: auto;
+        margin: 0 auto 14px;
+        filter: drop-shadow(0 12px 22px rgba(251, 146, 60, 0.25))
+          drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
+        transform-origin: 50% 75%;
+        animation: sushiBob 4.5s ease-in-out infinite alternate;
+      }
+      @keyframes sushiBob {
+        from {
+          transform: translateY(0) rotate(-0.6deg);
+        }
+        to {
+          transform: translateY(-4px) rotate(0.6deg);
+        }
+      }
+      /* 寿司から立ち上る湯気（イラスト内の wisp 用） */
+      .sushi-illustration .steam {
+        animation: steamCurl 2.8s ease-in-out infinite;
+      }
+      .sushi-illustration .steam-b {
+        animation-delay: 1.2s;
+      }
+      @keyframes steamCurl {
+        0% {
+          transform: translateY(0) scaleY(1);
+          opacity: 0.55;
+        }
+        50% {
+          transform: translateY(-3px) scaleY(1.05);
+          opacity: 0.3;
+        }
+        100% {
+          transform: translateY(-6px) scaleY(1.1);
+          opacity: 0;
+        }
+      }
+
       .hero-tag {
         display: inline-flex;
         align-items: center;
@@ -638,6 +680,51 @@
         position: relative;
         margin-bottom: 16px;
       }
+      /* レーンの上から立ち上る湯気（CSS のみ） */
+      .lane-stage::before {
+        content: "";
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        top: -22px;
+        height: 28px;
+        background:
+          radial-gradient(
+            ellipse 30px 14px at 12% 100%,
+            rgba(230, 244, 249, 0.18),
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 28px 12px at 42% 100%,
+            rgba(230, 244, 249, 0.14),
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 30px 14px at 70% 100%,
+            rgba(230, 244, 249, 0.18),
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 26px 11px at 90% 100%,
+            rgba(230, 244, 249, 0.12),
+            transparent 70%
+          );
+        filter: blur(2px);
+        pointer-events: none;
+        animation: laneSteam 5.5s ease-in-out infinite;
+        z-index: 4;
+      }
+      @keyframes laneSteam {
+        0%,
+        100% {
+          transform: translateY(0) scaleX(1);
+          opacity: 0.85;
+        }
+        50% {
+          transform: translateY(-5px) scaleX(1.04);
+          opacity: 1;
+        }
+      }
       .countdown {
         position: absolute;
         inset: 0;
@@ -837,21 +924,54 @@
         font-weight: 600;
       }
 
-      /* レーン（next 表示） */
+      /* レーン（next 表示） — 木目 + 醤油の艶 */
       .lane-belt {
         position: relative;
-        background: repeating-linear-gradient(
-          90deg,
-          var(--shoyu) 0,
-          var(--shoyu) 28px,
-          var(--wood) 28px,
-          var(--wood) 32px
-        );
-        border: 1px solid rgba(160, 90, 44, 0.4);
+        background:
+          /* 細い縦の木目線 */
+          repeating-linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 6px,
+            rgba(0, 0, 0, 0.12) 6px,
+            rgba(0, 0, 0, 0.12) 7px
+          ),
+          /* 板の継ぎ目 */
+            repeating-linear-gradient(
+              90deg,
+              var(--shoyu) 0,
+              var(--shoyu) 56px,
+              var(--wood) 56px,
+              var(--wood) 60px
+            );
+        border: 1px solid rgba(160, 90, 44, 0.55);
+        border-top: 2px solid rgba(160, 90, 44, 0.7);
+        border-bottom: 3px solid rgba(40, 20, 8, 0.85);
         border-radius: var(--radius-sm);
         padding: 12px 14px;
         overflow: hidden;
-        box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.45);
+        box-shadow:
+          inset 0 6px 14px rgba(0, 0, 0, 0.55),
+          inset 0 -3px 8px rgba(0, 0, 0, 0.4),
+          inset 0 1px 0 rgba(255, 220, 180, 0.18);
+      }
+      /* 醤油の艶テカり（上面のハイライト） */
+      .lane-belt > .belt-shine {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 8%;
+        right: 8%;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 230, 200, 0.18),
+          transparent
+        );
+        pointer-events: none;
+        filter: blur(1px);
+        z-index: 0;
       }
       .lane-belt::before {
         content: "";
@@ -1844,6 +1964,114 @@
       <!-- ============ START SCREEN ============ -->
       <section id="screen-start" class="screen active">
         <div class="start-hero">
+          <!--
+            寿司ゲタ × にぎり三貫 × 割り箸 × 山葵 のヒーローイラスト。
+            装飾用なので aria-hidden、CSS で軽く揺らす。
+          -->
+          <svg
+            class="sushi-illustration"
+            viewBox="0 0 280 140"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="boardGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#a05a2c" />
+                <stop offset="1" stop-color="#6b3a1c" />
+              </linearGradient>
+              <linearGradient id="riceGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#fffaf0" />
+                <stop offset="1" stop-color="#e8dec9" />
+              </linearGradient>
+              <linearGradient id="tunaGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ef4444" />
+                <stop offset="1" stop-color="#991b1b" />
+              </linearGradient>
+              <linearGradient id="salmonGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#fb923c" />
+                <stop offset="1" stop-color="#c2410c" />
+              </linearGradient>
+              <linearGradient id="tamagoGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#fde047" />
+                <stop offset="1" stop-color="#ca8a04" />
+              </linearGradient>
+            </defs>
+
+            <!-- 湯気（上に立ち上る 3 本の白い線） -->
+            <g stroke="#e6f4f9" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.55">
+              <path class="steam" d="M 80 50 Q 76 38, 80 28 Q 84 18, 78 8" />
+              <path class="steam steam-b" d="M 140 48 Q 144 36, 140 26 Q 136 16, 142 6" />
+              <path class="steam" d="M 200 50 Q 196 38, 200 28 Q 204 18, 198 8" />
+            </g>
+
+            <!-- 板（geta）：木目入り -->
+            <rect
+              x="20"
+              y="78"
+              width="240"
+              height="40"
+              rx="5"
+              fill="url(#boardGrad)"
+              stroke="#3b1d09"
+              stroke-width="1.5"
+            />
+            <line x1="22" y1="92" x2="258" y2="92" stroke="#3b1d09" stroke-width="0.4" opacity="0.35" />
+            <line x1="22" y1="104" x2="258" y2="104" stroke="#3b1d09" stroke-width="0.4" opacity="0.35" />
+            <!-- 板の脚 -->
+            <rect x="38" y="116" width="26" height="9" rx="2" fill="#3b1d09" />
+            <rect x="216" y="116" width="26" height="9" rx="2" fill="#3b1d09" />
+
+            <!-- にぎり #1（マグロ） -->
+            <g transform="translate(80, 68)">
+              <ellipse cx="0" cy="14" rx="24" ry="9" fill="url(#riceGrad)" stroke="#bca580" stroke-width="0.8" />
+              <path d="M -21 8 Q 0 0, 21 8 Q 18 13, 0 13 Q -18 13, -21 8 Z" fill="url(#tunaGrad)" />
+              <path d="M -17 4 Q 0 1, 17 4" stroke="#fca5a5" stroke-width="1" fill="none" opacity="0.65" />
+              <path d="M -10 7 Q 0 6, 10 8" stroke="#fca5a5" stroke-width="0.6" fill="none" opacity="0.4" />
+            </g>
+
+            <!-- にぎり #2（サーモン） -->
+            <g transform="translate(140, 66)">
+              <ellipse cx="0" cy="14" rx="24" ry="9" fill="url(#riceGrad)" stroke="#bca580" stroke-width="0.8" />
+              <path d="M -21 8 Q 0 0, 21 8 Q 18 13, 0 13 Q -18 13, -21 8 Z" fill="url(#salmonGrad)" />
+              <line x1="-14" y1="6" x2="-10" y2="11" stroke="#fef3c7" stroke-width="1" opacity="0.7" />
+              <line x1="-2" y1="3" x2="2" y2="11" stroke="#fef3c7" stroke-width="1" opacity="0.7" />
+              <line x1="10" y1="6" x2="14" y2="11" stroke="#fef3c7" stroke-width="1" opacity="0.7" />
+            </g>
+
+            <!-- にぎり #3（卵焼き + 海苔帯） -->
+            <g transform="translate(200, 68)">
+              <ellipse cx="0" cy="14" rx="24" ry="9" fill="url(#riceGrad)" stroke="#bca580" stroke-width="0.8" />
+              <rect x="-21" y="3" width="42" height="11" rx="2" fill="url(#tamagoGrad)" />
+              <rect x="-4" y="0" width="8" height="22" fill="#1f2937" />
+              <line x1="-17" y1="6" x2="-7" y2="6" stroke="#fef3c7" stroke-width="1" opacity="0.6" />
+              <line x1="9" y1="6" x2="17" y2="6" stroke="#fef3c7" stroke-width="1" opacity="0.6" />
+            </g>
+
+            <!-- 山葵（左下、板の上） -->
+            <g transform="translate(46, 84)">
+              <path d="M 0 0 Q 6 -4, 11 0 Q 13 4, 7 6 Q 0 5, 0 0 Z" fill="#22c55e" stroke="#15803d" stroke-width="0.5" />
+              <path d="M 2 -1 Q 5 -3, 8 -1" stroke="#15803d" stroke-width="0.5" fill="none" />
+            </g>
+
+            <!-- 醤油皿（右下） -->
+            <g transform="translate(248, 86)">
+              <ellipse cx="0" cy="0" rx="10" ry="3" fill="#1c1917" />
+              <ellipse cx="0" cy="-1" rx="9" ry="2.4" fill="#3b1d09" />
+            </g>
+
+            <!-- 割り箸（右上から斜め） -->
+            <g stroke-linecap="round">
+              <line x1="252" y1="20" x2="186" y2="62" stroke="#c79a3b" stroke-width="3.2" />
+              <line x1="258" y1="28" x2="194" y2="68" stroke="#a87926" stroke-width="3.2" />
+              <!-- 箸の先 -->
+              <circle cx="186" cy="62" r="1.6" fill="#7c5413" />
+              <circle cx="194" cy="68" r="1.6" fill="#7c5413" />
+            </g>
+
+            <!-- 板の影 -->
+            <ellipse cx="140" cy="130" rx="120" ry="4" fill="#000" opacity="0.35" />
+          </svg>
+
           <div class="hero-tag">
             <span class="hero-tag-dot"></span>
             <span id="hero-tag-text"></span>
