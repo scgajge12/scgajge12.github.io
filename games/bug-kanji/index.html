@@ -324,6 +324,78 @@
         margin-top: 6px;
         margin-bottom: 28px;
       }
+
+      /* スタートヒーロー：筆 × 和紙 × 墨壺 × 漢字（書道風） */
+      .kanji-illustration {
+        display: block;
+        width: clamp(200px, 36vw, 260px);
+        height: auto;
+        margin: 0 auto 14px;
+        filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.5))
+          drop-shadow(0 0 12px rgba(251, 146, 60, 0.18));
+      }
+      /* 筆がにじむように上下する */
+      .kanji-illustration .brush {
+        animation: brushHover 4s ease-in-out infinite alternate;
+        transform-origin: 100% 0%;
+      }
+      @keyframes brushHover {
+        from {
+          transform: translateY(0) rotate(-1deg);
+        }
+        to {
+          transform: translateY(-4px) rotate(2deg);
+        }
+      }
+      /* 墨のしずく */
+      .kanji-illustration .ink-drop {
+        animation: inkDrop 3.5s ease-in infinite;
+        transform-origin: center top;
+      }
+      @keyframes inkDrop {
+        0%,
+        70% {
+          transform: translateY(0) scaleY(1);
+          opacity: 0;
+        }
+        80% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(18px) scaleY(1.4);
+          opacity: 0;
+        }
+      }
+      /* 漢字が書かれていくようにじわっと現れる */
+      .kanji-illustration .kanji-stroke {
+        stroke-dasharray: 200;
+        stroke-dashoffset: 200;
+        animation: strokeDraw 4s ease-in-out infinite;
+      }
+      .kanji-illustration .kanji-stroke-b {
+        animation-delay: 1s;
+      }
+      .kanji-illustration .kanji-stroke-c {
+        animation-delay: 2s;
+      }
+      @keyframes strokeDraw {
+        0% {
+          stroke-dashoffset: 200;
+          opacity: 0;
+        }
+        20% {
+          opacity: 1;
+        }
+        60% {
+          stroke-dashoffset: 0;
+          opacity: 1;
+        }
+        100% {
+          stroke-dashoffset: 0;
+          opacity: 0;
+        }
+      }
+
       .hero-tag {
         display: inline-flex;
         align-items: center;
@@ -1786,6 +1858,140 @@
       <!-- ========== START ========== -->
       <section id="screen-start" class="screen active">
         <div class="start-hero">
+          <!--
+            筆 × 和紙 × 墨壺 × 漢字「脆」のヒーローイラスト（書道風）。
+            装飾用、aria-hidden。筆はにじむように揺れる、墨は時折滴り、漢字は描かれる。
+          -->
+          <svg
+            class="kanji-illustration"
+            viewBox="0 0 260 180"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="paperGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#fdf6e3" />
+                <stop offset="1" stop-color="#e8d6a8" />
+              </linearGradient>
+              <linearGradient id="brushHandleGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#92400e" />
+                <stop offset="1" stop-color="#451a03" />
+              </linearGradient>
+              <linearGradient id="brushTipGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#3b2410" />
+                <stop offset="0.6" stop-color="#1a1a1a" />
+                <stop offset="1" stop-color="#000000" />
+              </linearGradient>
+            </defs>
+
+            <!-- 和紙（背景） -->
+            <g>
+              <rect
+                x="40"
+                y="40"
+                width="160"
+                height="120"
+                rx="2"
+                fill="url(#paperGrad)"
+                stroke="#a87926"
+                stroke-width="1"
+              />
+              <!-- 紙のシワ・繊維 -->
+              <line x1="50" y1="60" x2="190" y2="60" stroke="#a87926" stroke-width="0.3" opacity="0.3" />
+              <line x1="50" y1="130" x2="190" y2="130" stroke="#a87926" stroke-width="0.3" opacity="0.3" />
+              <line x1="100" y1="50" x2="100" y2="150" stroke="#a87926" stroke-width="0.3" opacity="0.2" />
+              <!-- 朱印（落款） -->
+              <rect x="165" y="135" width="20" height="20" fill="#dc2626" rx="1" />
+              <text x="175" y="148" text-anchor="middle" font-size="11" font-weight="900" fill="#fdf6e3" font-family="Hiragino Mincho ProN, Yu Mincho, serif">印</text>
+            </g>
+
+            <!-- 漢字「脆」（jagged strokes、stroke-by-stroke で描かれる） -->
+            <g
+              stroke="#0a0a10"
+              stroke-width="6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"
+            >
+              <!-- 月偏（縦） -->
+              <path class="kanji-stroke" d="M 78 65 L 78 140" />
+              <!-- 月偏（横上） -->
+              <path class="kanji-stroke kanji-stroke-b" d="M 78 80 L 100 80" />
+              <!-- 月偏（横下） -->
+              <path class="kanji-stroke kanji-stroke-b" d="M 78 110 L 100 110" />
+              <!-- 月偏（底） -->
+              <path class="kanji-stroke kanji-stroke-b" d="M 78 140 L 100 140" />
+              <!-- 危の上の角 -->
+              <path class="kanji-stroke kanji-stroke-c" d="M 115 60 L 155 60 L 165 75" />
+              <!-- 危の縦 -->
+              <path class="kanji-stroke kanji-stroke-c" d="M 138 60 L 138 92" />
+              <!-- 危の下半分 -->
+              <path class="kanji-stroke kanji-stroke-c" d="M 120 100 Q 135 95, 155 100 Q 170 110, 165 135" />
+              <!-- 危の左下のはね -->
+              <path class="kanji-stroke kanji-stroke-c" d="M 120 100 Q 115 115, 122 130" />
+            </g>
+
+            <!-- 墨だまり（漢字の足元のかすれ） -->
+            <g fill="#0a0a10" opacity="0.6">
+              <ellipse cx="86" cy="142" rx="6" ry="1.6" />
+              <ellipse cx="124" cy="132" rx="4" ry="1.4" />
+            </g>
+
+            <!-- 墨壺（左下） -->
+            <g transform="translate(40, 152)">
+              <ellipse cx="0" cy="6" rx="20" ry="3" fill="#000" opacity="0.5" />
+              <ellipse cx="0" cy="2" rx="20" ry="5" fill="#1c1917" />
+              <ellipse cx="0" cy="0" rx="18" ry="4" fill="#0a0a10" />
+              <ellipse cx="0" cy="0" rx="12" ry="2.5" fill="#000" />
+              <!-- 墨の艶 -->
+              <ellipse cx="-5" cy="-1" rx="4" ry="0.6" fill="#3f3f46" opacity="0.6" />
+            </g>
+
+            <!-- 筆（右上から斜めに） -->
+            <g class="brush" transform="translate(180, 30)">
+              <!-- 柄 -->
+              <rect
+                x="-3"
+                y="0"
+                width="6"
+                height="80"
+                rx="1.5"
+                fill="url(#brushHandleGrad)"
+                stroke="#1c1917"
+                stroke-width="0.5"
+                transform="rotate(20)"
+              />
+              <!-- 金の口金 -->
+              <rect
+                x="-5"
+                y="74"
+                width="10"
+                height="6"
+                rx="1"
+                fill="#fbbf24"
+                stroke="#7c2d12"
+                stroke-width="0.5"
+                transform="rotate(20)"
+              />
+              <!-- 筆先 -->
+              <path
+                d="M -5 80 Q 0 88, 5 80 Q 8 100, 0 110 Q -8 100, -5 80 Z"
+                fill="url(#brushTipGrad)"
+                stroke="#000"
+                stroke-width="0.4"
+                transform="rotate(20)"
+              />
+              <!-- 筆先の墨溜まり光沢 -->
+              <ellipse cx="0" cy="92" rx="2" ry="6" fill="#1f2937" opacity="0.6" transform="rotate(20)" />
+
+              <!-- 墨のしずく -->
+              <ellipse class="ink-drop" cx="38" cy="115" rx="2" ry="3.5" fill="#0a0a10" />
+            </g>
+
+            <!-- 紙の影 -->
+            <ellipse cx="120" cy="166" rx="80" ry="3" fill="#000" opacity="0.35" />
+          </svg>
+
           <div class="hero-tag">
             <span class="hero-tag-dot"></span>
             <span id="hero-tag-text"></span>

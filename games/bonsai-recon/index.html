@@ -1,0 +1,3119 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#04111e" />
+    <title>Bonsai Recon | 偵察盆栽</title>
+    <meta
+      name="description"
+      content="subfinder / nuclei / ffuf / gau / JS bundle / httpx などのリコンツール出力から、深掘りすべき「ホットリード」だけを盆栽のように剪定する学習ゲーム。プロのバグハンター視点でノイズと信号を見分ける眼を鍛える。"
+    />
+
+    <!-- ===== OGP / Twitter Card ===== -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Bonsai Recon | 偵察盆栽" />
+    <meta
+      property="og:description"
+      content="リコンツールの大量出力を盆栽のように剪定して、深掘りすべき「真のリード」だけ残す学習ゲーム。サブドメイン列挙・nuclei・ffuf・JS bundle・CT log など 10 種のリコン結果でノイズ判定眼を鍛える。"
+    />
+    <meta
+      property="og:url"
+      content="https://scgajge12.github.io/games/bonsai-recon/"
+    />
+    <meta
+      property="og:image"
+      content="https://scgajge12.github.io/images/bonsai-recon-ogp.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="偵察盆栽 - morioka12 game site" />
+    <meta property="og:site_name" content="morioka12 game site" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@scgajge12" />
+    <meta name="twitter:creator" content="@scgajge12" />
+    <meta name="twitter:title" content="Bonsai Recon | 偵察盆栽" />
+    <meta
+      name="twitter:description"
+      content="リコンツールの大量出力を盆栽のように剪定して、深掘りすべき「真のリード」だけ残す学習ゲーム。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://scgajge12.github.io/images/bonsai-recon-ogp.png"
+    />
+
+    <style>
+      :root {
+        /* カワセミ（kingfisher）配色：コバルトブルー × バーントオレンジ */
+        --bg: #04111e;
+        --bg2: #082336;
+        --bg3: #0e3149;
+        --surface: #103e58;
+        --surface-2: #154d6d;
+        --line: rgba(14, 165, 233, 0.2);
+        --line-strong: rgba(14, 165, 233, 0.5);
+
+        --text: #e6f4f9;
+        --text-muted: #93c5d8;
+        --text-dim: #5b8597;
+
+        --primary: #0891b2;
+        --primary-light: #22d3ee;
+        --primary-deep: #155e75;
+        --secondary: #f97316;
+        --secondary-light: #fb923c;
+        --accent: #fbbf24;
+        --gold: #fbbf24;
+        --success: #34d399;
+        --danger: #fb7185;
+
+        /* 盆栽メタファー：葉色（緑系）と幹／鉢の木色 */
+        --leaf: #34d399;
+        --leaf-deep: #047857;
+        --leaf-soft: rgba(52, 211, 153, 0.18);
+        --leaf-line: rgba(52, 211, 153, 0.35);
+        --wood: #92400e;
+        --wood-light: #b45309;
+        --wood-deep: #451a03;
+        --soil: #44403c;
+
+        /* 葉と鋏のインライン SVG（::before の background-image で使う） */
+        --icon-leaf: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z' fill='%2334d399'/></svg>");
+        --icon-leaf-bright: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z' fill='%236ee7b7'/></svg>");
+        --icon-leaf-wilt: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z' fill='%23fbbf24'/></svg>");
+        --icon-scissors-red: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9.64 7.64c.23-.5.36-1.05.36-1.64 0-2.21-1.79-4-4-4S2 3.79 2 6s1.79 4 4 4c.59 0 1.14-.13 1.64-.36L10 12l-2.36 2.36C7.14 14.13 6.59 14 6 14c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4c0-.59-.13-1.14-.36-1.64L12 14l7 7h3v-1L9.64 7.64zM6 8c-1.1 0-2-.89-2-2s.9-2 2-2 2 .89 2 2-.9 2-2 2zm0 12c-1.1 0-2-.89-2-2s.9-2 2-2 2 .89 2 2-.9 2-2 2zM19 3l-6 6 2 2 7-7V3z' fill='%23fb7185'/></svg>");
+        --icon-scissors-green: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9.64 7.64c.23-.5.36-1.05.36-1.64 0-2.21-1.79-4-4-4S2 3.79 2 6s1.79 4 4 4c.59 0 1.14-.13 1.64-.36L10 12l-2.36 2.36C7.14 14.13 6.59 14 6 14c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4c0-.59-.13-1.14-.36-1.64L12 14l7 7h3v-1L9.64 7.64zM6 8c-1.1 0-2-.89-2-2s.9-2 2-2 2 .89 2 2-.9 2-2 2zm0 12c-1.1 0-2-.89-2-2s.9-2 2-2 2 .89 2 2-.9 2-2 2zM19 3l-6 6 2 2 7-7V3z' fill='%2334d399'/></svg>");
+
+        --radius: 14px;
+        --radius-sm: 8px;
+        --shadow: 0 12px 40px rgba(14, 165, 233, 0.22);
+        --shadow-strong: 0 0 60px rgba(14, 165, 233, 0.4);
+
+        --pad-x: 20px;
+        --pad-bottom: max(80px, env(safe-area-inset-bottom));
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        height: 100%;
+      }
+      html,
+      body {
+        overflow-x: hidden;
+        max-width: 100%;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+      body {
+        font-family:
+          "Inter", "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic",
+          "Noto Sans JP", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100dvh;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+      }
+
+      .bg-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .bg-grid {
+        background-image:
+          linear-gradient(
+            to right,
+            rgba(14, 165, 233, 0.04) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(14, 165, 233, 0.04) 1px,
+            transparent 1px
+          );
+        background-size: 56px 56px;
+        mask-image: radial-gradient(
+          ellipse at center,
+          rgba(0, 0, 0, 0.85) 0%,
+          rgba(0, 0, 0, 0.2) 70%,
+          transparent 100%
+        );
+      }
+      .bg-glow1 {
+        background: radial-gradient(
+          circle at 18% 12%,
+          rgba(14, 165, 233, 0.18),
+          transparent 55%
+        );
+      }
+      .bg-glow2 {
+        background: radial-gradient(
+          circle at 82% 88%,
+          rgba(52, 211, 153, 0.1),
+          transparent 60%
+        );
+      }
+      #particles {
+        z-index: 0;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 880px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 28px var(--pad-x) var(--pad-bottom);
+      }
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+        background: linear-gradient(135deg, var(--leaf), var(--leaf-deep));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #04261b;
+        font-weight: 800;
+        font-size: 18px;
+        box-shadow: 0 0 20px rgba(52, 211, 153, 0.45);
+      }
+      .brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.15;
+      }
+      .brand-name {
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: var(--text);
+      }
+      .brand-sub {
+        font-size: 10.5px;
+        color: var(--text-dim);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .lang-toggle {
+        display: inline-flex;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 3px;
+        position: relative;
+        overflow: hidden;
+      }
+      .lang-toggle button {
+        background: transparent;
+        border: 0;
+        color: var(--text-muted);
+        padding: 7px 14px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        border-radius: 999px;
+        transition: color 0.2s;
+        position: relative;
+        z-index: 1;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .lang-toggle button.active {
+        color: #fff;
+      }
+      .lang-toggle .lang-pill {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        height: calc(100% - 6px);
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        border-radius: 999px;
+        transition:
+          transform 0.28s ease,
+          width 0.28s ease;
+        z-index: 0;
+        box-shadow: 0 0 16px rgba(14, 165, 233, 0.4);
+      }
+
+      .screen {
+        display: none;
+        animation: fadeIn 0.45s ease;
+      }
+      .screen.active {
+        display: block;
+      }
+
+      .start-hero {
+        text-align: center;
+        margin-top: 6px;
+        margin-bottom: 28px;
+      }
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        font-size: 11px;
+        letter-spacing: 2.5px;
+        color: var(--leaf);
+        background: var(--leaf-soft);
+        border: 1px solid var(--leaf-line);
+        border-radius: 999px;
+        font-weight: 700;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .hero-tag-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--leaf);
+        box-shadow: 0 0 8px var(--leaf);
+        animation: blink 1.4s infinite;
+      }
+
+      /* スタート画面の盆栽イラスト：そよ風で軽く揺れる */
+      .bonsai-illustration {
+        display: block;
+        width: clamp(140px, 26vw, 200px);
+        height: auto;
+        margin: 0 auto 18px;
+        filter: drop-shadow(0 10px 24px rgba(52, 211, 153, 0.22))
+          drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
+        transform-origin: 50% 90%;
+        animation: bonsaiSway 6s ease-in-out infinite alternate;
+      }
+      @keyframes bonsaiSway {
+        from {
+          transform: rotate(-1.2deg);
+        }
+        to {
+          transform: rotate(1.2deg);
+        }
+      }
+      .hero-title {
+        font-size: clamp(22px, 6vw, 44px);
+        font-weight: 900;
+        letter-spacing: -0.5px;
+        line-height: 1.22;
+        background: linear-gradient(
+          120deg,
+          var(--leaf) 8%,
+          var(--primary-light) 50%,
+          var(--secondary-light) 95%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 12px;
+      }
+      .hero-sub {
+        color: var(--text-muted);
+        font-size: clamp(13.5px, 2vw, 15.5px);
+        max-width: 620px;
+        margin: 0 auto;
+      }
+
+      .info-card {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 22px 26px;
+        margin-bottom: 22px;
+        position: relative;
+        overflow: hidden;
+      }
+      .info-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at top right,
+          rgba(52, 211, 153, 0.08),
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+      .info-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 16px;
+        position: relative;
+      }
+      .info-stat {
+        text-align: center;
+      }
+      .info-stat-num {
+        font-size: 26px;
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--leaf), var(--primary-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        font-feature-settings: "tnum";
+      }
+      .info-stat-label {
+        font-size: 11px;
+        color: var(--text-dim);
+        margin-top: 6px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .rules {
+        background: linear-gradient(160deg, var(--bg2), var(--surface));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        margin-bottom: 22px;
+      }
+      .rules-title {
+        font-size: 12px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .rules-list {
+        display: grid;
+        gap: 10px;
+      }
+      .rule-row {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        font-size: 13px;
+        line-height: 1.65;
+        color: var(--text-muted);
+      }
+      .rule-icon {
+        flex-shrink: 0;
+        width: 26px;
+        height: 26px;
+        border-radius: 7px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 12px;
+      }
+      .rule-icon.keep {
+        background: var(--leaf-soft);
+        color: var(--leaf);
+        border: 1px solid var(--leaf-line);
+      }
+      .rule-icon.cut {
+        background: rgba(251, 113, 133, 0.12);
+        color: var(--danger);
+        border: 1px solid rgba(251, 113, 133, 0.32);
+      }
+      .rule-icon.score {
+        background: rgba(34, 211, 238, 0.12);
+        color: var(--primary-light);
+        border: 1px solid rgba(34, 211, 238, 0.3);
+      }
+      .rule-row strong {
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .sources {
+        background: linear-gradient(160deg, var(--bg2), var(--surface));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        margin-bottom: 26px;
+      }
+      .sources-title {
+        font-size: 12px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .source-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .source-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 13px;
+        transition: all 0.2s;
+      }
+      .source-item:hover {
+        border-color: var(--leaf);
+        color: var(--leaf);
+        transform: translateX(2px);
+      }
+      .source-tag {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 10.5px;
+        font-weight: 700;
+        color: var(--secondary-light);
+        background: rgba(251, 146, 60, 0.1);
+        padding: 3px 8px;
+        border-radius: 4px;
+        flex-shrink: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .source-title {
+        flex: 1;
+      }
+      .source-arrow {
+        color: var(--text-dim);
+      }
+
+      .start-btn-wrap {
+        text-align: center;
+      }
+      .btn-start {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 36px;
+        background: linear-gradient(135deg, var(--leaf), var(--leaf-deep));
+        border: 0;
+        color: #04261b;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        box-shadow: 0 8px 32px rgba(52, 211, 153, 0.35);
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-start::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          120deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.28) 50%,
+          transparent 70%
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 40px rgba(52, 211, 153, 0.45);
+      }
+      .btn-start:hover::after {
+        transform: translateX(100%);
+      }
+      .start-note {
+        margin-top: 14px;
+        color: var(--text-dim);
+        font-size: 12px;
+      }
+
+      .quiz-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px 12px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+        font-size: 12.5px;
+      }
+      .quiz-counter {
+        color: var(--text-muted);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        letter-spacing: 1px;
+      }
+      .quiz-counter strong {
+        color: var(--leaf);
+        font-size: 16px;
+        font-weight: 800;
+      }
+      .quiz-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        background: rgba(251, 146, 60, 0.08);
+        border: 1px solid rgba(251, 146, 60, 0.25);
+        border-radius: 999px;
+        color: var(--secondary-light);
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      /* 健康ゲージを「鉢の中の土」に見立てる：木の縁＋土色のベース */
+      .bonsai-bar {
+        margin-bottom: 22px;
+        background: linear-gradient(
+          180deg,
+          rgba(68, 64, 60, 0.6),
+          rgba(28, 25, 23, 0.7)
+        );
+        border: 1px solid var(--wood);
+        border-radius: 12px;
+        padding: 4px 6px;
+        position: relative;
+        overflow: hidden;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
+          inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+          0 6px 14px rgba(0, 0, 0, 0.3);
+      }
+      /* 鉢の脚（左右の小さな台座） */
+      .bonsai-bar::before,
+      .bonsai-bar::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        width: 16px;
+        height: 4px;
+        background: var(--wood-deep);
+        border-radius: 0 0 3px 3px;
+      }
+      .bonsai-bar::before {
+        left: 14%;
+      }
+      .bonsai-bar::after {
+        right: 14%;
+      }
+      .bonsai-fill {
+        height: 10px;
+        background: linear-gradient(
+          90deg,
+          var(--leaf-deep),
+          var(--leaf),
+          var(--accent)
+        );
+        background-size: 200% 100%;
+        animation: shimmer 4s linear infinite;
+        border-radius: 999px;
+        width: 0%;
+        transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow:
+          0 0 12px rgba(52, 211, 153, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      }
+      .bonsai-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 10.5px;
+        color: var(--text-dim);
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        margin-bottom: 6px;
+      }
+      .bonsai-meta strong {
+        color: var(--leaf);
+        font-weight: 800;
+        font-size: 12px;
+      }
+
+      .scenario-card {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 22px 24px;
+        margin-bottom: 16px;
+        animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .scenario-vuln {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 12px;
+        background: rgba(34, 211, 238, 0.1);
+        border: 1px solid rgba(34, 211, 238, 0.3);
+        color: var(--primary-light);
+        border-radius: 999px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.8px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+      }
+      .scenario-vuln-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--primary-light);
+        box-shadow: 0 0 6px var(--primary-light);
+      }
+      .scenario-context {
+        font-size: 13.5px;
+        line-height: 1.7;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+      }
+      .scenario-context strong {
+        color: var(--text);
+        font-weight: 700;
+      }
+      .scenario-question {
+        font-size: clamp(14.5px, 2.2vw, 16px);
+        line-height: 1.7;
+        color: var(--text);
+        font-weight: 700;
+        margin-top: 14px;
+      }
+      .scenario-goal {
+        margin-top: 10px;
+        padding: 10px 14px;
+        background: rgba(52, 211, 153, 0.06);
+        border: 1px dashed var(--leaf-line);
+        border-radius: var(--radius-sm);
+        font-size: 12.5px;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+      .scenario-goal strong {
+        color: var(--leaf);
+      }
+      .inline-code {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        padding: 1px 5px;
+        background: rgba(14, 165, 233, 0.1);
+        color: var(--primary-light);
+        border-radius: 4px;
+        font-size: 92%;
+        word-break: break-word;
+      }
+
+      .poc-block {
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--leaf);
+        border-radius: var(--radius-sm);
+        padding: 12px 8px;
+        margin: 16px 0 14px;
+        overflow-x: auto;
+      }
+      .poc-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        font-size: 10.5px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--leaf);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        margin: 0 6px 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px dashed var(--leaf-line);
+      }
+      .poc-head-count {
+        color: var(--text-dim);
+      }
+      .poc-head-count strong {
+        color: var(--leaf);
+        font-weight: 800;
+      }
+
+      .poc-line {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 6px 10px;
+        margin: 2px 0;
+        border-radius: 6px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 12.5px;
+        line-height: 1.55;
+        color: var(--text);
+        cursor:
+          url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M9.64 7.64c.23-.5.36-1.05.36-1.64 0-2.21-1.79-4-4-4S2 3.79 2 6s1.79 4 4 4c.59 0 1.14-.13 1.64-.36L10 12l-2.36 2.36C7.14 14.13 6.59 14 6 14c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4c0-.59-.13-1.14-.36-1.64L12 14l7 7h3v-1L9.64 7.64zM6 8c-1.1 0-2-.89-2-2s.9-2 2-2 2 .89 2 2-.9 2-2 2zm0 12c-1.1 0-2-.89-2-2s.9-2 2-2 2 .89 2 2-.9 2-2 2zM19 3l-6 6 2 2 7-7V3z' fill='%23fb923c' stroke='%23ffffff' stroke-width='0.5'/></svg>")
+            12 12,
+          pointer;
+        transition: all 0.15s ease;
+        position: relative;
+        white-space: pre-wrap;
+        word-break: break-word;
+        background: rgba(52, 211, 153, 0.04);
+        border: 1px solid transparent;
+        -webkit-tap-highlight-color: transparent;
+        user-select: none;
+      }
+      .poc-line:hover:not(.locked) {
+        background: rgba(52, 211, 153, 0.1);
+        border-color: var(--leaf-line);
+      }
+      .poc-line-num {
+        flex-shrink: 0;
+        width: 26px;
+        color: var(--text-dim);
+        text-align: right;
+        font-size: 11px;
+        font-weight: 700;
+        padding-top: 1px;
+      }
+      .poc-line-mark {
+        flex-shrink: 0;
+        width: 22px;
+        height: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-weight: 800;
+        font-size: 13px;
+        color: var(--text-dim);
+      }
+      /* デフォルト：そっと枝についている葉っぱ。ホバーで揺れる。 */
+      .poc-line-mark::before {
+        content: "";
+        display: block;
+        width: 14px;
+        height: 14px;
+        background-image: var(--icon-leaf);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.55;
+        transform-origin: 50% 90%;
+        transition:
+          opacity 0.2s ease,
+          transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      .poc-line:hover:not(.locked) .poc-line-mark::before {
+        opacity: 1;
+        transform: rotate(-12deg);
+      }
+      .poc-line-code {
+        flex: 1;
+        min-width: 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      /* 剪定対象として選択中：葉が鋏に変わる */
+      .poc-line.cut-selected {
+        background: rgba(251, 113, 133, 0.14);
+        border-color: rgba(251, 113, 133, 0.5);
+        color: var(--danger);
+      }
+      .poc-line.cut-selected .poc-line-code {
+        text-decoration: line-through;
+        text-decoration-color: var(--danger);
+        text-decoration-thickness: 2px;
+        opacity: 0.85;
+      }
+      .poc-line.cut-selected .poc-line-mark::before {
+        content: "";
+        background-image: var(--icon-scissors-red);
+        opacity: 1;
+        transform: rotate(0deg);
+        animation: snipReady 1.6s ease-in-out infinite;
+      }
+      .poc-line.cut-selected .poc-line-num {
+        color: var(--danger);
+      }
+
+      .poc-line.locked {
+        cursor: default;
+      }
+
+      /* 残した essential：濃い緑の葉として描く */
+      .poc-line.feed-good {
+        background: rgba(52, 211, 153, 0.16);
+        border-color: var(--leaf);
+      }
+      .poc-line.feed-good .poc-line-mark::before {
+        content: "";
+        background-image: var(--icon-leaf-bright);
+        opacity: 1;
+        transform: rotate(-4deg);
+        filter: drop-shadow(0 0 4px rgba(52, 211, 153, 0.5));
+      }
+      .poc-line.feed-good .poc-line-code {
+        color: var(--leaf);
+      }
+
+      /* essential を切ってしまった（致命）：赤鋏 + 落葉アニメで枝から落とす */
+      .poc-line.feed-mistake-cut {
+        background: rgba(251, 113, 133, 0.16);
+        border-color: var(--danger);
+        color: var(--danger);
+        animation: leafFall 0.55s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+      }
+      .poc-line.feed-mistake-cut .poc-line-mark::before {
+        content: "";
+        background-image: var(--icon-scissors-red);
+        opacity: 1;
+        transform: rotate(-15deg);
+      }
+      .poc-line.feed-mistake-cut .poc-line-code {
+        text-decoration: line-through;
+        text-decoration-color: var(--danger);
+        opacity: 0.7;
+        color: var(--danger);
+      }
+
+      /* 切り損ねた junk：枯れた葉 */
+      .poc-line.feed-missed-junk {
+        background: rgba(251, 191, 36, 0.14);
+        border-color: rgba(251, 191, 36, 0.55);
+      }
+      .poc-line.feed-missed-junk .poc-line-mark::before {
+        content: "";
+        background-image: var(--icon-leaf-wilt);
+        opacity: 0.95;
+        transform: rotate(40deg);
+        filter: drop-shadow(0 0 3px rgba(251, 191, 36, 0.35));
+      }
+      .poc-line.feed-missed-junk .poc-line-code {
+        color: var(--accent);
+      }
+
+      /* junk を正しく剪定：緑の鋏 + 葉を散らせる */
+      .poc-line.feed-correct-cut {
+        background: rgba(52, 211, 153, 0.16);
+        border-color: var(--leaf);
+        color: var(--leaf);
+        animation: leafFall 0.55s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+      }
+      .poc-line.feed-correct-cut .poc-line-mark::before {
+        content: "";
+        background-image: var(--icon-scissors-green);
+        opacity: 1;
+        transform: rotate(0deg);
+      }
+      .poc-line.feed-correct-cut .poc-line-code {
+        text-decoration: line-through;
+        text-decoration-color: var(--leaf);
+        text-decoration-thickness: 2px;
+      }
+
+      /* 剪定が確定したときに、切られた行が枝から落ちるアニメ */
+      @keyframes leafFall {
+        0% {
+          transform: translateX(0) translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        40% {
+          transform: translateX(6px) translateY(2px) rotate(2deg);
+          opacity: 0.95;
+        }
+        100% {
+          transform: translateX(14px) translateY(4px) rotate(4deg);
+          opacity: 0.9;
+        }
+      }
+
+      /* 鋏マークが小さく開閉して「切るよ」シグナルを出す */
+      @keyframes snipReady {
+        0%,
+        100% {
+          transform: rotate(0deg) scale(1);
+        }
+        50% {
+          transform: rotate(-8deg) scale(1.08);
+        }
+      }
+
+      .poc-reason {
+        margin: 4px 0 8px 54px;
+        padding: 8px 12px;
+        background: var(--surface);
+        border-left: 2px solid var(--line-strong);
+        border-radius: 0 6px 6px 0;
+        font-size: 12px;
+        line-height: 1.65;
+        color: var(--text-muted);
+      }
+      .poc-reason.good {
+        border-left-color: var(--leaf);
+      }
+      .poc-reason.bad {
+        border-left-color: var(--danger);
+      }
+      .poc-reason.warn {
+        border-left-color: var(--accent);
+      }
+      .poc-reason-tag {
+        display: inline-block;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        padding: 1px 7px;
+        border-radius: 4px;
+        margin-right: 6px;
+        vertical-align: 1px;
+        text-transform: uppercase;
+      }
+      .poc-reason.good .poc-reason-tag {
+        color: var(--leaf);
+        background: rgba(52, 211, 153, 0.14);
+        border: 1px solid var(--leaf-line);
+      }
+      .poc-reason.bad .poc-reason-tag {
+        color: var(--danger);
+        background: rgba(251, 113, 133, 0.12);
+        border: 1px solid rgba(251, 113, 133, 0.32);
+      }
+      .poc-reason.warn .poc-reason-tag {
+        color: var(--accent);
+        background: rgba(251, 191, 36, 0.12);
+        border: 1px solid rgba(251, 191, 36, 0.35);
+      }
+
+      .play-actions {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+      .btn-prune {
+        flex: 2;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 18px;
+        background: linear-gradient(135deg, var(--leaf), var(--leaf-deep));
+        border: 0;
+        color: #04261b;
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(52, 211, 153, 0.3);
+      }
+      .btn-prune:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(52, 211, 153, 0.45);
+      }
+      .btn-prune:disabled {
+        opacity: 0.5;
+        cursor: default;
+        box-shadow: none;
+      }
+      .btn-reset {
+        flex: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px 16px;
+        background: transparent;
+        border: 1.5px solid var(--line-strong);
+        color: var(--text-muted);
+        font-size: 13.5px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-reset:hover:not(:disabled) {
+        border-color: var(--primary-light);
+        color: var(--primary-light);
+      }
+      .btn-reset:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+
+      .result-feedback {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--leaf);
+        border-radius: var(--radius-sm);
+        padding: 16px 20px;
+        margin-top: 14px;
+        animation: fadeIn 0.3s ease;
+      }
+      .result-feedback.perfect {
+        border-left-color: var(--gold);
+        background: linear-gradient(
+          135deg,
+          rgba(251, 191, 36, 0.08),
+          rgba(52, 211, 153, 0.06)
+        );
+      }
+      .result-feedback.partial {
+        border-left-color: var(--accent);
+      }
+      .result-feedback.dead {
+        border-left-color: var(--danger);
+        background: rgba(251, 113, 133, 0.06);
+      }
+      .feedback-title {
+        font-weight: 800;
+        font-size: 14.5px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .result-feedback.perfect .feedback-title {
+        color: var(--gold);
+      }
+      .result-feedback.partial .feedback-title {
+        color: var(--accent);
+      }
+      .result-feedback.dead .feedback-title {
+        color: var(--danger);
+      }
+      .feedback-points {
+        margin-left: auto;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+        color: var(--text-muted);
+      }
+      .feedback-points strong {
+        color: var(--leaf);
+        font-weight: 800;
+        font-size: 14px;
+      }
+      .feedback-body {
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--text-muted);
+      }
+      .feedback-body strong {
+        color: var(--text);
+        font-weight: 700;
+      }
+      .feedback-tip {
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px dashed var(--line);
+        font-size: 12px;
+        line-height: 1.65;
+        color: var(--text-dim);
+      }
+      .feedback-tip strong {
+        color: var(--secondary-light);
+      }
+
+      .next-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 16px;
+        margin-top: 16px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        border: 0;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
+      }
+      .next-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(14, 165, 233, 0.45);
+      }
+
+      .result {
+        text-align: center;
+        max-width: 640px;
+        margin: 0 auto;
+      }
+      .result-rank-tag {
+        display: inline-block;
+        padding: 6px 18px;
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: var(--gold);
+        background: rgba(251, 191, 36, 0.08);
+        border: 1px solid rgba(251, 191, 36, 0.3);
+        border-radius: 999px;
+        font-weight: 700;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .result-title {
+        font-size: clamp(22px, 6vw, 44px);
+        font-weight: 900;
+        background: linear-gradient(
+          120deg,
+          var(--leaf),
+          var(--primary-light),
+          var(--accent)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.2;
+        margin-bottom: 10px;
+      }
+      .result-sub {
+        color: var(--text-muted);
+        margin-bottom: 26px;
+        font-size: 14px;
+      }
+      .score-display {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 24px;
+      }
+      .score-ring {
+        --pct: 0;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: conic-gradient(
+          from -90deg,
+          var(--leaf-deep) 0%,
+          var(--leaf) calc(var(--pct) * 0.5%),
+          var(--accent) calc(var(--pct) * 1%),
+          var(--surface-2) calc(var(--pct) * 1%)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-shadow: var(--shadow-strong);
+      }
+      .score-ring::before {
+        content: "";
+        position: absolute;
+        inset: 14px;
+        border-radius: 50%;
+        background: var(--bg);
+      }
+      .score-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+      }
+      .score-num {
+        font-size: 54px;
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--leaf), var(--primary-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        font-feature-settings: "tnum";
+      }
+      .score-total {
+        color: var(--text-dim);
+        font-size: 14px;
+        margin-top: 4px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .score-suffix {
+        color: var(--text-muted);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-top: 8px;
+      }
+      .result-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 28px;
+      }
+      .result-stat {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        padding: 14px 10px;
+      }
+      .result-stat-num {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--leaf);
+        font-feature-settings: "tnum";
+      }
+      .result-stat-label {
+        font-size: 10.5px;
+        color: var(--text-dim);
+        letter-spacing: 1px;
+        margin-top: 4px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .result-comment {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        margin-bottom: 26px;
+        text-align: left;
+        font-size: 14px;
+        line-height: 1.75;
+        color: var(--text-muted);
+      }
+      .result-comment strong {
+        color: var(--text);
+      }
+      .result-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+      .btn-share-x {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 28px;
+        background: #000;
+        border: 1.5px solid #2a2a2a;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 800;
+        border-radius: 999px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+      .btn-share-x:hover {
+        background: #111;
+        border-color: #555;
+        transform: translateY(-2px);
+      }
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 28px;
+        background: transparent;
+        color: var(--leaf);
+        font-size: 14px;
+        font-weight: 800;
+        border-radius: 999px;
+        border: 1.5px solid var(--leaf);
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+      .btn-secondary:hover {
+        background: rgba(52, 211, 153, 0.12);
+        transform: translateY(-2px);
+      }
+
+      .review {
+        margin-top: 36px;
+        text-align: left;
+      }
+      .review-title {
+        font-size: 14px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        text-align: center;
+      }
+      .review-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .review-item {
+        display: flex;
+        gap: 12px;
+        padding: 14px 16px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+      }
+      .review-mark {
+        flex-shrink: 0;
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 14px;
+      }
+      .review-mark.ok {
+        background: rgba(52, 211, 153, 0.18);
+        color: var(--leaf);
+      }
+      .review-mark.warn {
+        background: rgba(251, 191, 36, 0.18);
+        color: var(--accent);
+      }
+      .review-mark.ng {
+        background: rgba(251, 113, 133, 0.18);
+        color: var(--danger);
+      }
+      .review-content {
+        flex: 1;
+        min-width: 0;
+      }
+      .review-q {
+        color: var(--text);
+        font-weight: 700;
+        margin-bottom: 6px;
+        line-height: 1.5;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: baseline;
+      }
+      .review-dim {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 10.5px;
+        letter-spacing: 1px;
+        color: var(--secondary-light);
+        text-transform: uppercase;
+      }
+      .review-points {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--leaf);
+      }
+      .review-a {
+        color: var(--text-muted);
+        font-size: 12.5px;
+      }
+
+      .footer {
+        margin-top: 60px;
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-dim);
+      }
+      .footer a {
+        color: var(--text-muted);
+        text-decoration: none;
+        border-bottom: 1px dotted var(--text-dim);
+      }
+      .footer a:hover {
+        color: var(--leaf);
+        border-color: var(--leaf);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: 0% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+
+      @media (max-width: 560px) {
+        :root {
+          --pad-x: 16px;
+        }
+        .page {
+          padding-top: 22px;
+        }
+        .scenario-card {
+          padding: 18px 16px;
+        }
+        .info-card,
+        .sources,
+        .rules {
+          padding: 18px 16px;
+        }
+        .top-bar {
+          flex-wrap: wrap;
+        }
+        .poc-line {
+          font-size: 11.5px;
+          padding: 6px 8px;
+        }
+        .poc-line-num {
+          width: 22px;
+          font-size: 10.5px;
+        }
+        .poc-reason {
+          margin-left: 30px;
+          padding: 7px 10px;
+          font-size: 11.5px;
+        }
+        .result-feedback {
+          padding: 14px 16px;
+        }
+        .feedback-body {
+          font-size: 12.5px;
+        }
+        .result-stats {
+          gap: 8px;
+        }
+        .result-stat-num {
+          font-size: 18px;
+        }
+        .result-comment {
+          padding: 16px 18px;
+          font-size: 13px;
+        }
+        .review-item {
+          padding: 12px 14px;
+          font-size: 12.5px;
+        }
+        .btn-share-x,
+        .btn-secondary {
+          padding: 13px 22px;
+          font-size: 13.5px;
+        }
+        .play-actions {
+          flex-direction: column;
+        }
+        .play-actions .btn-prune,
+        .play-actions .btn-reset {
+          flex: 1 1 auto;
+        }
+      }
+
+      @media (max-width: 400px) {
+        :root {
+          --pad-x: 12px;
+        }
+        .page {
+          padding-top: 18px;
+        }
+        .brand-sub {
+          letter-spacing: 1px;
+          font-size: 9.5px;
+        }
+        .hero-tag {
+          letter-spacing: 1.5px;
+          font-size: 10.5px;
+          padding: 5px 12px;
+        }
+        .hero-sub {
+          font-size: 13px;
+        }
+        .poc-block {
+          padding: 10px 6px;
+        }
+        .poc-line {
+          font-size: 11px;
+        }
+        .btn-start {
+          padding: 14px 28px;
+          font-size: 14px;
+        }
+        .info-stat-num {
+          font-size: 22px;
+        }
+        .score-ring {
+          width: 160px;
+          height: 160px;
+        }
+        .score-ring::before {
+          inset: 12px;
+        }
+        .score-num {
+          font-size: 42px;
+        }
+        .result-stat-num {
+          font-size: 16px;
+        }
+        .result-stat-label {
+          font-size: 9.5px;
+        }
+      }
+
+      @media (max-width: 340px) {
+        .brand-sub {
+          display: none;
+        }
+        .lang-toggle button {
+          padding: 6px 11px;
+          font-size: 11px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-layer bg-grid"></div>
+    <div class="bg-layer bg-glow1"></div>
+    <div class="bg-layer bg-glow2"></div>
+    <canvas id="particles" class="bg-layer"></canvas>
+
+    <div class="page">
+      <header class="top-bar">
+        <a class="brand" href="../" title="morioka12 game site">
+          <div class="brand-mark">盆</div>
+          <div class="brand-text">
+            <span class="brand-name" id="brand-name"></span>
+            <span class="brand-sub">BONSAI · POC · PRUNER</span>
+          </div>
+        </a>
+        <div class="lang-toggle" role="tablist" aria-label="Language">
+          <span class="lang-pill" id="lang-pill"></span>
+          <button data-lang="ja" class="active" role="tab">日本語</button>
+          <button data-lang="en" role="tab">EN</button>
+        </div>
+      </header>
+
+      <section id="screen-start" class="screen active">
+        <div class="start-hero">
+          <!--
+            盆栽イラスト：曲がった幹 + 3 か所の葉群 + 鉢。
+            装飾用なので aria-hidden、CSS で軽く揺らす。
+          -->
+          <svg
+            class="bonsai-illustration"
+            viewBox="0 0 200 170"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="potGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#92400e" />
+                <stop offset="1" stop-color="#451a03" />
+              </linearGradient>
+              <linearGradient id="trunkGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#b45309" />
+                <stop offset="1" stop-color="#451a03" />
+              </linearGradient>
+              <radialGradient id="leafGradA" cx="0.4" cy="0.35" r="0.7">
+                <stop offset="0" stop-color="#6ee7b7" />
+                <stop offset="0.6" stop-color="#34d399" />
+                <stop offset="1" stop-color="#047857" />
+              </radialGradient>
+              <radialGradient id="leafGradB" cx="0.55" cy="0.3" r="0.75">
+                <stop offset="0" stop-color="#5eead4" />
+                <stop offset="0.5" stop-color="#34d399" />
+                <stop offset="1" stop-color="#065f46" />
+              </radialGradient>
+            </defs>
+
+            <!-- 鉢の脚 -->
+            <rect x="56" y="153" width="14" height="6" rx="1.5" fill="#1c1917" />
+            <rect x="130" y="153" width="14" height="6" rx="1.5" fill="#1c1917" />
+            <!-- 鉢本体（台形） -->
+            <path
+              d="M 55 135 L 145 135 L 135 156 L 65 156 Z"
+              fill="url(#potGrad)"
+              stroke="#1c1917"
+              stroke-width="0.8"
+            />
+            <!-- 鉢の縁 -->
+            <rect
+              x="50"
+              y="128"
+              width="100"
+              height="9"
+              rx="2"
+              fill="#7c2d12"
+              stroke="#1c1917"
+              stroke-width="0.8"
+            />
+            <!-- 土 -->
+            <ellipse cx="100" cy="131" rx="46" ry="3" fill="#44403c" />
+            <!-- 苔（土の上の緑） -->
+            <ellipse cx="80" cy="130" rx="8" ry="1.6" fill="#065f46" opacity="0.7" />
+            <ellipse cx="118" cy="130" rx="6" ry="1.4" fill="#065f46" opacity="0.7" />
+
+            <!-- 幹：S 字に曲げる -->
+            <path
+              d="M 100 130 C 92 110, 112 100, 100 82 C 88 64, 110 54, 100 38 C 92 24, 106 14, 100 8"
+              stroke="url(#trunkGrad)"
+              stroke-width="6.5"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <!-- 幹の陰影 -->
+            <path
+              d="M 100 130 C 92 110, 112 100, 100 82 C 88 64, 110 54, 100 38 C 92 24, 106 14, 100 8"
+              stroke="#1c1917"
+              stroke-width="1"
+              fill="none"
+              stroke-linecap="round"
+              opacity="0.4"
+              transform="translate(1.5, 1)"
+            />
+
+            <!-- 左下の枝 -->
+            <path
+              d="M 100 88 C 80 84, 60 84, 46 70"
+              stroke="url(#trunkGrad)"
+              stroke-width="3"
+              fill="none"
+              stroke-linecap="round"
+            />
+            <!-- 右中の枝 -->
+            <path
+              d="M 100 58 C 120 54, 138 56, 152 44"
+              stroke="url(#trunkGrad)"
+              stroke-width="3"
+              fill="none"
+              stroke-linecap="round"
+            />
+            <!-- 頂上の小枝 -->
+            <path
+              d="M 100 18 L 96 10"
+              stroke="url(#trunkGrad)"
+              stroke-width="2"
+              fill="none"
+              stroke-linecap="round"
+            />
+
+            <!-- 葉群：左下 -->
+            <g>
+              <ellipse cx="46" cy="64" rx="22" ry="11" fill="url(#leafGradA)" />
+              <ellipse cx="38" cy="56" rx="14" ry="8" fill="url(#leafGradB)" />
+              <ellipse cx="52" cy="58" rx="10" ry="6" fill="#6ee7b7" opacity="0.7" />
+            </g>
+            <!-- 葉群：右中 -->
+            <g>
+              <ellipse cx="152" cy="40" rx="24" ry="12" fill="url(#leafGradA)" />
+              <ellipse cx="160" cy="32" rx="14" ry="8" fill="url(#leafGradB)" />
+              <ellipse cx="146" cy="34" rx="11" ry="6" fill="#6ee7b7" opacity="0.7" />
+            </g>
+            <!-- 葉群：頂上 -->
+            <g>
+              <ellipse cx="100" cy="10" rx="28" ry="13" fill="url(#leafGradA)" />
+              <ellipse cx="108" cy="2" rx="15" ry="8" fill="url(#leafGradB)" />
+              <ellipse cx="88" cy="4" rx="11" ry="6" fill="#6ee7b7" opacity="0.7" />
+            </g>
+
+            <!-- 散らばった落葉（盆栽の足元） -->
+            <g opacity="0.65">
+              <ellipse cx="42" cy="139" rx="2.5" ry="1.2" fill="#34d399" transform="rotate(-15 42 139)" />
+              <ellipse cx="160" cy="141" rx="2.2" ry="1.1" fill="#34d399" transform="rotate(20 160 141)" />
+              <ellipse cx="156" cy="148" rx="2" ry="1" fill="#047857" transform="rotate(-25 156 148)" />
+            </g>
+          </svg>
+
+          <div class="hero-tag">
+            <span class="hero-tag-dot"></span>
+            <span id="hero-tag-text"></span>
+          </div>
+          <h1 class="hero-title" id="hero-title"></h1>
+          <p class="hero-sub" id="hero-sub"></p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-grid">
+            <div class="info-stat">
+              <div class="info-stat-num">10</div>
+              <div class="info-stat-label" id="stat-label-q"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">100</div>
+              <div class="info-stat-label" id="stat-label-pt"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">~8min</div>
+              <div class="info-stat-label" id="stat-label-time"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">JA / EN</div>
+              <div class="info-stat-label" id="stat-label-lang"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules">
+          <div class="rules-title" id="rules-title"></div>
+          <div class="rules-list">
+            <div class="rule-row">
+              <span class="rule-icon keep">+</span>
+              <div id="rule-keep"></div>
+            </div>
+            <div class="rule-row">
+              <span class="rule-icon cut">✂</span>
+              <div id="rule-cut"></div>
+            </div>
+            <div class="rule-row">
+              <span class="rule-icon score">★</span>
+              <div id="rule-score"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sources">
+          <div class="sources-title" id="sources-title"></div>
+          <div class="source-list">
+            <a
+              class="source-item"
+              href="https://projectdiscovery.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="source-tag">OSS</span>
+              <span class="source-title" id="src-h1"></span>
+              <span class="source-arrow">→</span>
+            </a>
+            <a
+              class="source-item"
+              href="https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/01-Information_Gathering/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="source-tag">OWASP</span>
+              <span class="source-title" id="src-owasp"></span>
+              <span class="source-arrow">→</span>
+            </a>
+            <a
+              class="source-item"
+              href="https://owasp.org/www-project-amass/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="source-tag">OSS</span>
+              <span class="source-title" id="src-psw"></span>
+              <span class="source-arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="start-btn-wrap">
+          <button class="btn-start" id="btn-start">
+            <span id="btn-start-text"></span>
+            <span aria-hidden="true">→</span>
+          </button>
+          <div class="start-note" id="start-note"></div>
+        </div>
+      </section>
+
+      <section id="screen-quiz" class="screen">
+        <div class="quiz-meta">
+          <div class="quiz-counter">
+            <span id="qm-q-label"></span>
+            <strong id="q-current">1</strong>
+            <span style="color: var(--text-dim)">/</span>
+            <span id="q-total">10</span>
+          </div>
+          <span class="quiz-tag" id="q-tag"></span>
+        </div>
+
+        <div class="bonsai-meta">
+          <span id="bonsai-label"></span>
+          <span><strong id="bonsai-num">0</strong> / 100</span>
+        </div>
+        <div class="bonsai-bar">
+          <div class="bonsai-fill" id="bonsai-fill"></div>
+        </div>
+
+        <div class="scenario-card">
+          <div class="scenario-vuln">
+            <span class="scenario-vuln-dot"></span>
+            <span id="scenario-vuln-text"></span>
+          </div>
+          <p class="scenario-context" id="scenario-context"></p>
+          <p class="scenario-question" id="scenario-question"></p>
+          <div class="scenario-goal" id="scenario-goal"></div>
+        </div>
+
+        <div class="poc-block">
+          <div class="poc-head">
+            <span id="poc-head-label"></span>
+            <span class="poc-head-count">
+              <span id="poc-count-label"></span>
+              <strong id="poc-kept-num">0</strong>
+              <span>/</span>
+              <span id="poc-total-num">0</span>
+            </span>
+          </div>
+          <div id="poc-lines"></div>
+        </div>
+
+        <div class="play-actions">
+          <button class="btn-prune" id="btn-prune">
+            <span id="btn-prune-text"></span>
+          </button>
+          <button class="btn-reset" id="btn-reset">
+            <span id="btn-reset-text"></span>
+          </button>
+        </div>
+
+        <div id="feedback-area"></div>
+
+        <button class="next-btn" id="btn-next" style="display: none"></button>
+      </section>
+
+      <section id="screen-result" class="screen">
+        <div class="result">
+          <div class="result-rank-tag" id="result-rank">★ BONSAI RANK</div>
+          <h2 class="result-title" id="result-title"></h2>
+          <p class="result-sub" id="result-sub"></p>
+
+          <div class="score-display">
+            <div class="score-ring" id="score-ring">
+              <div class="score-content">
+                <div class="score-num" id="score-num">0</div>
+                <div class="score-total">/ 100</div>
+              </div>
+            </div>
+          </div>
+          <div class="score-suffix" id="score-suffix"></div>
+
+          <div class="result-stats">
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-perfect">0</div>
+              <div class="result-stat-label" id="stat-lbl-perfect"></div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-cut-correct">0</div>
+              <div class="result-stat-label" id="stat-lbl-cut"></div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-pct">0%</div>
+              <div class="result-stat-label" id="stat-lbl-pct"></div>
+            </div>
+          </div>
+
+          <div class="result-comment" id="result-comment"></div>
+
+          <div class="result-actions">
+            <button class="btn-share-x" id="btn-share">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631Zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                />
+              </svg>
+              <span id="btn-share-text"></span>
+            </button>
+            <button class="btn-secondary" id="btn-retry">
+              <span id="btn-retry-text"></span>
+            </button>
+          </div>
+
+          <div class="review">
+            <div class="review-title" id="review-title"></div>
+            <div class="review-grid" id="review-grid"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>
+          <span id="footer-by"></span>
+          <a
+            href="https://x.com/scgajge12"
+            target="_blank"
+            rel="noopener noreferrer"
+            >@scgajge12</a
+          >
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      "use strict";
+
+      /* =========================================================
+         全ロジックを IIFE に閉じてグローバル汚染を防ぐ。
+         ========================================================= */
+      (function () {
+        const I18N = {
+          ja: {
+            brandName: "偵察盆栽",
+            heroTag: "BONSAI · RECON PRUNER",
+            heroTitle: "Bonsai Recon — 偵察盆栽",
+            heroSub:
+              "subfinder・nuclei・ffuf・gau・JS bundle・httpx などのリコンツール出力を盆栽のように剪定して、本当に深掘りすべき「ホットリード」だけ残す学習ゲーム。プロのバグハンター視点でノイズと信号を見分ける眼を鍛える。",
+            statQ: "問題数",
+            statPt: "満点",
+            statTime: "プレイ時間",
+            statLang: "言語",
+            rulesTitle: "// 剪定の心得",
+            ruleKeep:
+              "<strong>切ってはいけない枝（ホットリード）</strong>：深掘り価値のある行 — 最近の新規ホスト、認証必須エンドポイント、状態変更系API、本物のシークレット、古いスタックの痕跡、認証バイパス示唆など。切るとバグを逃す。",
+            ruleCut:
+              "<strong>切るべき不要枝（ノイズ）</strong>：3rd party SaaS、CDN、静的アセット、tracking pixel、catch-all、デフォルトページ、公開前提のキー、ワイルドカード／期限切れ証明書、低 impact の info ノイズなど、深掘りしても何も出ない行。",
+            ruleScore:
+              "<strong>得点</strong>：各行の判定が正しいほど高得点。「完璧な盆栽」（全行正答）はボーナス込で 10 pt / 問。10 問で <strong>100 pt 満点</strong>。",
+            sourcesTitle: "// 出典・参考リソース",
+            srcH1: "ProjectDiscovery（subfinder · nuclei · httpx · katana）",
+            srcOwasp: "OWASP WSTG — Information Gathering（情報収集ガイド）",
+            srcPsw: "OWASP Amass — Attack Surface Mapping（攻撃面マッピング）",
+            startBtn: "盆栽を始める",
+            startNote:
+              "※ 10 問・100 点満点。プレイ後に X(Twitter) シェアボタンが表示されます",
+            qmQ: "BONSAI",
+            bonsaiLabel: "BONSAI HEALTH（盆栽の健やかさ）",
+            pocHead: "RECON OUTPUT — 枝ぶりを整える",
+            pocCount: "残す枝（リード） ",
+            pruneBtn: "剪定する（PRUNE）",
+            resetBtn: "葉戻し（RESET）",
+            nextBtn: "次の盆栽へ →",
+            lastBtn: "結果を見る →",
+            quizPerfect: "完璧な盆栽",
+            quizPartial: "もう少し剪定",
+            quizDead: "ホットリードを切った",
+            scoreSuffix: "BONSAI RECON SCORE",
+            statLblPerfect: "完璧",
+            statLblCut: "正しく剪定",
+            statLblPct: "獲得率",
+            resultShare: "X (Twitter) でシェア",
+            resultRetry: "もう一度挑戦",
+            resultReview: "// 盆栽ごとのレビュー",
+            tagGood: "GOOD CUT",
+            tagBad: "MISSED LEAD",
+            tagWarn: "MISSED NOISE",
+            tagKeep: "KEEP",
+            footerBy: "Created by ",
+          },
+          en: {
+            brandName: "Bonsai Recon",
+            heroTag: "BONSAI · RECON PRUNER",
+            heroTitle: "Bonsai Recon",
+            heroSub:
+              "Prune the firehose of recon-tool output — subfinder, nuclei, ffuf, gau, JS bundles, httpx — like a bonsai until only the truly hot leads remain. Learn to spot signal from noise the way working bug hunters do.",
+            statQ: "PUZZLES",
+            statPt: "POINTS",
+            statTime: "PLAY TIME",
+            statLang: "LANGUAGE",
+            rulesTitle: "// THE WAY OF THE PRUNER",
+            ruleKeep:
+              "<strong>Branches you must NOT cut (hot leads):</strong> recently-issued hosts, auth-gated endpoints, state-changing APIs, real secrets, traces of old stacks, signs of broken auth. Cut these and you'll skip real bugs.",
+            ruleCut:
+              "<strong>Branches to prune (noise):</strong> 3rd-party SaaS, CDN, static assets, tracking pixels, catch-all 200s, default pages, intentionally public keys, wildcard / expired certs, low-impact info findings.",
+            ruleScore:
+              "<strong>Scoring:</strong> the more lines you label correctly, the higher the score. A <strong>perfect bonsai</strong> (all lines right) is 10 pt / puzzle including the bonus — <strong>100 pt total</strong>.",
+            sourcesTitle: "// SOURCES & REFERENCES",
+            srcH1: "ProjectDiscovery (subfinder · nuclei · httpx · katana)",
+            srcOwasp: "OWASP WSTG — Information Gathering",
+            srcPsw: "OWASP Amass — Attack Surface Mapping",
+            startBtn: "Start Pruning",
+            startNote:
+              "* 10 puzzles · 100 pt total. X (Twitter) share button at the end.",
+            qmQ: "BONSAI",
+            bonsaiLabel: "BONSAI HEALTH",
+            pocHead: "RECON OUTPUT — shape the branches",
+            pocCount: "Keep ",
+            pruneBtn: "Prune (剪定)",
+            resetBtn: "Reset (葉戻し)",
+            nextBtn: "Next bonsai →",
+            lastBtn: "See results →",
+            quizPerfect: "Perfect bonsai",
+            quizPartial: "Needs a tighter cut",
+            quizDead: "Cut a hot lead",
+            scoreSuffix: "BONSAI RECON SCORE",
+            statLblPerfect: "Perfect",
+            statLblCut: "Cut right",
+            statLblPct: "Accuracy",
+            resultShare: "Share on X",
+            resultRetry: "Try again",
+            resultReview: "// Per-bonsai review",
+            tagGood: "GOOD CUT",
+            tagBad: "MISSED LEAD",
+            tagWarn: "MISSED NOISE",
+            tagKeep: "KEEP",
+            footerBy: "Created by ",
+          },
+        };
+
+        /* =========================================================
+           正解難読化
+             - 各行の正解 role（essential / junk）は XOR + Base64 で隠蔽し、
+               r フィールドに格納する（line.code を salt にして 1 行ごとに
+               一意なトークンになる）。
+             - DevTools の Sources 検索で "essential" / "junk" や
+               role: といった文字列が直接マッチしないようにする。
+             - kaiten-bounty / caido-ninja と同じレベルのカジュアルな
+               チート対策（暗号強度は期待しない）。
+           ========================================================= */
+        const _BK = "B0nsa1R3con7";
+        function _decRole(payload, salt) {
+          const k = salt + "|" + _BK;
+          const bin = atob(payload);
+          const out = new Uint8Array(bin.length);
+          for (let i = 0; i < bin.length; i++) {
+            out[i] = bin.charCodeAt(i) ^ k.charCodeAt(i % k.length);
+          }
+          return new TextDecoder().decode(out);
+        }
+        // 同じ行に対して何度もデコードしないようキャッシュ
+        const _roleCache = new WeakMap();
+        function roleOf(line) {
+          let v = _roleCache.get(line);
+          if (v === undefined) {
+            v = _decRole(line.r, line.code);
+            _roleCache.set(line, v);
+          }
+          return v;
+        }
+
+        const SCENARIOS = [
+          {
+            id: "subfinder",
+            tag: { ja: "01 · subfinder / Subdomain Enum", en: "01 · subfinder / Subdomain Enum" },
+            vuln: { ja: "サブドメイン列挙", en: "Subdomain Enumeration" },
+            context: { ja: "新規プログラム `target.com` のサブドメイン列挙が走り終わった。subfinder + amass passive + crt.sh の集計で 12 ホスト。プログラム規約は <strong>in-scope: `*.target.com`（production only）/ OOS: `*-stage.*`, `*-dev.*`, 3rd party SaaS</strong>。プロは「今日の最初の 1 時間で触るべきホスト」だけ残す。", en: "Recon just finished on a fresh program `target.com`. subfinder + amass passive + crt.sh union returns 12 hosts. Scope: <strong>in-scope `*.target.com` (production only) / out-of-scope `*-stage.*`, `*-dev.*`, 3rd-party SaaS</strong>. A pro keeps only what they'd touch in the first hour." },
+            question: { ja: "深掘り価値のあるホスト（攻撃面が広い・古いスタック・モバイル・内部臭）だけ残す。", en: "Keep only hosts worth deep-diving (wide attack surface, old stack, mobile, smells of internal)." },
+            goal: { ja: "<strong>目的</strong>：12 ホストから、認証エンドポイント／旧 API／モバイル版／内部ツール／billing などホットなものを残し、CDN・SaaS・OOS・edge ホスト名を切る。", en: "<strong>Goal:</strong> from 12 hosts, keep auth endpoints, legacy APIs, mobile builds, internal tooling, billing — and prune CDN, SaaS, OOS, and edge hostnames." },
+            lines: [
+              { code: "api.target.com", r: "BAMaSxoVGwYJ", reason: { ja: "API ホストは攻撃面が最も広い（IDOR・SSRF・SQLi の主戦場）。最初に httpx + dirsearch を当てる対象。", en: "API hosts hold the widest attack surface (IDOR / SSRF / SQLi). First in line for httpx + dirsearch." } },
+              { code: "admin.target.com", r: "BBceDABaHQAe", reason: { ja: "管理画面は認証バイパス・IDOR・横展開の宝庫。プロは admin / dashboard / portal を最優先で覗く。", en: "Admin panels are gold for auth bypass, IDOR and lateral movement. Pros always pop the hood on admin / dashboard / portal hosts first." } },
+              { code: "billing.target.com", r: "BxofCQcaDk8Y", reason: { ja: "お金系は impact が CVSS で伸びやすく、bounty 帯も上がる。決済・サブスク・refund 周りの状態変更系は最優先。", en: "Money-touching surfaces scale impact (and bounty) faster than anything else. Hammer payment / subscription / refund flows first." } },
+              { code: "m.target.com", r: "CF0HBBwTDBVC", reason: { ja: "モバイル版は Web 版と認可ロジックがズレやすく、旧 endpoint が残ることが多い。プロが必ず触る「手薄な弟」。", en: "Mobile builds drift from the Web build's authz logic and tend to ship stale endpoints — a habitual blind spot pros never skip." } },
+              { code: "legacy-api.target.com", r: "CRYUBA0NRAAc", reason: { ja: "`legacy-` 接頭辞は最高のシグナル。古い依存ライブラリ・忘れられた endpoint・OAuth レガシーフローなど、CVE と独自バグが両方ヒットする。", en: "A `legacy-` prefix is the loudest signal in recon. Old deps, forgotten endpoints, legacy OAuth flows — CVEs and unique bugs both live here." } },
+              { code: "internal-tools.target.com", r: "DB0HABwaCA1B", reason: { ja: "「internal」が外から見えている時点で ACL ミスを疑う。social-engineering なしで触れる internal は最優先で攻める。", en: "An `internal-` hostname reachable from the public internet implies an ACL slip. Anything externally exposed yet named 'internal' is a top-priority target." } },
+              { code: "www.target.com", r: "HQIZRQ==", reason: { ja: "マーケサイト中心で攻撃面が薄い。1 周目では時間効率が悪く後回し（特殊なフォームがあれば後で戻る）。", en: "Mostly marketing surface — low yield in the first sweep. Park it unless a contact form or campaign endpoint turns up later." } },
+              { code: "docs.target.com", r: "DhoNGA==", reason: { ja: "Read-only ドキュメント。バグハント対象としては低価値（中身は別途、internal endpoint や API key の grep 対象としては有用だが、それは別フロー）。", en: "Read-only docs surface — low bug yield. Useful as a secret/grep target later, not as a deep-dive host now." } },
+              { code: "cdn.target.com", r: "CREARQ==", reason: { ja: "CDN は静的アセット配信のみ。S3/CloudFront のバケット監査は別フロー（subdomain takeover チェックは別途）。", en: "CDN host is static-only. Bucket-takeover and S3-misconfig audits run on a separate workflow, not via app bug-hunting." } },
+              { code: "target.zendesk.com", r: "HhQcDA==", reason: { ja: "3rd party SaaS。OOS 規約に明確に該当する典型例で、報告しても N/A 確定。recon ノートには残すが対象からは外す。", en: "3rd-party SaaS host — explicitly OOS in most programs. Note it for context, but reporting on Zendesk lands you a flat N/A." } },
+              { code: "api-stage.target.com", r: "CwUHRg==", reason: { ja: "プログラム規約で <strong>`*-stage.*` は OOS 明記</strong>。active testing 一発でレポート却下＋警告対象。", en: "Program scope explicitly excludes `*-stage.*`. Active testing here gets you closed and possibly warned." } },
+              { code: "*.target.com.cdn.cloudflare.net", r: "QFsaCg==", reason: { ja: "Cloudflare の edge ホスト名。個別ホスト情報を持たないため recon としては無価値。", en: "Cloudflare edge hostname — carries no per-host info, useless as a recon target." } },
+            ],
+          },
+          {
+            id: "nuclei",
+            tag: { ja: "02 · nuclei / Templated Scan", en: "02 · nuclei / Templated Scan" },
+            vuln: { ja: "nuclei 出力フィルタ", en: "nuclei Output Filter" },
+            context: { ja: "`nuclei -severity info,low,medium,high,critical -l live-hosts.txt` を広めに走らせた結果が 12 件。プロは <strong>info の大半を切り捨て</strong>、medium 以上 + 露出パネル / 秘密漏洩 / .git 系を最優先で triage する。", en: "Ran `nuclei -severity info,low,medium,high,critical -l live-hosts.txt` wide. 12 findings come back. Pros toss most of `info`, and chase medium+ along with exposed panels, leaked tokens and .git surfaces first." },
+            question: { ja: "CVE / 秘密漏洩 / 認証バイパスに即つながる finding だけ残す。", en: "Keep findings that lead straight to a CVE, a secret leak, or an auth bypass." },
+            goal: { ja: "<strong>目的</strong>：12 件の templated-scanner 結果から「報告書 1 本になる」素材だけ残す。", en: "<strong>Goal:</strong> from 12 scanner findings, keep what becomes a real report on its own." },
+            lines: [
+              { code: "[ssl-issuer] [info] api.target.com — Let's Encrypt", r: "MQYdBw==", reason: { ja: "発行元の info はインベントリ情報。脆弱性ではない。", en: "Issuer info is inventory, not a vuln." } },
+              { code: "[tls-version] [info] api.target.com — TLS 1.2 supported", r: "MQECGA==", reason: { ja: "TLS バージョン情報は単独で impact 無し。weak cipher 等が出るまで保留。", en: "TLS version alone carries no impact. Hold off until weak-cipher findings appear." } },
+              { code: "[exposed-panels:jenkins-login-panel] [info] ci.target.com", r: "PhYLFQEHDAVB", reason: { ja: "<strong>Jenkins 露出は登竜門</strong>：default cred / 古い CVE / script console → RCE までの距離が短い。severity が info 表記でも触る価値最大。", en: "<strong>Exposed Jenkins is a classic foothold:</strong> default creds, CVE chains, script console → RCE. Don't be fooled by the `info` label." } },
+              { code: "[git-config] [medium] backup.target.com/.git/config", r: "PhQaEUMXBg8K", reason: { ja: "`.git/config` 露出は <strong>git-dumper</strong> でソース全流出に直結。即報告レベル。", en: "Exposed `.git/config` lets git-dumper exfiltrate the full source. Direct path to a high-severity report." } },
+              { code: "[options-method] [info] api.target.com", r: "MRoeHw==", reason: { ja: "OPTIONS が有効なのは大半のサーバで通常。CORS 検証は別フローで個別に。", en: "OPTIONS being enabled is normal. Validate CORS in a dedicated pass instead." } },
+              { code: "[generic-tokens:slack-webhook] [high] static.target.com/main.js", r: "PhQWCwsGAAJB", reason: { ja: "Slack webhook 漏洩は <strong>そのまま PoC 化可能</strong>（curl 1 発で社内チャンネルに投稿）。即報告。", en: "A leaked Slack webhook is a one-curl PoC — file the report today." } },
+              { code: "[swagger-api] [info] api.target.com/swagger", r: "PgAEBAkTDBNB", reason: { ja: "Swagger / OpenAPI 露出は <strong>API 全 endpoint の地図</strong>。隠し endpoint や admin ルートを引きずり出せる recon の宝。", en: "Open Swagger / OpenAPI gives you the whole API map — perfect for surfacing hidden endpoints and admin routes." } },
+              { code: "[php-info] [high] legacy.target.com/phpinfo.php", r: "PgMbFUMdBwcD", reason: { ja: "phpinfo() は <strong>環境変数・パス・モジュール一覧</strong>が丸見え。Apache 内部パス → LFI 連鎖の起点になりがち。", en: "`phpinfo()` exposes env vars, paths, loaded modules — classic kickoff for LFI / RCE chains." } },
+              { code: "[robots-txt-detect] [info] www.target.com/robots.txt", r: "MQcBCQ==", reason: { ja: "robots.txt の存在自体は普通。中身に `/admin` 等が書いてあれば別途 disallow grep するが、それは別フロー。", en: "robots.txt existing is normal. Worth grepping for `/admin` later, but not as a finding on its own." } },
+              { code: "[detect-cms-wordpress] [info] blog.target.com", r: "MRELHw==", reason: { ja: "CMS 識別だけでは脆弱性なし。WP plugin / version まで降りて初めて意味がある。", en: "CMS detection alone isn't a bug. Drill to plugin / version first." } },
+              { code: "[favicon-detect:react] [info] app.target.com", r: "MRMPHQ==", reason: { ja: "フレームワーク識別は recon のメモ。impact 0、報告対象外。", en: "Framework fingerprinting is recon trivia, not a finding." } },
+              { code: "[exposed-panels:grafana] [medium] metrics.target.com", r: "PhYLFQEHDAVB", reason: { ja: "Grafana 露出 → default cred（admin/admin）・anonymous dashboard・dashboard 経由のメトリクス漏洩。<strong>Jenkins と並ぶ最頻のお手柄</strong>。", en: "Exposed Grafana → default creds (admin/admin), anonymous dashboards, metrics exfil. As reliable a payday as exposed Jenkins." } },
+            ],
+          },
+          {
+            id: "ffuf",
+            tag: { ja: "03 · ffuf / Directory Brute", en: "03 · ffuf / Directory Brute" },
+            vuln: { ja: "ffuf ディレクトリ列挙", en: "ffuf Directory Brute" },
+            context: { ja: "ffuf でディレクトリ列挙を実施。<strong>calibration で `/asdfqwerty` を投げると 200 OK + 12483 bytes が返る</strong>（= catch-all 確定）。プロは「catch-all と一致するレスポンス」を全部切り、それから外れる行だけ拾う。", en: "Ran ffuf for path brute. Calibration with `/asdfqwerty` returns `200 OK / 12483 bytes` — that's the catch-all baseline. Pros mute everything matching the baseline and only look at the anomalies." },
+            question: { ja: "catch-all サイズと一致するノイズを切り、status / size の異常で「実在」を示すパスだけ残す。", en: "Cut everything matching the catch-all signature; keep paths that diverge in status or size." },
+            goal: { ja: "<strong>目的</strong>：12 結果から、catch-all のサイズ・status と異なる本物の存在示唆だけ残す。", en: "<strong>Goal:</strong> from 12 results, keep entries whose status/size differ from the catch-all signature." },
+            lines: [
+              { code: "/admin              [Status: 401, Size: 0]", r: "ShIXCAcaSUFM", reason: { ja: "<strong>401 = ここに何かある</strong>のシグナル。auth bypass / default cred / token leak の入口になり得る。", en: "<strong>401 is 'something lives here'.</strong> Pivot to auth bypass, default creds, or token-leak chains." } },
+              { code: "/login              [Status: 200, Size: 12483]", r: "RRkBDA==", reason: { ja: "サイズが calibration と完全一致 = catch-all（SPA index）。実体は無いと判断。", en: "Size matches the calibration body — that's the SPA catch-all, not a real path." } },
+              { code: "/api                [Status: 200, Size: 12483]", r: "RRQeAg==", reason: { ja: "同上 catch-all。/api ベースは別のホストや別ポートで個別に再 brute する。", en: "Same catch-all signature. Re-brute the `/api/` namespace separately under the API host." } },
+              { code: "/backup.zip         [Status: 200, Size: 4823901]", r: "ShESBgUBGU8W", reason: { ja: "<strong>4.8MB のバイナリ</strong>は秒で deep-dive。ソース・設定・creds が丸ごと入っている事故案件は珍しくない。", en: "A 4.8 MB binary — open it immediately. Source / config / creds leaking via a stray `backup.zip` is a perennial classic." } },
+              { code: "/swagger-ui.html    [Status: 200, Size: 18234]", r: "SgAEBAkTDBNB", reason: { ja: "Swagger UI 露出は <strong>API 全列挙＋未文書 endpoint</strong> 取得の宝。", en: "Open Swagger UI = the whole API map plus undocumented endpoints. Always worth a deep dive." } },
+              { code: "/console            [Status: 403, Size: 162]", r: "ShAcCx0bBQRM", reason: { ja: "<strong>403 は存在示唆</strong>。X-Forwarded-For / Host header / referer 工夫で bypass できることがある。Spring Boot Actuator や Tomcat manager の場合は default cred も。", en: "<strong>403 means it exists.</strong> Try XFF / Host-header / referer tricks; if it's Spring Actuator or Tomcat manager, default creds may walk you in." } },
+              { code: "/robots.txt         [Status: 200, Size: 211]", r: "RQcBCQ==", reason: { ja: "存在は当然。中身は別途 `curl /robots.txt | grep -i 'disallow.*admin'` で grep するが、それは別フロー。", en: "Expected to exist. Grep its body for hidden paths separately — not as a brute finding." } },
+              { code: "/img                [Status: 200, Size: 12483]", r: "RRwDDA==", reason: { ja: "catch-all 一致。SPA だと存在しないパスでも index.html が返ることを覚えておく。", en: "Catch-all signature — under SPAs, missing paths return index.html. Skip." } },
+              { code: "/.git/HEAD          [Status: 200, Size: 23]", r: "Sl0UDBpbISQt", reason: { ja: "<strong>.git 露出は最高ネタ</strong>。<code>git-dumper</code> 一発でリポジトリ全復元 → commit 履歴に hardcoded secret や internal endpoint が眠る。", en: "<strong>An exposed .git is jackpot.</strong> Run git-dumper to reconstitute the repo; commit history almost always coughs up secrets or internal endpoints." } },
+              { code: "/dashboard          [Status: 302 → /login, Size: 0]", r: "ShcSFgYWBgAe", reason: { ja: "302 → /login は <strong>認証ゲートを発見</strong>した証拠。「直接 GET したらゲートで止まるが、別 method や Cookie 操作で抜けないか？」を試す対象。", en: "302 → /login surfaces an auth gate. Probe whether a different verb, a forged cookie, or path-confusion lets you bypass it." } },
+              { code: "/.DS_Store          [Status: 200, Size: 6148]", r: "Sl03NjEnHQ4e", reason: { ja: "<strong>macOS のディレクトリ構造漏洩</strong>。`ds_store_exp` でファイル名を列挙して、隠れたパス（admin-old, internal-backup.zip 等）を芋づる式に。", en: "macOS leak that maps directory structure. Run `ds_store_exp` to enumerate buried filenames (admin-old, internal-backup.zip, etc.)." } },
+              { code: "/test               [Status: 200, Size: 12483]", r: "RQELGA==", reason: { ja: "catch-all 一致。", en: "Catch-all match." } },
+            ],
+          },
+          {
+            id: "wayback",
+            tag: { ja: "04 · gau / waybackurls", en: "04 · gau / waybackurls" },
+            vuln: { ja: "Wayback Machine アーカイブ", en: "Wayback Machine Archive" },
+            context: { ja: "`gau` と `waybackurls` で <strong>10 年分</strong>の URL をアーカイブから引きずり出した。半分は静的・UTM 重複、半分が「過去の脆弱版」「拡張子変化」「デバッグ残骸」のシグナル。プロはアーカイブを <strong>「過去にあった脆弱な版の発見器」</strong> として使う。", en: "Ran `gau` + `waybackurls` and pulled <strong>10 years</strong> of archived URLs. Half is static / UTM dupes; the other half hints at old-vulnerable versions, stack migrations, and debug remnants. Pros treat archives as a <strong>'past-vulnerable-version' radar</strong>." },
+            question: { ja: "「過去の脆弱な版」「移行痕跡 (拡張子変化)」「デバッグ／token 残骸」を残す。", en: "Keep past-vulnerable versions, stack-migration relics, and debug / token residue." },
+            goal: { ja: "<strong>目的</strong>：13 URL から、深掘り価値ある「変化の痕跡」と「今も生きてる興味深い API」を残す。", en: "<strong>Goal:</strong> from 13 URLs, keep meaningful 'traces of change' and APIs that are still live and interesting." },
+            lines: [
+              { code: "https://target.com/main.css?v=2.1", r: "AgEaGw==", reason: { ja: "静的 CSS。version クエリは cache busting で実態は静的。", en: "Static CSS — the `?v=` is cache-busting, not a real parameter." } },
+              { code: "https://target.com/logo.png", r: "AgEaGw==", reason: { ja: "画像。", en: "Image asset." } },
+              { code: "https://target.com/api/v1/users?id=1", r: "DQcHFR1ORk4Y", reason: { ja: "<strong>過去ログにパラメータ付き API</strong> が残っている = 当時の脆弱版 (IDOR / SQLi) が今も生きてる可能性。最初に Repeater へ。", en: "An archived parameterised API often still lives. Drop it into Repeater for IDOR / SQLi probing." } },
+              { code: "https://target.com/api/v2/transfer", r: "DQcHFR1ORk4Y", reason: { ja: "状態変更系。アーカイブで見えるということは旧版 / 旧ドキュメント由来。CSRF や認可漏れの宝庫。", en: "State-changing endpoint surfaced via archive — typically a leftover from old docs. Mine it for CSRF / authz gaps." } },
+              { code: "https://target.com/static/jquery-1.7.2.min.js", r: "AgEaGw==", reason: { ja: "静的かつ古い jQuery だが、これ自体は CDN 経由のことが多く SAST 対象。recon 上は junk。", en: "Static jQuery — usually CDN-served. Worth a SAST pass elsewhere, not a recon lead." } },
+              { code: "https://target.com/?utm_source=fb&utm_campaign=spring", r: "AgEaGw==", reason: { ja: "UTM だけ違う重複 URL。`uddup` 等で重複圧縮する対象。", en: "UTM-only duplicate. Collapse with `uddup` or `uro`." } },
+              { code: "https://target.com/?utm_source=tw&utm_campaign=summer", r: "AgEaGw==", reason: { ja: "同上。", en: "Same as above." } },
+              { code: "https://target.com/admin/users?role=admin", r: "DQcHFR1ORk4Y", reason: { ja: "<strong>過去に `/admin/users` が外から見えていた痕跡</strong>。<code>?role=admin</code> 等の client-side フラグの存在は、今も role bypass の余地がある示唆。", en: "Evidence `/admin/users` was once externally reachable. A client-side `?role=admin` hints at role-bypass surface that may still linger." } },
+              { code: "https://target.com/redirect?url=https://partner.com", r: "DQcHFR1ORk4Y", reason: { ja: "Open Redirect 候補。アーカイブで見つかった `?url=` 系パラメータは <strong>OAuth callback 改竄 / phishing 連鎖</strong>のネタになりやすい。", en: "Classic open-redirect parameter. Archived `?url=` params often chain into OAuth-callback abuse or phishing setups." } },
+              { code: "https://target.com/debug?token=xxx", r: "DQcHFR1ORk4Y", reason: { ja: "<strong>デバッグ endpoint</strong> が過去にあった = 今も残ってる確率は無視できない。`?token=` が default の場合は認証バイパスがそのまま通ることもある。", en: "Archived debug endpoint — odds it still lives are non-trivial. A default `?token=` value sometimes walks straight through auth." } },
+              { code: "https://target.com/api/v1/user.php?id=1", r: "DQcHFR1ORk4Y", reason: { ja: "<strong>.php 拡張子はスタック移行の痕跡</strong>。現行は Node/Go でも、旧 PHP 版が同一パスで残っているケースがある（Apache の rewrite 順）。", en: "A `.php` extension marks a stack migration. The current site may run Node/Go, yet the old PHP shadow can survive at the same path under Apache rewrites." } },
+              { code: "https://target.com/track.gif?u=xxx", r: "AgEaGw==", reason: { ja: "tracking pixel。", en: "Tracking pixel." } },
+              { code: "https://target.com/sitemap.xml", r: "AgEaGw==", reason: { ja: "通常ファイル。中身の URL を crawl 対象として別途扱う。", en: "Standard sitemap. Feed its contents into the crawl queue separately, not as a lead." } },
+            ],
+          },
+          {
+            id: "js-bundle",
+            tag: { ja: "05 · JS Bundle / LinkFinder", en: "05 · JS Bundle / LinkFinder" },
+            vuln: { ja: "JS bundle 解析", en: "JS Bundle Analysis" },
+            context: { ja: "本番 SPA の Webpack bundle を `linkfinder` + `secretfinder` + 手 grep で抽出した結果が 12 件。プロは <strong>「公開前提のキー（`pk_live_*`, Sentry DSN）」「フォールバック値」「フレームワーク内部」</strong> を秒で弾き、本物の secret と内部 endpoint だけ残す。", en: "Pulled 12 candidates from a production SPA's Webpack bundle via `linkfinder` + `secretfinder` + manual grep. Pros instantly discard <strong>intentionally public keys (`pk_live_*`, Sentry DSN), fallback constants, and framework internals</strong> and keep only real secrets and internal endpoints." },
+            question: { ja: "「本物の secret」「内部 endpoint」「auth bypass の手がかり」だけ残す。", en: "Keep real secrets, internal endpoints, and auth-bypass hints only." },
+            goal: { ja: "<strong>目的</strong>：12 抽出から、即報告レベルの hardcoded secret と未公開 endpoint を残す。", en: "<strong>Goal:</strong> from 12 hits, keep report-ready hardcoded secrets and undocumented endpoints." },
+            lines: [
+              { code: "const API_BASE = \"https://api.target.com/v2\"", r: "BhwdFhpUKDEl", reason: { ja: "API ベース URL は recon の地図。隠し API ホスト / v1 / v2 並走の検知に使う。", en: "Base URLs are recon scaffolding — pivot to hidden API hosts or parallel v1/v2 stacks." } },
+              { code: "function debounce(func, wait) { ... }", r: "DAAACA==", reason: { ja: "lodash 由来のユーティリティ。", en: "lodash utility, ignore." } },
+              { code: "window.AWS_REGION = \"us-east-1\"", r: "HRwADw==", reason: { ja: "region 名は公開して問題ない設定。", en: "Region constants are intentionally public configuration." } },
+              { code: "const SENTRY_DSN = \"https://abc...@sentry.io/123\"", r: "CRoAGA==", reason: { ja: "<strong>Sentry DSN は公開前提</strong>。誤報告は Informative 確定（rate limit 無しなら quota スパムの議論は別途）。", en: "<strong>Sentry DSNs are public by design.</strong> Reporting one lands a flat Informative (quota-spam abuse is a separate conversation)." } },
+              { code: "const STRIPE_PUBLISHABLE_KEY = \"pk_live_4321abcd\"", r: "CRoAGA==", reason: { ja: "<strong>`pk_live_` は publishable（公開鍵）</strong>。秘密鍵は `sk_live_`。混同すると即 N/A。", en: "<strong>`pk_live_` is publishable on purpose</strong> — the secret form is `sk_live_`. Mixing them up earns an immediate N/A." } },
+              { code: "const ADMIN_API_KEY = \"secret-key-12345\"", r: "BhwdFhpUKCUh", reason: { ja: "命名が ADMIN_*。<strong>クライアント側に admin key を埋めるのは事故</strong>。バックエンド呼び出しに使われていれば admin 権限奪取に直結。", en: "Variable literally named ADMIN_*. <strong>Shipping an admin key to clients is an incident.</strong> If it's used against the API, you've got admin." } },
+              { code: "fetch('/internal/admin/users', { headers: ... })", r: "AxYHBgZcTk4F", reason: { ja: "公開 SPA が <strong>`/internal/admin/*` を叩いている</strong> = サーバ側 ACL が IP / origin だけに頼っている可能性。直接叩いて出るかを試す。", en: "Public SPA calling `/internal/admin/*` suggests server-side ACL leaning on IP or Origin only. Hit it directly and see what falls out." } },
+              { code: "React.createElement(...)", r: "OBAPCA==", reason: { ja: "フレームワーク。", en: "Framework boilerplate." } },
+              { code: "const ROUTES = {USERS: '/api/v1/users', PAY: '/api/v1/charge', ADMIN_DEBUG: '/api/internal/_debug'}", r: "BhwdFhpUOy45", reason: { ja: "<strong>ルート定義一覧</strong>は recon の最高ネタ。`ADMIN_DEBUG` のような未公開 endpoint を抽出して順番に Repeater へ。", en: "A `ROUTES` constant is recon jackpot — surface every undocumented endpoint (`ADMIN_DEBUG` etc.) and queue them for Repeater." } },
+              { code: "console.log(\"[DEBUG] user role:\", user.role)", r: "BhwdFgEYDE8A", reason: { ja: "<strong>クライアント側で role を判定している証拠</strong>。サーバ側で同じチェックを掛け忘れていれば直結的に auth bypass / role escalation。", en: "Evidence the client decides roles. If the server forgets to re-check, you've got direct auth bypass / role escalation." } },
+              { code: "const GOOGLE_MAPS_KEY = \"AIzaSyABC...\"", r: "CRoAGA==", reason: { ja: "Maps API key は通常 HTTP referer 制限がかかっており、単独で報告しても Informative 行き。制限が無ければ別。", en: "Maps API keys are usually referer-restricted — flat Informative on their own. Worth checking if no restriction exists, but rarely a payday." } },
+              { code: "const FEATURE_FLAGS = {betaCheckout: true, adminPanelV2: true, unreleased_billing_export: true}", r: "BhwdFhpULyQt", reason: { ja: "<strong>未公開機能フラグの露出</strong>。`unreleased_billing_export` のような名前は、フラグ ON で hidden endpoint を呼び出せる可能性大。", en: "<strong>Unreleased feature flags leaking via JS.</strong> Names like `unreleased_billing_export` often unlock hidden endpoints once the flag is on." } },
+            ],
+          },
+          {
+            id: "burp-history",
+            tag: { ja: "06 · Burp HTTP History", en: "06 · Burp HTTP History" },
+            vuln: { ja: "Burp 履歴の絞り込み", en: "Burp Proxy History" },
+            context: { ja: "アプリを 10 分操作したあとの Burp 履歴 12 件。<strong>GA / Segment / font CDN / 3rd party 画像で 80% が埋まる</strong>のが現実。プロは <strong>状態変更系 (POST/PUT/DELETE)</strong> と <strong>認証フロー</strong>、興味深い GET（PII / file upload / session ops）を残す。", en: "12 entries from Burp's proxy history after 10 minutes of clicking around. <strong>GA / Segment / font CDN / 3rd-party images chew up ~80%</strong>. Pros keep state-changing verbs, auth flows, and the few interesting GETs (PII / uploads / session ops)." },
+            question: { ja: "Repeater で触る価値ある request だけ残す。", en: "Keep only requests worth pulling into Repeater." },
+            goal: { ja: "<strong>目的</strong>：12 件から、状態変更系・認証・upload・PII 変更だけ残し、tracking / 静的アセット / font CDN を切る。", en: "<strong>Goal:</strong> from 12 entries, keep state changes, auth, uploads and PII mutations; prune tracking, static assets and font CDNs." },
+            lines: [
+              { code: "GET https://target.com/", r: "LTA6Sw==", reason: { ja: "初回 GET、状態変化なし。", en: "Initial GET, no state change." } },
+              { code: "GET https://www.google-analytics.com/collect?v=1&t=pageview", r: "LTA6Sw==", reason: { ja: "GA tracking。", en: "GA pixel." } },
+              { code: "POST https://target.com/api/login", r: "NTwgMU4cHRUc", reason: { ja: "<strong>認証は必ず最初に深掘る</strong>。CSRF token 検証、レート制限、user enumeration、JWT 構造、anti-automation の有無を一気に見る。", en: "<strong>Always go after auth first.</strong> CSRF token validation, rate limits, user enumeration, JWT structure, anti-automation — all tested in one pass." } },
+              { code: "GET https://target.com/static/app.bundle.js", r: "LTA6Sw==", reason: { ja: "静的 JS。LinkFinder / SecretFinder の対象としては別フローで扱う。", en: "Static JS bundle — feed to LinkFinder / SecretFinder in a separate workflow." } },
+              { code: "POST https://target.com/api/v1/transfer", r: "NTwgMU4cHRUc", reason: { ja: "<strong>お金移動 = bounty 帯が伸びる主戦場</strong>。amount 操作 / 通貨 confusion / IDOR / race condition を一気に試す。", en: "<strong>Money movement scales your bounty.</strong> Hit amount tampering, currency confusion, IDOR, and race conditions in one round." } },
+              { code: "GET https://fonts.googleapis.com/css?family=Inter", r: "LTA6Sw==", reason: { ja: "3rd party font。", en: "3rd-party font asset." } },
+              { code: "PUT https://target.com/api/v1/users/me/email", r: "NSYnRQYAHREf", reason: { ja: "<strong>メール変更は ATO の高速道路</strong>。確認メールを飛ばすかどうか、`me` を `123` に差し替えられるか、recovery flow を破壊できるかを試す。", en: "<strong>Email change is the ATO highway.</strong> Test whether confirmation is required, whether `me` can flip to `123`, and whether recovery flow breaks." } },
+              { code: "POST https://api.segment.io/v1/p", r: "Ojo9Pw==", reason: { ja: "Segment analytics SDK。", en: "Segment analytics SDK." } },
+              { code: "DELETE https://target.com/api/v1/sessions/sess_abc", r: "ITY/IDoxSQkY", reason: { ja: "セッション破棄 API。<strong>他人の session_id を入れて殺せるか</strong>（IDOR）/ CSRF が効くか（強制ログアウト → phishing 連鎖）を試す。", en: "Session-revocation API. Probe whether <strong>another user's session id can be killed</strong> (IDOR) or whether CSRF lets you force-logout for phishing setups." } },
+              { code: "GET https://target.com/api/v1/users/me", r: "IjYnRQYAHREf", reason: { ja: "<strong>IDOR ベースライン</strong>。`me` → `1` / `2` / `99999` の挙動差分を取る。レスポンスの過剰 field（hashed_password 等）も同時にチェック。", en: "<strong>IDOR baseline.</strong> Diff `me` → `1` / `2` / `99999`, and inspect the response for over-eager fields (hashed_password, tokens, etc.)." } },
+              { code: "POST https://target.com/api/v1/upload?type=avatar", r: "NTwgMU4cHRUc", reason: { ja: "<strong>upload は脆弱性の交差点</strong>：SSRF (url 系)、stored XSS (SVG)、path traversal (filename)、unrestricted upload (.html, .svg)、ImageTragick 系。一発で複数バグ候補。", en: "<strong>Upload endpoints are bug-class intersections:</strong> SSRF, stored XSS via SVG, path traversal via filename, unrestricted .html/.svg uploads, ImageTragick. Multiple bug candidates per request." } },
+              { code: "GET https://cdn.target.com/avatar/123.png", r: "LTA6Sw==", reason: { ja: "アップロード後の参照、状態変化なし。", en: "Post-upload fetch, no state change." } },
+            ],
+          },
+          {
+            id: "github-dork",
+            tag: { ja: "07 · GitHub Code Search", en: "07 · GitHub Code Search" },
+            vuln: { ja: "GitHub dorking", en: "GitHub Code Search" },
+            context: { ja: "`org:target-corp` を軸に `AWS_SECRET`, `JWT_SECRET`, `.env`, `BEGIN RSA PRIVATE KEY` などを掛け合わせた検索結果 10 件。プロは <strong>「AWS 公式サンプル (AKIA...EXAMPLE)」「JWT_SECRET の `||` フォールバック」「テスト fixture」「公開前提の OAuth client_id」</strong> を即弾き、最近の commit + production 命名だけ残す。", en: "10 hits for `org:target-corp` crossed with `AWS_SECRET`, `JWT_SECRET`, `.env`, `BEGIN RSA PRIVATE KEY`. Pros instantly discard <strong>AWS sample keys (`AKIA...EXAMPLE`), `JWT_SECRET ||` fallbacks, test fixtures, intentionally public OAuth client_ids</strong> and keep only recent commits with production-style naming." },
+            question: { ja: "「即報告レベル」の本物の漏洩だけ残す。", en: "Keep only leaks worth filing today." },
+            goal: { ja: "<strong>目的</strong>：10 件から H1 / Intigriti で受理される本物の secret 漏洩だけ残す。", en: "<strong>Goal:</strong> from 10 hits, keep secret leaks that will actually triage as Medium+." },
+            lines: [
+              { code: "AWS_SECRET_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE in docs/aws-tutorial.md", r: "KyI9NA==", reason: { ja: "<strong>`AKIAIOSFODNN7EXAMPLE` は AWS 公式のサンプル鍵</strong>。何回も初心者が報告して N/A になる定番。AWS の Documentation に必ず出てくる。", en: "<strong>`AKIAIOSFODNN7EXAMPLE` is AWS's own sample.</strong> A perennial newbie N/A — it shows up across every AWS doc and SDK example." } },
+              { code: "SLACK_WEBHOOK=https://hooks.slack.com/services/T00.../B00... in deploy.sh", r: "Nj8yJiUrPiQu", reason: { ja: "<strong>本物の Slack webhook</strong>。curl 1 発で社内チャンネルに任意投稿可能 = Information disclosure + spoofing 報告として通る。", en: "Real Slack webhook. One curl posts to the internal channel — files cleanly as info disclosure / spoofing." } },
+              { code: "DATABASE_PASSWORD=\"changeme\" in docker-compose.yml", r: "LjQ6Kg==", reason: { ja: "`changeme` は default プレースホルダ。production で使われていないことが明白なので junk。", en: "`changeme` is the classic placeholder — obviously not the production value." } },
+              { code: "const API_KEY = \"real-prod-key-abc123\" in src/config.ts (committed 2 days ago)", r: "BhwdFhpUKDEl", reason: { ja: "<strong>2 日前の commit ＋ production 命名</strong>。実値の確率高い。endpoint を読んで認証に使われているか即確認 → 報告。", en: "<strong>Two-day-old commit with production naming.</strong> Very likely a real value — pivot to the endpoint that consumes it and file." } },
+              { code: "\"password\": \"test\" in tests/fixtures/users.json", r: "SAUPGA==", reason: { ja: "fixture / テストデータ。production で使われていない前提。", en: "Test fixture — explicitly not production." } },
+              { code: "ssh_private_key (-----BEGIN RSA PRIVATE KEY-----) in legacy-server-setup.sh", r: "FgAbOh4GABcN", reason: { ja: "<strong>SSH 秘密鍵の commit は最悪パターン</strong>。`legacy-server-setup.sh` という名前から運用用 = 本物の確率最大。即報告 + 鍵ローテ要請。", en: "<strong>A committed SSH private key is worst-case.</strong> `legacy-server-setup.sh` smells operational — almost certainly live. File immediately and request rotation." } },
+              { code: "JWT_SECRET = process.env.JWT_SECRET || \"dev-secret\" in src/auth.ts", r: "ICI6NA==", reason: { ja: "<strong>`||` フォールバック</strong>は production で env が効いてれば実害なし。`dev-secret` が本番で使われている証拠が無ければ Informative 行き。", en: "<strong>The `||` fallback</strong> only fires when the env var is missing. Without proof production actually runs with `dev-secret`, this lands Informative." } },
+              { code: ".env.production (4.2KB) committed in feature/staging-debug branch", r: "SxYdE0AEGw4I", reason: { ja: "<strong>`.env.production` 丸ごと commit は事故案件</strong>。ブランチが merge されていなくても、リポが public ならアクセス可。中身を grep して即報告。", en: "<strong>A committed `.env.production` is incident-grade.</strong> Even if the branch never merged, anyone with repo access reads it. Grep its body and file." } },
+              { code: "\"oauth_client_id\": \"1234.apps.googleusercontent.com\" in src/google.ts", r: "SBoPHg==", reason: { ja: "OAuth の `client_id` は公開前提。`client_secret` が同じファイルに無いなら junk。", en: "OAuth `client_id` is public by design. Without a `client_secret` next to it, ignore." } },
+              { code: "internal-runbook.md contains https://admin:P@ssw0rd@console.target.com", r: "DB0HABwaCA1B", reason: { ja: "<strong>URL 内 credential embed</strong> は最悪パターン。runbook のような文脈で出ている時点で運用クレデンシャル。", en: "<strong>Embedded credentials in a URL</strong> — and inside a runbook, no less. Operational password, file it." } },
+            ],
+          },
+          {
+            id: "crtsh",
+            tag: { ja: "08 · crt.sh / CT Logs", en: "08 · crt.sh / CT Logs" },
+            vuln: { ja: "Certificate Transparency", en: "Certificate Transparency" },
+            context: { ja: "<strong>Certificate Transparency</strong>（crt.sh）から `%.target.com` の証明書 11 件を取得。プロは「ワイルドカード」「期限切れ」「subfinder 既出」を秒で切り、<strong>「数日前の新規」「テナント名露出」「internal の外露出」</strong> だけ残す。CT は subfinder にまだ載っていない新規ホストの最速発見器。", en: "Pulled 11 certs for `%.target.com` from crt.sh. Pros instantly cut wildcards, expired entries, and hosts already seen by subfinder; they keep <strong>fresh (a few days old) certs, tenant-name leaks, and internal hosts visible from outside.</strong> CT is the fastest finder of brand-new hosts subfinder hasn't seen yet." },
+            question: { ja: "「subfinder では出ない最新の盲点」だけ残す。", en: "Keep only the fresh blind spots that subfinder hasn't seen." },
+            goal: { ja: "<strong>目的</strong>：11 件から、ツール未捕捉の新規ホスト・テナント名・内部臭を残す。", en: "<strong>Goal:</strong> from 11 certs, surface tool-missed fresh hosts, tenant leaks, and internal hosts." },
+            lines: [
+              { code: "target.com (issued 2025-04-01)", r: "HhQcDA==", reason: { ja: "ルート、既知。", en: "Root domain, already known." } },
+              { code: "www.target.com (issued 2025-04-01)", r: "HQIZRQ==", reason: { ja: "既知。", en: "Already known." } },
+              { code: "*.target.com (wildcard, issued 2024-01-01)", r: "QFsaCg==", reason: { ja: "ワイルドカード = 個別ホスト情報を含まない。", en: "Wildcard certs carry no per-host info." } },
+              { code: "api.target.com (issued 2025-04-10)", r: "CwUHRQ==", reason: { ja: "subfinder 既出。", en: "Already seen via subfinder." } },
+              { code: "secret-launch.target.com (issued 2025-05-08, 3 days old)", r: "FhYQFwsARA0N", reason: { ja: "<strong>3 日前発行</strong>。プロモーション系のホスト名はステルスローンチ中の機能を示唆。ツール未補足の確率最大。", en: "<strong>Three-day-old cert.</strong> Promo-flavored hostnames usually flag a stealth launch — odds of recon-tool coverage near zero." } },
+              { code: "demo-customer-acme.target.com (issued 2025-05-10)", r: "ARYeCkMXHBIY", reason: { ja: "<strong>テナント名（顧客企業名）がドメインに露出</strong>。顧客名漏洩（情報開示）＋マルチテナント基盤上で他テナント enum / takeover の入口。", en: "<strong>Tenant (customer) name leaking in the hostname.</strong> Info disclosure plus a likely pivot point for tenant enumeration / takeover on multi-tenant infra." } },
+              { code: "*.staging.target.com (wildcard, expired 2023)", r: "QFsdHw==", reason: { ja: "期限切れ + ワイルドカード。", en: "Expired wildcard." } },
+              { code: "internal-tools.target.com (issued 2025-05-09)", r: "DB0HABwaCA1B", reason: { ja: "<strong>internal が外から証明書取れている</strong>＝外向き露出の証拠。最近発行ということは新設 → ACL 設定ミス確率が高い。", en: "<strong>An `internal-` host with a public cert</strong> proves external exposure. Recent issuance = freshly stood up, so ACL slip-ups are likeliest right now." } },
+              { code: "target-corp-phishing.com (different domain!)", r: "HhQcDA==", reason: { ja: "別ドメイン、関係ない。typosquat 監視は別フロー。", en: "Different domain — typosquat monitoring is a separate workflow." } },
+              { code: "m.api.target.com (issued 2025-04-15)", r: "CF0SFQdaHQAe", reason: { ja: "<strong>入れ子ホスト</strong>（`m.` × `api.`）。subfinder が `*.target.com` だけ見ていると拾えないことがある盲点。モバイル × API は手薄。", en: "<strong>Nested hostname</strong> (`m.` × `api.`). Often missed when subfinder only crawls `*.target.com`. Mobile × API combos are routinely undertested." } },
+              { code: "ci.target.com (issued 2025-05-07, 4 days old)", r: "BhpdEQ8GDgQY", reason: { ja: "<strong>4 日前発行の CI/CD ホスト</strong>。`ci.` = Jenkins / GitLab CI / Drone などの露出が高確率。新設直後は設定漏れ多発。", en: "<strong>Four-day-old CI/CD host.</strong> `ci.` prefixes usually expose Jenkins / GitLab CI / Drone. Day-1 misconfigurations are the norm." } },
+            ],
+          },
+          {
+            id: "httpx",
+            tag: { ja: "09 · httpx / Live Host Probe", en: "09 · httpx / Live Host Probe" },
+            vuln: { ja: "httpx ライブホスト判定", en: "httpx Live Host Probe" },
+            context: { ja: "`subfinder | httpx -title -tech-detect -status-code` で生きてるホストの title / tech / status を取った 12 件。プロは <strong>Apache 古い / Tomcat / Jenkins / Grafana / auth ゲート / 旧モバイル版</strong>を優先、welcome / parked / SaaS / 完全 502 を切る。", en: "Ran `subfinder | httpx -title -tech-detect -status-code`. 12 live hosts come back with title / tech / status. Pros prioritise <strong>old Apache, Tomcat, Jenkins, Grafana, auth gates, mobile builds</strong> and prune welcome pages, parked domains, SaaS, and totally dead 502s." },
+            question: { ja: "稼働中 + 攻撃面ありのホストだけ残す。", en: "Keep hosts that are live and carry attack surface." },
+            goal: { ja: "<strong>目的</strong>：12 件を「Burp で開く順番の上位」に並べ替え、不要枝を切る。", en: "<strong>Goal:</strong> rank 12 hosts by Burp-opening priority and prune the noise." },
+            lines: [
+              { code: "api.target.com [200] [Welcome to nginx] [nginx]", r: "CwUHRQ==", reason: { ja: "nginx の default welcome = アプリ未稼働 / 404。", en: "Default nginx welcome — app isn't actually serving anything." } },
+              { code: "admin.target.com [401] [-] [-]", r: "BBceDABaHQAe", reason: { ja: "401 = 認証要求 = アプリ稼働 + 攻撃面確定。次に Basic auth bruteforce 規約をチェック、ダメなら user enum / token replay 系へ。", en: "401 = app is live and gated. Verify the program's stance on bruteforce, otherwise pivot to user enum / token replay." } },
+              { code: "old-api.target.com [200] [Apache Tomcat/7.0.34] [Apache Coyote/1.1]", r: "Ch8XSA8EAE8Y", reason: { ja: "<strong>Tomcat 7.0.34 は CVE まみれ</strong>（CVE-2017-12617 RCE 等）。`/manager/html` default cred も確認。", en: "<strong>Tomcat 7.0.34 is a CVE buffet</strong> (CVE-2017-12617 RCE, etc.). Always probe `/manager/html` default creds in parallel." } },
+              { code: "beta.target.com [302 -> /login] [Beta Portal] [Express]", r: "BxYHBEAACBML", reason: { ja: "<strong>ベータ環境はテスト不足の宝庫</strong>。本番に出ていない bug がそのまま残っていることが多い。302 → /login で auth ゲートも確認済。", en: "<strong>Beta surfaces concentrate untested code.</strong> Bugs the prod team caught here often still ship. The 302 also confirms an auth gate." } },
+              { code: "support.target.com [200] [Zendesk] [Zendesk]", r: "GQAeGw==", reason: { ja: "SaaS 3rd party、OOS。", en: "3rd-party SaaS, OOS." } },
+              { code: "parked.target.com [200] [Domain parked by GoDaddy] [-]", r: "GhQcAA==", reason: { ja: "パーキング。", en: "Parked." } },
+              { code: "ci-jenkins.target.com [200] [Dashboard [Jenkins]] [Jenkins]", r: "BhpeDwsaAggC", reason: { ja: "<strong>Jenkins 露出は最優先</strong>：`/script` の console、anonymous user の権限、CVE-2018-1000861 系の auth bypass。", en: "<strong>Exposed Jenkins is top priority:</strong> `/script` console, anonymous-user perms, CVE-2018-1000861-class auth bypasses." } },
+              { code: "backup.target.com [403] [-] [-]", r: "BxIQDhsERxUN", reason: { ja: "403 = 存在示唆。<strong>X-Forwarded-For: 127.0.0.1</strong> / <strong>Host header smuggling</strong> / 末尾スラッシュトリック等で bypass を試す。", en: "403 means it lives. Try <strong>XFF: 127.0.0.1</strong>, Host-header smuggling, trailing-slash tricks." } },
+              { code: "status.target.com [200] [Status Page] [statuspage.io]", r: "GQEPHw==", reason: { ja: "SaaS status page。", en: "SaaS status page." } },
+              { code: "m.target.com [200] [Mobile Login] [Cloudflare]", r: "CF0HBBwTDBVC", reason: { ja: "<strong>モバイル版 = ロジック差分の宝</strong>。Web 版にない旧 endpoint、ゆるい認可、API バージョン分岐などが残る。", en: "<strong>Mobile builds = drift goldmine.</strong> Old endpoints, looser authz, API-version forks tend to persist here." } },
+              { code: "404.target.com [502] [-] [-]", r: "XkVaRQ==", reason: { ja: "完全に落ちてる。再 probe する価値は低い。", en: "Hard 502. Re-probing rarely pays off." } },
+              { code: "beta-mobile-v2.target.com [500] [-] [Express]", r: "BxYHBEMZBgMF", reason: { ja: "<strong>500 はサーバ稼働 + エラー応答</strong>。Express スタックトレースが返ってくれば <strong>パス・ファイル名・ライブラリバージョン</strong>が漏れる。デバッグ情報漏洩 → スタック特定 → 既知 CVE。", en: "<strong>500 means the server is up and erroring.</strong> If Express leaks a stack trace, you get paths, filenames, library versions — info disclosure that powers CVE lookups." } },
+            ],
+          },
+          {
+            id: "burp-scan",
+            tag: { ja: "10 · Burp Active Scan / Triage", en: "10 · Burp Active Scan / Triage" },
+            vuln: { ja: "自動スキャン結果トリアージ", en: "Auto-scan Result Triage" },
+            context: { ja: "Burp Active Scan / nuclei Web-vulns で出た Issue 12 件。プロは <strong>「未認証 Cookie の Secure 不在」「Server header disclosure」「static asset の X-Frame-Options 欠落」「logout CSRF」</strong>のような impact 0 を切り、報告書になる finding だけ残す。", en: "12 Burp Active Scan + nuclei web-vuln findings. Pros prune <strong>'Secure flag missing on anonymous cookie', server-version disclosure, X-Frame-Options on static assets, logout CSRF</strong> — impact-zero noise — and keep only what becomes a real report." },
+            question: { ja: "H1 / Intigriti で受理される impact のある finding だけ残す。", en: "Keep only findings that will actually triage on H1 / Intigriti." },
+            goal: { ja: "<strong>目的</strong>：12 件の自動スキャン結果から、Informative 行きの noise を捨て、Medium 以上で通る素材だけ残す。", en: "<strong>Goal:</strong> from 12 auto-scan findings, discard the Informative noise and keep what triages Medium+." },
+            lines: [
+              { code: "[High] SQL injection on /api/search?q=%27%20OR%201%3D1", r: "PjsaAgYpSTI9", reason: { ja: "古典 SQLi。<strong>error-based / time-based / UNION でデータ抽出まで進められれば High 確定</strong>。手で再現して報告。", en: "Classic SQLi. If you can chain error-based / time-based / UNION into data extraction, it lands as High. Reproduce manually before filing." } },
+              { code: "[Medium] Cross-Site Scripting (DOM) on /redirect.html", r: "Pj4WAQcBBDxM", reason: { ja: "DOM XSS。<strong>session hijack まで demo すれば High 帯</strong>。auto-scan 結果だけで報告せず PoC URL を作る。", en: "DOM XSS. Demonstrating session hijack pushes it to High. Don't ship the scanner output — build a real PoC URL." } },
+              { code: "[Info] Cookie without Secure flag (anonymous session cookie)", r: "MTwADQ==", reason: { ja: "<strong>未認証 Cookie の Secure 不在は実害なし</strong> = Informative 確定。session cookie ですらない anonymous は無視。", en: "<strong>Missing Secure on an anonymous cookie has no impact</strong> — flat Informative. Especially worthless when it isn't even a session cookie." } },
+              { code: "[Info] X-Frame-Options not set on /static/main.css", r: "MTwADQ==", reason: { ja: "<strong>静的アセットに XFO は無意味</strong>（埋めても clickjacking 不能）。スキャナは機械的に出すが報告すると恥。", en: "<strong>XFO on a static asset is pointless</strong> — there's nothing to clickjack. Scanners flag it reflexively; filing it is just embarrassing." } },
+              { code: "[Low] Email address disclosed (info@target.com in footer)", r: "MTkBHA==", reason: { ja: "<strong>公開メアド</strong>は site の問い合わせ用。impact 0。", en: "<strong>A public contact email</strong> — that's literally why it's in the footer." } },
+              { code: "[High] Open Redirect via /goto?url=", r: "PjsaAgYpSS4c", reason: { ja: "Open redirect 単独だと Low の program が多いが、<strong>OAuth callback と組み合わせて token 奪取まで demo すれば High</strong>。チェーンを組んで報告。", en: "Open redirect alone is Low at many programs; <strong>chain it through OAuth callback to steal a token</strong> and it climbs to High. Build the chain before filing." } },
+              { code: "[Info] Server version disclosure (Apache/2.4.41 in Server header)", r: "MTwADQ==", reason: { ja: "<strong>単独では報告不可</strong>。Apache 2.4.41 + 既知 CVE の demo を組めば別、それまでは保留メモ。", en: "<strong>Not reportable alone.</strong> Stash it; if you later weaponise it with a CVE-2.4.41 exploit, the disclosure becomes context." } },
+              { code: "[Critical] Remote Code Execution via /upload (.jsp execution allowed)", r: "PjABDBodCgAA", reason: { ja: "<strong>RCE は最優先</strong>。手で `id` を実行して証拠スクショ → 即報告。program 上限の bounty が出る案件。", en: "<strong>RCE always tops the queue.</strong> Run `id` manually, capture proof, file today — these typically pay program-max bounty." } },
+              { code: "[Low] CORS misconfiguration: Origin: null reflected with credentials", r: "Pj8cEjNUKi4+", reason: { ja: "<strong>null origin + credentials reflection は『立派なバグ』</strong>。sandboxed iframe や file:// から credentialed request が通る。Medium 以上で受理されやすい。", en: "<strong>Reflecting `Origin: null` with credentials is a real bug</strong> — sandboxed iframes / `file://` contexts can send credentialed requests. Usually triages Medium+." } },
+              { code: "[Info] HTML form without CSRF token on logout form", r: "MTwADQ==", reason: { ja: "<strong>logout CSRF は大半の program で no-impact</strong>。プログラム規約 (Out-of-scope vulns) で明記されていることも多い。", en: "<strong>Logout CSRF is no-impact at most programs</strong> — and is often explicitly listed as out-of-scope vulns in policy." } },
+              { code: "[Medium] Path Traversal in /download?file=", r: "Pj4WAQcBBDxM", reason: { ja: "古典トラバーサル。<strong>`/etc/passwd` まで取れれば Medium-High</strong>。手で再現確認して報告。", en: "Classic traversal. Pulling `/etc/passwd` brings it to Medium-High. Reproduce manually before filing." } },
+              { code: "[Low] HTTP TRACE method enabled", r: "MTkBHA==", reason: { ja: "<strong>現代ブラウザでは XST 攻撃不能</strong>。スキャナの古い rule。10 年前ならともかく、今は Informative 行き。", en: "<strong>XST is dead in modern browsers</strong> — old scanner rule. May have mattered a decade ago; today it's flat Informative." } },
+            ],
+          },
+        ];
+
+        /* 状態 */
+        let currentLang = "ja";
+        let qIndex = 0;
+        let selectedCuts = [];
+        let perQuestionResults = [];
+        let phase = "play";
+
+        function el(tag, className, text) {
+          const e = document.createElement(tag);
+          if (className) e.className = className;
+          if (text !== undefined && text !== null) e.textContent = text;
+          return e;
+        }
+
+        /* renderInline:
+             <strong>...</strong> と `code` を DOM に安全に展開。
+             String.split() のキャプチャグループで分割するため、innerHTML を経由しない。 */
+        function renderInline(target, text) {
+          target.textContent = "";
+          if (!text) return;
+          const parts = text.split(/(<strong>[\s\S]*?<\/strong>|`[^`]+`)/g);
+          for (let i = 0; i < parts.length; i++) {
+            const tok = parts[i];
+            if (!tok) continue;
+            if (tok.indexOf("<strong>") === 0 && tok.indexOf("</strong>") > 0) {
+              const inner = tok.slice(8, tok.length - 9);
+              const s = document.createElement("strong");
+              s.textContent = inner;
+              target.appendChild(s);
+            } else if (
+              tok.length >= 2 &&
+              tok.charAt(0) === "`" &&
+              tok.charAt(tok.length - 1) === "`"
+            ) {
+              const c = document.createElement("code");
+              c.className = "inline-code";
+              c.textContent = tok.slice(1, tok.length - 1);
+              target.appendChild(c);
+            } else {
+              target.appendChild(document.createTextNode(tok));
+            }
+          }
+        }
+
+        function t(k) {
+          return I18N[currentLang][k];
+        }
+
+        function showScreen(id) {
+          ["screen-start", "screen-quiz", "screen-result"].forEach(function (s) {
+            const node = document.getElementById(s);
+            if (node) node.classList.toggle("active", s === id);
+          });
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function applyI18n() {
+          const dict = I18N[currentLang];
+          document.documentElement.lang = currentLang;
+          document.getElementById("brand-name").textContent = dict.brandName;
+          document.getElementById("hero-tag-text").textContent = dict.heroTag;
+          document.getElementById("hero-title").textContent = dict.heroTitle;
+          document.getElementById("hero-sub").textContent = dict.heroSub;
+
+          document.getElementById("stat-label-q").textContent = dict.statQ;
+          document.getElementById("stat-label-pt").textContent = dict.statPt;
+          document.getElementById("stat-label-time").textContent = dict.statTime;
+          document.getElementById("stat-label-lang").textContent = dict.statLang;
+
+          document.getElementById("rules-title").textContent = dict.rulesTitle;
+          renderInline(document.getElementById("rule-keep"), dict.ruleKeep);
+          renderInline(document.getElementById("rule-cut"), dict.ruleCut);
+          renderInline(document.getElementById("rule-score"), dict.ruleScore);
+
+          document.getElementById("sources-title").textContent = dict.sourcesTitle;
+          document.getElementById("src-h1").textContent = dict.srcH1;
+          document.getElementById("src-owasp").textContent = dict.srcOwasp;
+          document.getElementById("src-psw").textContent = dict.srcPsw;
+          document.getElementById("btn-start-text").textContent = dict.startBtn;
+          document.getElementById("start-note").textContent = dict.startNote;
+
+          document.getElementById("qm-q-label").textContent = dict.qmQ;
+          document.getElementById("q-total").textContent = SCENARIOS.length;
+          document.getElementById("bonsai-label").textContent = dict.bonsaiLabel;
+          document.getElementById("poc-head-label").textContent = dict.pocHead;
+          document.getElementById("poc-count-label").textContent = dict.pocCount;
+          document.getElementById("btn-prune-text").textContent = dict.pruneBtn;
+          document.getElementById("btn-reset-text").textContent = dict.resetBtn;
+
+          document.getElementById("btn-share-text").textContent = dict.resultShare;
+          document.getElementById("btn-retry-text").textContent = dict.resultRetry;
+          document.getElementById("review-title").textContent = dict.resultReview;
+          document.getElementById("score-suffix").textContent = dict.scoreSuffix;
+          document.getElementById("stat-lbl-perfect").textContent = dict.statLblPerfect;
+          document.getElementById("stat-lbl-cut").textContent = dict.statLblCut;
+          document.getElementById("stat-lbl-pct").textContent = dict.statLblPct;
+          document.getElementById("footer-by").textContent = dict.footerBy;
+
+          if (document.getElementById("screen-quiz").classList.contains("active")) {
+            renderScenario(true);
+          }
+          if (document.getElementById("screen-result").classList.contains("active")) {
+            renderResult();
+          }
+        }
+
+        function setLanguage(lang) {
+          if (lang === currentLang) return;
+          currentLang = lang;
+          document.querySelectorAll(".lang-toggle button").forEach(function (b) {
+            b.classList.toggle("active", b.dataset.lang === lang);
+          });
+          updateLangPill();
+          applyI18n();
+        }
+
+        const langPill = document.getElementById("lang-pill");
+        function updateLangPill() {
+          const active = document.querySelector(".lang-toggle button.active");
+          if (!active) return;
+          langPill.style.width = active.offsetWidth + "px";
+          langPill.style.transform = "translateX(" + (active.offsetLeft - 3) + "px)";
+        }
+
+        function startQuiz() {
+          qIndex = 0;
+          selectedCuts = [];
+          perQuestionResults = [];
+          phase = "play";
+          renderScenario();
+          showScreen("screen-quiz");
+        }
+
+        function totalEarned() {
+          return perQuestionResults.reduce(function (s, r) {
+            return s + (r ? r.score : 0);
+          }, 0);
+        }
+        function totalPossible() {
+          return SCENARIOS.length * 10;
+        }
+
+        function renderScenario(keepState) {
+          const item = SCENARIOS[qIndex];
+          const lang = currentLang;
+          if (!keepState) {
+            selectedCuts = [];
+            phase = "play";
+            document.getElementById("feedback-area").textContent = "";
+            document.getElementById("btn-next").style.display = "none";
+          }
+
+          document.getElementById("q-current").textContent = qIndex + 1;
+          document.getElementById("q-tag").textContent = item.tag[lang];
+          document.getElementById("scenario-vuln-text").textContent = item.vuln[lang];
+          renderInline(document.getElementById("scenario-context"), item.context[lang]);
+          document.getElementById("scenario-question").textContent = item.question[lang];
+          renderInline(document.getElementById("scenario-goal"), item.goal[lang]);
+
+          const earned = totalEarned();
+          const possibleSoFar = SCENARIOS.length * 10;
+          const pct = Math.round((earned / possibleSoFar) * 100);
+          document.getElementById("bonsai-num").textContent = earned;
+          document.getElementById("bonsai-fill").style.width = pct + "%";
+
+          const linesWrap = document.getElementById("poc-lines");
+          linesWrap.textContent = "";
+          item.lines.forEach(function (line, idx) {
+            const lineEl = el("div", "poc-line");
+            lineEl.dataset.idx = idx;
+            const num = el("span", "poc-line-num", String(idx + 1));
+            const mark = el("span", "poc-line-mark");
+            const code = el("code", "poc-line-code");
+            code.textContent = line.code === "" ? " " : line.code;
+            lineEl.appendChild(num);
+            lineEl.appendChild(mark);
+            lineEl.appendChild(code);
+
+            if (phase === "play") {
+              lineEl.addEventListener("click", function () {
+                toggleCut(idx);
+              });
+              if (selectedCuts.indexOf(idx) !== -1) {
+                lineEl.classList.add("cut-selected");
+              }
+            } else {
+              lineEl.classList.add("locked");
+              const isJunk = roleOf(line) === "junk";
+              const wasCut = selectedCuts.indexOf(idx) !== -1;
+              if (isJunk && wasCut) lineEl.classList.add("feed-correct-cut");
+              else if (isJunk && !wasCut) lineEl.classList.add("feed-missed-junk");
+              else if (!isJunk && wasCut) lineEl.classList.add("feed-mistake-cut");
+              else lineEl.classList.add("feed-good");
+            }
+            linesWrap.appendChild(lineEl);
+
+            if (phase === "review") {
+              const isJunk = roleOf(line) === "junk";
+              const wasCut = selectedCuts.indexOf(idx) !== -1;
+              let cls = "good";
+              let tag = "";
+              if (isJunk && wasCut) {
+                cls = "good";
+                tag = t("tagGood");
+              } else if (isJunk && !wasCut) {
+                cls = "warn";
+                tag = t("tagWarn");
+              } else if (!isJunk && wasCut) {
+                cls = "bad";
+                tag = t("tagBad");
+              } else {
+                cls = "good";
+                tag = t("tagKeep");
+              }
+              const reasonEl = el("div", "poc-reason " + cls);
+              const tagEl = el("span", "poc-reason-tag", tag);
+              reasonEl.appendChild(tagEl);
+              const reasonText = document.createElement("span");
+              renderInline(reasonText, line.reason[lang]);
+              reasonEl.appendChild(reasonText);
+              linesWrap.appendChild(reasonEl);
+            }
+          });
+
+          updateKeptCount();
+
+          const pruneBtn = document.getElementById("btn-prune");
+          const resetBtn = document.getElementById("btn-reset");
+          if (phase === "play") {
+            pruneBtn.disabled = false;
+            resetBtn.disabled = selectedCuts.length === 0;
+            pruneBtn.style.display = "inline-flex";
+            resetBtn.style.display = "inline-flex";
+          } else {
+            pruneBtn.style.display = "none";
+            resetBtn.style.display = "none";
+          }
+        }
+
+        function updateKeptCount() {
+          const item = SCENARIOS[qIndex];
+          document.getElementById("poc-total-num").textContent = item.lines.length;
+          document.getElementById("poc-kept-num").textContent =
+            item.lines.length - selectedCuts.length;
+        }
+
+        function toggleCut(idx) {
+          if (phase !== "play") return;
+          const at = selectedCuts.indexOf(idx);
+          if (at === -1) selectedCuts.push(idx);
+          else selectedCuts.splice(at, 1);
+          const lineEl = document
+            .getElementById("poc-lines")
+            .querySelector('[data-idx="' + idx + '"]');
+          if (lineEl) {
+            lineEl.classList.toggle("cut-selected", at === -1);
+          }
+          updateKeptCount();
+          document.getElementById("btn-reset").disabled = selectedCuts.length === 0;
+        }
+
+        function resetSelection() {
+          if (phase !== "play") return;
+          selectedCuts = [];
+          renderScenario(true);
+        }
+
+        function scoreCurrent() {
+          const item = SCENARIOS[qIndex];
+          let correct = 0;
+          let cutCorrect = 0;
+          let mistakes = 0;
+          let missed = 0;
+          item.lines.forEach(function (line, idx) {
+            const wasCut = selectedCuts.indexOf(idx) !== -1;
+            const isJunk = roleOf(line) === "junk";
+            if (isJunk === wasCut) {
+              correct++;
+              if (wasCut) cutCorrect++;
+            } else if (!isJunk && wasCut) {
+              mistakes++;
+            } else if (isJunk && !wasCut) {
+              missed++;
+            }
+          });
+          const accuracy = correct / item.lines.length;
+          let score = Math.round(accuracy * 9);
+          const perfect = correct === item.lines.length;
+          if (perfect) score = 10;
+          if (mistakes > 0) score = Math.min(score, 5);
+          if (score < 0) score = 0;
+          return {
+            score: score,
+            total: 10,
+            perfect: perfect,
+            cutCorrect: cutCorrect,
+            mistakes: mistakes,
+            missed: missed,
+            correctLines: correct,
+            totalLines: item.lines.length,
+          };
+        }
+
+        function prune() {
+          if (phase !== "play") return;
+          const result = scoreCurrent();
+          perQuestionResults[qIndex] = result;
+          phase = "review";
+          renderScenario(true);
+          showResultFeedback(result);
+
+          const nextBtn = document.getElementById("btn-next");
+          nextBtn.textContent =
+            qIndex >= SCENARIOS.length - 1 ? t("lastBtn") : t("nextBtn");
+          nextBtn.style.display = "flex";
+          nextBtn.onclick = onNext;
+
+          const earned = totalEarned();
+          const pct = Math.round((earned / totalPossible()) * 100);
+          document.getElementById("bonsai-num").textContent = earned;
+          document.getElementById("bonsai-fill").style.width = pct + "%";
+        }
+
+        function showResultFeedback(r) {
+          const fbArea = document.getElementById("feedback-area");
+          fbArea.textContent = "";
+          const fb = document.createElement("div");
+          let titleKey = "quizPartial";
+          let cls = "partial";
+          if (r.perfect) {
+            titleKey = "quizPerfect";
+            cls = "perfect";
+          } else if (r.mistakes > 0) {
+            titleKey = "quizDead";
+            cls = "dead";
+          }
+          fb.className = "result-feedback " + cls;
+
+          const title = document.createElement("div");
+          title.className = "feedback-title";
+          const titleText = document.createElement("span");
+          titleText.textContent =
+            (r.perfect ? "✓ " : r.mistakes > 0 ? "✕ " : "△ ") + t(titleKey);
+          title.appendChild(titleText);
+
+          const pts = document.createElement("span");
+          pts.className = "feedback-points";
+          const sStrong = document.createElement("strong");
+          sStrong.textContent = "+ " + r.score;
+          pts.appendChild(sStrong);
+          pts.appendChild(document.createTextNode(" / " + r.total + " pt"));
+          title.appendChild(pts);
+          fb.appendChild(title);
+
+          const body = document.createElement("div");
+          body.className = "feedback-body";
+          renderInline(body, buildSummary(r, currentLang));
+          fb.appendChild(body);
+
+          const tipText = buildTip(r, currentLang);
+          if (tipText) {
+            const tipEl = document.createElement("div");
+            tipEl.className = "feedback-tip";
+            renderInline(tipEl, tipText);
+            fb.appendChild(tipEl);
+          }
+          fbArea.appendChild(fb);
+        }
+
+        function buildSummary(r, lang) {
+          if (lang === "ja") {
+            if (r.perfect) {
+              return (
+                "<strong>完璧な盆栽</strong>。" +
+                r.correctLines +
+                " / " +
+                r.totalLines +
+                " 行すべて正しく判定できています。ノイズを刈り取り、ホットリードだけ残せた状態。"
+              );
+            }
+            if (r.mistakes > 0) {
+              return (
+                "<strong>ホットリードを切った</strong>：深掘りすべき行を " +
+                r.mistakes +
+                " 本切ってしまい、本物の手がかりを見逃しました。" +
+                "（ノイズの剪定は " +
+                r.cutCorrect +
+                " 本、残してしまったノイズ " +
+                r.missed +
+                " 本）"
+              );
+            }
+            return (
+              "<strong>剪定不足</strong>：ノイズが " +
+              r.missed +
+              " 本残っています。recon の信号雑音比を上げるほど、次の 1 時間で見つかるバグの量が増えます。" +
+              "（正しく切った数 " +
+              r.cutCorrect +
+              " / 正答行 " +
+              r.correctLines +
+              "）"
+            );
+          }
+          if (r.perfect) {
+            return (
+              "<strong>Perfect bonsai.</strong> All " +
+              r.correctLines +
+              " / " +
+              r.totalLines +
+              " lines judged correctly. Noise gone, only hot leads remain."
+            );
+          }
+          if (r.mistakes > 0) {
+            return (
+              "<strong>You cut a hot lead:</strong> " +
+              r.mistakes +
+              " worth-investigating line(s) removed, so you'd miss the real finding. " +
+              "(Noise pruned correctly: " +
+              r.cutCorrect +
+              ", noise still in: " +
+              r.missed +
+              ")"
+            );
+          }
+          return (
+            "<strong>Needs more pruning:</strong> " +
+            r.missed +
+            " noise line(s) still attached. Tightening your signal-to-noise on recon directly raises the bugs-per-hour you find. " +
+            "(Cut right: " +
+            r.cutCorrect +
+            " / correct lines: " +
+            r.correctLines +
+            ")"
+          );
+        }
+
+        function buildTip(r, lang) {
+          if (lang === "ja") {
+            if (r.perfect)
+              return "<strong>Pro Tip</strong>：実 recon では、ツール出力を <code>uddup</code> / <code>uro</code> で重複圧縮 → grep でドメイン外し → catch-all calibration の三段ノイズ除去をルーチン化すると、深掘り対象が 10 倍速で絞れる。";
+            if (r.mistakes > 0)
+              return "<strong>Pro Tip</strong>：迷ったら「これを今日触らないと後悔するか？」を自問。Yes なら残す（ホットリード）。No なら切る（ノイズ）。<strong>internal / legacy / billing / 認証ゲート / 古いスタック</strong> は条件反射で残す。";
+            return "<strong>Pro Tip</strong>：3rd party SaaS（Zendesk・statuspage・Salesforce 等）、CDN edge、tracking pixel、ワイルドカード証明書、`pk_live_*` のような公開前提キー、未認証 Cookie の Secure 欠落 — これらは <strong>反射で切る</strong>癖をつける。";
+          }
+          if (r.perfect)
+            return "<strong>Pro tip:</strong> on real recon, pipe everything through <code>uddup</code> / <code>uro</code> for dedup, grep the noise domains out, and calibrate ffuf's catch-all baseline — three quick filters compound to 10x faster shortlisting.";
+          if (r.mistakes > 0)
+            return "<strong>Pro tip:</strong> when in doubt, ask 'would I regret not touching this today?'. Yes -> keep it. No -> prune. <strong>internal-*, legacy-*, billing, auth gates, ancient stacks</strong> are reflexive keeps.";
+          return "<strong>Pro tip:</strong> 3rd-party SaaS (Zendesk / statuspage / Salesforce), CDN edge hosts, tracking pixels, wildcard certs, intentionally-public keys like `pk_live_*`, and Secure-flag-missing on anonymous cookies — train yourself to cut these on sight.";
+        }
+
+        function onNext() {
+          if (qIndex >= SCENARIOS.length - 1) {
+            finishQuiz();
+          } else {
+            qIndex++;
+            renderScenario();
+          }
+        }
+
+        function getRankKey(score) {
+          if (score >= 90) return "sensei";
+          if (score >= 75) return "master";
+          if (score >= 60) return "apprentice";
+          if (score >= 40) return "novice";
+          return "seed";
+        }
+
+        function getRank(score) {
+          const isJa = currentLang === "ja";
+          const key = getRankKey(score);
+          if (key === "sensei") {
+            return {
+              key: key,
+              tag: "★ BONSAI SENSEI",
+              title: isJa ? "盆栽の達人" : "Bonsai Sensei",
+              sub: isJa
+                ? "90+ 点。recon の信号雑音比を本能で見抜ける達人。"
+                : "90+. You read signal vs. noise on instinct.",
+              comment: isJa
+                ? "<strong>90〜100 点（盆栽の達人）</strong>：recon ノイズの判別眼が完成しています。実 hunt でも、subfinder → httpx → ffuf → dirsearch → linkfinder の各段で <strong>「ホットリードだけ蓄積する」フロー</strong>を確立しているはず。次は automation で「他人より先に新規ホストへ着く」スピード勝負へ。"
+                : "<strong>90–100 (Bonsai Sensei):</strong> your signal-vs-noise instincts are dialed in. On real hunts you already stack only the hot leads across subfinder → httpx → ffuf → dirsearch → linkfinder. Next step: automate it to beat other hunters to fresh hosts.",
+            };
+          }
+          if (key === "master") {
+            return {
+              key: key,
+              tag: "★ BONSAI MASTER",
+              title: isJa ? "剪定上手" : "Bonsai Master",
+              sub: isJa
+                ? "75+ 点。recon ノイズの 8 割は反射で切れる段階。"
+                : "75+. You reflexively prune ~80% of recon noise.",
+              comment: isJa
+                ? "<strong>75〜89 点（剪定上手）</strong>：3rd party SaaS・CDN edge・catch-all・publishable key 等の典型ノイズは見抜けています。次は <strong>「最近の CT log（数日前）」「`internal-*` / `legacy-*` の外露出」「JS bundle の FEATURE_FLAGS」</strong> など、見落とされがちな宝箱を意識的に拾う癖をつけると Sensei 級へ。"
+                : "<strong>75–89 (Bonsai Master):</strong> you cut the obvious noise — 3rd-party SaaS, CDN edge, catch-alls, publishable keys. To break into Sensei, start consciously chasing the goldmines pros pick over: <strong>fresh-by-days CT log entries, exposed `internal-*` / `legacy-*` hosts, FEATURE_FLAGS in JS bundles</strong>.",
+            };
+          }
+          if (key === "apprentice") {
+            return {
+              key: key,
+              tag: "★ BONSAI APPRENTICE",
+              title: isJa ? "剪定見習い" : "Bonsai Apprentice",
+              sub: isJa
+                ? "60+ 点。recon の輪郭は見えてきた段階。"
+                : "60+. The shape of recon is starting to show.",
+              comment: isJa
+                ? "<strong>60〜74 点（剪定見習い）</strong>：基本（パークドメイン / wildcard 証明書 / tracking pixel / SaaS / 静的アセットは切る）は身についています。次は <strong>「`pk_live_*` は公開鍵」「AKIA...EXAMPLE は AWS サンプル」「JWT_SECRET の `||` フォールバック」</strong> など、初心者が誤報告する罠を覚えると 75+ が見えてきます。"
+                : "<strong>60–74 (Bonsai Apprentice):</strong> basics are in place (parked domains, wildcard certs, tracking pixels, SaaS, static assets — you prune those). Next, memorise the classic newbie traps that turn into Informatives: <strong>`pk_live_*` is publishable, `AKIA...EXAMPLE` is the AWS sample key, `JWT_SECRET ||` fallbacks aren't impact on their own</strong>. That unlocks 75+.",
+            };
+          }
+          if (key === "novice") {
+            return {
+              key: key,
+              tag: "★ BONSAI NOVICE",
+              title: isJa ? "種から学ぶ" : "Bonsai Novice",
+              sub: isJa
+                ? "40+ 点。まずは「絶対に切らない」リストを固める段階。"
+                : "40+. Lock in your never-cut list first.",
+              comment: isJa
+                ? "<strong>40〜59 点（種から学ぶ）</strong>：まず <strong>「`api.*` / `admin.*` / `billing.*` / `legacy-*` / `internal-*` / `m.*` / 401 / 403 / .git / .env / backup.zip / Jenkins / Grafana / Tomcat 古い」は絶対に切らない</strong> という「never-cut リスト」を固定するところから始めましょう。"
+                : "<strong>40–59 (Bonsai Novice):</strong> nail down your <strong>never-cut list first</strong>: `api.*`, `admin.*`, `billing.*`, `legacy-*`, `internal-*`, `m.*`, 401 / 403 status, `.git` / `.env` / `backup.zip` paths, exposed Jenkins / Grafana / old Tomcat. Internalize those, then layer noise recognition on top.",
+            };
+          }
+          return {
+            key: key,
+            tag: "★ BONSAI SEED",
+            title: isJa ? "種：もう一度" : "Bonsai Seed",
+            sub: isJa
+              ? "<40 点。盆栽は枯れたが、種から再挑戦できる。"
+              : "<40. The bonsai withered — but seeds regrow.",
+            comment: isJa
+              ? "<strong>0〜39 点（種：もう一度）</strong>：ホットリードを切りすぎ / ノイズを残しすぎ。recon の出発点は <strong>「自分が今日 1 時間でバグを見つけたいなら、どのホストの Burp タブを最初に開くか」</strong>。`api.*` / `admin.*` / `legacy-*` / 認証ゲート (401/403) / 露出パネル (Jenkins/Grafana) は反射で残す。3rd party SaaS / CDN / tracking / wildcard 証明書 は反射で切る。"
+              : "<strong>0–39 (Bonsai Seed):</strong> you're either cutting hot leads or hoarding noise. Reset to the core question: <strong>'which Burp tab do I open first if I want a bug in the next hour?'</strong> Reflexively keep `api.*` / `admin.*` / `legacy-*` / auth gates (401/403) / exposed panels (Jenkins, Grafana). Reflexively cut 3rd-party SaaS / CDN / tracking pixels / wildcard certs.",
+          };
+        }
+
+        function renderResult() {
+          const earned = totalEarned();
+          const total = totalPossible();
+          const pct = Math.round((earned / total) * 100);
+          const rank = getRank(earned);
+          const perfectCount = perQuestionResults.filter(function (r) {
+            return r && r.perfect;
+          }).length;
+          const cutCorrectCount = perQuestionResults.reduce(function (s, r) {
+            return s + (r ? r.cutCorrect : 0);
+          }, 0);
+
+          document.getElementById("result-rank").textContent = rank.tag;
+          document.getElementById("result-title").textContent = rank.title;
+          document.getElementById("result-sub").textContent = rank.sub;
+          document.getElementById("score-num").textContent = earned;
+          document.getElementById("score-ring").style.setProperty("--pct", pct);
+          document.getElementById("stat-perfect").textContent = perfectCount;
+          document.getElementById("stat-cut-correct").textContent = cutCorrectCount;
+          document.getElementById("stat-pct").textContent = pct + "%";
+          renderInline(document.getElementById("result-comment"), rank.comment);
+
+          const reviewGrid = document.getElementById("review-grid");
+          reviewGrid.textContent = "";
+          SCENARIOS.forEach(function (item, i) {
+            const r = perQuestionResults[i];
+            const row = document.createElement("div");
+            row.className = "review-item";
+            const mark = document.createElement("div");
+            let kind = "ok";
+            if (!r) kind = "ng";
+            else if (r.perfect) kind = "ok";
+            else if (r.mistakes > 0) kind = "ng";
+            else kind = "warn";
+            mark.className = "review-mark " + kind;
+            mark.textContent = r ? r.score : 0;
+
+            const content = document.createElement("div");
+            content.className = "review-content";
+            const qLine = document.createElement("div");
+            qLine.className = "review-q";
+            const dim = document.createElement("span");
+            dim.className = "review-dim";
+            dim.textContent = "[" + item.vuln[currentLang] + "]";
+            const qText = document.createElement("span");
+            qText.textContent = item.tag[currentLang];
+            const pointsLabel = document.createElement("span");
+            pointsLabel.className = "review-points";
+            pointsLabel.textContent = (r ? r.score : 0) + " / 10 pt";
+            qLine.appendChild(dim);
+            qLine.appendChild(qText);
+            qLine.appendChild(pointsLabel);
+            content.appendChild(qLine);
+
+            if (r) {
+              const aLine = document.createElement("div");
+              aLine.className = "review-a";
+              renderInline(aLine, buildShortReview(r, currentLang));
+              content.appendChild(aLine);
+            }
+
+            row.appendChild(mark);
+            row.appendChild(content);
+            reviewGrid.appendChild(row);
+          });
+        }
+
+        function buildShortReview(r, lang) {
+          if (lang === "ja") {
+            if (r.perfect) return "完璧 — 全行を正しく判断";
+            if (r.mistakes > 0)
+              return "ホットリードを切った（ホットリード " + r.mistakes + " 本見逃し / ノイズ残し " + r.missed + " 本）";
+            return "剪定不足 — ノイズ " + r.missed + " 本残し（正しく切った数 " + r.cutCorrect + "）";
+          }
+          if (r.perfect) return "Perfect — all lines judged correctly";
+          if (r.mistakes > 0)
+            return "Cut a hot lead (" + r.mistakes + " leads missed / " + r.missed + " noise left)";
+          return "Under-pruned — " + r.missed + " noise left (cut right: " + r.cutCorrect + ")";
+        }
+
+        function finishQuiz() {
+          renderResult();
+          showScreen("screen-result");
+        }
+
+        function rankBandLabel(key, langKey) {
+          const map = {
+            sensei: { ja: "盆栽の達人 / Sensei", en: "Bonsai Sensei" },
+            master: { ja: "剪定上手 / Master", en: "Bonsai Master" },
+            apprentice: { ja: "剪定見習い / Apprentice", en: "Bonsai Apprentice" },
+            novice: { ja: "種から学ぶ / Novice", en: "Bonsai Novice" },
+            seed: { ja: "種：もう一度 / Seed", en: "Bonsai Seed" },
+          };
+          return (map[key] && map[key][langKey]) || key;
+        }
+
+        function buildShareText(earned, total, pct, rankKey) {
+          const band = rankBandLabel(rankKey, currentLang);
+          if (currentLang === "ja") {
+            return (
+              "「Bonsai Recon (偵察盆栽)」で " +
+              earned +
+              " / " +
+              total +
+              " 点（" +
+              pct +
+              "%）獲得！判定: " +
+              band +
+              "\n" +
+              "subfinder / nuclei / ffuf / gau / JS bundle などのリコン出力から「真のリード」だけを盆栽のように剪定する、バグハンター視点の学習ゲーム。あなたも挑戦してみよう！\n\n" +
+              "#BugBountyJPGame"
+            );
+          }
+          return (
+            "I scored " +
+            earned +
+            " / " +
+            total +
+            " (" +
+            pct +
+            "%) — " +
+            band +
+            " rank on Bonsai Recon.\n" +
+            "A bug-hunter's pruning game: shape subfinder / nuclei / ffuf / gau / JS-bundle output down to the real hot leads. Give it a shot!\n\n" +
+            "#BugBountyJPGame"
+          );
+        }
+
+        function onShare() {
+          const earned = totalEarned();
+          const total = totalPossible();
+          const pct = Math.round((earned / total) * 100);
+          const rankKey = getRankKey(earned);
+          const text = buildShareText(earned, total, pct, rankKey);
+          const base = location.href.split("#")[0].replace(/[^/]*$/, "");
+          const url = base + "share/" + rankKey + "/";
+          const intent =
+            "https://x.com/intent/tweet?text=" +
+            encodeURIComponent(text) +
+            "&url=" +
+            encodeURIComponent(url);
+          window.open(intent, "_blank", "noopener,noreferrer");
+        }
+
+        document.querySelectorAll(".lang-toggle button").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            setLanguage(btn.dataset.lang);
+          });
+        });
+        document.getElementById("btn-start").addEventListener("click", startQuiz);
+        document.getElementById("btn-prune").addEventListener("click", prune);
+        document.getElementById("btn-reset").addEventListener("click", resetSelection);
+        document.getElementById("btn-share").addEventListener("click", onShare);
+        document.getElementById("btn-retry").addEventListener("click", startQuiz);
+
+        (function initParticles() {
+          const canvas = document.getElementById("particles");
+          const ctx = canvas.getContext("2d");
+          let w = 0;
+          let h = 0;
+          let particles = [];
+          const reduce =
+            window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+          function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+          }
+          function create() {
+            particles = [];
+            const count = Math.max(28, Math.floor((w * h) / 32000));
+            for (let i = 0; i < count; i++) {
+              particles.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                r: Math.random() * 1.6 + 0.4,
+                vx: (Math.random() - 0.5) * 0.18,
+                vy: (Math.random() - 0.5) * 0.18,
+                alpha: Math.random() * 0.5 + 0.15,
+                hue: Math.random() < 0.55 ? "52, 211, 153" : "14, 165, 233",
+              });
+            }
+          }
+          function draw() {
+            ctx.clearRect(0, 0, w, h);
+            for (let i = 0; i < particles.length; i++) {
+              const p = particles[i];
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+              ctx.fillStyle = "rgba(" + p.hue + ", " + p.alpha + ")";
+              ctx.fill();
+              p.x += p.vx;
+              p.y += p.vy;
+              if (p.x < 0) p.x = w;
+              if (p.x > w) p.x = 0;
+              if (p.y < 0) p.y = h;
+              if (p.y > h) p.y = 0;
+            }
+            if (!reduce) requestAnimationFrame(draw);
+          }
+          resize();
+          create();
+          draw();
+          window.addEventListener("resize", function () {
+            resize();
+            create();
+          });
+        })();
+
+        applyI18n();
+        requestAnimationFrame(updateLangPill);
+        window.addEventListener("resize", updateLangPill);
+      })();
+    </script>
+  </body>
+</html>

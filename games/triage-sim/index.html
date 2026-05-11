@@ -285,6 +285,72 @@
         margin-top: 6px;
         margin-bottom: 28px;
       }
+
+      /* スタートヒーロー：クリップボード + 報告書 + 虫眼鏡 + 赤ペン */
+      .triage-illustration {
+        display: block;
+        width: clamp(200px, 38vw, 280px);
+        height: auto;
+        margin: 0 auto 14px;
+        filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.55))
+          drop-shadow(0 0 14px rgba(14, 165, 233, 0.12));
+      }
+      /* 虫眼鏡がレポート上をホバーする */
+      .triage-illustration .magnifier {
+        animation: magHover 4s ease-in-out infinite alternate;
+        transform-origin: 30% 70%;
+      }
+      @keyframes magHover {
+        from {
+          transform: translate(0, 0) rotate(-3deg);
+        }
+        to {
+          transform: translate(10px, -4px) rotate(4deg);
+        }
+      }
+      /* チェックマークが順に書かれていくように */
+      .triage-illustration .check-stroke {
+        stroke-dasharray: 24;
+        stroke-dashoffset: 24;
+        animation: checkDraw 5s ease-in-out infinite;
+      }
+      .triage-illustration .check-stroke-b {
+        animation-delay: 1s;
+      }
+      .triage-illustration .check-stroke-c {
+        animation-delay: 2s;
+      }
+      .triage-illustration .check-stroke-d {
+        animation-delay: 3s;
+      }
+      @keyframes checkDraw {
+        0%,
+        10% {
+          stroke-dashoffset: 24;
+        }
+        25%,
+        90% {
+          stroke-dashoffset: 0;
+        }
+        100% {
+          stroke-dashoffset: 0;
+          opacity: 0;
+        }
+      }
+      /* 赤ペンがゆらゆら */
+      .triage-illustration .red-pen {
+        animation: penTilt 5s ease-in-out infinite alternate;
+        transform-origin: 100% 100%;
+      }
+      @keyframes penTilt {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(-6deg);
+        }
+      }
+
       .hero-tag {
         display: inline-flex;
         align-items: center;
@@ -1382,6 +1448,177 @@
 
       <section id="screen-start" class="screen active">
         <div class="start-hero">
+          <!--
+            クリップボード × 報告書 × 虫眼鏡 × 赤ペン のヒーローイラスト。
+            装飾用、aria-hidden。虫眼鏡は紙の上をホバー、チェックマークは順に描かれる。
+          -->
+          <svg
+            class="triage-illustration"
+            viewBox="0 0 280 200"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="clipboardGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#92400e" />
+                <stop offset="1" stop-color="#451a03" />
+              </linearGradient>
+              <linearGradient id="paperGrad2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#fdfaf3" />
+                <stop offset="1" stop-color="#e8dec9" />
+              </linearGradient>
+              <radialGradient id="lensGrad" cx="0.35" cy="0.35" r="0.65">
+                <stop offset="0" stop-color="#bae6fd" stop-opacity="0.55" />
+                <stop offset="0.7" stop-color="#22d3ee" stop-opacity="0.25" />
+                <stop offset="1" stop-color="#0891b2" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+
+            <!-- 影 -->
+            <ellipse cx="140" cy="186" rx="100" ry="6" fill="#000" opacity="0.45" />
+
+            <!-- クリップボード（茶色） -->
+            <rect
+              x="40"
+              y="30"
+              width="200"
+              height="150"
+              rx="6"
+              fill="url(#clipboardGrad)"
+              stroke="#1c1917"
+              stroke-width="1.2"
+            />
+            <!-- クリップボードの紙 -->
+            <rect
+              x="50"
+              y="50"
+              width="180"
+              height="120"
+              rx="2"
+              fill="url(#paperGrad2)"
+              stroke="#a87926"
+              stroke-width="0.6"
+            />
+            <!-- 上部のクリップ（金属の留め具） -->
+            <rect x="115" y="22" width="50" height="20" rx="3" fill="#9ca3af" stroke="#374151" stroke-width="1" />
+            <rect x="125" y="14" width="30" height="14" rx="2" fill="#d1d5db" stroke="#374151" stroke-width="0.8" />
+            <circle cx="140" cy="34" r="2.5" fill="#6b7280" />
+
+            <!-- 報告書のタイトル -->
+            <rect x="60" y="60" width="130" height="6" rx="1" fill="#1c1917" />
+            <rect x="60" y="72" width="80" height="3" rx="1" fill="#71717a" />
+
+            <!-- 13 軸のチェックリスト（行は 4 つ表示） -->
+            <g>
+              <!-- 行 1 -->
+              <rect x="60" y="88" width="10" height="10" rx="1.5" fill="none" stroke="#1c1917" stroke-width="1.2" />
+              <path
+                class="check-stroke"
+                d="M 62 93 L 65 96 L 69 90"
+                stroke="#34d399"
+                stroke-width="2"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <rect x="76" y="91" width="100" height="4" rx="1" fill="#52525b" />
+
+              <!-- 行 2 -->
+              <rect x="60" y="106" width="10" height="10" rx="1.5" fill="none" stroke="#1c1917" stroke-width="1.2" />
+              <path
+                class="check-stroke check-stroke-b"
+                d="M 62 111 L 65 114 L 69 108"
+                stroke="#34d399"
+                stroke-width="2"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <rect x="76" y="109" width="90" height="4" rx="1" fill="#52525b" />
+
+              <!-- 行 3：誤り（×） -->
+              <rect x="60" y="124" width="10" height="10" rx="1.5" fill="none" stroke="#1c1917" stroke-width="1.2" />
+              <g class="check-stroke check-stroke-c" stroke="#fb7185" stroke-width="2" stroke-linecap="round">
+                <line x1="62" y1="126" x2="68" y2="132" />
+                <line x1="68" y1="126" x2="62" y2="132" />
+              </g>
+              <rect x="76" y="127" width="120" height="4" rx="1" fill="#fb7185" opacity="0.7" />
+
+              <!-- 行 4 -->
+              <rect x="60" y="142" width="10" height="10" rx="1.5" fill="none" stroke="#1c1917" stroke-width="1.2" />
+              <path
+                class="check-stroke check-stroke-d"
+                d="M 62 147 L 65 150 L 69 144"
+                stroke="#34d399"
+                stroke-width="2"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <rect x="76" y="145" width="70" height="4" rx="1" fill="#52525b" />
+            </g>
+
+            <!-- スコア表示（右下のスタンプ） -->
+            <g transform="translate(196, 152)">
+              <rect x="-22" y="-12" width="44" height="22" rx="2" fill="none" stroke="#dc2626" stroke-width="1.8" transform="rotate(-6)" />
+              <text
+                x="0"
+                y="3"
+                text-anchor="middle"
+                font-family="JetBrains Mono, monospace"
+                font-size="11"
+                font-weight="900"
+                fill="#dc2626"
+                transform="rotate(-6)"
+              >82/100</text>
+            </g>
+
+            <!-- 虫眼鏡（左上、ふわふわ移動） -->
+            <g class="magnifier" transform="translate(82, 100)">
+              <!-- 柄 -->
+              <line
+                x1="32"
+                y1="32"
+                x2="56"
+                y2="58"
+                stroke="#7c2d12"
+                stroke-width="6"
+                stroke-linecap="round"
+              />
+              <!-- 柄のグリップ -->
+              <rect x="50" y="50" width="14" height="16" rx="3" fill="#451a03" stroke="#1c1917" stroke-width="0.6" transform="rotate(48 56 58)" />
+              <!-- リング -->
+              <circle cx="18" cy="18" r="20" fill="none" stroke="#1c1917" stroke-width="3.5" />
+              <circle cx="18" cy="18" r="20" fill="url(#lensGrad)" />
+              <!-- レンズの内側のハイライト -->
+              <ellipse cx="11" cy="11" rx="6" ry="4" fill="#ffffff" opacity="0.55" />
+              <!-- レンズに映る「BUG」字 -->
+              <text
+                x="18"
+                y="22"
+                text-anchor="middle"
+                font-family="JetBrains Mono, monospace"
+                font-weight="900"
+                font-size="9"
+                fill="#0e3149"
+                opacity="0.65"
+              >BUG</text>
+            </g>
+
+            <!-- 赤ペン（右下から飛び出す） -->
+            <g class="red-pen" transform="translate(232, 158)">
+              <!-- ボディ -->
+              <rect x="-5" y="-46" width="10" height="60" rx="2" fill="#dc2626" stroke="#7f1d1d" stroke-width="0.6" />
+              <!-- 黒帯 -->
+              <rect x="-5" y="-30" width="10" height="3" fill="#1c1917" />
+              <!-- クリップ -->
+              <rect x="-7" y="-44" width="3" height="14" fill="#9ca3af" />
+              <!-- 先端の金属 -->
+              <polygon points="-5,14 5,14 3,22 -3,22" fill="#9ca3af" stroke="#374151" stroke-width="0.5" />
+              <polygon points="-3,22 3,22 0,28" fill="#1c1917" />
+            </g>
+          </svg>
+
           <div class="hero-tag">
             <span class="hero-tag-dot"></span>
             <span id="hero-tag-text"></span>

@@ -295,6 +295,68 @@
         margin-top: 6px;
         margin-bottom: 28px;
       }
+
+      /* スタートヒーロー：金トロフィーから這い出るバグ＋紙吹雪 */
+      .trophy-illustration {
+        display: block;
+        width: clamp(180px, 32vw, 240px);
+        height: auto;
+        margin: 0 auto 14px;
+        filter: drop-shadow(0 12px 22px rgba(251, 191, 36, 0.3))
+          drop-shadow(0 4px 6px rgba(0, 0, 0, 0.45));
+      }
+      /* バグの足がもぞもぞ動く */
+      .trophy-illustration .bug-leg {
+        animation: bugWiggle 0.9s ease-in-out infinite alternate;
+        transform-origin: 50% 0%;
+      }
+      .trophy-illustration .bug-leg-b {
+        animation-delay: 0.45s;
+      }
+      @keyframes bugWiggle {
+        from {
+          transform: rotate(-6deg);
+        }
+        to {
+          transform: rotate(6deg);
+        }
+      }
+      /* 紙吹雪・スパークがちかちか */
+      .trophy-illustration .spark {
+        animation: sparkTwinkle 1.8s ease-in-out infinite;
+        transform-origin: center;
+      }
+      .trophy-illustration .spark-b {
+        animation-delay: 0.6s;
+      }
+      .trophy-illustration .spark-c {
+        animation-delay: 1.2s;
+      }
+      @keyframes sparkTwinkle {
+        0%,
+        100% {
+          opacity: 0.3;
+          transform: scale(0.85);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.15);
+        }
+      }
+      /* トロフィー全体がほんの少し浮く */
+      .trophy-illustration .trophy-body {
+        animation: trophyHover 3.5s ease-in-out infinite alternate;
+        transform-origin: 50% 100%;
+      }
+      @keyframes trophyHover {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-3px);
+        }
+      }
+
       .hero-tag {
         display: inline-flex;
         align-items: center;
@@ -1211,6 +1273,155 @@
 
       <section id="screen-start" class="screen active">
         <div class="start-hero">
+          <!--
+            金トロフィー + バグ + 紙吹雪のヒーローイラスト。
+            装飾用、aria-hidden。トロフィーは浮遊、バグは足を動かす、スパークは明滅。
+          -->
+          <svg
+            class="trophy-illustration"
+            viewBox="0 0 240 200"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#fef3c7" />
+                <stop offset="0.4" stop-color="#fbbf24" />
+                <stop offset="1" stop-color="#92400e" />
+              </linearGradient>
+              <linearGradient id="goldDark" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#d97706" />
+                <stop offset="1" stop-color="#451a03" />
+              </linearGradient>
+              <radialGradient id="goldShine" cx="0.3" cy="0.3" r="0.5">
+                <stop offset="0" stop-color="#ffffff" stop-opacity="0.6" />
+                <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+
+            <!-- 後光（金色のグロー） -->
+            <circle cx="120" cy="80" r="65" fill="#fbbf24" opacity="0.18" />
+            <circle cx="120" cy="80" r="45" fill="#fbbf24" opacity="0.15" />
+
+            <g class="trophy-body">
+              <!-- 台座 -->
+              <rect x="80" y="160" width="80" height="14" rx="2" fill="url(#goldDark)" />
+              <rect x="86" y="146" width="68" height="16" rx="2" fill="url(#goldGrad)" stroke="#7c2d12" stroke-width="1" />
+              <!-- 銘板 -->
+              <rect x="92" y="151" width="56" height="7" rx="1" fill="#451a03" />
+              <text
+                x="120"
+                y="157"
+                text-anchor="middle"
+                font-size="6"
+                font-weight="900"
+                fill="#fbbf24"
+                font-family="JetBrains Mono, monospace"
+                letter-spacing="1.5"
+              >TOP 10</text>
+
+              <!-- 杯の柄（細い柱） -->
+              <rect x="116" y="130" width="8" height="18" fill="url(#goldDark)" />
+
+              <!-- 杯本体 -->
+              <path
+                d="M 75 50
+                   L 165 50
+                   L 158 100
+                   Q 158 130, 120 130
+                   Q 82 130, 82 100 Z"
+                fill="url(#goldGrad)"
+                stroke="#7c2d12"
+                stroke-width="1.4"
+                stroke-linejoin="round"
+              />
+              <!-- 杯の口の縁 -->
+              <rect x="73" y="44" width="94" height="10" rx="2" fill="url(#goldDark)" />
+              <rect x="76" y="42" width="88" height="6" rx="1" fill="url(#goldGrad)" stroke="#7c2d12" stroke-width="0.8" />
+
+              <!-- 取っ手・左 -->
+              <path
+                d="M 75 60 C 50 60, 50 100, 78 100"
+                stroke="url(#goldGrad)"
+                stroke-width="7"
+                fill="none"
+                stroke-linecap="round"
+              />
+              <!-- 取っ手・右 -->
+              <path
+                d="M 165 60 C 190 60, 190 100, 162 100"
+                stroke="url(#goldGrad)"
+                stroke-width="7"
+                fill="none"
+                stroke-linecap="round"
+              />
+
+              <!-- 杯の表面のハイライト -->
+              <ellipse cx="100" cy="70" rx="10" ry="22" fill="url(#goldShine)" />
+            </g>
+
+            <!-- バグが杯から半身を出している -->
+            <g transform="translate(120, 56)">
+              <!-- 胴体 -->
+              <ellipse cx="0" cy="-2" rx="18" ry="12" fill="#1c1917" />
+              <ellipse cx="0" cy="-4" rx="14" ry="8" fill="#3f3f46" />
+              <!-- 目 -->
+              <circle cx="-6" cy="-7" r="2.5" fill="#fbbf24" />
+              <circle cx="6" cy="-7" r="2.5" fill="#fbbf24" />
+              <circle cx="-6" cy="-7" r="1" fill="#1c1917" />
+              <circle cx="6" cy="-7" r="1" fill="#1c1917" />
+              <!-- 触覚 -->
+              <path
+                d="M -7 -12 Q -12 -22, -16 -26"
+                stroke="#1c1917"
+                stroke-width="1.6"
+                fill="none"
+                stroke-linecap="round"
+              />
+              <path
+                d="M 7 -12 Q 12 -22, 16 -26"
+                stroke="#1c1917"
+                stroke-width="1.6"
+                fill="none"
+                stroke-linecap="round"
+              />
+              <circle cx="-16" cy="-26" r="1.6" fill="#fb7185" />
+              <circle cx="16" cy="-26" r="1.6" fill="#fb7185" />
+              <!-- 足（左右に振れる） -->
+              <g class="bug-leg" transform="translate(-14, -2)">
+                <line x1="0" y1="0" x2="-6" y2="6" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round" />
+              </g>
+              <g class="bug-leg bug-leg-b" transform="translate(14, -2)">
+                <line x1="0" y1="0" x2="6" y2="6" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round" />
+              </g>
+              <g class="bug-leg" transform="translate(-15, 4)">
+                <line x1="0" y1="0" x2="-7" y2="2" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round" />
+              </g>
+              <g class="bug-leg bug-leg-b" transform="translate(15, 4)">
+                <line x1="0" y1="0" x2="7" y2="2" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round" />
+              </g>
+            </g>
+
+            <!-- スパーク（金の星型） -->
+            <g fill="#fbbf24">
+              <path class="spark" d="M 50 30 L 52 36 L 58 38 L 52 40 L 50 46 L 48 40 L 42 38 L 48 36 Z" />
+              <path class="spark spark-b" d="M 200 50 L 202 56 L 208 58 L 202 60 L 200 66 L 198 60 L 192 58 L 198 56 Z" />
+              <path class="spark spark-c" d="M 30 110 L 32 116 L 38 118 L 32 120 L 30 126 L 28 120 L 22 118 L 28 116 Z" />
+              <path class="spark spark-b" d="M 210 130 L 212 136 L 218 138 L 212 140 L 210 146 L 208 140 L 202 138 L 208 136 Z" />
+              <path class="spark" d="M 60 175 L 62 179 L 66 181 L 62 183 L 60 187 L 58 183 L 54 181 L 58 179 Z" opacity="0.7" />
+              <path class="spark spark-c" d="M 180 175 L 182 179 L 186 181 L 182 183 L 180 187 L 178 183 L 174 181 L 178 179 Z" opacity="0.7" />
+            </g>
+
+            <!-- ドル記号スパーク -->
+            <g fill="#34d399" font-family="JetBrains Mono, monospace" font-weight="900" font-size="14">
+              <text class="spark spark-b" x="40" y="76">$</text>
+              <text class="spark" x="190" y="100">$</text>
+            </g>
+
+            <!-- 床の影 -->
+            <ellipse cx="120" cy="186" rx="50" ry="4" fill="#000" opacity="0.4" />
+          </svg>
+
           <div class="hero-tag">
             <span class="hero-tag-dot"></span>
             <span id="hero-tag-text"></span>
