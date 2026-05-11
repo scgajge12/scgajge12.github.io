@@ -537,6 +537,66 @@
         font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
       }
 
+      /* スコアランク（帯位）一覧 */
+      .rank-list {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 18px 20px;
+        margin-bottom: 22px;
+      }
+      .rank-list-title {
+        font-size: 12px;
+        color: var(--text-dim);
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .rank-list-grid {
+        display: grid;
+        gap: 8px;
+      }
+      .rank-row {
+        display: grid;
+        grid-template-columns: 32px 110px 1fr auto;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+      }
+      .rank-row-belt {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3);
+      }
+      .rank-row-score {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--accent);
+        letter-spacing: 0.5px;
+      }
+      .rank-row-name {
+        font-size: 14px;
+        color: var(--text);
+        font-weight: 800;
+        line-height: 1.3;
+      }
+      .rank-row-tag {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 10.5px;
+        color: var(--gold);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
       .start-btn-wrap {
         text-align: center;
       }
@@ -923,6 +983,10 @@
         color: var(--text);
         border-radius: var(--radius-sm);
         padding: 10px 6px 12px;
+        /* モバイルで 300ms tap 遅延と scroll ジェスチャ干渉を回避 */
+        touch-action: manipulation;
+        -webkit-user-select: none;
+        user-select: none;
         /* 札の上では手裏剣カーソル — 投げる/構える感を出す */
         cursor:
           url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><g transform='translate(14,14) rotate(0)'><path d='M 0 -11 L 3 -3 L 11 0 L 3 3 L 0 11 L -3 3 L -11 0 L -3 -3 Z' fill='%23fbbf24' stroke='%231c1917' stroke-width='1' stroke-linejoin='round'/><circle cx='0' cy='0' r='1.8' fill='%231c1917'/></g></svg>")
@@ -1707,6 +1771,25 @@
         .jutsu-card .jc-key {
           display: none;
         }
+        .rank-list {
+          padding: 16px 14px;
+        }
+        .rank-row {
+          grid-template-columns: 28px 90px 1fr;
+          gap: 10px;
+          padding: 9px 11px;
+        }
+        .rank-row-belt {
+          width: 22px;
+          height: 22px;
+        }
+        .rank-row-tag {
+          grid-column: 1 / -1;
+          font-size: 10px;
+          color: var(--text-dim);
+          letter-spacing: 1.2px;
+          padding-left: 38px;
+        }
       }
       @media (max-width: 380px) {
         .scroll {
@@ -1737,6 +1820,22 @@
           animation-iteration-count: 1 !important;
           transition-duration: 0.001ms !important;
         }
+      }
+
+      /* ===== A11y common (focus-visible + 44px touch target) ===== */
+      /* キーボードフォーカス可視化（WCAG 2.4.7）— マウスクリック時は表示しない */
+      :focus {
+        outline: none;
+      }
+      :focus-visible {
+        outline: 2px solid var(--primary-light, #22d3ee);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+      /* lang-toggle 等の小型ボタンのタッチターゲット 44×44px 確保 */
+      .lang-toggle button {
+        min-height: 44px;
+        min-width: 44px;
       }
     </style>
   </head>
@@ -2021,6 +2120,11 @@
           <div class="jutsu-legend-grid" id="legend-grid"></div>
         </div>
 
+        <div class="rank-list">
+          <div class="rank-list-title" id="rank-list-title"></div>
+          <div class="rank-list-grid" id="rank-list-grid"></div>
+        </div>
+
         <div class="start-btn-wrap">
           <button class="btn-start" id="btn-start">
             <span id="btn-start-text"></span>
@@ -2193,6 +2297,15 @@
             ngText: "ミス",
             missText: "見逃し",
             ranks: ["白帯", "黄帯", "紫帯", "黒帯", "師範", "影忍"],
+            rankListTitle: "// 帯位（スコアランク）一覧",
+            rankDescs: [
+              "入門したての見習い。",
+              "巻物の読み方が分かってきた段階。",
+              "Replay / Automate を使い分けられる。",
+              "Match & Replace / Workflows を実戦投入できる。",
+              "Caido を「自分の道場」として使いこなす。",
+              "Workflows を組み上げ、他のハンターを導く存在。",
+            ],
             resultRank: "★ NINJA RANK",
             resultTitle: "修行終了",
             resultSub: "あなたの最終スコアと帯位はこちら。",
@@ -2272,6 +2385,15 @@
               "Black",
               "Master",
               "Shadow",
+            ],
+            rankListTitle: "// Belt Ranks (Score Tiers)",
+            rankDescs: [
+              "Just stepped into the dojo.",
+              "Starting to read the scrolls.",
+              "Can tell Replay from Automate at a glance.",
+              "Deploys Match & Replace / Workflows in real engagements.",
+              "Treats Caido as your own custom dojo.",
+              "Composes Workflows and leads other hunters.",
             ],
             resultRank: "★ NINJA RANK",
             resultTitle: "Training Complete",
@@ -2392,8 +2514,10 @@
 
         /* =========================================================
            巻物データ（脅威シナリオ）
-             20 種類、5 つの忍術にそれぞれ 4 種類ずつ。
+             40 種類、5 つの忍術にそれぞれ 8 種類ずつ。
              jE フィールドは XOR+Base64 で隠した正解、ja/en は本文。
+             バグハンターが実戦で「あ、これは Replay／Automate／…」と
+             即断するシナリオを意識して厳選している。
            ========================================================= */
         const SCROLLS = [
           // -- Replay -----------------------------------------------
@@ -2417,6 +2541,26 @@
             ja: "Cookie を別アカウントの値に差し替えて、1 件だけ叩いてみる",
             en: "Swap the cookie with another account's and send just one request",
           },
+          {
+            jE: "CGpeRgpVPFQeBlU9EkYSBRNJalBVURUqV0wX",
+            ja: "GraphQL のミューテーションを 1 件編集して、認可漏れを単発で確認したい",
+            en: "Tweak a single GraphQL mutation and resend it to confirm an authz gap",
+          },
+          {
+            jE: "CGpeRgpVPFQeBlU9EkYSBRNJagBVA0cvCEwX",
+            ja: "CSRF トークン無しの POST を 1 回だけ再送し、検証の有無を素手で確かめたい",
+            en: "Resend a POST once with the CSRF token stripped to verify the check is missing",
+          },
+          {
+            jE: "CGpeRgpVPFQeBlU9EkYSBRNJagYHAhR2AEwX",
+            ja: "WebSocket Upgrade のハンドシェイクを書き換えて Origin 検証を 1 発で試したい",
+            en: "Edit a WebSocket Upgrade handshake to test whether Origin is enforced",
+          },
+          {
+            jE: "CGpeRgpVPFQeBlU9EkYSBRNJagNWCBN8BkwX",
+            ja: "決済 API の amount=1000 を amount=-1000 / amount=0.01 に書き換えて 1 件だけ送りたい",
+            en: "Tamper amount=1000 → amount=-1000 / amount=0.01 on a payment API and send just one",
+          },
 
           // -- Automate ---------------------------------------------
           {
@@ -2438,6 +2582,26 @@
             jE: "CGpeRgpVL0QaBVklRA8SWhMAag5GCBZ7UlgPFjk=",
             ja: "並列度を変えながらレート制限を超えるか測定したい",
             en: "Vary concurrency to measure when the rate limit kicks in",
+          },
+          {
+            jE: "CGpeRgpVL0QaBVklRA8SWhMAag5GVEJ7UgpcFjk=",
+            ja: "同じパスに GET / POST / PUT / PATCH / DELETE を順に投げて、隠れた動詞の挙動を引き出したい",
+            en: "Cycle GET / POST / PUT / PATCH / DELETE on one path to surface hidden verbs",
+          },
+          {
+            jE: "CGpeRgpVL0QaBVklRA8SWhMAag5GBk9+B1wMFjk=",
+            ja: "JWT の kid パラメータを wordlist で総当たりし、SQLi / Path Traversal 経由の検証バイパスを試したい",
+            en: "Brute the JWT `kid` parameter to probe for SQLi / Path Traversal in the lookup",
+          },
+          {
+            jE: "CGpeRgpVL0QaBVklRA8SWhMAag5GCEd7BFkOFjk=",
+            ja: "Host ヘッダにサブドメイン wordlist を大量投入して、隠れたバーチャルホストを掘り起こしたい",
+            en: "Spray a subdomain wordlist into the Host header to enumerate virtual hosts",
+          },
+          {
+            jE: "CGpeRgpVL0QaBVklRA8SWhMAag5GVU8oVQ9TFjk=",
+            ja: "6 桁の招待コードを 100 万通り総当たりして、有効なコードを掴みたい",
+            en: "Brute a 6-digit invite code across 1M values to find a live one",
           },
 
           // -- Match & Replace --------------------------------------
@@ -2461,6 +2625,26 @@
             ja: "特定パスへの Authorization を別アカウントの値に常時差し替えたい",
             en: "Always swap Authorization for a specific path with another account's value",
           },
+          {
+            jE: "CGpeRgpVI0NMRhY3ElASFAYRKgBTEgo=",
+            ja: "全レスポンスから X-Frame-Options を常時削除し、Clickjacking PoC をいつでも組めるようにしたい",
+            en: "Strip X-Frame-Options from every response so Clickjacking PoCs are always reachable",
+          },
+          {
+            jE: "CGpeRgpVI0NMRhY3ElASRAAQLAQBEgo=",
+            ja: "通過する全 JSON 内の \"isAdmin\": false / \"role\": \"user\" を昇格させて挙動を観察したい",
+            en: "Rewrite `\"isAdmin\": false` / `\"role\": \"user\"` to elevated values across all passing JSON",
+          },
+          {
+            jE: "CGpeRgpVI0NMRhY3ElASEFBAf1BXEgo=",
+            ja: "API の Content-Type を application/json から text/html に書き換え、反射 XSS を狙いたい",
+            en: "Flip API Content-Type from application/json to text/html to coax reflected XSS",
+          },
+          {
+            jE: "CGpeRgpVI0NMRhY3ElAST1dDfAIAEgo=",
+            ja: "Set-Cookie の SameSite=Lax を SameSite=None; Secure に常時書き換え、CSRF 連鎖を観察したい",
+            en: "Rewrite Set-Cookie SameSite=Lax → None; Secure for the session to study CSRF chains",
+          },
 
           // -- Convert ----------------------------------------------
           {
@@ -2483,6 +2667,26 @@
             ja: "謎の長い文字列が gzip+Base64 で出来ているか変換して確かめたい",
             en: "Inspect a mystery long string by reversing gzip+Base64 encoding",
           },
+          {
+            jE: "CGpeRgpVLV4AHFE2REgcVEJRchYCBhR+V15ISQ==",
+            ja: "Set-Cookie に乗っていた Base64URL の値をデコードしてセッション構造を読みたい",
+            en: "Base64URL-decode a token from Set-Cookie to read the session structure",
+          },
+          {
+            jE: "CGpeRgpVLV4AHFE2REgcVEJRchYFVkctAVZISQ==",
+            ja: "AWS 署名付き URL の X-Amz-Signature を hex として並べ直し、署名生成過程を追いたい",
+            en: "Reformat an AWS pre-signed URL's X-Amz-Signature to hex to study the signing flow",
+          },
+          {
+            jE: "CGpeRgpVLV4AHFE2REgcVEJRchZdA0J9BFlISQ==",
+            ja: "HTML エンティティ化された WAF の反射出力を平文に戻し、本当にエスケープが効いているか確かめたい",
+            en: "Decode HTML-entity-escaped WAF reflections back to plain text to verify escaping",
+          },
+          {
+            jE: "CGpeRgpVLV4AHFE2REgcVEJRchYGABF7AQtISQ==",
+            ja: "改行 \\r\\n を含む Header smuggling payload を URL/percent エンコードに変換したい",
+            en: "Percent-encode a `\\r\\n`-bearing header-smuggling payload before sending",
+          },
 
           // -- Workflows --------------------------------------------
           {
@@ -2504,6 +2708,26 @@
             jE: "CGpeRgpVOV4cAVIoXx1DVB1ROxZeEhMqAA9YUGZN",
             ja: "SQLi の hint を検知したら sqlmap 用 payload を生成して別 workspace に飛ばしたい",
             en: "When an SQLi hint is seen, auto-generate sqlmap payloads and pipe them to another workspace",
+          },
+          {
+            jE: "CGpeRgpVOV4cAVIoXx1DVB1ROxZeEkB3V18IDGZN",
+            ja: "AWS Access Key / Slack Token / Stripe sk_live_ など Secret 風の正規表現に応答が一致したら、自動で Findings に積みたい",
+            en: "Auto-stash to Findings whenever a response matches secret regexes (AWS keys, Slack tokens, sk_live_, ...)",
+          },
+          {
+            jE: "CGpeRgpVOV4cAVIoXx1DVB1ROxZeEk9/Ul8OAmZN",
+            ja: "テスト中だけ 401/403 を 200 に書き換えるパイプラインを通し、フロント JS の権限ガード崩しを試したい",
+            en: "During testing, run a pipeline that flips 401/403 to 200 to break frontend permission gates",
+          },
+          {
+            jE: "CGpeRgpVOV4cAVIoXx1DVB1ROxZeEkd5UlZbVmZN",
+            ja: "全 Set-Cookie を解析し、HttpOnly / Secure / SameSite が欠けていたらタグ付きで自動レポートしたい",
+            en: "Parse every Set-Cookie and auto-tag findings whenever HttpOnly / Secure / SameSite is missing",
+          },
+          {
+            jE: "CGpeRgpVOV4cAVIoXx1DVB1ROxZeEkN6VV5fVmZN",
+            ja: "新規ホストが proxy 履歴に現れたら、外部コマンドで nuclei テンプレを自動キックしたい",
+            en: "Trigger nuclei via an external command whenever a new host shows up in proxy history",
           },
         ];
 
@@ -2727,7 +2951,10 @@
            ========================================================= */
         let lang = "ja";
         try {
-          const stored = localStorage.getItem("caido_ninja_lang");
+          // 全ゲーム共通キー mk12_game_lang を優先、旧キー caido_ninja_lang から移行も読む
+          const stored =
+            localStorage.getItem("mk12_game_lang") ||
+            localStorage.getItem("caido_ninja_lang");
           if (stored === "ja" || stored === "en") lang = stored;
         } catch (e) {}
 
@@ -2750,7 +2977,12 @@
           scrollDuration: 11200,
           raf: null,
           countdown: 0,
+          // 直近にスポーンした巻物のインデックス履歴（連続出題防止用）。
+          // SCROLLS が 40 種類あるので、最後の 8 件を除外しても十分プールは残る。
+          recentScrollIdx: [],
         };
+        // 連続出題を避けるためにスキップしたい直近インデックスの件数
+        const RECENT_SCROLL_WINDOW = 8;
 
         const laneEl = document.getElementById("lane");
         const slashFxEl = document.getElementById("slash-fx");
@@ -2858,9 +3090,57 @@
             legend.appendChild(row);
           });
 
+          // スコアランク（帯位）一覧
+          renderRankList();
+
           document.getElementById("btn-start-text").textContent = t("startBtn");
           document.getElementById("start-note").textContent = t("startNote");
           document.getElementById("footer-by").textContent = t("footerBy");
+        }
+
+        /* =========================================================
+           スコアランク（帯位）一覧のレンダリング
+           ========================================================= */
+        const RANK_TIERS = [
+          { min: 4000, max: null, beltColor: "linear-gradient(135deg, #d97706, #fbbf24, #d97706)" },
+          { min: 2500, max: 3999, beltColor: "linear-gradient(135deg, #b91c1c, #ef4444)" },
+          { min: 1500, max: 2499, beltColor: "#0f172a" },
+          { min: 800, max: 1499, beltColor: "#7e22ce" },
+          { min: 300, max: 799, beltColor: "#facc15" },
+          { min: 0, max: 299, beltColor: "#f4f4f5" },
+        ];
+        function renderRankList() {
+          const titleEl = document.getElementById("rank-list-title");
+          const grid = document.getElementById("rank-list-grid");
+          if (!titleEl || !grid) return;
+          titleEl.textContent = t("rankListTitle");
+          grid.textContent = "";
+          const names = t("ranks");
+          const descs = t("rankDescs");
+          RANK_TIERS.forEach((tier) => {
+            const idx = getBeltIdx(tier.min);
+            const row = el("div", "rank-row");
+            const belt = el("span", "rank-row-belt");
+            belt.style.background = tier.beltColor;
+            const score = el("span", "rank-row-score");
+            score.textContent =
+              tier.max === null
+                ? tier.min.toLocaleString() + "+"
+                : tier.min.toLocaleString() +
+                  "–" +
+                  tier.max.toLocaleString();
+            const name = el("div", "rank-row-name", names[idx]);
+            const tag = el(
+              "span",
+              "rank-row-tag",
+              descs && descs[idx] ? descs[idx] : "",
+            );
+            row.appendChild(belt);
+            row.appendChild(score);
+            row.appendChild(name);
+            row.appendChild(tag);
+            grid.appendChild(row);
+          });
         }
 
         /* =========================================================
@@ -2893,7 +3173,20 @@
             btn.appendChild(name);
             btn.appendChild(ws);
 
-            btn.addEventListener("click", () => tryHit(j.id));
+            // PointerEvents で 300ms tap 遅延を回避（モバイル応答性向上）
+            // pointerdown が拾えない環境のため click にもフォールバックを残す
+            if (window.PointerEvent) {
+              btn.addEventListener("pointerdown", (e) => {
+                if (e.button === 0 || e.pointerType !== "mouse") {
+                  e.preventDefault();
+                  tryHit(j.id);
+                }
+              });
+              // 二重発火防止用に click は無効化
+              btn.addEventListener("click", (e) => e.preventDefault());
+            } else {
+              btn.addEventListener("click", () => tryHit(j.id));
+            }
             bar.appendChild(btn);
           });
         }
@@ -3059,6 +3352,14 @@
         function cancelActiveGame() {
           if (state.raf) cancelAnimationFrame(state.raf);
           state.raf = null;
+          // カウントダウン setInterval も止めないと、startGame 直後のキャンセル時に
+          // tick が遅延発火して state.raf を勝手に再開してしまう
+          if (state.cdTimer) {
+            clearInterval(state.cdTimer);
+            state.cdTimer = null;
+          }
+          state._cdResume = false;
+          state.pausedAt = 0;
           for (const s of state.scrolls) s.dom.remove();
           state.scrolls = [];
           state.activeScrollId = null;
@@ -3088,7 +3389,7 @@
           if (lang === next) return;
           lang = next;
           try {
-            localStorage.setItem("caido_ninja_lang", lang);
+            localStorage.setItem("mk12_game_lang", lang);
           } catch (e) {}
           applyStartI18n();
           applyGameI18n();
@@ -3166,17 +3467,20 @@
           state.spawned = 0;
           state.spawnInterval = 3600;
           state.scrollDuration = 11200;
+          state.recentScrollIdx = [];
           updateHud();
 
           showScreen("screen-game");
 
-          // 3-2-1 カウントダウン
+          // 3-2-1 カウントダウン（cdTimer は state に持たせて
+          // visibilitychange / endGame / quitGame から確実に停止できるようにする）
           const cdEl = document.getElementById("countdown");
           state.countdown = 3;
           cdEl.style.display = "flex";
           cdEl.textContent = "3";
           let tick = 1;
-          const cdTimer = setInterval(() => {
+          if (state.cdTimer) clearInterval(state.cdTimer);
+          state.cdTimer = setInterval(() => {
             tick++;
             if (tick === 2) cdEl.textContent = "2";
             else if (tick === 3) cdEl.textContent = "1";
@@ -3184,7 +3488,8 @@
               cdEl.textContent = lang === "ja" ? "斬！" : "GO!";
             } else {
               cdEl.style.display = "none";
-              clearInterval(cdTimer);
+              clearInterval(state.cdTimer);
+              state.cdTimer = null;
               state.gameStartMs = performance.now();
               state.nextSpawnAt = state.gameStartMs + 600;
               state.raf = requestAnimationFrame(loop);
@@ -3242,7 +3547,30 @@
         }
 
         function spawnScroll(now) {
-          const idx = Math.floor(Math.random() * SCROLLS.length);
+          // 直近に出した巻物・現在画面上にある巻物は除外して、連続出題を避ける。
+          // 候補が枯渇した場合は許可セットを段階的に緩めるため、フィルタは
+          // "直近 N 件除外" → "全件許可" の二段フォールバックにする。
+          const active = new Set(state.scrolls.map((s) => s.scenarioIdx));
+          const banned = new Set([...state.recentScrollIdx, ...active]);
+          let candidates = [];
+          for (let i = 0; i < SCROLLS.length; i++) {
+            if (!banned.has(i)) candidates.push(i);
+          }
+          if (candidates.length === 0) {
+            // 直近履歴を切り詰めて再評価。最低でも「画面上に居る巻物」は避ける。
+            for (let i = 0; i < SCROLLS.length; i++) {
+              if (!active.has(i)) candidates.push(i);
+            }
+          }
+          if (candidates.length === 0) {
+            // どうしても枯れたら全部許可（理論的にここに来るのは稀）
+            candidates = SCROLLS.map((_, i) => i);
+          }
+          const idx = candidates[Math.floor(Math.random() * candidates.length)];
+          state.recentScrollIdx.push(idx);
+          if (state.recentScrollIdx.length > RECENT_SCROLL_WINDOW) {
+            state.recentScrollIdx.shift();
+          }
           const data = SCROLLS[idx];
           const dom = document.createElement("div");
           dom.className = "scroll";
@@ -3298,11 +3626,16 @@
            ========================================================= */
         function tryHit(jutsuId) {
           if (state.phase !== "game") return;
-          // アクティブな巻物（左端の未斬）
+          // 視覚上 active で表示されている巻物のみを判定対象にする
+          // （updateActiveScroll が最後にセットした state.activeScrollId と完全に一致させる）
           let target = null;
-          for (const s of state.scrolls) {
-            if (s.slashed) continue;
-            if (!target || s.x < target.x) target = s;
+          if (state.activeScrollId != null) {
+            for (const s of state.scrolls) {
+              if (s.id === state.activeScrollId && !s.slashed) {
+                target = s;
+                break;
+              }
+            }
           }
           if (!target) {
             flashCard(jutsuId, "ng");
@@ -3572,8 +3905,13 @@
               "An arcade where Caido workspaces become ninjutsu — train your bug-bounty reflexes!\n\n" +
               "#BugBountyJPGame";
           }
-          const base = location.href.split("#")[0].replace(/[^/]*$/, "");
-          const url = base + "share/" + shareBucket(state.score) + "/";
+          // 現在のページ位置を基準に share/<bucket>/ への絶対 URL を作る。
+          // new URL は相対パス解決を仕様通り行うため、ドット入りディレクトリ名や
+          // /index.html 直指定でも正しく動作する。
+          const url = new URL(
+            "share/" + shareBucket(state.score) + "/",
+            location.href,
+          ).href;
           const intent =
             "https://x.com/intent/tweet?text=" +
             encodeURIComponent(text) +
@@ -3613,6 +3951,8 @@
 
         // キーボード入力
         document.addEventListener("keydown", (e) => {
+          // IME 入力中の Enter 等で誤発火しないようガード
+          if (e.isComposing || e.keyCode === 229) return;
           if (state.phase !== "game") {
             if ((e.key === " " || e.key === "Enter") && state.phase === "start") {
               e.preventDefault();
@@ -3629,23 +3969,45 @@
         });
 
         // ページが非表示になったら一時停止（戻ったときの猛攻ぎを防ぐ）
+        // カウントダウン中（state.raf 未開始 + state.cdTimer 走行中）も止める
         document.addEventListener("visibilitychange", () => {
           if (document.hidden && state.phase === "game") {
             if (state.raf) cancelAnimationFrame(state.raf);
             state.raf = null;
+            // カウントダウン setInterval も停止しておかないと、戻った瞬間に
+            // throttled で残っていた tick が一気に発火して startGame 直行になる
+            if (state.cdTimer) {
+              clearInterval(state.cdTimer);
+              state.cdTimer = null;
+              state._cdResume = true;
+            }
             state.pausedAt = performance.now();
-          } else if (!document.hidden && state.phase === "game" && !state.raf) {
+          } else if (!document.hidden && state.phase === "game") {
             // 経過時間の補正：止まっていた分を巻物に加算
             if (state.pausedAt) {
               const delta = performance.now() - state.pausedAt;
               for (const s of state.scrolls) {
                 s.spawnAt += delta;
               }
-              state.nextSpawnAt += delta;
-              state.gameStartMs += delta;
+              if (state.nextSpawnAt) state.nextSpawnAt += delta;
+              if (state.gameStartMs) state.gameStartMs += delta;
               state.pausedAt = 0;
             }
-            state.raf = requestAnimationFrame(loop);
+            // カウントダウン中だった場合は「斬！」→ loop 開始へ強制復帰
+            if (state._cdResume) {
+              state._cdResume = false;
+              const cdEl = document.getElementById("countdown");
+              cdEl.textContent = lang === "ja" ? "斬！" : "GO!";
+              cdEl.style.display = "flex";
+              setTimeout(() => {
+                cdEl.style.display = "none";
+                state.gameStartMs = performance.now();
+                state.nextSpawnAt = state.gameStartMs + 600;
+                state.raf = requestAnimationFrame(loop);
+              }, 400);
+            } else if (!state.raf && state.gameStartMs) {
+              state.raf = requestAnimationFrame(loop);
+            }
           }
         });
 
