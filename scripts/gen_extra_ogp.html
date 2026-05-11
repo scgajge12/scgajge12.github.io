@@ -2,18 +2,23 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <title>Generate top & rank OGP images (Kaiten Bounty / Bug Kanji)</title>
+    <title>Generate top & rank OGP images (Kaiten / Bug Kanji / Triage / Caido Ninja / Bonsai Recon)</title>
     <!--
-      新規ゲーム（Kaiten Bounty / Bug Kanji / Triage Sim）用の OGP 画像生成ツール。
+      ランク系ゲーム（Kaiten Bounty / Bug Kanji / Triage Sim / Caido Ninja / Bonsai Recon）の
+      OGP 画像生成ツール。
       - ブラウザで本ファイルを開き「Save into static/images/」を押すと、
         File System Access API で選んだディレクトリ（リポジトリの static/images/）に
         以下を書き出す。
           kaiten-bounty-ogp.png
           bug-kanji-ogp.png
           triage-sim-ogp.png
+          caido-ninja-ogp.png
+          bonsai-recon-ogp.png
           games/kaiten-bounty/rank-{shirouto|joren|itamae|taisho|legendary}.png
           games/bug-kanji/rank-{c|b|a|s}.png
           games/triage-sim/rank-{do-not-submit|major-rewrite|needs-work|almost-ready|submit-ready}.png
+          games/caido-ninja/rank-{white|yellow|purple|black|master|elite}.png
+          games/bonsai-recon/rank-{seed|novice|apprentice|master|sensei}.png
       - File System Access API 非対応の場合は「Download all」で順次ダウンロード。
       - デザインは既存 OGP（ダークティール基調・カワセミ配色）と統一。
 
@@ -101,7 +106,7 @@
   </head>
   <body>
     <header>
-      <h1>Top &amp; Rank OGP image generator (Kaiten Bounty / Bug Kanji)</h1>
+      <h1>Top &amp; Rank OGP image generator (Kaiten / Bug Kanji / Triage / Caido Ninja)</h1>
       <button id="save" class="primary">Save into static/images/</button>
       <button id="download">Download all</button>
       <span id="log"></span>
@@ -496,6 +501,131 @@
         ],
       };
 
+      const NINJA = {
+        slug: "caido-ninja",
+        subBadge: "CDN · CAIDO NINJA DOJO",
+        url: "scgajge12.github.io/games/caido-ninja",
+        titleJa: "Caido 忍者道場",
+        titleEn: "Caido Ninja Dojo — Scroll-Slashing Time Attack",
+        tagline:
+          "Caido のワークスペース（Replay／Automate／Match & Replace／Convert／Workflows）を「忍術」に見立てたタイムアタック。流れる脅威の巻物を正しい忍法札で斬りかかれ。",
+        pills: ["アーケード", "タイムアタック", "JA / EN"],
+        ranks: [
+          {
+            key: "white",
+            tag: "★ WHITE BELT",
+            bigJa: "白帯",
+            bigEn: "White Belt",
+            copyJa: "スコア 0〜299。まずは流れを掴む段階。",
+            copyEn: "Score 0–299. Warming up — get the flow.",
+            accent: "#f97316",
+          },
+          {
+            key: "yellow",
+            tag: "★ YELLOW BELT",
+            bigJa: "黄帯",
+            bigEn: "Yellow Belt",
+            copyJa: "スコア 300〜799。Replay と Automate の境界が見えてきた。",
+            copyEn: "Score 300–799. Replay vs Automate is clicking.",
+            accent: "#fbbf24",
+          },
+          {
+            key: "purple",
+            tag: "★ PURPLE BELT",
+            bigJa: "紫帯",
+            bigEn: "Purple Belt",
+            copyJa: "スコア 800〜1,499。5 忍術をほぼ即答で使い分け。",
+            copyEn: "Score 800–1,499. You pick the right jutsu on reflex.",
+            accent: "#fbbf24",
+          },
+          {
+            key: "black",
+            tag: "★ BLACK BELT",
+            bigJa: "黒帯",
+            bigEn: "Black Belt",
+            copyJa: "スコア 1,500〜2,499。M&R と Workflows まで完璧。",
+            copyEn: "Score 1,500–2,499. M&R vs Workflows: clean split.",
+            accent: "#22d3ee",
+          },
+          {
+            key: "master",
+            tag: "★ MASTER",
+            bigJa: "師範",
+            bigEn: "Master",
+            copyJa: "スコア 2,500〜3,999。道場を任せられる実戦レベル。",
+            copyEn: "Score 2,500–3,999. Battle-ready — run the dojo.",
+            accent: "#22d3ee",
+          },
+          {
+            key: "elite",
+            tag: "★ SHADOW NINJA",
+            bigJa: "影忍",
+            bigEn: "Shadow Ninja",
+            copyJa: "スコア 4,000 以上。Caido の言語で世界を見る達人。",
+            copyEn: "Score 4,000+. You see the world in Caido's tongue.",
+            accent: "#22d3ee",
+          },
+        ],
+      };
+
+      const BONSAI = {
+        slug: "bonsai-recon",
+        subBadge: "BRC · BONSAI RECON",
+        url: "scgajge12.github.io/games/bonsai-recon",
+        titleJa: "Bonsai Recon — 偵察盆栽",
+        titleEn: "Bonsai Recon — Prune Recon Output to Hot Leads",
+        tagline:
+          "subfinder / nuclei / ffuf / gau / JS bundle などのリコン出力を盆栽のように剪定し、深掘りすべき「ホットリード」だけを残す学習ゲーム。",
+        pills: ["10問", "100点法", "JA / EN"],
+        ranks: [
+          {
+            key: "seed",
+            tag: "★ BONSAI SEED",
+            bigJa: "種：もう一度",
+            bigEn: "Bonsai Seed",
+            copyJa: "40 点未満。種から再挑戦。",
+            copyEn: "Under 40. Start over from seed.",
+            accent: "#fb7185",
+          },
+          {
+            key: "novice",
+            tag: "★ BONSAI NOVICE",
+            bigJa: "種から学ぶ",
+            bigEn: "Bonsai Novice",
+            copyJa: "40+ 点。「絶対に切らない」リストを固める段階。",
+            copyEn: "40+. Lock in your never-cut list first.",
+            accent: "#f97316",
+          },
+          {
+            key: "apprentice",
+            tag: "★ BONSAI APPRENTICE",
+            bigJa: "剪定見習い",
+            bigEn: "Bonsai Apprentice",
+            copyJa: "60+ 点。recon の輪郭が見えてきた段階。",
+            copyEn: "60+. The shape of recon is starting to show.",
+            accent: "#fbbf24",
+          },
+          {
+            key: "master",
+            tag: "★ BONSAI MASTER",
+            bigJa: "剪定上手",
+            bigEn: "Bonsai Master",
+            copyJa: "75+ 点。recon ノイズの 8 割を反射で剪定できる。",
+            copyEn: "75+. You reflexively prune ~80% of recon noise.",
+            accent: "#22d3ee",
+          },
+          {
+            key: "sensei",
+            tag: "★ BONSAI SENSEI",
+            bigJa: "盆栽の達人",
+            bigEn: "Bonsai Sensei",
+            copyJa: "90+ 点。信号雑音比を本能で見抜ける達人。",
+            copyEn: "90+. You read signal vs. noise on instinct.",
+            accent: "#22d3ee",
+          },
+        ],
+      };
+
       const TRIAGE = {
         slug: "triage-sim",
         subBadge: "TRG · TRIAGE SIMULATOR",
@@ -587,6 +717,16 @@
         (cv) => drawTopOgp(cv, TRIAGE),
         ["triage-sim-ogp.png"],
       );
+      addItem(
+        "caido-ninja-ogp.png",
+        (cv) => drawTopOgp(cv, NINJA),
+        ["caido-ninja-ogp.png"],
+      );
+      addItem(
+        "bonsai-recon-ogp.png",
+        (cv) => drawTopOgp(cv, BONSAI),
+        ["bonsai-recon-ogp.png"],
+      );
 
       // ランク別 OGP（kaiten-bounty）
       for (const rank of KAITEN.ranks) {
@@ -612,6 +752,24 @@
           `${TRIAGE.slug} / rank-${rank.key}.png`,
           (cv) => drawRankOgp(cv, TRIAGE, rank),
           ["games", TRIAGE.slug, `rank-${rank.key}.png`],
+        );
+      }
+
+      // ランク別 OGP（caido-ninja）— 6 帯位（白〜影忍）
+      for (const rank of NINJA.ranks) {
+        addItem(
+          `${NINJA.slug} / rank-${rank.key}.png`,
+          (cv) => drawRankOgp(cv, NINJA, rank),
+          ["games", NINJA.slug, `rank-${rank.key}.png`],
+        );
+      }
+
+      // ランク別 OGP（bonsai-recon）— 100 点法 5 ランク（種〜達人）
+      for (const rank of BONSAI.ranks) {
+        addItem(
+          `${BONSAI.slug} / rank-${rank.key}.png`,
+          (cv) => drawRankOgp(cv, BONSAI, rank),
+          ["games", BONSAI.slug, `rank-${rank.key}.png`],
         );
       }
 
