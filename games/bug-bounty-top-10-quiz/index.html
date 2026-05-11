@@ -1247,6 +1247,22 @@
           transition-duration: 0.001ms !important;
         }
       }
+
+      /* ===== A11y common (focus-visible + 44px touch target) ===== */
+      /* キーボードフォーカス可視化（WCAG 2.4.7）— マウスクリック時は表示しない */
+      :focus {
+        outline: none;
+      }
+      :focus-visible {
+        outline: 2px solid var(--primary-light, #22d3ee);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+      /* lang-toggle 等の小型ボタンのタッチターゲット 44×44px 確保 */
+      .lang-toggle button {
+        min-height: 44px;
+        min-width: 44px;
+      }
     </style>
   </head>
   <body>
@@ -1516,7 +1532,7 @@
 
         <div class="choices" id="choices"></div>
 
-        <div id="feedback-area"></div>
+        <div id="feedback-area" aria-live="polite" aria-atomic="true"></div>
 
         <button class="next-btn" id="btn-next" style="display: none"></button>
       </section>
@@ -1957,7 +1973,10 @@
          ========================================================= */
       let lang = "ja";
       try {
-        const stored = localStorage.getItem("bb_quiz_lang");
+        // 全ゲーム共通キー mk12_game_lang を優先、旧キー bb_quiz_lang から移行も読む
+        const stored =
+          localStorage.getItem("mk12_game_lang") ||
+          localStorage.getItem("bb_quiz_lang");
         if (stored === "ja" || stored === "en") lang = stored;
       } catch (e) {}
 
@@ -1974,6 +1993,12 @@
          ========================================================= */
       function applyI18n() {
         document.documentElement.lang = lang;
+        // タブタイトルとブックマーク名を言語に追従させる
+        document.title =
+          (lang === "ja"
+            ? "バグバウンティ脆弱性ランキング・クイズ"
+            : "Bug Bounty Top 10 Vulnerability Quiz") +
+          " | morioka12 game site";
 
         document.getElementById("brand-name").textContent = t("brandName");
         document.getElementById("hero-tag-text").textContent = t("heroTag");
@@ -2032,7 +2057,7 @@
         if (lang === next) return;
         lang = next;
         try {
-          localStorage.setItem("bb_quiz_lang", lang);
+          localStorage.setItem("mk12_game_lang", lang);
         } catch (e) {}
         applyI18n();
         updateLangPill();
@@ -2180,6 +2205,17 @@
           qIndex >= QUIZ.length - 1 ? t("quizLast") : t("quizNext");
         nextBtn.style.display = "flex";
         nextBtn.onclick = onNext;
+        /* focus-next-btn-after-answer */
+        {
+          const _ae = document.activeElement;
+          const _aeChoice = _ae && _ae.classList && _ae.classList.contains('choice');
+          if (!_ae || _ae === document.body || _aeChoice) {
+            requestAnimationFrame(function () {
+              try { nextBtn.focus({ preventScroll: false }); }
+              catch (e) { nextBtn.focus(); }
+            });
+          }
+        }
       }
 
       function onNext() {
@@ -2434,8 +2470,9 @@
         // スコア別シェアページ（OGP 画像にスコアが焼き込まれる）へリンクを向ける。
         // share/<score>/index.html は事前に静的生成されており、og:image が
         // /images/games/<slug>/score-<score>.png を指している。
-        const base = location.href.split("#")[0].replace(/[^/]*$/, "");
-        const url = base + "share/" + correct + "/";
+        // new URL の相対パス解決を使うことで、ドット入りディレクトリ名や
+        // /index.html 直指定でも安全に share/<score>/ を組み立てる。
+        const url = new URL("share/" + correct + "/", location.href).href;
         const intent =
           "https://x.com/intent/tweet?text=" +
           encodeURIComponent(text) +
@@ -2520,6 +2557,36 @@
          ========================================================= */
       applyI18n();
       requestAnimationFrame(updateLangPill);
+      /* ===== Quiz keyboard shortcuts (1-4 / A-D / Enter) ===== */
+      document.addEventListener("keydown", function (_kbEvt) {
+        if (_kbEvt.isComposing || _kbEvt.keyCode === 229) return;
+        const _tg = _kbEvt.target;
+        if (_tg && /^(INPUT|TEXTAREA|SELECT)$/i.test(_tg.tagName)) return;
+        // quiz 画面がアクティブな時のみ反応する
+        const _scr = document.querySelector("#screen-quiz.active");
+        if (!_scr) return;
+        // Enter / Space で「次へ」ボタンを進める
+        if (_kbEvt.key === "Enter" || _kbEvt.key === " " || _kbEvt.code === "Space") {
+          const _nb = document.getElementById("btn-next");
+          if (_nb && _nb.style.display !== "none" && !_nb.disabled) {
+            _kbEvt.preventDefault();
+            _nb.click();
+          }
+          return;
+        }
+        // 1-4 / A-D で choice を選択（disabled なら無視）
+        let _idx = -1;
+        if (/^[1-4]$/.test(_kbEvt.key)) _idx = parseInt(_kbEvt.key, 10) - 1;
+        else if (/^[a-dA-D]$/.test(_kbEvt.key))
+          _idx = _kbEvt.key.toUpperCase().charCodeAt(0) - 65;
+        if (_idx < 0) return;
+        const _btns = _scr.querySelectorAll(".choice");
+        if (_btns[_idx] && !_btns[_idx].disabled) {
+          _kbEvt.preventDefault();
+          _btns[_idx].click();
+        }
+      });
+
       window.addEventListener("resize", updateLangPill);
       })();
     </script>

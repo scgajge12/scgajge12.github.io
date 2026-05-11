@@ -792,6 +792,12 @@
         border: 1px solid transparent;
         -webkit-tap-highlight-color: transparent;
         user-select: none;
+        /* タッチで scroll に食われず即座に剪定できるように */
+        touch-action: manipulation;
+      }
+      /* キーボードユーザー向け：剪定対象の "選択中" 表示を強める */
+      .poc-line[aria-pressed="true"] {
+        outline: none;
       }
       .poc-line:hover:not(.locked) {
         background: rgba(52, 211, 153, 0.1);
@@ -1629,6 +1635,22 @@
           transition-duration: 0.001ms !important;
         }
       }
+
+      /* ===== A11y common (focus-visible + 44px touch target) ===== */
+      /* キーボードフォーカス可視化（WCAG 2.4.7）— マウスクリック時は表示しない */
+      :focus {
+        outline: none;
+      }
+      :focus-visible {
+        outline: 2px solid var(--primary-light, #22d3ee);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+      /* lang-toggle 等の小型ボタンのタッチターゲット 44×44px 確保 */
+      .lang-toggle button {
+        min-height: 44px;
+        min-width: 44px;
+      }
     </style>
   </head>
   <body>
@@ -2365,7 +2387,12 @@
         ];
 
         /* 状態 */
+        // 全ゲーム共通キー mk12_game_lang を優先して読み出し、なければ "ja"
         let currentLang = "ja";
+        try {
+          const stored = localStorage.getItem("mk12_game_lang");
+          if (stored === "ja" || stored === "en") currentLang = stored;
+        } catch (e) {}
         let qIndex = 0;
         let selectedCuts = [];
         let perQuestionResults = [];
@@ -2473,6 +2500,9 @@
         function setLanguage(lang) {
           if (lang === currentLang) return;
           currentLang = lang;
+          try {
+            localStorage.setItem("mk12_game_lang", lang);
+          } catch (e) {}
           document.querySelectorAll(".lang-toggle button").forEach(function (b) {
             b.classList.toggle("active", b.dataset.lang === lang);
           });
@@ -2543,10 +2573,22 @@
             lineEl.appendChild(code);
 
             if (phase === "play") {
+              // キーボード操作可能にする（剪定はゲームの主操作）
+              lineEl.setAttribute("role", "button");
+              lineEl.setAttribute("tabindex", "0");
+              const isCut = selectedCuts.indexOf(idx) !== -1;
+              lineEl.setAttribute("aria-pressed", isCut ? "true" : "false");
               lineEl.addEventListener("click", function () {
                 toggleCut(idx);
               });
-              if (selectedCuts.indexOf(idx) !== -1) {
+              lineEl.addEventListener("keydown", function (e) {
+                if (e.isComposing || e.keyCode === 229) return;
+                if (e.key === "Enter" || e.key === " " || e.code === "Space") {
+                  e.preventDefault();
+                  toggleCut(idx);
+                }
+              });
+              if (isCut) {
                 lineEl.classList.add("cut-selected");
               }
             } else {
@@ -3034,8 +3076,9 @@
           const pct = Math.round((earned / total) * 100);
           const rankKey = getRankKey(earned);
           const text = buildShareText(earned, total, pct, rankKey);
-          const base = location.href.split("#")[0].replace(/[^/]*$/, "");
-          const url = base + "share/" + rankKey + "/";
+          // new URL の相対パス解決でランク別シェア URL を組み立てる。
+          // ドット入りディレクトリ名や /index.html 直指定にも安全。
+          const url = new URL("share/" + rankKey + "/", location.href).href;
           const intent =
             "https://x.com/intent/tweet?text=" +
             encodeURIComponent(text) +
@@ -3110,6 +3153,11 @@
           });
         })();
 
+        // 言語トグルボタンの active 状態を currentLang に合わせて同期
+        document.querySelectorAll(".lang-toggle button").forEach(function (b) {
+          b.classList.toggle("active", b.dataset.lang === currentLang);
+        });
+        document.documentElement.lang = currentLang;
         applyI18n();
         requestAnimationFrame(updateLangPill);
         window.addEventListener("resize", updateLangPill);

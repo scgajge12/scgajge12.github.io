@@ -1520,6 +1520,18 @@
         animation: penaltyPop 0.5s;
       }
 
+      /* 前庭神経 / 光感受性に配慮：他ゲームと同水準のグローバル抑制 */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+
       @media (max-width: 560px) {
         .page {
           padding: 20px 14px 60px;
@@ -1826,6 +1838,22 @@
           font-size: 11px;
         }
       }
+
+      /* ===== A11y common (focus-visible + 44px touch target) ===== */
+      /* キーボードフォーカス可視化（WCAG 2.4.7）— マウスクリック時は表示しない */
+      :focus {
+        outline: none;
+      }
+      :focus-visible {
+        outline: 2px solid var(--primary-light, #22d3ee);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+      /* lang-toggle 等の小型ボタンのタッチターゲット 44×44px 確保 */
+      .lang-toggle button {
+        min-height: 44px;
+        min-width: 44px;
+      }
     </style>
   </head>
   <body>
@@ -2065,7 +2093,7 @@
 
         <div class="choices" id="choices"></div>
 
-        <div id="feedback-area"></div>
+        <div id="feedback-area" aria-live="polite" aria-atomic="true"></div>
 
         <button class="next-btn" id="btn-next" style="display: none"></button>
       </section>
@@ -2154,6 +2182,9 @@
 
     <script>
       "use strict";
+
+      /* 全ロジックを IIFE でカプセル化（DevTools から正解プールを覗かせない） */
+      (function () {
 
       /* =========================================================
          I18N - 日本語 / 英語の文字列辞書
@@ -3097,7 +3128,10 @@
          ========================================================= */
       let lang = "ja";
       try {
-        const stored = localStorage.getItem("bug_kanji_lang");
+        // 全ゲーム共通キー mk12_game_lang を優先、旧キー bug_kanji_lang から移行も読む
+        const stored =
+          localStorage.getItem("mk12_game_lang") ||
+          localStorage.getItem("bug_kanji_lang");
         if (stored === "ja" || stored === "en") lang = stored;
       } catch (e) {}
 
@@ -3110,6 +3144,9 @@
       let startTime = 0;
       let endTime = 0;
       let timerHandle = null;
+      // タブ非表示中の累積時間（タイムアタックの公平性のため elapsed から差し引く）
+      let hiddenAccumMs = 0;
+      let hiddenStartedAt = 0;
 
       const QUESTIONS_PER_RUN = 10;
 
@@ -3161,13 +3198,28 @@
         });
       }
 
+      // ベストタイムは mk12_ プレフィックスで他ゲームと統一
+      // （旧 bug_kanji_best_* も初回 read 時に救済し、新キーへマイグレート）
       function bestTimeKey(diff) {
+        return "mk12_bkj_best_" + diff;
+      }
+      function bestTimeKeyLegacy(diff) {
         return "bug_kanji_best_" + diff;
       }
 
       function getBestTime(diff) {
         try {
-          const v = localStorage.getItem(bestTimeKey(diff));
+          let v = localStorage.getItem(bestTimeKey(diff));
+          if (v == null) {
+            const legacy = localStorage.getItem(bestTimeKeyLegacy(diff));
+            if (legacy != null) {
+              v = legacy;
+              try {
+                localStorage.setItem(bestTimeKey(diff), legacy);
+                localStorage.removeItem(bestTimeKeyLegacy(diff));
+              } catch (e) {}
+            }
+          }
           if (v == null) return null;
           const n = Number(v);
           return Number.isFinite(n) && n > 0 ? n : null;
@@ -3300,7 +3352,7 @@
         if (lang === next) return;
         lang = next;
         try {
-          localStorage.setItem("bug_kanji_lang", lang);
+          localStorage.setItem("mk12_game_lang", lang);
         } catch (e) {}
         applyI18n();
         updateLangPill();
@@ -3511,6 +3563,8 @@
 
         startTime = performance.now();
         endTime = 0;
+        hiddenAccumMs = 0;
+        hiddenStartedAt = 0;
         clearInterval(timerHandle);
         timerHandle = setInterval(updateTimer, 100);
         updateTimer();
@@ -3520,9 +3574,25 @@
       }
 
       function elapsedMs() {
-        const base = (endTime || performance.now()) - startTime;
-        return base + totalMisses * PENALTY_PER_MISS_MS;
+        // タブ非表示中だった時間を差し引いてフェアな計測にする
+        let hidden = hiddenAccumMs;
+        if (document.hidden && hiddenStartedAt && !endTime) {
+          hidden += performance.now() - hiddenStartedAt;
+        }
+        const base = (endTime || performance.now()) - startTime - hidden;
+        return Math.max(0, base) + totalMisses * PENALTY_PER_MISS_MS;
       }
+
+      // Page Visibility：クイズ中にタブを切り替えた時間を hiddenAccumMs に積む
+      document.addEventListener("visibilitychange", function () {
+        if (!startTime || endTime) return; // クイズ中だけ補正対象
+        if (document.hidden) {
+          hiddenStartedAt = performance.now();
+        } else if (hiddenStartedAt) {
+          hiddenAccumMs += performance.now() - hiddenStartedAt;
+          hiddenStartedAt = 0;
+        }
+      });
 
       function updateTimer() {
         document.getElementById("quiz-timer").textContent =
@@ -3846,8 +3916,9 @@
         // ランクに応じたシェアページを向き先にする（OGP がランクごとに焼ける）。
         // share/<rank>/index.html は事前に静的生成されている。
         const rankKey = getRankKey(ms);
-        const base = location.href.split("#")[0].replace(/[^/]*$/, "");
-        const url = base + "share/" + rankKey + "/";
+        // new URL の相対パス解決でランク別シェア URL を組み立てる。
+        // ドット入りディレクトリ名や /index.html 直指定にも安全。
+        const url = new URL("share/" + rankKey + "/", location.href).href;
         const intent =
           "https://x.com/intent/tweet?text=" +
           encodeURIComponent(text) +
@@ -3939,6 +4010,8 @@
       applyI18n();
       requestAnimationFrame(updateLangPill);
       window.addEventListener("resize", updateLangPill);
+
+      })();
     </script>
   </body>
 </html>

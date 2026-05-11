@@ -1,0 +1,3632 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#04111e" />
+    <title>OSSバグハント入門 クイズ | OSS Bug Hunting 101 Quiz</title>
+    <meta
+      name="description"
+      content="Zenn 書籍『30日でCVE取得! OSSバグハント入門』を題材にした、30日ロードマップ型シナリオクイズ。20問・約10分・JA/EN対応。"
+    />
+
+    <!-- ===== OGP / Twitter Card ===== -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="OSSバグハント入門 クイズ | morioka12 game site"
+    />
+    <meta
+      property="og:description"
+      content="『30日でCVE取得! OSSバグハント入門』の30日ロードマップを20問に圧縮したシナリオ型4択クイズ。CVE採番までの判断軸を試そう。"
+    />
+    <meta
+      property="og:url"
+      content="https://scgajge12.github.io/games/oss-bug-hunt-quiz/"
+    />
+    <meta
+      property="og:image"
+      content="https://scgajge12.github.io/images/oss-bug-hunt-quiz-ogp.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="OSSバグハント入門 クイズ - morioka12 game site"
+    />
+    <meta property="og:site_name" content="morioka12 game site" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@scgajge12" />
+    <meta name="twitter:creator" content="@scgajge12" />
+    <meta
+      name="twitter:title"
+      content="OSSバグハント入門 クイズ | morioka12 game site"
+    />
+    <meta
+      name="twitter:description"
+      content="『30日でCVE取得! OSSバグハント入門』の30日ロードマップを20問に圧縮したシナリオ型4択クイズ。CVE採番までの判断軸を試そう。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://scgajge12.github.io/images/oss-bug-hunt-quiz-ogp.png"
+    />
+
+    <style>
+      :root {
+        /* カワセミ（kingfisher）配色：コバルトブルー × バーントオレンジ */
+        --bg: #04111e;
+        --bg2: #082336;
+        --bg3: #0e3149;
+        --surface: #103e58;
+        --surface-2: #154d6d;
+        --line: rgba(14, 165, 233, 0.2);
+        --line-strong: rgba(14, 165, 233, 0.5);
+
+        --text: #e6f4f9;
+        --text-muted: #93c5d8;
+        --text-dim: #5b8597;
+
+        --primary: #0891b2;
+        --primary-light: #22d3ee;
+        --primary-deep: #155e75;
+        --secondary: #f97316;
+        --secondary-light: #fb923c;
+        --accent: #fbbf24;
+        --gold: #fbbf24;
+        --success: #34d399;
+        --danger: #fb7185;
+
+        --radius: 14px;
+        --radius-sm: 8px;
+        --shadow: 0 12px 40px rgba(14, 165, 233, 0.22);
+        --shadow-strong: 0 0 60px rgba(14, 165, 233, 0.4);
+
+        --pad-x: 20px;
+        --pad-bottom: max(80px, env(safe-area-inset-bottom));
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        height: 100%;
+      }
+
+      html,
+      body {
+        overflow-x: hidden;
+        max-width: 100%;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+
+      body {
+        font-family:
+          "Inter", "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic",
+          "Noto Sans JP", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100dvh;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+      }
+
+      .bg-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .bg-grid {
+        background-image:
+          linear-gradient(
+            to right,
+            rgba(14, 165, 233, 0.04) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(14, 165, 233, 0.04) 1px,
+            transparent 1px
+          );
+        background-size: 56px 56px;
+        mask-image: radial-gradient(
+          ellipse at center,
+          rgba(0, 0, 0, 0.85) 0%,
+          rgba(0, 0, 0, 0.2) 70%,
+          transparent 100%
+        );
+      }
+      .bg-glow1 {
+        background: radial-gradient(
+          circle at 18% 12%,
+          rgba(14, 165, 233, 0.18),
+          transparent 55%
+        );
+      }
+      .bg-glow2 {
+        background: radial-gradient(
+          circle at 82% 88%,
+          rgba(251, 146, 60, 0.14),
+          transparent 60%
+        );
+      }
+      #particles {
+        z-index: 0;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 880px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 28px var(--pad-x) var(--pad-bottom);
+      }
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: 800;
+        font-size: 18px;
+        box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+      }
+      .brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.15;
+      }
+      .brand-name {
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: var(--text);
+      }
+      .brand-sub {
+        font-size: 10.5px;
+        color: var(--text-dim);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .lang-toggle {
+        display: inline-flex;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 3px;
+        position: relative;
+        overflow: hidden;
+      }
+      .lang-toggle button {
+        background: transparent;
+        border: 0;
+        color: var(--text-muted);
+        padding: 7px 14px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        border-radius: 999px;
+        transition: color 0.2s;
+        position: relative;
+        z-index: 1;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .lang-toggle button.active {
+        color: #fff;
+      }
+      .lang-toggle .lang-pill {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        height: calc(100% - 6px);
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        border-radius: 999px;
+        transition:
+          transform 0.28s ease,
+          width 0.28s ease;
+        z-index: 0;
+        box-shadow: 0 0 16px rgba(14, 165, 233, 0.4);
+      }
+
+      .screen {
+        display: none;
+        animation: fadeIn 0.45s ease;
+      }
+      .screen.active {
+        display: block;
+      }
+
+      .start-hero {
+        text-align: center;
+        margin-top: 6px;
+        margin-bottom: 28px;
+      }
+
+      /* スタートヒーロー：30 日カレンダー + CVE バッジ */
+      .cve-illustration {
+        display: block;
+        width: clamp(200px, 36vw, 280px);
+        height: auto;
+        margin: 0 auto 16px;
+        filter: drop-shadow(0 12px 22px rgba(14, 165, 233, 0.3))
+          drop-shadow(0 4px 6px rgba(0, 0, 0, 0.45));
+      }
+      .cve-illustration .day-cell {
+        opacity: 0.6;
+        animation: dayFlash 6s ease-in-out infinite;
+      }
+      .cve-illustration .day-cell:nth-child(odd) {
+        animation-delay: 0.4s;
+      }
+      .cve-illustration .day-cell:nth-child(3n) {
+        animation-delay: 1.2s;
+      }
+      .cve-illustration .day-30-glow {
+        animation: stampPulse 2.6s ease-in-out infinite;
+      }
+      @keyframes dayFlash {
+        0%,
+        100% {
+          opacity: 0.55;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      @keyframes stampPulse {
+        0%,
+        100% {
+          opacity: 0.8;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.06);
+        }
+      }
+      .cve-illustration .badge-body {
+        animation: badgeFloat 3.5s ease-in-out infinite alternate;
+        transform-origin: 50% 100%;
+      }
+      @keyframes badgeFloat {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-3px);
+        }
+      }
+
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        font-size: 11px;
+        letter-spacing: 2.5px;
+        color: var(--secondary-light);
+        background: rgba(251, 146, 60, 0.08);
+        border: 1px solid rgba(251, 146, 60, 0.3);
+        border-radius: 999px;
+        font-weight: 700;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .hero-tag-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--secondary);
+        box-shadow: 0 0 8px var(--secondary);
+        animation: blink 1.4s infinite;
+      }
+      .hero-title {
+        font-size: clamp(22px, 6vw, 44px);
+        font-weight: 900;
+        letter-spacing: -0.5px;
+        line-height: 1.22;
+        background: linear-gradient(
+          120deg,
+          var(--primary-light) 10%,
+          var(--secondary-light) 55%,
+          var(--accent) 95%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 12px;
+      }
+      .hero-sub {
+        color: var(--text-muted);
+        font-size: clamp(13.5px, 2vw, 15.5px);
+        max-width: 560px;
+        margin: 0 auto;
+      }
+
+      .info-card {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 22px 26px;
+        margin-bottom: 22px;
+        position: relative;
+        overflow: hidden;
+      }
+      .info-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at top right,
+          rgba(14, 165, 233, 0.08),
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+      .info-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 16px;
+        position: relative;
+      }
+      .info-stat {
+        text-align: center;
+      }
+      .info-stat-num {
+        font-size: 26px;
+        font-weight: 900;
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--secondary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        font-feature-settings: "tnum";
+      }
+      .info-stat-label {
+        font-size: 11px;
+        color: var(--text-dim);
+        margin-top: 6px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .sources {
+        background: linear-gradient(160deg, var(--bg2), var(--surface));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        margin-bottom: 26px;
+      }
+      .sources-title {
+        font-size: 12px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .source-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .source-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 13px;
+        transition: all 0.2s;
+      }
+      .source-item:hover {
+        border-color: var(--primary);
+        color: var(--primary-light);
+        transform: translateX(2px);
+      }
+      .source-tag {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--secondary-light);
+        background: rgba(251, 146, 60, 0.1);
+        padding: 3px 8px;
+        border-radius: 4px;
+        flex-shrink: 0;
+      }
+      .source-title {
+        flex: 1;
+      }
+      .source-arrow {
+        color: var(--text-dim);
+      }
+
+      .start-btn-wrap {
+        text-align: center;
+      }
+      .btn-start {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 36px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        border: 0;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        box-shadow: 0 8px 32px rgba(14, 165, 233, 0.35);
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-start::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          120deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.18) 50%,
+          transparent 70%
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 40px rgba(14, 165, 233, 0.5);
+      }
+      .btn-start:hover::after {
+        transform: translateX(100%);
+      }
+      .start-note {
+        margin-top: 14px;
+        color: var(--text-dim);
+        font-size: 12px;
+      }
+
+      .quiz-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px 12px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+        font-size: 12.5px;
+      }
+      .quiz-counter {
+        color: var(--text-muted);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        letter-spacing: 1px;
+      }
+      .quiz-counter strong {
+        color: var(--primary-light);
+        font-size: 16px;
+        font-weight: 800;
+      }
+      .quiz-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        background: rgba(251, 146, 60, 0.08);
+        border: 1px solid rgba(251, 146, 60, 0.25);
+        border-radius: 999px;
+        color: var(--secondary-light);
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      /* 30 日カレンダー演出（Q1..Q10 進行で Day 1..Day 30 まで点灯） */
+      .day-calendar {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        padding: 14px 16px;
+        margin-bottom: 14px;
+      }
+      .day-calendar-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        color: var(--text-dim);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        text-transform: uppercase;
+      }
+      .day-calendar-head .dc-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .day-calendar-head .dc-now {
+        color: var(--primary-light);
+        font-weight: 800;
+        font-size: 12px;
+      }
+      .day-grid {
+        display: grid;
+        grid-template-columns: repeat(15, minmax(0, 1fr));
+        gap: 4px;
+      }
+      .day-cell {
+        aspect-ratio: 1 / 1;
+        border-radius: 4px;
+        background: var(--bg);
+        border: 1px solid rgba(14, 165, 233, 0.08);
+        transition: all 0.3s ease;
+        position: relative;
+      }
+      .day-cell.is-passed {
+        background: linear-gradient(
+          135deg,
+          var(--primary-deep),
+          var(--primary)
+        );
+        border-color: var(--primary);
+        box-shadow: 0 0 6px rgba(34, 211, 238, 0.5);
+      }
+      .day-cell.is-current {
+        background: linear-gradient(
+          135deg,
+          var(--secondary),
+          var(--secondary-light)
+        );
+        border-color: var(--secondary-light);
+        box-shadow: 0 0 10px rgba(251, 146, 60, 0.7);
+        animation: cellGlow 1.2s ease-in-out infinite alternate;
+      }
+      .day-cell.is-30 {
+        background: linear-gradient(135deg, var(--accent), var(--gold));
+        border-color: var(--accent);
+        box-shadow: 0 0 12px rgba(251, 191, 36, 0.7);
+        position: relative;
+      }
+      .day-cell.is-30::after {
+        content: "★";
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 9px;
+        color: #04111e;
+        font-weight: 900;
+        line-height: 1;
+      }
+      /* 最終問題 (Q20) では Day 30 が「現在地」かつ「ゴール」を兼ねるため、
+         ゴール印（金色＋★）を保ちつつパルス点滅で現在地を示す。 */
+      .day-cell.is-30.is-current {
+        animation: cellGlow30 1.2s ease-in-out infinite alternate;
+      }
+      @keyframes cellGlow30 {
+        from {
+          box-shadow: 0 0 8px rgba(251, 191, 36, 0.7);
+        }
+        to {
+          box-shadow: 0 0 16px rgba(251, 191, 36, 1);
+        }
+      }
+      @keyframes cellGlow {
+        from {
+          box-shadow: 0 0 6px rgba(251, 146, 60, 0.5);
+        }
+        to {
+          box-shadow: 0 0 14px rgba(251, 146, 60, 0.95);
+        }
+      }
+
+      .progress {
+        height: 6px;
+        background: var(--surface);
+        border-radius: 999px;
+        overflow: hidden;
+        margin-bottom: 22px;
+        border: 1px solid var(--line);
+      }
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--primary),
+          var(--secondary),
+          var(--accent)
+        );
+        background-size: 200% 100%;
+        animation: shimmer 4s linear infinite;
+        transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        border-radius: 999px;
+        box-shadow: 0 0 12px rgba(14, 165, 233, 0.5);
+      }
+
+      .question-card {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 30px 32px;
+        margin-bottom: 18px;
+        animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .question-text {
+        font-size: clamp(16px, 2.6vw, 19px);
+        line-height: 1.7;
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .choices {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .choice {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 16px 18px;
+        background: var(--surface);
+        border: 1.5px solid var(--line);
+        color: var(--text);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        text-align: left;
+        font-size: 14px;
+        line-height: 1.55;
+        transition: all 0.2s;
+        position: relative;
+        font-family: inherit;
+        word-break: break-word;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .choice .choice-key,
+      .choice .choice-icon {
+        margin-top: 1px;
+      }
+      .choice:hover:not(:disabled) {
+        border-color: var(--primary);
+        background: var(--surface-2);
+        transform: translateX(2px);
+      }
+      .choice:disabled {
+        cursor: default;
+      }
+      .choice-key {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: rgba(14, 165, 233, 0.15);
+        border: 1px solid rgba(14, 165, 233, 0.3);
+        color: var(--primary-light);
+        font-size: 12px;
+        font-weight: 800;
+        flex-shrink: 0;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        transition: all 0.2s;
+      }
+      .choice-text {
+        flex: 1;
+      }
+      .choice-icon {
+        opacity: 0;
+        font-size: 18px;
+        transition: opacity 0.2s;
+      }
+      .choice.correct {
+        border-color: var(--success);
+        background: rgba(52, 211, 153, 0.1);
+      }
+      .choice.correct .choice-key {
+        background: var(--success);
+        color: #04261b;
+        border-color: var(--success);
+      }
+      .choice.correct .choice-icon {
+        opacity: 1;
+        color: var(--success);
+      }
+      .choice.wrong {
+        border-color: var(--danger);
+        background: rgba(251, 113, 133, 0.1);
+      }
+      .choice.wrong .choice-key {
+        background: var(--danger);
+        color: #2a0710;
+        border-color: var(--danger);
+      }
+      .choice.wrong .choice-icon {
+        opacity: 1;
+        color: var(--danger);
+      }
+      .choice.dim {
+        opacity: 0.45;
+      }
+
+      .feedback {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--primary);
+        border-radius: var(--radius-sm);
+        padding: 16px 20px;
+        margin-top: 14px;
+        animation: fadeIn 0.3s ease;
+      }
+      .feedback.correct-fb {
+        border-left-color: var(--success);
+        background: rgba(52, 211, 153, 0.06);
+      }
+      .feedback.wrong-fb {
+        border-left-color: var(--danger);
+        background: rgba(251, 113, 133, 0.06);
+      }
+      .feedback-title {
+        font-weight: 800;
+        font-size: 14px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .feedback.correct-fb .feedback-title {
+        color: var(--success);
+      }
+      .feedback.wrong-fb .feedback-title {
+        color: var(--danger);
+      }
+      .feedback-body {
+        font-size: 13.5px;
+        line-height: 1.7;
+        color: var(--text-muted);
+        /* 解説中の URL が幅を突き破らないように */
+        word-break: break-word;
+      }
+      .feedback-body strong {
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .next-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 16px;
+        margin-top: 18px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        border: 0;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
+      }
+      .next-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(14, 165, 233, 0.45);
+      }
+
+      .result {
+        text-align: center;
+        max-width: 620px;
+        margin: 0 auto;
+      }
+      .result-rank-tag {
+        display: inline-block;
+        padding: 6px 18px;
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: var(--gold);
+        background: rgba(251, 191, 36, 0.08);
+        border: 1px solid rgba(251, 191, 36, 0.3);
+        border-radius: 999px;
+        font-weight: 700;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .result-title {
+        font-size: clamp(22px, 6vw, 44px);
+        font-weight: 900;
+        background: linear-gradient(
+          120deg,
+          var(--primary-light),
+          var(--secondary-light),
+          var(--accent)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.2;
+        margin-bottom: 10px;
+      }
+      .result-sub {
+        color: var(--text-muted);
+        margin-bottom: 30px;
+        font-size: 14px;
+      }
+
+      .score-display {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 24px;
+      }
+      .score-ring {
+        --pct: 0;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: conic-gradient(
+          from -90deg,
+          var(--primary) 0%,
+          var(--secondary) calc(var(--pct) * 0.5%),
+          var(--accent) calc(var(--pct) * 1%),
+          var(--surface-2) calc(var(--pct) * 1%)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-shadow: var(--shadow-strong);
+      }
+      .score-ring::before {
+        content: "";
+        position: absolute;
+        inset: 14px;
+        border-radius: 50%;
+        background: var(--bg);
+      }
+      .score-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+      }
+      .score-num {
+        font-size: 48px;
+        font-weight: 900;
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--secondary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        font-feature-settings: "tnum";
+      }
+      .score-total {
+        color: var(--text-dim);
+        font-size: 14px;
+        margin-top: 4px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .result-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 28px;
+      }
+      .result-stat {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        padding: 14px 10px;
+      }
+      .result-stat-num {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--primary-light);
+        font-feature-settings: "tnum";
+      }
+      .result-stat-label {
+        font-size: 10.5px;
+        color: var(--text-dim);
+        letter-spacing: 1px;
+        margin-top: 4px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .result-comment {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        margin-bottom: 26px;
+        text-align: left;
+        font-size: 14px;
+        line-height: 1.75;
+        color: var(--text-muted);
+      }
+      .result-comment strong {
+        color: var(--text);
+      }
+
+      /* 結果画面の書籍 CTA */
+      .book-cta {
+        background: linear-gradient(160deg, var(--bg2), var(--surface));
+        border: 1px solid rgba(251, 191, 36, 0.3);
+        border-radius: var(--radius);
+        padding: 18px 22px;
+        margin-bottom: 22px;
+        text-align: left;
+      }
+      .book-cta-title {
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: var(--accent);
+        margin-bottom: 8px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        text-transform: uppercase;
+      }
+      .book-cta-body {
+        font-size: 13.5px;
+        color: var(--text-muted);
+        line-height: 1.65;
+        margin-bottom: 10px;
+      }
+      .book-cta-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        background: rgba(251, 191, 36, 0.1);
+        border: 1px solid rgba(251, 191, 36, 0.35);
+        border-radius: 999px;
+        color: var(--accent);
+        text-decoration: none;
+        font-size: 12.5px;
+        font-weight: 700;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        transition: all 0.2s;
+      }
+      .book-cta-link:hover {
+        background: rgba(251, 191, 36, 0.18);
+        transform: translateX(2px);
+      }
+
+      .result-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+      .btn-share-x {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 28px;
+        background: #000;
+        border: 1.5px solid #2a2a2a;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 800;
+        border-radius: 999px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+      .btn-share-x:hover {
+        background: #111;
+        border-color: #555;
+        transform: translateY(-2px);
+      }
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 28px;
+        background: transparent;
+        color: var(--primary-light);
+        font-size: 14px;
+        font-weight: 800;
+        border-radius: 999px;
+        border: 1.5px solid var(--primary);
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+      .btn-secondary:hover {
+        background: rgba(14, 165, 233, 0.12);
+        transform: translateY(-2px);
+      }
+
+      .review {
+        margin-top: 36px;
+        text-align: left;
+      }
+      .review-title {
+        font-size: 14px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        text-align: center;
+      }
+      .review-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .review-item {
+        display: flex;
+        gap: 12px;
+        padding: 14px 18px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+      }
+      .review-mark {
+        flex-shrink: 0;
+        width: 26px;
+        height: 26px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 13px;
+      }
+      .review-mark.ok {
+        background: rgba(52, 211, 153, 0.18);
+        color: var(--success);
+      }
+      .review-mark.ng {
+        background: rgba(251, 113, 133, 0.18);
+        color: var(--danger);
+      }
+      .review-content {
+        flex: 1;
+      }
+      .review-q {
+        color: var(--text);
+        font-weight: 600;
+        margin-bottom: 6px;
+        line-height: 1.5;
+      }
+      .review-a {
+        color: var(--text-muted);
+        font-size: 12.5px;
+      }
+      .review-a-tag {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-weight: 700;
+        margin-right: 6px;
+      }
+
+      .footer {
+        margin-top: 60px;
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-dim);
+      }
+      .footer a {
+        color: var(--text-muted);
+        text-decoration: none;
+        border-bottom: 1px dotted var(--text-dim);
+      }
+      .footer a:hover {
+        color: var(--primary-light);
+        border-color: var(--primary-light);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: 0% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+
+      @media (max-width: 560px) {
+        :root {
+          --pad-x: 16px;
+        }
+        .page {
+          padding-top: 22px;
+        }
+        .question-card {
+          padding: 22px 18px;
+        }
+        .info-card,
+        .sources {
+          padding: 18px 16px;
+        }
+        .top-bar {
+          flex-wrap: wrap;
+        }
+        .choice {
+          padding: 14px 14px;
+          gap: 12px;
+        }
+        .choice-key {
+          width: 26px;
+          height: 26px;
+        }
+        .feedback {
+          padding: 14px 16px;
+        }
+        .feedback-body {
+          font-size: 13px;
+        }
+        .result-stats {
+          gap: 8px;
+        }
+        .result-stat-num {
+          font-size: 18px;
+        }
+        .result-comment {
+          padding: 16px 18px;
+          font-size: 13px;
+        }
+        .review-item {
+          padding: 12px 14px;
+          font-size: 12.5px;
+        }
+        .btn-share-x,
+        .btn-secondary {
+          padding: 13px 22px;
+          font-size: 13.5px;
+        }
+        .source-item {
+          font-size: 12.5px;
+        }
+        .source-title {
+          line-height: 1.45;
+        }
+        .day-grid {
+          gap: 3px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        :root {
+          --pad-x: 12px;
+        }
+        .page {
+          padding-top: 18px;
+        }
+        .brand-sub {
+          letter-spacing: 1px;
+          font-size: 9.5px;
+        }
+        .hero-tag {
+          letter-spacing: 1.5px;
+          font-size: 10.5px;
+          padding: 5px 12px;
+        }
+        .hero-sub {
+          font-size: 13px;
+        }
+        .question-card {
+          padding: 20px 16px;
+        }
+        .question-text {
+          font-size: 15.5px;
+          line-height: 1.65;
+        }
+        .choice {
+          padding: 13px 13px;
+          font-size: 13.5px;
+        }
+        .btn-start {
+          padding: 14px 28px;
+          font-size: 14px;
+        }
+        .info-card-grid {
+          gap: 12px;
+        }
+        .info-stat-num {
+          font-size: 22px;
+        }
+        .score-ring {
+          width: 150px;
+          height: 150px;
+        }
+        .score-ring::before {
+          inset: 12px;
+        }
+        .score-num {
+          font-size: 40px;
+        }
+        .result-stats {
+          gap: 6px;
+        }
+        .result-stat {
+          padding: 12px 6px;
+        }
+        .result-stat-num {
+          font-size: 16px;
+        }
+        .result-stat-label {
+          font-size: 9.5px;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      @media (max-width: 340px) {
+        .brand-sub {
+          display: none;
+        }
+        .lang-toggle button {
+          padding: 6px 11px;
+          font-size: 11px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+
+      /* ===== A11y common (focus-visible + 44px touch target) ===== */
+      /* キーボードフォーカス可視化（WCAG 2.4.7）— マウスクリック時は表示しない */
+      :focus {
+        outline: none;
+      }
+      :focus-visible {
+        outline: 2px solid var(--primary-light, #22d3ee);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+      /* lang-toggle 等の小型ボタンのタッチターゲット 44×44px 確保 */
+      .lang-toggle button {
+        min-height: 44px;
+        min-width: 44px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-layer bg-grid"></div>
+    <div class="bg-layer bg-glow1"></div>
+    <div class="bg-layer bg-glow2"></div>
+    <canvas id="particles" class="bg-layer"></canvas>
+
+    <div class="page">
+      <header class="top-bar">
+        <a class="brand" href="../" title="morioka12 game site">
+          <div class="brand-mark">O</div>
+          <div class="brand-text">
+            <span class="brand-name" id="brand-name"></span>
+            <span class="brand-sub">30-DAY · CVE PLAYBOOK</span>
+          </div>
+        </a>
+        <div class="lang-toggle" role="tablist" aria-label="Language">
+          <span class="lang-pill" id="lang-pill"></span>
+          <button data-lang="ja" class="active" role="tab">日本語</button>
+          <button data-lang="en" role="tab">EN</button>
+        </div>
+      </header>
+
+      <section id="screen-start" class="screen active">
+        <div class="start-hero">
+          <!--
+            ヒーローイラスト：30 日カレンダー（5x6）の最右下に CVE バッジが立っている。
+            装飾用、aria-hidden。Day 30 セルは点滅、バッジは浮遊。
+          -->
+          <svg
+            class="cve-illustration"
+            viewBox="0 0 280 200"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#0e3149" />
+                <stop offset="1" stop-color="#04111e" />
+              </linearGradient>
+              <linearGradient id="cellGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#155e75" />
+                <stop offset="1" stop-color="#0891b2" />
+              </linearGradient>
+              <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#fef3c7" />
+                <stop offset="0.4" stop-color="#fbbf24" />
+                <stop offset="1" stop-color="#92400e" />
+              </linearGradient>
+              <linearGradient id="badgeGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#22d3ee" />
+                <stop offset="1" stop-color="#0e7490" />
+              </linearGradient>
+              <radialGradient id="shine" cx="0.3" cy="0.3" r="0.6">
+                <stop offset="0" stop-color="#ffffff" stop-opacity="0.55" />
+                <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+
+            <!-- 後光 -->
+            <circle cx="140" cy="100" r="80" fill="#22d3ee" opacity="0.1" />
+            <circle cx="140" cy="100" r="55" fill="#fbbf24" opacity="0.1" />
+
+            <!-- カレンダー本体 -->
+            <g transform="translate(36, 30)">
+              <!-- 紙の台 -->
+              <rect
+                x="0"
+                y="0"
+                width="160"
+                height="120"
+                rx="8"
+                fill="url(#bgGrad)"
+                stroke="#22d3ee"
+                stroke-width="1.2"
+                opacity="0.95"
+              />
+              <!-- リング（上部） -->
+              <circle cx="40" cy="0" r="3" fill="#0e7490" />
+              <circle cx="120" cy="0" r="3" fill="#0e7490" />
+              <!-- 見出し帯 -->
+              <rect x="0" y="0" width="160" height="18" rx="8" fill="#0e7490" />
+              <rect x="0" y="9" width="160" height="9" fill="#0e7490" />
+              <text
+                x="80"
+                y="13"
+                text-anchor="middle"
+                font-size="9"
+                font-weight="800"
+                fill="#fef3c7"
+                font-family="JetBrains Mono, monospace"
+                letter-spacing="2"
+              >
+                DAY 1 → DAY 30
+              </text>
+
+              <!-- 30 日セル（5 列 × 6 行 / 各 24x12 + gap 2） -->
+              <g transform="translate(8, 26)">
+                <!-- 1〜29 までの一般セル -->
+                <g class="day-cell">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(30, 0)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(60, 0)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(90, 0)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(120, 0)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+
+                <g class="day-cell" transform="translate(0, 16)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(30, 16)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(60, 16)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(90, 16)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(120, 16)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+
+                <g class="day-cell" transform="translate(0, 32)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(30, 32)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(60, 32)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(90, 32)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(120, 32)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+
+                <g class="day-cell" transform="translate(0, 48)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(30, 48)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(60, 48)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(90, 48)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(120, 48)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+
+                <g class="day-cell" transform="translate(0, 64)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(30, 64)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(60, 64)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(90, 64)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(120, 64)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+
+                <g class="day-cell" transform="translate(0, 80)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(30, 80)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(60, 80)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <g class="day-cell" transform="translate(90, 80)">
+                  <rect width="24" height="12" rx="2" fill="url(#cellGrad)" />
+                </g>
+                <!-- DAY 30 セル（金） -->
+                <g class="day-30-glow" transform="translate(120, 80)">
+                  <rect
+                    width="24"
+                    height="12"
+                    rx="2"
+                    fill="url(#goldGrad)"
+                    stroke="#7c2d12"
+                    stroke-width="0.5"
+                  />
+                  <text
+                    x="12"
+                    y="9"
+                    text-anchor="middle"
+                    font-size="7"
+                    font-weight="900"
+                    fill="#451a03"
+                    font-family="JetBrains Mono, monospace"
+                  >
+                    30
+                  </text>
+                </g>
+              </g>
+            </g>
+
+            <!-- 右下：CVE バッジ -->
+            <g class="badge-body" transform="translate(206, 116)">
+              <!-- リボン -->
+              <path
+                d="M -4 36 L -4 60 L 4 54 L 12 60 L 12 36 Z"
+                fill="#155e75"
+              />
+              <!-- 円バッジ -->
+              <circle
+                cx="4"
+                cy="20"
+                r="22"
+                fill="url(#badgeGrad)"
+                stroke="#0e7490"
+                stroke-width="1.5"
+              />
+              <circle
+                cx="4"
+                cy="20"
+                r="16"
+                fill="none"
+                stroke="#fef3c7"
+                stroke-width="0.8"
+                stroke-dasharray="2,2"
+              />
+              <text
+                x="4"
+                y="17"
+                text-anchor="middle"
+                font-size="7"
+                font-weight="800"
+                fill="#fef3c7"
+                font-family="JetBrains Mono, monospace"
+                letter-spacing="1"
+              >
+                CVE
+              </text>
+              <text
+                x="4"
+                y="26"
+                text-anchor="middle"
+                font-size="6"
+                font-weight="700"
+                fill="#fef3c7"
+                font-family="JetBrains Mono, monospace"
+                letter-spacing="0.5"
+              >
+                2026
+              </text>
+              <!-- ハイライト -->
+              <ellipse cx="-3" cy="13" rx="6" ry="10" fill="url(#shine)" />
+            </g>
+
+            <!-- 左上：チェックマーク（進捗の象徴） -->
+            <g transform="translate(20, 16)" opacity="0.85">
+              <circle cx="0" cy="0" r="10" fill="#34d399" />
+              <path
+                d="M -4 0 L -1 3 L 5 -3"
+                stroke="#04261b"
+                stroke-width="2"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </g>
+
+            <!-- 床の影 -->
+            <ellipse
+              cx="140"
+              cy="186"
+              rx="80"
+              ry="5"
+              fill="#000"
+              opacity="0.4"
+            />
+          </svg>
+
+          <div class="hero-tag">
+            <span class="hero-tag-dot"></span>
+            <span id="hero-tag-text"></span>
+          </div>
+          <h1 class="hero-title" id="hero-title"></h1>
+          <p class="hero-sub" id="hero-sub"></p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-grid">
+            <div class="info-stat">
+              <div class="info-stat-num">20</div>
+              <div class="info-stat-label" id="stat-label-q"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">30d</div>
+              <div class="info-stat-label" id="stat-label-d"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">~10min</div>
+              <div class="info-stat-label" id="stat-label-t"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">4-Choice</div>
+              <div class="info-stat-label" id="stat-label-f"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sources">
+          <div class="sources-title" id="sources-title"></div>
+          <div class="source-list">
+            <a
+              class="source-item"
+              href="https://zenn.dev/scgajge12/books/6f6ab44df405b2"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="source-tag">ZENN</span>
+              <span class="source-title" id="src-book"></span>
+              <span class="source-arrow">→</span>
+            </a>
+            <a
+              class="source-item"
+              href="https://zenn.dev/scgajge12/books/6f6ab44df405b2/viewer/268429"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="source-tag">FREE</span>
+              <span class="source-title" id="src-free"></span>
+              <span class="source-arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="start-btn-wrap">
+          <button class="btn-start" id="btn-start">
+            <span id="btn-start-text"></span>
+            <span aria-hidden="true">→</span>
+          </button>
+          <div class="start-note" id="start-note"></div>
+        </div>
+      </section>
+
+      <section id="screen-quiz" class="screen">
+        <div class="quiz-meta">
+          <div class="quiz-counter">
+            <span id="qm-q-label"></span>
+            <strong id="q-current">1</strong>
+            <span style="color: var(--text-dim)">/</span>
+            <span id="q-total">20</span>
+          </div>
+          <span class="quiz-tag" id="q-tag"></span>
+        </div>
+
+        <!-- 30 日カレンダー演出（Q1..Q10 進行で Day 1..Day 30 まで点灯） -->
+        <div class="day-calendar" aria-hidden="true">
+          <div class="day-calendar-head">
+            <span class="dc-label" id="dc-label-text"></span>
+            <span class="dc-now"
+              ><span id="dc-now-prefix"></span> <span id="dc-now-num">1</span> /
+              30</span
+            >
+          </div>
+          <div class="day-grid" id="day-grid"></div>
+        </div>
+
+        <div class="progress">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="question-card" id="question-card">
+          <p class="question-text" id="question-text"></p>
+        </div>
+
+        <div class="choices" id="choices"></div>
+
+        <div id="feedback-area" aria-live="polite" aria-atomic="true"></div>
+
+        <button class="next-btn" id="btn-next" style="display: none"></button>
+      </section>
+
+      <section id="screen-result" class="screen">
+        <div class="result">
+          <div class="result-rank-tag" id="result-rank">★ DAY 0</div>
+          <h2 class="result-title" id="result-title"></h2>
+          <p class="result-sub" id="result-sub"></p>
+
+          <div class="score-display">
+            <div class="score-ring" id="score-ring">
+              <div class="score-content">
+                <div class="score-num" id="score-num">0</div>
+                <div class="score-total">/ 20</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-stats">
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-correct">0</div>
+              <div class="result-stat-label" id="stat-lbl-correct"></div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-wrong">0</div>
+              <div class="result-stat-label" id="stat-lbl-wrong"></div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-acc">0%</div>
+              <div class="result-stat-label" id="stat-lbl-acc"></div>
+            </div>
+          </div>
+
+          <div class="result-comment" id="result-comment"></div>
+
+          <div class="book-cta">
+            <div class="book-cta-title" id="book-cta-title"></div>
+            <div class="book-cta-body" id="book-cta-body"></div>
+            <a
+              class="book-cta-link"
+              id="book-cta-link"
+              href="https://zenn.dev/scgajge12/books/6f6ab44df405b2"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span id="book-cta-link-text"></span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <div class="result-actions">
+            <button class="btn-share-x" id="btn-share">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631Zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                />
+              </svg>
+              <span id="btn-share-text"></span>
+            </button>
+            <button class="btn-secondary" id="btn-retry">
+              <span id="btn-retry-text"></span>
+            </button>
+          </div>
+
+          <div class="review">
+            <div class="review-title" id="review-title"></div>
+            <div class="review-grid" id="review-grid"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>
+          <span id="footer-by"></span>
+          <a
+            href="https://x.com/scgajge12"
+            target="_blank"
+            rel="noopener noreferrer"
+            >@scgajge12</a
+          >
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      "use strict";
+
+      /* =========================================================
+         全ロジックを IIFE で閉じてグローバル汚染を防止する。
+         （DevTools の console から QUIZ / 正解関数にアクセスできない）
+         ========================================================= */
+      (function () {
+        /* =========================================================
+         I18N - 日本語 / 英語の文字列辞書（プレーンテキストのみ）
+         ========================================================= */
+        const I18N = {
+          ja: {
+            brandName: "OSS Bug Hunting 101 Quiz",
+            heroTag: "30 日 CVE ロードマップ",
+            heroTitleLine1: "OSSバグハント入門",
+            heroTitleLine2: "クイズ",
+            heroSub:
+              "Zenn 書籍『30日でCVE取得! OSSバグハント入門』の30日ロードマップを、20問のシナリオに圧縮した4択クイズ。「今日この瞬間どう動くか」を問います。",
+            statQuestions: "問題数",
+            statDays: "ロードマップ",
+            statTime: "プレイ時間",
+            statFormat: "出題形式",
+            sourcesTitle: "// 元ネタ書籍（Zenn / 一部無料公開）",
+            srcBook: "30日でCVE取得! OSSバグハント入門",
+            srcFree: "「はじめに」と第1章の一部は無料で読める",
+            startBtn: "30 日チャレンジ開始",
+            startNote: "※ 最後にスコアと X(Twitter) シェアボタンが表示されます",
+            quizQ: "Day",
+            dcLabel: "// 30 日カレンダー",
+            dcNowPrefix: "Day",
+            quizNext: "次の問題へ",
+            quizLast: "結果を見る",
+            quizCorrect: "正解！",
+            quizWrong: "不正解",
+            resultCorrect: "正解",
+            resultWrong: "不正解",
+            resultAcc: "正答率",
+            resultShare: "X (Twitter) でシェア",
+            resultRetry: "もう一度挑戦",
+            resultReview: "// 解答レビュー",
+            resultYour: "あなたの解答",
+            resultAnswer: "正解",
+            bookCtaTitle: "// 書籍で深掘りする",
+            bookCtaBody:
+              "出題テーマは Zenn 書籍『30日でCVE取得! OSSバグハント入門』の判断軸に対応しています。30 日で初 CVE を取りに行く具体的な手順を、章ごとのチェックポイントとして学べます。",
+            bookCtaLinkText: "Zenn で書籍を見る",
+            footerBy: "Created by ",
+          },
+          en: {
+            brandName: "OSS Bug Hunting 101 Quiz",
+            heroTag: "30-Day CVE Roadmap",
+            heroTitleLine1: "OSS Bug Hunting 101",
+            heroTitleLine2: "Quiz",
+            heroSub:
+              "20 scenario questions that compress the 30-day roadmap from the Zenn book 'Get Your CVE in 30 Days! An Introduction to OSS Bug Hunting' — what's your next move today?",
+            statQuestions: "Questions",
+            statDays: "Roadmap",
+            statTime: "Play Time",
+            statFormat: "Format",
+            sourcesTitle: "// Source Book (Zenn, partial free preview)",
+            srcBook:
+              "Get Your CVE in 30 Days! An Introduction to OSS Bug Hunting",
+            srcFree: 'Free preview: "Intro" and parts of chapter 1',
+            startBtn: "Start the 30-Day Challenge",
+            startNote:
+              "* Your score and an X (Twitter) share button appear at the end.",
+            quizQ: "Day",
+            dcLabel: "// 30-DAY CALENDAR",
+            dcNowPrefix: "Day",
+            quizNext: "Next →",
+            quizLast: "See Results →",
+            quizCorrect: "Correct!",
+            quizWrong: "Incorrect",
+            resultCorrect: "Correct",
+            resultWrong: "Wrong",
+            resultAcc: "Accuracy",
+            resultShare: "Share on X",
+            resultRetry: "Try again",
+            resultReview: "// Answer Review",
+            resultYour: "Your answer",
+            resultAnswer: "Correct answer",
+            bookCtaTitle: "// Go deeper with the book",
+            bookCtaBody:
+              "Every question maps to a judgment axis from the Zenn book 'Get Your CVE in 30 Days! An Introduction to OSS Bug Hunting' — a concrete 30-day playbook for landing your first CVE.",
+            bookCtaLinkText: "View the book on Zenn",
+            footerBy: "Created by ",
+          },
+        };
+
+        /* =========================================================
+         軽量難読化済みクイズデータ（QUIZ オブジェクト全体）
+         - 3 段 XOR + Base64。あくまで DevTools からの正解バレ防止が
+           目的で、鍵はファイル内に同梱されているため暗号学的な強度はない。
+         - 鍵 A : 平文文字列
+         - 鍵 B : Base64 で擬装した平文
+         - 鍵 C : 32 バイトのバイト列を Base64 で擬装
+         - QUIZ の正解（c フラグ）と解説 ex（segments）もまとめて難読化
+         ========================================================= */
+        const _kA = "0sSCv30bh7";
+        const _kB = (function () {
+          // "OSS-CVE-30day-hunter-2026" の Base64
+          return atob("T1NTLUNWRS0zMGRheS1odW50ZXItMjAyNg==");
+        })();
+        const _kC = (function () {
+          // SHA-256("oss-bug-hunt-kingfisher-orange") の 32 バイト
+          const b64 = "XHowiTi54tJxa3aSvd+XekLu9+uJ5r3zULtnvwr3pzA=";
+          return Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+        })();
+
+        // ペイロードを多数のチャンクに分割して保持。実行時に join("") で結合。
+        const _PAYLOAD = [
+          "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",
+          "DaOHLR16NbU/nJTseWdK7pe771oi8unnlA==",
+        ].join("");
+
+        /* =========================================================
+         復号
+         ========================================================= */
+        function _decryptQuiz(payload) {
+          const bin = atob(payload);
+          const out = new Uint8Array(bin.length);
+          for (let i = 0; i < bin.length; i++) {
+            let x = bin.charCodeAt(i);
+            x ^= _kA.charCodeAt(i % _kA.length);
+            x ^= _kB.charCodeAt(i % _kB.length);
+            x ^= _kC[i % _kC.length];
+            out[i] = x;
+          }
+          return JSON.parse(new TextDecoder().decode(out));
+        }
+
+        /* =========================================================
+         Fisher-Yates シャッフル（呼ぶたびに別の順序）
+         - 各問題の choices 配列の順序をランダム化することで、
+           DevTools で復号後 QUIZ を覗いても「画面上の A〜D が
+           配列インデックスのどれに対応するか」が一定にならない
+         ========================================================= */
+        function _shuffleInPlace(arr) {
+          for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+          }
+          return arr;
+        }
+
+        // 復号 → クロージャ内に保持（window には載せない）
+        const QUIZ = _decryptQuiz(_PAYLOAD);
+        // 各問題の choices をシャッフル
+        for (const q of QUIZ) {
+          _shuffleInPlace(q.choices);
+        }
+
+        // 正解の choice 配列インデックスを返す（c フラグ持ち）
+        function _correctIdx(qIdx) {
+          const choices = QUIZ[qIdx].choices;
+          for (let i = 0; i < choices.length; i++) {
+            if (choices[i].c) return i;
+          }
+          return -1;
+        }
+
+        /* =========================================================
+         セグメント配列を <strong> 込みで安全に DOM へ描画
+         ========================================================= */
+        function renderSegments(target, segments) {
+          target.textContent = "";
+          for (const seg of segments) {
+            if (seg.b) {
+              const strong = document.createElement("strong");
+              strong.textContent = seg.t;
+              target.appendChild(strong);
+            } else {
+              target.appendChild(document.createTextNode(seg.t));
+            }
+          }
+        }
+
+        /* =========================================================
+         状態
+         ========================================================= */
+        let lang = "ja";
+        try {
+          // 全ゲーム共通キー mk12_game_lang を優先、旧キー oss_quiz_lang から移行も読む
+          const stored =
+            localStorage.getItem("mk12_game_lang") ||
+            localStorage.getItem("oss_quiz_lang");
+          if (stored === "ja" || stored === "en") lang = stored;
+        } catch (e) {}
+
+        let qIndex = 0;
+        let answers = [];
+        let answered = false;
+
+        function t(key) {
+          return I18N[lang][key] !== undefined ? I18N[lang][key] : key;
+        }
+
+        /* =========================================================
+         I18N - プレーン文字列のみ textContent でセット
+         ========================================================= */
+        function applyI18n() {
+          document.documentElement.lang = lang;
+
+          document.getElementById("brand-name").textContent = t("brandName");
+          document.getElementById("hero-tag-text").textContent = t("heroTag");
+
+          // ヒーロー見出しは 2 行構成
+          const heroTitle = document.getElementById("hero-title");
+          heroTitle.textContent = "";
+          heroTitle.appendChild(document.createTextNode(t("heroTitleLine1")));
+          heroTitle.appendChild(document.createElement("br"));
+          heroTitle.appendChild(document.createTextNode(t("heroTitleLine2")));
+
+          document.getElementById("hero-sub").textContent = t("heroSub");
+          document.getElementById("stat-label-q").textContent =
+            t("statQuestions");
+          document.getElementById("stat-label-d").textContent = t("statDays");
+          document.getElementById("stat-label-t").textContent = t("statTime");
+          document.getElementById("stat-label-f").textContent = t("statFormat");
+
+          document.getElementById("sources-title").textContent =
+            t("sourcesTitle");
+          document.getElementById("src-book").textContent = t("srcBook");
+          document.getElementById("src-free").textContent = t("srcFree");
+
+          document.getElementById("btn-start-text").textContent = t("startBtn");
+          document.getElementById("start-note").textContent = t("startNote");
+
+          document.getElementById("qm-q-label").textContent = t("quizQ");
+          document.getElementById("dc-label-text").textContent = t("dcLabel");
+          document.getElementById("dc-now-prefix").textContent =
+            t("dcNowPrefix");
+
+          document.getElementById("stat-lbl-correct").textContent =
+            t("resultCorrect");
+          document.getElementById("stat-lbl-wrong").textContent =
+            t("resultWrong");
+          document.getElementById("stat-lbl-acc").textContent = t("resultAcc");
+          document.getElementById("btn-share-text").textContent =
+            t("resultShare");
+          document.getElementById("btn-retry-text").textContent =
+            t("resultRetry");
+          document.getElementById("review-title").textContent =
+            t("resultReview");
+          document.getElementById("book-cta-title").textContent =
+            t("bookCtaTitle");
+          document.getElementById("book-cta-body").textContent =
+            t("bookCtaBody");
+          document.getElementById("book-cta-link-text").textContent =
+            t("bookCtaLinkText");
+          document.getElementById("footer-by").textContent = t("footerBy");
+        }
+
+        function updateLangPill() {
+          const pill = document.getElementById("lang-pill");
+          const buttons = document.querySelectorAll(".lang-toggle button");
+          const active = document.querySelector(
+            '.lang-toggle button[data-lang="' + lang + '"]',
+          );
+          if (!active || !pill) return;
+          buttons.forEach((b) => b.classList.toggle("active", b === active));
+          pill.style.width = active.offsetWidth + "px";
+          pill.style.transform =
+            "translateX(" + (active.offsetLeft - 3) + "px)";
+        }
+
+        function setLanguage(next) {
+          if (lang === next) return;
+          lang = next;
+          try {
+            localStorage.setItem("mk12_game_lang", lang);
+          } catch (e) {}
+          applyI18n();
+          updateLangPill();
+          if (
+            document.getElementById("screen-quiz").classList.contains("active")
+          ) {
+            renderQuestion();
+          }
+          if (
+            document
+              .getElementById("screen-result")
+              .classList.contains("active")
+          ) {
+            renderResult();
+          }
+        }
+
+        /* =========================================================
+         画面切り替え
+         ========================================================= */
+        function showScreen(id) {
+          document
+            .querySelectorAll(".screen")
+            .forEach((s) => s.classList.remove("active"));
+          document.getElementById(id).classList.add("active");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        /* =========================================================
+         30 日カレンダー（Q1..Q10 → Day 1..Day 30 を進行）
+         ========================================================= */
+        function buildDayGrid() {
+          const grid = document.getElementById("day-grid");
+          grid.textContent = "";
+          for (let i = 1; i <= 30; i++) {
+            const cell = document.createElement("div");
+            cell.className = "day-cell";
+            cell.dataset.day = String(i);
+            grid.appendChild(cell);
+          }
+        }
+
+        // qIndex → Day 範囲を Math.floor((qIdx * 30) / N) + 1 ... Math.floor((qIdx+1) * 30 / N) に線形マップ
+        function updateDayGrid() {
+          // スタート画面の SVG にも .day-cell が含まれるため #day-grid 配下に限定する
+          const cells = document.querySelectorAll("#day-grid .day-cell");
+          const total = QUIZ.length;
+          const startDay = Math.floor((qIndex * 30) / total) + 1;
+          const endDay = Math.floor(((qIndex + 1) * 30) / total);
+          const currentMid = Math.round((startDay + endDay) / 2);
+          cells.forEach((cell, i) => {
+            const day = i + 1;
+            cell.classList.remove("is-passed", "is-current", "is-30");
+            // 最終日（Day 30）はゴール印として常に is-30 を付ける。
+            // ただし最終問題で currentMid===30 になるケースでは
+            // is-current も併用して「今ここ」表示が消えないようにする。
+            if (day === 30) {
+              cell.classList.add("is-30");
+              if (day === currentMid) cell.classList.add("is-current");
+              return;
+            }
+            if (day < startDay) {
+              cell.classList.add("is-passed");
+            } else if (day >= startDay && day <= endDay) {
+              if (day === currentMid) cell.classList.add("is-current");
+            }
+          });
+          document.getElementById("dc-now-num").textContent =
+            String(currentMid);
+        }
+
+        /* =========================================================
+         クイズ
+         ========================================================= */
+        function startQuiz() {
+          qIndex = 0;
+          answers = [];
+          answered = false;
+          document.getElementById("q-total").textContent = QUIZ.length;
+          showScreen("screen-quiz");
+          buildDayGrid();
+          renderQuestion();
+        }
+
+        function renderQuestion() {
+          const item = QUIZ[qIndex];
+          answered = !!answers[qIndex];
+
+          document.getElementById("q-current").textContent = qIndex + 1;
+          document.getElementById("q-tag").textContent = item.tag[lang];
+          document.getElementById("question-text").textContent = item.q[lang];
+
+          updateDayGrid();
+
+          const pct = (qIndex / QUIZ.length) * 100;
+          document.getElementById("progress-fill").style.width = pct + "%";
+
+          const choicesEl = document.getElementById("choices");
+          choicesEl.textContent = "";
+
+          const keys = ["A", "B", "C", "D"];
+          item.choices.forEach((c, idx) => {
+            const btn = document.createElement("button");
+            btn.className = "choice";
+            btn.type = "button";
+
+            const key = document.createElement("span");
+            key.className = "choice-key";
+            key.textContent = keys[idx];
+
+            const text = document.createElement("span");
+            text.className = "choice-text";
+            text.textContent = c[lang];
+
+            const icon = document.createElement("span");
+            icon.className = "choice-icon";
+            icon.setAttribute("aria-hidden", "true");
+
+            btn.appendChild(key);
+            btn.appendChild(text);
+            btn.appendChild(icon);
+
+            btn.addEventListener("click", () => onAnswer(idx));
+            choicesEl.appendChild(btn);
+          });
+
+          document.getElementById("feedback-area").textContent = "";
+          document.getElementById("btn-next").style.display = "none";
+
+          if (answered) {
+            applyAnswerVisual(answers[qIndex].selected);
+            showFeedback(answers[qIndex].selected);
+          }
+        }
+
+        function onAnswer(selectedIdx) {
+          if (answered) return;
+          answered = true;
+
+          const correctIdx = _correctIdx(qIndex);
+          answers[qIndex] = { selected: selectedIdx, correct: correctIdx };
+
+          applyAnswerVisual(selectedIdx);
+          showFeedback(selectedIdx);
+        }
+
+        function applyAnswerVisual(selectedIdx) {
+          const correctIdx = _correctIdx(qIndex);
+          const btns = document.querySelectorAll(".choice");
+          btns.forEach((b, idx) => {
+            b.disabled = true;
+            const icon = b.querySelector(".choice-icon");
+            if (idx === correctIdx) {
+              b.classList.add("correct");
+              icon.textContent = "✓";
+            } else if (idx === selectedIdx) {
+              b.classList.add("wrong");
+              icon.textContent = "✕";
+            } else {
+              b.classList.add("dim");
+            }
+          });
+        }
+
+        function showFeedback(selectedIdx) {
+          const item = QUIZ[qIndex];
+          const correctIdx = _correctIdx(qIndex);
+          const isCorrect = selectedIdx === correctIdx;
+
+          const fb = document.createElement("div");
+          fb.className = "feedback " + (isCorrect ? "correct-fb" : "wrong-fb");
+
+          const title = document.createElement("div");
+          title.className = "feedback-title";
+          title.textContent =
+            (isCorrect ? "✓ " : "✕ ") +
+            (isCorrect ? t("quizCorrect") : t("quizWrong"));
+          fb.appendChild(title);
+
+          const body = document.createElement("div");
+          body.className = "feedback-body";
+          renderSegments(body, item.ex[lang]);
+          fb.appendChild(body);
+
+          const fbArea = document.getElementById("feedback-area");
+          fbArea.textContent = "";
+          fbArea.appendChild(fb);
+
+          const nextBtn = document.getElementById("btn-next");
+          nextBtn.textContent =
+            qIndex >= QUIZ.length - 1 ? t("quizLast") : t("quizNext");
+          nextBtn.style.display = "flex";
+          nextBtn.onclick = onNext;
+          // 回答直後にフォーカスを「次へ」へ移し、Tab/SR ユーザに次アクションを伝える
+          // 既に回答済みの問題を再描画した場合（言語切替等）にフォーカスを奪わないよう
+          // document.activeElement が body / disabled な choice の場合のみ移動する
+          const ae = document.activeElement;
+          const aeIsChoice =
+            ae && ae.classList && ae.classList.contains("choice");
+          if (!ae || ae === document.body || aeIsChoice) {
+            // レイアウト確定後に focus（次フレーム）
+            requestAnimationFrame(function () {
+              try {
+                nextBtn.focus({ preventScroll: false });
+              } catch (e) {
+                nextBtn.focus();
+              }
+            });
+          }
+        }
+
+        function onNext() {
+          if (qIndex >= QUIZ.length - 1) {
+            finishQuiz();
+          } else {
+            qIndex++;
+            renderQuestion();
+          }
+        }
+
+        /* =========================================================
+         結果（4 段階：Day 0 / Day 15 / Day 28 / Day 30）
+         ========================================================= */
+        function finishQuiz() {
+          document.getElementById("progress-fill").style.width = "100%";
+          renderResult();
+          showScreen("screen-result");
+        }
+
+        function getRank(score, total) {
+          const isJa = lang === "ja";
+          if (score === total) {
+            return {
+              tag: "★ DAY 30 · CVE OBTAINED",
+              title: isJa
+                ? "Day 30：CVE 取得おめでとう！"
+                : "Day 30: Your first CVE!",
+              sub: isJa
+                ? "30 日チャレンジを満点で完走した猛者です。"
+                : "Flawless run on the 30-day challenge.",
+              comment: isJa
+                ? [
+                    { t: "10/10、お見事です。", b: true },
+                    {
+                      t: " CVE 採番までのプロセス、ターゲット選定、テイント解析、PoC、報告・採番の全フェーズで判断軸を押さえられています。あとは実弾を撃つだけ。自分が maintainer のリポジトリなら GitHub Security Advisory から「Request a CVE」、第三者として見つけた OSS 脆弱性なら huntr.dev での開示や、メンテナーに連絡して GHSA 経由で採番依頼を出すのが現実的なルートです。",
+                    },
+                  ]
+                : [
+                    { t: "10/10. ", b: true },
+                    {
+                      t: 'You\'ve internalized every phase — issuance flow, target selection, taint analysis, PoC, and disclosure. Time for the real shot: if you maintain the repo, file a GitHub Security Advisory and hit "Request a CVE"; if you found the bug as an outsider, route it through huntr.dev or coordinate with the maintainer so they can publish a GHSA and get a CVE assigned.',
+                    },
+                  ],
+            };
+          }
+          if (score / total >= 0.8) {
+            return {
+              tag: "★ DAY 28 · ALMOST THERE",
+              title: isJa ? "Day 28：あと一歩" : "Day 28: Almost there",
+              sub: isJa
+                ? "ロードマップの大半は身についています。"
+                : "Most of the roadmap is locked in.",
+              comment: isJa
+                ? [
+                    { t: "正答率 80% 以上は" },
+                    { t: "ロードマップを実走できる水準", b: true },
+                    {
+                      t: "。テイント解析・再検証・PoC の運用が安定している印象です。間違えた問題の章を 1〜2 節読み返すだけで、Day 30 のスタンプは目前です。",
+                    },
+                  ]
+                : [
+                    {
+                      t: "80%+ means you can actually run the roadmap. ",
+                      b: true,
+                    },
+                    {
+                      t: "Your taint analysis, re-validation, and PoC craft are solid. Skim 1–2 sections from the chapters you missed and the Day-30 stamp is yours.",
+                    },
+                  ],
+            };
+          }
+          if (score / total >= 0.5) {
+            return {
+              tag: "★ DAY 15 · ON TRACK",
+              title: isJa ? "Day 15：いい線まで来てる" : "Day 15: On track",
+              sub: isJa
+                ? "前半フェーズは押さえつつ、後半（テイント解析〜採番）の精度を上げる段階。"
+                : "Front-half locked. Time to sharpen taint-analysis through CVE issuance.",
+              comment: isJa
+                ? [
+                    {
+                      t: "「採番フロー」「ターゲット選定」「脆弱性タイプ」",
+                      b: true,
+                    },
+                    {
+                      t: " の 3 軸はそれなりに掴めています。後半（テイント解析・再検証・PoC・報告）で取りこぼした章を中心に読み直すと、一気に Day 28 まで近づきます。",
+                    },
+                  ]
+                : [
+                    {
+                      t: "Issuance flow, target selection, and vuln types are landing. ",
+                    },
+                    {
+                      t: "Re-read the chapters you missed in the back half (taint analysis, re-validation, PoC, disclosure) — that's the gap to Day 28.",
+                    },
+                  ],
+            };
+          }
+          return {
+            tag: "★ DAY 0 · START HERE",
+            title: isJa
+              ? "Day 0：まずは本を読もう"
+              : "Day 0: Start with the book",
+            sub: isJa
+              ? "ここから始めれば 30 日で十分に間に合います。"
+              : "Plenty of room — 30 days is enough if you start now.",
+            comment: isJa
+              ? [
+                  { t: "まずは無料公開されている " },
+                  { t: "「はじめに」と第 1 章の一部", b: true },
+                  {
+                    t: " に目を通すと、CVE 採番までの全体像が一気に掴めます。書籍本編は 30 日のチェックポイントごとに構成されているので、各 Day と章を対応させて読むと迷子になりません。",
+                  },
+                ]
+              : [
+                  {
+                    t: "Skim the free preview — ",
+                  },
+                  {
+                    t: '"Intro" and the first part of chapter 1',
+                    b: true,
+                  },
+                  {
+                    t: " — to get the whole CVE-issuance picture. The full book is laid out by 30-day checkpoints, so you can map each Day to a chapter and stay oriented.",
+                  },
+                ],
+          };
+        }
+
+        function renderResult() {
+          const correctCount = answers.filter(
+            (a) => a.selected === a.correct,
+          ).length;
+          const wrongCount = QUIZ.length - correctCount;
+          const acc = Math.round((correctCount / QUIZ.length) * 100);
+          const rank = getRank(correctCount, QUIZ.length);
+
+          document.getElementById("result-rank").textContent = rank.tag;
+          document.getElementById("result-title").textContent = rank.title;
+          document.getElementById("result-sub").textContent = rank.sub;
+          document.getElementById("score-num").textContent = correctCount;
+          document.getElementById("score-ring").style.setProperty("--pct", acc);
+          document.getElementById("stat-correct").textContent = correctCount;
+          document.getElementById("stat-wrong").textContent = wrongCount;
+          document.getElementById("stat-acc").textContent = acc + "%";
+          renderSegments(
+            document.getElementById("result-comment"),
+            rank.comment,
+          );
+
+          const reviewGrid = document.getElementById("review-grid");
+          reviewGrid.textContent = "";
+          const keys = ["A", "B", "C", "D"];
+          QUIZ.forEach((item, i) => {
+            const ans = answers[i];
+            const isOk = ans && ans.selected === ans.correct;
+            const row = document.createElement("div");
+            row.className = "review-item";
+
+            const mark = document.createElement("div");
+            mark.className = "review-mark " + (isOk ? "ok" : "ng");
+            mark.textContent = isOk ? "✓" : "✕";
+
+            const content = document.createElement("div");
+            content.className = "review-content";
+
+            const qLine = document.createElement("div");
+            qLine.className = "review-q";
+            qLine.textContent = "Q" + (i + 1) + ". " + item.q[lang];
+            content.appendChild(qLine);
+
+            if (ans) {
+              const aLine = document.createElement("div");
+              aLine.className = "review-a";
+              const yourTag = document.createElement("span");
+              yourTag.className = "review-a-tag";
+              yourTag.style.color = isOk ? "var(--success)" : "var(--danger)";
+              yourTag.textContent =
+                "[" + t("resultYour") + "] " + keys[ans.selected];
+              aLine.appendChild(yourTag);
+              aLine.appendChild(
+                document.createTextNode(item.choices[ans.selected][lang]),
+              );
+              content.appendChild(aLine);
+
+              if (!isOk) {
+                const cLine = document.createElement("div");
+                cLine.className = "review-a";
+                cLine.style.marginTop = "4px";
+                const cTag = document.createElement("span");
+                cTag.className = "review-a-tag";
+                cTag.style.color = "var(--success)";
+                cTag.textContent =
+                  "[" + t("resultAnswer") + "] " + keys[ans.correct];
+                cLine.appendChild(cTag);
+                cLine.appendChild(
+                  document.createTextNode(item.choices[ans.correct][lang]),
+                );
+                content.appendChild(cLine);
+              }
+            }
+
+            row.appendChild(mark);
+            row.appendChild(content);
+            reviewGrid.appendChild(row);
+          });
+        }
+
+        /* =========================================================
+         X (Twitter) シェア
+         ========================================================= */
+        function buildShareText(correct, total, acc) {
+          if (lang === "ja") {
+            return (
+              "「OSSバグハント入門 クイズ」全 " +
+              total +
+              " 問中 " +
+              correct +
+              " 問正解（正答率 " +
+              acc +
+              "%）\n" +
+              "Zenn 書籍『30日でCVE取得! OSSバグハント入門』の30日ロードマップに挑戦してみよう！\n\n" +
+              "#BugBountyJPGame"
+            );
+          }
+          return (
+            "I scored " +
+            correct +
+            "/" +
+            total +
+            " (" +
+            acc +
+            "%) on the OSS Bug Hunting 101 Quiz \n" +
+            "Try the 30-day CVE roadmap from the Zenn book!\n\n" +
+            "#BugBountyJPGame"
+          );
+        }
+
+        function onShare() {
+          const correct = answers.filter(
+            (a) => a.selected === a.correct,
+          ).length;
+          const acc = Math.round((correct / QUIZ.length) * 100);
+          const text = buildShareText(correct, QUIZ.length, acc);
+          // スコア別シェアページ（OGP 画像にスコアが焼き込まれる）へリンクを向ける。
+          // new URL の相対パス解決でドット入りディレクトリ名や /index.html 直指定にも安全。
+          const url = new URL("share/" + correct + "/", location.href).href;
+          const intent =
+            "https://x.com/intent/tweet?text=" +
+            encodeURIComponent(text) +
+            "&url=" +
+            encodeURIComponent(url);
+          window.open(intent, "_blank", "noopener,noreferrer");
+        }
+
+        /* =========================================================
+         イベントバインド
+         ========================================================= */
+        document.querySelectorAll(".lang-toggle button").forEach((btn) => {
+          btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+        });
+        document
+          .getElementById("btn-start")
+          .addEventListener("click", startQuiz);
+        document.getElementById("btn-share").addEventListener("click", onShare);
+        document
+          .getElementById("btn-retry")
+          .addEventListener("click", startQuiz);
+
+        /* =========================================================
+         パーティクル背景
+         ========================================================= */
+        (function initParticles() {
+          const canvas = document.getElementById("particles");
+          const ctx = canvas.getContext("2d");
+          let w = 0;
+          let h = 0;
+          let particles = [];
+          const reduce =
+            window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+          function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+          }
+
+          function create() {
+            particles = [];
+            const count = Math.max(28, Math.floor((w * h) / 32000));
+            for (let i = 0; i < count; i++) {
+              particles.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                r: Math.random() * 1.6 + 0.4,
+                vx: (Math.random() - 0.5) * 0.18,
+                vy: (Math.random() - 0.5) * 0.18,
+                alpha: Math.random() * 0.5 + 0.15,
+                hue: Math.random() < 0.5 ? "14, 165, 233" : "251, 146, 60",
+              });
+            }
+          }
+
+          function draw() {
+            ctx.clearRect(0, 0, w, h);
+            for (let i = 0; i < particles.length; i++) {
+              const p = particles[i];
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+              ctx.fillStyle = "rgba(" + p.hue + ", " + p.alpha + ")";
+              ctx.fill();
+              p.x += p.vx;
+              p.y += p.vy;
+              if (p.x < 0) p.x = w;
+              if (p.x > w) p.x = 0;
+              if (p.y < 0) p.y = h;
+              if (p.y > h) p.y = 0;
+            }
+            if (!reduce) requestAnimationFrame(draw);
+          }
+
+          resize();
+          create();
+          draw();
+          window.addEventListener("resize", () => {
+            resize();
+            create();
+          });
+        })();
+
+        /* =========================================================
+         初期化
+         ========================================================= */
+        applyI18n();
+        requestAnimationFrame(updateLangPill);
+        /* ===== Quiz keyboard shortcuts (1-4 / A-D / Enter) ===== */
+        document.addEventListener("keydown", function (_kbEvt) {
+          if (_kbEvt.isComposing || _kbEvt.keyCode === 229) return;
+          const _tg = _kbEvt.target;
+          if (_tg && /^(INPUT|TEXTAREA|SELECT)$/i.test(_tg.tagName)) return;
+          // quiz 画面がアクティブな時のみ反応する
+          const _scr = document.querySelector("#screen-quiz.active");
+          if (!_scr) return;
+          // Enter / Space で「次へ」ボタンを進める
+          if (
+            _kbEvt.key === "Enter" ||
+            _kbEvt.key === " " ||
+            _kbEvt.code === "Space"
+          ) {
+            const _nb = document.getElementById("btn-next");
+            if (_nb && _nb.style.display !== "none" && !_nb.disabled) {
+              _kbEvt.preventDefault();
+              _nb.click();
+            }
+            return;
+          }
+          // 1-4 / A-D で choice を選択（disabled なら無視）
+          let _idx = -1;
+          if (/^[1-4]$/.test(_kbEvt.key)) _idx = parseInt(_kbEvt.key, 10) - 1;
+          else if (/^[a-dA-D]$/.test(_kbEvt.key))
+            _idx = _kbEvt.key.toUpperCase().charCodeAt(0) - 65;
+          if (_idx < 0) return;
+          const _btns = _scr.querySelectorAll(".choice");
+          if (_btns[_idx] && !_btns[_idx].disabled) {
+            _kbEvt.preventDefault();
+            _btns[_idx].click();
+          }
+        });
+
+        window.addEventListener("resize", updateLangPill);
+      })();
+    </script>
+  </body>
+</html>

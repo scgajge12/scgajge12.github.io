@@ -878,6 +878,22 @@
           transition-duration: 0.001ms !important;
         }
       }
+
+      /* ===== A11y common (focus-visible + 44px touch target) ===== */
+      /* キーボードフォーカス可視化（WCAG 2.4.7）— マウスクリック時は表示しない */
+      :focus {
+        outline: none;
+      }
+      :focus-visible {
+        outline: 2px solid var(--primary-light, #22d3ee);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+      /* lang-toggle 等の小型ボタンのタッチターゲット 44×44px 確保 */
+      .lang-toggle button {
+        min-height: 44px;
+        min-width: 44px;
+      }
     </style>
   </head>
   <body>
@@ -1100,34 +1116,36 @@
           },
           {
             id: "OSS",
-            status: "soon",
+            status: "playable",
+            href: "./oss-bug-hunt-quiz/",
             emblem: "OSS",
-            tag: "QUIZ",
+            tag: "QUIZ · 30 DAYS",
             ja: {
               title: "OSSバグハント入門 クイズ",
-              desc: "本「30日でCVE取得! OSSバグハント入門」を題材にした、理解度テストクイズ（準備中）。",
-              meta: ["準備中"],
+              desc: "Zenn 書籍『30日でCVE取得! OSSバグハント入門』の 30 日ロードマップを 20 問のシナリオに圧縮した、CVE 取得志向の4択クイズ。",
+              meta: ["20問", "約10分", "JA / EN"],
             },
             en: {
               title: "OSS Bug Hunting 101 Quiz",
-              desc: "A comprehension quiz based on the content of 'Get Your CVE in 30 Days! An Introduction to OSS Bug Hunting' (coming soon).",
-              meta: ["WIP"],
+              desc: "A 30-day CVE roadmap from the Zenn book \"Get Your CVE in 30 Days! An Introduction to OSS Bug Hunting\" — compressed into 20 scenario questions for would-be CVE hunters.",
+              meta: ["20 Q", "~10 min", "JA / EN"],
             },
           },
           {
-            id: "BBP",
-            status: "soon",
-            emblem: "BBP",
-            tag: "QUIZ",
+            id: "BHE",
+            status: "playable",
+            href: "./bug-hunter-exam/",
+            emblem: "試",
+            tag: "QUIZ · 5-PHASE",
             ja: {
-              title: "実践バグバウンティ登竜門 クイズ",
-              desc: "本「脱初心者のための実践バグバウンティ登竜門」を題材にした、理解度テストクイズ（準備中）。",
-              meta: ["準備中"],
+              title: "バグハンター試験",
+              desc: "Zenn 書籍『脱初心者のための実践バグバウンティ登竜門』を題材にした、5 次試験式のシナリオクイズ。5 人の試験官が章ごとの判断軸を 20 問（試験ごと 4 問 × 5）で問い、最後にハンターライセンスを発行する。",
+              meta: ["20問", "5次試験", "JA / EN"],
             },
             en: {
-              title: "Practical Bug Bounty Quiz",
-              desc: "A comprehension quiz based on the content of 'Breaking into Bug Bounty: A Practical Guide for Beginners' (coming soon).",
-              meta: ["WIP"],
+              title: "Bug Hunter Exam",
+              desc: "A 5-phase scenario quiz inspired by the Zenn book 'Breaking into Bug Bounty: A Practical Guide for Beginners.' Five examiners test chapter-by-chapter judgement axes across 20 questions (4 per phase), and you walk away with a Hunter License.",
+              meta: ["20 Q", "5 PHASES", "JA / EN"],
             },
           },
           {
@@ -1237,7 +1255,12 @@
         /* =========================================================
          状態
          ========================================================= */
+        // 全ゲーム共通キー mk12_game_lang を優先して読み出し、なければ "ja"
         let currentLang = "ja";
+        try {
+          const stored = localStorage.getItem("mk12_game_lang");
+          if (stored === "ja" || stored === "en") currentLang = stored;
+        } catch (e) {}
 
         /* =========================================================
          DOM ヘルパ：要素を生成して属性／テキストを安全にセット
@@ -1372,6 +1395,9 @@
             const lang = btn.dataset.lang;
             if (lang === currentLang) return;
             currentLang = lang;
+            try {
+              localStorage.setItem("mk12_game_lang", lang);
+            } catch (e) {}
             langButtons.forEach(function (b) {
               b.classList.toggle("active", b === btn);
             });
@@ -1444,6 +1470,10 @@
         /* =========================================================
          初期化
          ========================================================= */
+        // 言語トグルボタンの active 状態を currentLang に合わせて同期
+        langButtons.forEach(function (b) {
+          b.classList.toggle("active", b.dataset.lang === currentLang);
+        });
         applyI18n();
         requestAnimationFrame(updateLangPill);
         window.addEventListener("resize", updateLangPill);
