@@ -327,6 +327,48 @@
         margin: 0 auto;
       }
 
+      /* 紹介動画（TRAILER）セクション */
+      .trailer {
+        margin-bottom: 36px;
+        animation: fadeIn 0.6s ease;
+      }
+      .trailer-frame {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        width: 100%;
+        max-width: 880px;
+        margin: 0 auto;
+        background: #000;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition:
+          border-color 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+      .trailer-frame:hover {
+        border-color: var(--primary);
+        box-shadow: var(--shadow-strong);
+      }
+      .trailer-frame iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+      }
+      .trailer-caption {
+        margin-top: 10px;
+        text-align: center;
+        font-size: 11.5px;
+        letter-spacing: 1.5px;
+        color: var(--text-dim);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        text-transform: uppercase;
+      }
+
       /* セクション見出し */
       .section-head {
         display: flex;
@@ -956,6 +998,28 @@
 
       <div class="game-grid" id="game-grid"></div>
 
+      <section class="trailer" aria-labelledby="trailer-head-title">
+        <div class="section-head">
+          <span
+            class="section-head-title"
+            id="trailer-head-title"
+          ></span>
+          <span class="section-head-line"></span>
+        </div>
+        <div class="trailer-frame">
+          <iframe
+            src="https://www.youtube.com/embed/9xJ2hXmGNNI?si=lK3nqAg9yFsS2XfG&playsinline=1&modestbranding=1"
+            title="Bug Bounty Online Game — Trailer"
+            loading="lazy"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <p class="trailer-caption" id="trailer-caption"></p>
+      </section>
+
       <div class="section-head">
         <span class="section-head-title" id="links-head-title"></span>
         <span class="section-head-line"></span>
@@ -1064,6 +1128,8 @@
             statFreeLabel: "無料 / 登録不要",
             statLangLabel: "言語切替",
             statWebLabel: "ブラウザ動作",
+            trailerHead: "TRAILER",
+            trailerCaption: "ゲーム紹介動画",
             gamesHead: "GAMES",
             linksHead: "LINKS",
             countSuffix: function (n, total) {
@@ -1082,6 +1148,8 @@
             statFreeLabel: "FREE / NO SIGNUP",
             statLangLabel: "LANGUAGE TOGGLE",
             statWebLabel: "WORKS IN BROWSER",
+            trailerHead: "TRAILER",
+            trailerCaption: "Official trailer",
             gamesHead: "GAMES",
             linksHead: "LINKS",
             countSuffix: function (n, total) {
@@ -1358,6 +1426,10 @@
             dict.statLangLabel;
           document.getElementById("stat-web-label").textContent =
             dict.statWebLabel;
+          document.getElementById("trailer-head-title").textContent =
+            dict.trailerHead;
+          document.getElementById("trailer-caption").textContent =
+            dict.trailerCaption;
           document.getElementById("games-head-title").textContent =
             dict.gamesHead;
           document.getElementById("links-head-title").textContent =
