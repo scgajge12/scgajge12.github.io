@@ -1,0 +1,8 @@
+<footer class="footer">
+    <!-- ユーザー定義のフッターHTMLを差し込む -->
+    {{ if .Site.Params.CustomFooterHTML }}
+    {{ .Site.Params.CustomFooterHTML | safeHTML }}
+    {{ end }}
+
+    <span>&copy; {{ now.Year }} {{ .Site.Params.Footer}}</span>
+</footer>
