@@ -7,6 +7,9 @@ theme = "gokarna"
 # Automatically generate robots.txt
 enableRobotsTXT = true
 
+# Google Analytics 4 測定ID（Hugo内部テンプレート用）
+googleAnalytics = "G-5RYW8BSKQ2"
+
 [params]
   footer = "scgajge12"
   description = "Security Engineer and Bug Hunter"

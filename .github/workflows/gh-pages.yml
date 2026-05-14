@@ -26,6 +26,18 @@ jobs:
       - name: Build
         run: hugo --minify
 
+      - name: Inject Google Analytics into static HTML (e.g. /games)
+        run: |
+          # hugo.toml から GA 測定ID を抽出（単一情報源）
+          GA_ID=$(grep -E '^\s*googleAnalytics\s*=' hugo.toml | sed -E 's/.*"([^"]+)".*/\1/')
+          if [ -z "$GA_ID" ]; then
+            echo "error: googleAnalytics not found in hugo.toml" >&2
+            exit 1
+          fi
+          echo "Using GA ID: $GA_ID"
+          # Hugoテンプレートを通らない静的HTML（/games配下など）にgtag.jsを注入
+          python3 scripts/inject_ga.py public/games --measurement-id "$GA_ID"
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref == 'refs/heads/main'
