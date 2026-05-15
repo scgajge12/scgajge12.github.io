@@ -183,7 +183,8 @@ type: page
 <div class="pf-skills">
   <span class="pf-skill">Web Application Security</span>
   <span class="pf-skill">Cloud Security (AWS)</span>
-  <span class="pf-skill">OSS Vulnerability Research</span>
+  <span class="pf-skill">Offensive Security</span>
+  <span class="pf-skill">Vulnerability Research</span>
   <span class="pf-skill">Source Code Assessment</span>
   <span class="pf-skill">LLM Security Assessment</span>
 </div>
@@ -206,7 +207,6 @@ type: page
   <span class="pf-skill">S3</span>
   <span class="pf-skill">EC2</span>
   <span class="pf-skill">Lambda</span>
-  <span class="pf-skill">IAM</span>
   <span class="pf-skill">GuardDuty</span>
   <span class="pf-skill">WAF</span>
 </div>
