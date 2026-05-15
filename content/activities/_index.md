@@ -260,7 +260,7 @@ type: page
       <tr>
         <td class="pf-history-year">2026</td>
         <td class="pf-history-role"><span class="pf-chip pf-chip-lecturer">Lecturer</span></td>
-        <td class="pf-history-detail"><em>Introduction to Bug Hunting in the AI Era</em></td>
+        <td class="pf-history-detail">Introduction to Bug Hunting in the AI Era</td>
       </tr>
       <tr>
         <td class="pf-history-year">2025</td>
@@ -344,6 +344,40 @@ type: page
         <td class="pf-history-year">2022</td>
         <td class="pf-history-role"><span class="pf-chip pf-chip-speaker">Speaker</span></td>
         <td class="pf-history-detail">Security-JAWS #25</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="pf-history-card">
+  <div class="pf-history-org">Community</div>
+  <h3 class="pf-history-title">Security Wakate Association</h3>
+  <table class="pf-history-table">
+    <tbody>
+      <tr>
+        <td class="pf-history-year">2025</td>
+        <td class="pf-history-role"><span class="pf-chip pf-chip-organizer">Organizer</span></td>
+        <td class="pf-history-detail">4th — LT &amp; Networking</td>
+      </tr>
+      <tr>
+        <td class="pf-history-year">2025</td>
+        <td class="pf-history-role"><span class="pf-chip pf-chip-organizer">Organizer</span></td>
+        <td class="pf-history-detail">3rd — Workshop &amp; Networking</td>
+      </tr>
+      <tr>
+        <td class="pf-history-year">2025</td>
+        <td class="pf-history-role"><span class="pf-chip pf-chip-organizer">Organizer</span></td>
+        <td class="pf-history-detail">2nd — LT &amp; Networking</td>
+      </tr>
+      <tr>
+        <td class="pf-history-year">2024</td>
+        <td class="pf-history-role"><span class="pf-chip pf-chip-organizer">Organizer</span></td>
+        <td class="pf-history-detail">1st — LT &amp; Networking</td>
+      </tr>
+      <tr>
+        <td class="pf-history-year">2024</td>
+        <td class="pf-history-role"><span class="pf-chip pf-chip-organizer">Co-founder</span></td>
+        <td class="pf-history-detail">Founded the association (Oct 2024)</td>
       </tr>
     </tbody>
   </table>
