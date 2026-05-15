@@ -1,7 +1,7 @@
 ---
 title: "⭐︎ Introduction to Software Supply Chain from a Bug Hunter's Perspective"
 date: 2026-05-09
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty"]
 type: post
 showTableOfContents: true
 ---

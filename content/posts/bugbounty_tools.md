@@ -1,7 +1,7 @@
 ---
 title: "10 recommended tools for Bug Bounty"
 date: 2023-12-05
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty"]
 type: post
 showTableOfContents: true
 ---

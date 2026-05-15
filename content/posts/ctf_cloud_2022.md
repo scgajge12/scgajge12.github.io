@@ -1,7 +1,7 @@
 ---
 title: "⭐︎ Summary of CTF Cloud attack methods (2022 version)"
 date: 2023-05-22
-tags: ["cloud", "security", "blog"]
+tags: ["cloud", "ctf"]
 type: post
 showTableOfContents: true
 ---

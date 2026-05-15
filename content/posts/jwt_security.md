@@ -1,7 +1,7 @@
 ---
 title: "⭐︎ An Introduction to JWT from a Security Perspective"
 date: 2020-12-10
-tags: ["web", "security", "blog"]
+tags: ["web", "security"]
 type: post
 showTableOfContents: true
 ---

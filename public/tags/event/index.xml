@@ -1,65 +1,103 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>event on morioka12 site</title>
-    <link>https://scgajge12.github.io/tags/event/</link>
-    <description>Recent content in event on morioka12 site</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <title>Event on morioka12 site</title>
+    <link>http://localhost:1313/tags/event/</link>
+    <description>Recent content in Event on morioka12 site</description>
+    <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 15 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://scgajge12.github.io/tags/event/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 10 Mar 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/event/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>P3NFEST 2026 Spring Hands-on Course and Talk Report</title>
+      <link>http://localhost:1313/posts/p3nfest_2026_spring/</link>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/p3nfest_2026_spring/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/p3nfest_2026_spring&#34;&gt;P3NFEST 2026 Spring ハンズオン講座と講演の登壇レポート&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ P3NFEST 2024 Summer Hands-on Course Report (Introduction to Practical Bug Bounty)</title>
+      <link>http://localhost:1313/posts/p3nfest_2024_summer_bugbounty/</link>
+      <pubDate>Mon, 02 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/p3nfest_2024_summer_bugbounty/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/p3nfest_2024_summer_bugbounty&#34;&gt;P3NFEST 2024 Summer のハンズオン講座に関する開催記（実践的なバグバウンティ入門）&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Summary of Bug Bounty Village 2024</title>
+      <link>http://localhost:1313/posts/bug_bounty_village_2024/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bug_bounty_village_2024/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bug_bounty_village_2024&#34;&gt;Bug Bounty Village 概要まとめ (2024)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Overview of Nahamcon 2024</title>
+      <link>http://localhost:1313/posts/nahamcon_2024/</link>
+      <pubDate>Sun, 26 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/nahamcon_2024/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/nahamcon_2024&#34;&gt;NahamCon 2024 簡単まとめ&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Participation in JAWS DAYS 2024 (Student Speakers)</title>
+      <link>http://localhost:1313/posts/jaws_days_2024_speaker/</link>
+      <pubDate>Mon, 04 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/jaws_days_2024_speaker/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/jaws_days_2024_speaker&#34;&gt;JAWS DAYS 2024の参加記(学生登壇)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Security-JAWS DAYS Participation Record &amp; CTF Creator Commentary</title>
+      <link>http://localhost:1313/posts/secjaws30_ctf/</link>
+      <pubDate>Thu, 31 Aug 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/secjaws30_ctf/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/security_jaws_days_2023&#34;&gt;Security-JAWS DAYS 参加記&amp;amp;CTF作問者解説&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>MBSD Cybersecurity Challenges 2022 Interview</title>
+      <link>http://localhost:1313/posts/mbsd_interview/</link>
+      <pubDate>Mon, 26 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/mbsd_interview/</guid>
+      <description>&lt;h2 id=&#34;interview-japanese&#34;&gt;Interview (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.mbsd.jp/2022_IPFactory/&#34;&gt;MBSD Cybersecurity Challenges 2022 Interview&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
     <item>
       <title>Security Camp National Convention 2022 Tutor Participation Record (B Class)</title>
-      <link>https://scgajge12.github.io/posts/securitycamp2022b_tutor/</link>
+      <link>http://localhost:1313/posts/securitycamp2022b_tutor/</link>
       <pubDate>Mon, 15 Aug 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://scgajge12.github.io/posts/securitycamp2022b_tutor/</guid>
-      <description>Blog (Japanese) セキュリティ・キャンプ全国大会 2022 チューター 参加記(Bクラス) </description>
+      <guid>http://localhost:1313/posts/securitycamp2022b_tutor/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/securitycamp2022b_tutor&#34;&gt;セキュリティ・キャンプ全国大会 2022 チューター 参加記(Bクラス)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
     </item>
-    
     <item>
       <title>SecHack365 Alumni Interview</title>
-      <link>https://scgajge12.github.io/posts/sechack365_interview/</link>
+      <link>http://localhost:1313/posts/sechack365_interview/</link>
       <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://scgajge12.github.io/posts/sechack365_interview/</guid>
-      <description>Interview (Japanese) SecHack365 修了生 Interview </description>
+      <guid>http://localhost:1313/posts/sechack365_interview/</guid>
+      <description>&lt;h2 id=&#34;interview-japanese&#34;&gt;Interview (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://sechack365.nict.go.jp/alumni/interview/2019interview01.html&#34;&gt;SecHack365 修了生 Interview&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
     </item>
-    
     <item>
       <title>Review of SECCON 2019</title>
-      <link>https://scgajge12.github.io/posts/seccon/</link>
+      <link>http://localhost:1313/posts/seccon/</link>
       <pubDate>Mon, 30 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://scgajge12.github.io/posts/seccon/</guid>
-      <description>Blog (Japanese) SECCON 2019の振り返り </description>
+      <guid>http://localhost:1313/posts/seccon/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/2019/12/30/SECCON_2019_%E3%82%B9%E3%83%9D%E3%83%B3%E3%82%B5%E3%83%BC%E3%81%A8%E3%81%97%E3%81%A6%E5%8F%82%E5%8A%A0&#34;&gt;SECCON 2019の振り返り&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
     </item>
-    
     <item>
       <title>Review of CODE BLUE 2019</title>
-      <link>https://scgajge12.github.io/posts/code_blue/</link>
+      <link>http://localhost:1313/posts/code_blue/</link>
       <pubDate>Fri, 06 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://scgajge12.github.io/posts/code_blue/</guid>
-      <description>Blog (Japanese) CODE BLUE 2019の振り返り </description>
+      <guid>http://localhost:1313/posts/code_blue/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/2019/12/06/CODE_BLUE_2019_%E5%AD%A6%E7%94%9F%E3%82%B9%E3%82%BF%E3%83%83%E3%83%95%E3%81%A8%E3%81%97%E3%81%A6%E5%8F%82%E5%8A%A0&#34;&gt;CODE BLUE 2019の振り返り&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
     </item>
-    
     <item>
       <title>Review of SecHack365 Returns (2019)</title>
-      <link>https://scgajge12.github.io/posts/sechack365_return/</link>
+      <link>http://localhost:1313/posts/sechack365_return/</link>
       <pubDate>Sat, 12 Oct 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://scgajge12.github.io/posts/sechack365_return/</guid>
-      <description>Blog (Japanese) SecHack365 Returns (2019)の振り返り </description>
+      <guid>http://localhost:1313/posts/sechack365_return/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/2019/10/12/SecHack365_Returns_2019_%E5%8F%82%E5%8A%A0&#34;&gt;SecHack365 Returns (2019)の振り返り&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
     </item>
-    
     <item>
       <title>Review of SecHack365 (2018)</title>
-      <link>https://scgajge12.github.io/posts/review_sechack365/</link>
+      <link>http://localhost:1313/posts/review_sechack365/</link>
       <pubDate>Tue, 02 Apr 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://scgajge12.github.io/posts/review_sechack365/</guid>
-      <description>Blog (Japanese) SecHack365(2018)の振り返り </description>
+      <guid>http://localhost:1313/posts/review_sechack365/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/2019/04/02/104058&#34;&gt;SecHack365(2018)の振り返り&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
     </item>
-    
   </channel>
 </rss>

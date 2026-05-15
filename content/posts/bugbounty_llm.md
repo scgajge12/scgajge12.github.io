@@ -1,7 +1,7 @@
 ---
 title: "Use case of LLM for Bug Bounty"
 date: 2025-02-07
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty"]
 type: post
 showTableOfContents: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Story about being selected as an AWS Community Builder"
 date: 2024-03-11
-tags: ["cloud", "blog"]
+tags: ["cloud", "career"]
 type: post
 showTableOfContents: true
 ---

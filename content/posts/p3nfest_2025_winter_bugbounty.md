@@ -1,7 +1,7 @@
 ---
 title: "⭐︎ Introduction to Practical Bug Bounty (2025 Edition)"
 date: 2025-03-15
-tags: ["bugbounty", "security", "Slide"]
+tags: ["bugbounty", "slide"]
 type: post
 showTableOfContents: true
 ---

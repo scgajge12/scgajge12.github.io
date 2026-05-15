@@ -1,7 +1,7 @@
 ---
 title: "Avoiding MFA authentication for AWS login by phishing and case studies"
 date: 2023-09-04
-tags: ["cloud", "security", "blog"]
+tags: ["cloud", "security"]
 type: post
 showTableOfContents: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Summary of Critical Vulnerability Reports on the Bug Bounty"
 date: 2023-12-12
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty", "web"]
 type: post
 showTableOfContents: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Overview of Nahamcon 2024"
 date: 2024-05-26
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty", "event"]
 type: post
 showTableOfContents: true
 ---

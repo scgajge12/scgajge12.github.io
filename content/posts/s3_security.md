@@ -1,7 +1,7 @@
 ---
 title: "⭐︎ Security risks and countermeasures due to vulnerable use of Amazon S3"
 date: 2022-07-26
-tags: ["cloud", "security", "blog"]
+tags: ["cloud", "security"]
 type: post
 showTableOfContents: true
 ---

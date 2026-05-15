@@ -1,7 +1,7 @@
 ---
 title: "Summary of HTB Cloud attack methods"
 date: 2022-10-13
-tags: ["cloud", "security", "htb", "blog"]
+tags: ["cloud", "ctf"]
 type: post
 showTableOfContents: true
 ---

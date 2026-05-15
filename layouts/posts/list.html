@@ -1,0 +1,39 @@
+{{ define "main" }}
+<div class="container list-posts">
+
+  <h1 class="list-title">{{ .Name }}</h1>
+
+  {{/* 主要タグをポストページ上部にピル表示。順序は表示優先順 */}}
+  <div class="pf-tagbar">
+    <div class="pf-tagbar-label">Topics</div>
+    <div class="pf-tagbar-pills">
+      {{- $featured := slice "bugbounty" "cloud" "web" "security" "career" "event" "slide" -}}
+      {{- $taxonomy := .Site.Taxonomies.tags -}}
+      {{- range $featured -}}
+        {{- $key := . | urlize -}}
+        {{- $term := index $taxonomy $key -}}
+        {{- if $term -}}
+        <a class="pf-tagbar-pill" href="{{ printf "tags/%s/" $key | absLangURL }}">
+          <span class="pf-tagbar-name">{{ . }}</span>
+          <span class="pf-tagbar-count">{{ len $term }}</span>
+        </a>
+        {{- end -}}
+      {{- end -}}
+      <a class="pf-tagbar-pill pf-tagbar-pill-all" href="{{ "tags/" | absLangURL }}">
+        All tags <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+
+  {{ $allPosts := where .Pages "Params.type" "post" }}
+  {{ range $allPosts.GroupByDate "2006" }}
+
+  <h2 class="posts-year">{{ .Key }}</h2>
+
+  {{- range .Pages -}}
+    {{- partial "list-posts.html" . -}}
+  {{ end }}
+  {{ end }}
+
+</div>
+{{ end }}

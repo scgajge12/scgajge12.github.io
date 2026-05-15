@@ -1,7 +1,7 @@
 ---
 title: "⭐︎ Introduction to Bug Bounty"
 date: 2023-09-25
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty"]
 type: post
 showTableOfContents: true
 ---

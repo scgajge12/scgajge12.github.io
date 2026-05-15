@@ -1,7 +1,7 @@
 ---
 title: "We asked 11 Japanese Bug Hunters about the appeal and fun of Bug Bounty!"
 date: 2025-04-07
-tags: ["blog","bugbounty","security"]
+tags: ["bugbounty", "interview"]
 type: post
 showTableOfContents: true
 ---

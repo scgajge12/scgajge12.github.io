@@ -1,7 +1,7 @@
 ---
 title: "Review of SECCON 2019"
 date: 2019-12-30
-tags: ["event", "blog"]
+tags: ["event"]
 type: post
 showTableOfContents: true
 ---

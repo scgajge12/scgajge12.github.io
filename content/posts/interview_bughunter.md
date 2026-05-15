@@ -1,7 +1,7 @@
 ---
 title: "Interview Summary: Why I work on the Bug Bounty and what I really enjoy about it."
 date: 2024-07-03
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty", "interview"]
 type: post
 showTableOfContents: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Participation in JAWS DAYS 2024 (Student Speakers)"
 date: 2024-03-04
-tags: ["event", "blog"]
+tags: ["cloud", "event"]
 type: post
 showTableOfContents: true
 ---

@@ -1,80 +1,129 @@
 ---
 title: "Bug Bounty"
+description: "Bug bounty platform standing & milestones by morioka12 — Intigriti, Synack Red Team, IssueHunt, huntr.dev. Highest CVSS 9.8 (Exceptional)."
 type: page
 ---
 
-## Intigriti
+<div class="pf-stats">
+  <div class="pf-stat">
+    <span class="pf-stat-value">6th</span>
+    <span class="pf-stat-label">Intigriti · Feb.2024</span>
+  </div>
+  <div class="pf-stat">
+    <span class="pf-stat-value">17th</span>
+    <span class="pf-stat-label">Intigriti · Q1 2024 (Award)</span>
+  </div>
+  <div class="pf-stat">
+    <span class="pf-stat-value">9.8</span>
+    <span class="pf-stat-label">Highest CVSS (Exceptional)</span>
+  </div>
+  <div class="pf-stat">
+    <span class="pf-stat-value">2020</span>
+    <span class="pf-stat-label">Bug Bounty Hunter · Debut</span>
+  </div>
+</div>
 
-> Open Bug Bounty Platform
+Profiles, platform standing and notable milestones across the bug bounty platforms I participate in.
 
-**Highest Ranking (Leaderboard)**
-- All time
-  - 83rd place (Apr.2020)
-- Last 90 days
-  - 19th place (Feb.2024)
-- Months
-  - 6th place (Feb.2024), [link](https://app.intigriti.com/leaderboard?severity=1&year=2024&month=2)
-- Quarters
-  - 17th place (Q1 2024), [link](https://app.intigriti.com/leaderboard?severity=1&year=2024&quarter=1), [tweet (post)](https://x.com/scgajge12/status/1775878382221418697)
+## Platforms
 
-**Main History**
-- 2024/04/01: Ranked **17th** in 1st Quarterly 2024
-- 2024/03/01: Ranked **6th** in February 2024
-- 2024/02/06: First **Exceptional** report Accepted
-  - CVSS score 9.8 (2 reports) , [tweet (post)](https://twitter.com/scgajge12/status/1754854881373106588)
-- 2022/04/25: First **Critical** report Accepted
-  - CVSS score 9.1 , [tweet (post)](https://twitter.com/scgajge12/status/1518578154830323712)
-- 2020/04/06: Ranked in All time Top #100
-  - [tweet (post)](https://twitter.com/scgajge12/status/1247149383092559872)
-- 2020/03/23: First Reward (bounty)
-  - [tweet (post)](https://twitter.com/scgajge12/status/1242094314328485888)
-- 2020/03/03: First Accepted
-  - [tweet (post)](https://twitter.com/scgajge12/status/1234845325371695104)
-- 2020/03/01: Join
+<div class="pf-platforms">
 
-## Synack Red Team
+<div class="pf-platform">
+  <div class="pf-platform-header">
+    <h3 class="pf-platform-name"><a href="https://www.intigriti.com/profile/morioka12">Intigriti</a></h3>
+    <span class="pf-platform-since">Since 2020/03</span>
+  </div>
+  <div class="pf-platform-kind">Open Bug Bounty Platform</div>
+  <dl>
+    <dt>All-time peak</dt><dd>83rd place (Apr.2020)</dd>
+    <dt>90-day peak</dt><dd>19th place (Feb.2024)</dd>
+    <dt>Monthly peak</dt><dd>6th place (Feb.2024) · <a href="https://app.intigriti.com/leaderboard?severity=1&year=2024&month=2" rel="noopener noreferrer">leaderboard</a></dd>
+    <dt>Quarterly peak</dt><dd>17th place (Q1 2024) · <a href="https://app.intigriti.com/leaderboard?severity=1&year=2024&quarter=1" rel="noopener noreferrer">leaderboard</a></dd>
+  </dl>
+</div>
 
-> Secret Bug Bounty Platform
+<div class="pf-platform">
+  <div class="pf-platform-header">
+    <h3 class="pf-platform-name">Synack Red Team</h3>
+    <span class="pf-platform-since">Since 2023/01</span>
+  </div>
+  <div class="pf-platform-kind">Private / Invite-only Platform</div>
+  <dl>
+    <dt>Status</dt><dd>Joined (passed selection) — <a href="https://twitter.com/scgajge12/status/1697783901970932095">tweet</a></dd>
+  </dl>
+</div>
 
-**History**
-- 2023/01/18: Join (passed)
-  - [tweet (post)](https://twitter.com/scgajge12/status/1697783901970932095)
+<div class="pf-platform">
+  <div class="pf-platform-header">
+    <h3 class="pf-platform-name"><a href="https://issuehunt.io/profiles/scgajge12">IssueHunt</a></h3>
+    <span class="pf-platform-since">Since 2023/08</span>
+  </div>
+  <div class="pf-platform-kind">Open Bug Bounty Platform</div>
+  <dl>
+    <dt>First report</dt><dd>Accepted (Oct.2023) — Rakuten Group, Inc. · <a href="https://twitter.com/scgajge12/status/1713728968656818665">tweet</a></dd>
+  </dl>
+</div>
 
-## IssueHunt
+<div class="pf-platform">
+  <div class="pf-platform-header">
+    <h3 class="pf-platform-name"><a href="https://huntr.dev/users/scgajge12/">huntr.dev</a></h3>
+    <span class="pf-platform-since">Since 2021/11</span>
+  </div>
+  <div class="pf-platform-kind">OSS Bug Bounty Platform (legacy)</div>
+  <dl>
+    <dt>All-time peak</dt><dd>69th place (Jul.2023)</dd>
+    <dt>90-day peak</dt><dd>2nd place (Jul.2023)</dd>
+    <dt>30-day peak</dt><dd>1st place (Jul.2023) · <a href="https://twitter.com/scgajge12/status/1681589725776474112" rel="noopener noreferrer">tweet</a></dd>
+  </dl>
+</div>
 
-> Open Bug Bounty Platform
+</div>
 
-**History**
-- 2023/10/02: First Accepted
-  - Report to: Rakuten Group, Inc. , [tweet (post)](https://twitter.com/scgajge12/status/1713728968656818665)
-- 2023/08/02: Join
+## Intigriti · Milestones
 
-## huntr.dev
+<table class="pf-milestones">
+<tbody>
 
-> Open OSS Bug Bounty Platform (old)
+<tr>
+  <td class="pf-ms-date">2024/04/01</td>
+  <td class="pf-ms-event">Ranked <strong>17th</strong> in Q1 2024</td>
+</tr>
 
-**History**
-- 2021/11: Join
+<tr>
+  <td class="pf-ms-date">2024/03/01</td>
+  <td class="pf-ms-event">Ranked <strong>6th</strong> in February 2024</td>
+</tr>
 
-**Highest Ranking (Leaderboard)**
-- All time
-  - 69th place (Jul.2023)
-- Last 90 days
-  - 2th place (Jul.2023)
-- Last 30 days
-  - 1st place (Jul.2023) , [tweet (post)](https://twitter.com/scgajge12/status/1681589725776474112)
+<tr class="is-key">
+  <td class="pf-ms-date">2024/02/06</td>
+  <td class="pf-ms-event">First <strong>Exceptional</strong> report accepted (CVSS 9.8 &times; 2) · <a href="https://twitter.com/scgajge12/status/1754854881373106588" rel="noopener noreferrer">tweet</a></td>
+</tr>
 
----
+<tr class="is-key">
+  <td class="pf-ms-date">2022/04/25</td>
+  <td class="pf-ms-event">First <strong>Critical</strong> report accepted (CVSS 9.1) · <a href="https://twitter.com/scgajge12/status/1518578154830323712" rel="noopener noreferrer">tweet</a></td>
+</tr>
 
-## Link
+<tr>
+  <td class="pf-ms-date">2020/04/06</td>
+  <td class="pf-ms-event">Ranked in All-time Top #100 · <a href="https://twitter.com/scgajge12/status/1247149383092559872" rel="noopener noreferrer">tweet</a></td>
+</tr>
 
-- [Intigriti](https://www.intigriti.com/profile/morioka12)
-- [huntr.dev](https://huntr.dev/users/scgajge12/)
-- [Open Bug Bounty](https://www.openbugbounty.org/researchers/morioka12/)
-- [IssueHunt](https://issuehunt.io/profiles/scgajge12)
+<tr>
+  <td class="pf-ms-date">2020/03/23</td>
+  <td class="pf-ms-event">First reward (bounty) · <a href="https://twitter.com/scgajge12/status/1242094314328485888" rel="noopener noreferrer">tweet</a></td>
+</tr>
 
-## Blog "Introduction to Bug Bounty"
+<tr>
+  <td class="pf-ms-date">2020/03/03</td>
+  <td class="pf-ms-event">First accepted · <a href="https://twitter.com/scgajge12/status/1234845325371695104" rel="noopener noreferrer">tweet</a></td>
+</tr>
 
-Blog (Japanese)
-- [バグバウンティ入門(始め方)](https://scgajge12.hatenablog.com/entry/bugbounty_beginner)
-  - [tweet (post)](https://twitter.com/scgajge12/status/1706118989448098079)
+<tr>
+  <td class="pf-ms-date">2020/03/01</td>
+  <td class="pf-ms-event">Joined Intigriti</td>
+</tr>
+
+</tbody>
+</table>

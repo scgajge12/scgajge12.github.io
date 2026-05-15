@@ -1,7 +1,7 @@
 ---
 title: "Intigriti Q1 2024 results"
 date: 2024-05-21
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty", "career"]
 type: post
 showTableOfContents: true
 ---

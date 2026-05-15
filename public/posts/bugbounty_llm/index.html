@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #38b48b;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>Use case of LLM for Bug Bounty</title>
+    <meta name="description" content="Security Engineer and Bug Hunter">
+    <meta name="keywords" content='morioka12, scgajge12, portfolio, bugbounty'>
+
+    <meta property="og:url" content="http://localhost:1313/posts/bugbounty_llm/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Use case of LLM for Bug Bounty">
+    <meta property="og:description" content="Security Engineer and Bug Hunter">
+    <meta property="og:image" content="http://localhost:1313/images/morioka12.jpg">
+    <meta property="og:image:secure_url" content="http://localhost:1313/images/morioka12.jpg">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Use case of LLM for Bug Bounty">
+    <meta name="twitter:description" content="Security Engineer and Bug Hunter">
+    <meta property="twitter:domain" content="http://localhost:1313/posts/bugbounty_llm/">
+    <meta property="twitter:url" content="http://localhost:1313/posts/bugbounty_llm/">
+    <meta name="twitter:image" content="http://localhost:1313/images/morioka12.jpg">
+
+    
+    <link rel="canonical" href="http://localhost:1313/posts/bugbounty_llm/" />
+
+    <link rel="stylesheet" type="text/css" href="http://localhost:1313//css/normalize.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="http://localhost:1313//css/main.css">
+    <link disabled id="dark-theme" rel="stylesheet" href="http://localhost:1313//css/dark.css">
+
+    <script src="http://localhost:1313//js/svg-injector.min.js"></script>
+    <script src="http://localhost:1313//js/feather-icons.min.js"></script>
+    <script src="http://localhost:1313//js/main.js"></script>
+
+    
+    
+
+    
+    
+        <!-- ポートフォリオ向け追加スタイル -->
+    <link rel="stylesheet" type="text/css" href="/css/portfolio.css">
+    <!-- ダークテーマの切替を data-pf-theme に同期（カードのカラー追従用） -->
+    <script>
+      (function() {
+        function syncPfTheme() {
+          var link = document.getElementById('dark-theme');
+          if (!link) return;
+          // theme.js は dark時に link を有効化、light時に disabled=true
+          var isDark = !link.disabled;
+          document.documentElement.setAttribute('data-pf-theme', isDark ? 'dark' : 'light');
+        }
+        // 初期同期
+        document.addEventListener('DOMContentLoaded', function() {
+          syncPfTheme();
+          var link = document.getElementById('dark-theme');
+          if (!link) return;
+          // disabled属性の変化を監視してリアルタイム反映
+          new MutationObserver(syncPfTheme).observe(link, { attributes: true, attributeFilter: ['disabled'] });
+        });
+      })();
+    </script>
+  
+    
+
+    
+    
+</head>
+<body>
+        <script type="text/javascript">
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="http://localhost:1313/">
+                <img src="http://localhost:1313//images/morioka12.jpg" alt="avatar" />
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="http://localhost:1313/">morioka12 site</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/"><span data-feather='home'></span> Home </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/about/"><span data-feather='user'></span> About </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/activities/"><span data-feather='activity'></span> Activity </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/posts/"><span data-feather='book'></span> Post </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/bb/"><span data-feather='search'></span> BB </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/cves/"><span data-feather='star'></span> CVE </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/podcast/"><span data-feather='music'></span> Podcast </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/games/"><span data-feather='play-circle'></span> Game </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span id="dark-theme-toggle-screen-reader-target" class="sr-only"></span>
+                <a>
+                    <span id="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span id="hamburger-menu-toggle-screen-reader-target" class="sr-only">menu</span>
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/"><span data-feather='home'></span> Home </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/about/"><span data-feather='user'></span> About </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/activities/"><span data-feather='activity'></span> Activity </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/posts/"><span data-feather='book'></span> Post </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/bb/"><span data-feather='search'></span> BB </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/cves/"><span data-feather='star'></span> CVE </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/podcast/"><span data-feather='music'></span> Podcast </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/games/"><span data-feather='play-circle'></span> Game </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span id="dark-theme-toggle-screen-reader-target" class="sr-only">theme</span>
+                    <a>
+                        <span id="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>Use case of LLM for Bug Bounty</h1>
+        <small role="doc-subtitle"></small>
+        <p class="post-date">
+            February 7, 2025
+        </p>
+
+        <ul class="post-tags">
+        
+            <li class="post-tag"><a href="http://localhost:1313/tags/bugbounty">bugbounty</a></li>
+        
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p>
+            <h2 id="blog-japanese">Blog (Japanese)</h2>
+<ul>
+<li><a href="https://scgajge12.hatenablog.com/entry/bugbounty_llm">バグバウンティにおけるLLMの活用事例</a></li>
+</ul>
+<hr>
+
+        </p>
+    </div>
+
+    <div class="prev-next">
+        
+            
+                
+<div class="prev-post">
+    <p>
+        <a href="/posts/sec_wakate_interview/">
+            &#8592;
+            Previous:
+            Interview with a Young Security Engineer 1
+        </a>
+    </p>
+    <p class="prev-post-date">
+        January 8, 2025
+    </p>
+</div>
+
+
+
+<div class="next-post">
+    <p>
+        <a href="/posts/bugbounty_js_monitoring/">
+            Next:
+            JavaScript files monitoring tool for Bug Bounty
+            &#8594;
+        </a>
+    </p>
+        <p class="next-post-date">
+            February 11, 2025
+        </p>
+</div>
+
+
+            
+        
+    </div>
+</div>
+
+<aside class="post-toc">
+    <nav id="toc">
+        <nav id="TableOfContents">
+  <ol>
+    <li><a href="#blog-japanese">Blog (Japanese)</a></li>
+  </ol>
+</nav>
+    </nav>
+</aside>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    <span>&copy; 2026 scgajge12</span>
+</footer>
+</body>
+</html>

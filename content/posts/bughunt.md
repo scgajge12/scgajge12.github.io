@@ -1,7 +1,7 @@
 ---
 title: "⭐︎ Introduction to Bug Hunting (OSS edition)"
 date: 2023-09-19
-tags: ["security", "blog"]
+tags: ["bugbounty"]
 type: post
 showTableOfContents: true
 ---

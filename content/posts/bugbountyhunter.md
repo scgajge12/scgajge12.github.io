@@ -1,7 +1,7 @@
 ---
 title: "Summary of the actual situation of Bug Bounty Hunter in Bug Bounty"
 date: 2023-10-25
-tags: ["bugbounty", "blog"]
+tags: ["bugbounty", "career"]
 type: post
 showTableOfContents: true
 ---

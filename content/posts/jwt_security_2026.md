@@ -1,7 +1,7 @@
 ---
 title: "⭐︎ An Introduction to JWT from a Security Perspective (2026 Edition)"
 date: 2026-05-09
-tags: ["web", "security", "blog"]
+tags: ["web", "security"]
 type: post
 showTableOfContents: true
 ---

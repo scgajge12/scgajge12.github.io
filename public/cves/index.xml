@@ -2,9 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CVEs on morioka12 site</title>
-    <link>https://scgajge12.github.io/cves/</link>
+    <link>http://localhost:1313/cves/</link>
     <description>Recent content in CVEs on morioka12 site</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language><atom:link href="https://scgajge12.github.io/cves/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="http://localhost:1313/cves/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

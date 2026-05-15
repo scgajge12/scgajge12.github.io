@@ -1,7 +1,7 @@
 ---
 title: "Supply Chain Vulnerabilities from a Bug Hunter's Perspective"
 date: 2025-12-04
-tags: ["bugbounty", "security", "Slide"]
+tags: ["bugbounty", "slide"]
 type: post
 showTableOfContents: true
 ---

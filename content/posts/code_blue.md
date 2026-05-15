@@ -1,7 +1,7 @@
 ---
 title: "Review of CODE BLUE 2019"
 date: 2019-12-06
-tags: ["event", "blog"]
+tags: ["event"]
 type: post
 showTableOfContents: true
 ---

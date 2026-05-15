@@ -1,7 +1,7 @@
 ---
 title: "Summary of recommended learning content in Bug Bounty (YouTube)"
 date: 2024-07-29
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty"]
 type: post
 showTableOfContents: true
 ---

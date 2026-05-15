@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Book on morioka12 site</title>
+    <link>https://scgajge12.github.io/tags/book/</link>
+    <description>Recent content in Book on morioka12 site</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 31 Dec 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://scgajge12.github.io/tags/book/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>⭐︎ Get Your First CVE in 30 Days: An Introduction to OSS Bug Hunting</title>
+      <link>https://scgajge12.github.io/posts/oss_bughunt/</link>
+      <pubDate>Wed, 31 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>https://scgajge12.github.io/posts/oss_bughunt/</guid>
+      <description>&lt;h2 id=&#34;book-japanese&#34;&gt;Book (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://zenn.dev/scgajge12/books/6f6ab44df405b2&#34;&gt;30日でCVE取得! OSSバグハント入門&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,7 +1,7 @@
 ---
 title: "Summary of CVE IDs obtained while a student"
 date: 2024-05-20
-tags: ["security", "blog"]
+tags: ["bugbounty", "career"]
 type: post
 showTableOfContents: true
 ---

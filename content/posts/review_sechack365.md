@@ -1,7 +1,7 @@
 ---
 title: "Review of SecHack365 (2018)"
 date: 2019-04-02
-tags: ["event", "blog"]
+tags: ["event"]
 type: post
 showTableOfContents: true
 ---

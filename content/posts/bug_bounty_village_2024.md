@@ -1,7 +1,7 @@
 ---
 title: "Summary of Bug Bounty Village 2024"
 date: 2024-07-23
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty", "event"]
 type: post
 showTableOfContents: true
 ---

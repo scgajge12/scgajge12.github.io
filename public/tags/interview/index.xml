@@ -1,20 +1,54 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>interview on morioka12 site</title>
-    <link>https://scgajge12.github.io/tags/interview/</link>
-    <description>Recent content in interview on morioka12 site</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <title>Interview on morioka12 site</title>
+    <link>http://localhost:1313/tags/interview/</link>
+    <description>Recent content in Interview on morioka12 site</description>
+    <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 01 Apr 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://scgajge12.github.io/tags/interview/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/interview/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>We asked 11 Japanese Bug Hunters about the appeal and fun of Bug Bounty!</title>
+      <link>http://localhost:1313/posts/bughunter_interview_11/</link>
+      <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bughunter_interview_11/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bughunter_interview_11&#34;&gt;日本人バグハンター11人に聞いた！バグバウンティの魅力や面白さについて&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Interview with a Young Security Engineer 1</title>
+      <link>http://localhost:1313/posts/sec_wakate_interview/</link>
+      <pubDate>Wed, 08 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/sec_wakate_interview/</guid>
+      <description>&lt;h2 id=&#34;interview-japanese&#34;&gt;Interview (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://zenn.dev/sec_wakate/articles/7794490c5ea3af&#34;&gt;若手セキュリティエンジニアのインタビュー記事1「morioka12」&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Interview Summary: Why I work on the Bug Bounty and what I really enjoy about it.</title>
+      <link>http://localhost:1313/posts/interview_bughunter/</link>
+      <pubDate>Wed, 03 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/interview_bughunter/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/interview_bughunter&#34;&gt;インタビュー記事「バグバウンティに取り組む理由とその醍醐味」&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ Why work on the Bug Bounty and What&#39;s really exciting about it</title>
+      <link>http://localhost:1313/posts/bugbounty_interview_levtech/</link>
+      <pubDate>Tue, 25 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_interview_levtech/</guid>
+      <description>&lt;h2 id=&#34;interview-japanese&#34;&gt;Interview (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://levtech.jp/media/article/interview/detail_466/&#34;&gt;その魅力は「お金」——だけじゃない。バグハンター界のホープが語る、バグバウンティに取り組む理由とその醍醐味&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://levtech.jp/media/wp-content/uploads/2024/06/240430_lab_eyecatch_interview_134.jpg&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>MBSD Cybersecurity Challenges 2022 Interview</title>
+      <link>http://localhost:1313/posts/mbsd_interview/</link>
+      <pubDate>Mon, 26 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/mbsd_interview/</guid>
+      <description>&lt;h2 id=&#34;interview-japanese&#34;&gt;Interview (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.mbsd.jp/2022_IPFactory/&#34;&gt;MBSD Cybersecurity Challenges 2022 Interview&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
     <item>
       <title>SecHack365 Alumni Interview</title>
-      <link>https://scgajge12.github.io/posts/sechack365_interview/</link>
+      <link>http://localhost:1313/posts/sechack365_interview/</link>
       <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://scgajge12.github.io/posts/sechack365_interview/</guid>
-      <description>Interview (Japanese) SecHack365 修了生 Interview </description>
+      <guid>http://localhost:1313/posts/sechack365_interview/</guid>
+      <description>&lt;h2 id=&#34;interview-japanese&#34;&gt;Interview (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://sechack365.nict.go.jp/alumni/interview/2019interview01.html&#34;&gt;SecHack365 修了生 Interview&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
     </item>
-    
   </channel>
 </rss>

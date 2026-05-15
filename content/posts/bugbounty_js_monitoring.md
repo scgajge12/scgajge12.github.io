@@ -1,7 +1,7 @@
 ---
 title: "JavaScript files monitoring tool for Bug Bounty"
 date: 2025-02-11
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty", "web"]
 type: post
 showTableOfContents: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: "Top 10 Most Vote Vulnerability Reports on Bug Bounty (2023 Edition)"
 date: 2023-12-27
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty"]
 type: post
 showTableOfContents: true
 ---

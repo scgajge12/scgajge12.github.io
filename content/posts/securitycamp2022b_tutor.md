@@ -1,7 +1,7 @@
 ---
 title: "Security Camp National Convention 2022 Tutor Participation Record (B Class)"
 date: 2022-08-15
-tags: ["event", "blog"]
+tags: ["event"]
 type: post
 showTableOfContents: true
 ---

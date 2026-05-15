@@ -1,20 +1,61 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>web on morioka12 site</title>
-    <link>https://scgajge12.github.io/tags/web/</link>
-    <description>Recent content in web on morioka12 site</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <title>Web on morioka12 site</title>
+    <link>http://localhost:1313/tags/web/</link>
+    <description>Recent content in Web on morioka12 site</description>
+    <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 10 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://scgajge12.github.io/tags/web/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 09 May 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/web/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>An Introduction to JWT from a Security Perspective</title>
-      <link>https://scgajge12.github.io/posts/jwt_security/</link>
-      <pubDate>Thu, 10 Dec 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://scgajge12.github.io/posts/jwt_security/</guid>
-      <description>Blog (Japanese) セキュリティ視点からの JWT 入門 </description>
+      <title>⭐︎ An Introduction to JWT from a Security Perspective (2026 Edition)</title>
+      <link>http://localhost:1313/posts/jwt_security_2026/</link>
+      <pubDate>Sat, 09 May 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/jwt_security_2026/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/jwt_security_2026&#34;&gt;セキュリティ視点からの JWT 入門 - 2026年版&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
     </item>
-    
+    <item>
+      <title>⭐︎ A Practical Bug Bounty Gateway for Beyond Beginners</title>
+      <link>http://localhost:1313/posts/bugbounty_practical_book/</link>
+      <pubDate>Mon, 02 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_practical_book/</guid>
+      <description>&lt;h2 id=&#34;book-japanese&#34;&gt;Book (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://zenn.dev/scgajge12/books/06d5b176dfe0d7&#34;&gt;脱初心者のための実践バグバウンティ登竜門&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;book-english&#34;&gt;Book (English)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leanpub.com/beyond_bugbountyhunting&#34;&gt;A Practical Bug Bounty Gateway for Beyond Beginners&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>JavaScript files monitoring tool for Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbounty_js_monitoring/</link>
+      <pubDate>Tue, 11 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_js_monitoring/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_js_monitoring&#34;&gt;バグバウンティにおけるJavaScriptファイルの監視ツールの事例&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Summary of specific threat examples of XSS in Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbounty_xss_escalation/</link>
+      <pubDate>Wed, 17 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_xss_escalation/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_xss_escalation&#34;&gt;バグバウンティにおける XSS の具体的な脅威の事例まとめ&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Summary of Critical Vulnerability Reports on the Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbounty_web_critical/</link>
+      <pubDate>Tue, 12 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_web_critical/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_web_critical&#34;&gt;バグバウンティにおける Critical な脆弱性報告の事例まとめ&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ Summary of Static and Dynamic Analysis of JavaScript in Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbounty_js_analyze/</link>
+      <pubDate>Wed, 06 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_js_analyze/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_js_analyze&#34;&gt;バグバウンティにおける JavaScript の静的解析と動的解析まとめ&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ An Introduction to JWT from a Security Perspective</title>
+      <link>http://localhost:1313/posts/jwt_security/</link>
+      <pubDate>Thu, 10 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/jwt_security/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/jwt_security&#34;&gt;セキュリティ視点からの JWT 入門&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
   </channel>
 </rss>

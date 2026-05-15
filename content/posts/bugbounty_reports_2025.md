@@ -1,7 +1,7 @@
 ---
 title: "Top 10 Bug Bounty Vulnerability Reports (2025 Edition)"
 date: 2026-01-07
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty"]
 type: post
 showTableOfContents: true
 ---

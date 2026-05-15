@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bugbounty on morioka12 site</title>
+    <link>http://localhost:1313/tags/bugbounty/</link>
+    <description>Recent content in Bugbounty on morioka12 site</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 11 May 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/bugbounty/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bug Bounty Online Game Playable in Browser</title>
+      <link>http://localhost:1313/posts/bugbounty_online_game/</link>
+      <pubDate>Mon, 11 May 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_online_game/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://zenn.dev/scgajge12/articles/04bdc482ac0478&#34;&gt;ブラウザだけで遊べる「Bug Bounty Online Game」を作りました&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ Introduction to Software Supply Chain from a Bug Hunter&#39;s Perspective</title>
+      <link>http://localhost:1313/posts/supplychain_bughunter/</link>
+      <pubDate>Sat, 09 May 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/supplychain_bughunter/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/supplychain_bughunter&#34;&gt;バグハンター視点によるソフトウェアサプライチェーン入門&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>P3NFEST 2026 Spring Hands-on Course and Talk Report</title>
+      <link>http://localhost:1313/posts/p3nfest_2026_spring/</link>
+      <pubDate>Tue, 10 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/p3nfest_2026_spring/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/p3nfest_2026_spring&#34;&gt;P3NFEST 2026 Spring ハンズオン講座と講演の登壇レポート&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ A Practical Bug Bounty Gateway for Beyond Beginners</title>
+      <link>http://localhost:1313/posts/bugbounty_practical_book/</link>
+      <pubDate>Mon, 02 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_practical_book/</guid>
+      <description>&lt;h2 id=&#34;book-japanese&#34;&gt;Book (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://zenn.dev/scgajge12/books/06d5b176dfe0d7&#34;&gt;脱初心者のための実践バグバウンティ登竜門&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;book-english&#34;&gt;Book (English)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leanpub.com/beyond_bugbountyhunting&#34;&gt;A Practical Bug Bounty Gateway for Beyond Beginners&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>2025 Retrospective </title>
+      <link>http://localhost:1313/posts/2025_year/</link>
+      <pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2025_year/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/2025_year&#34;&gt;2025年の振り返り&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Top 10 Bug Bounty Vulnerability Reports (2025 Edition)</title>
+      <link>http://localhost:1313/posts/bugbounty_reports_2025/</link>
+      <pubDate>Wed, 07 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_reports_2025/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_reports_2025&#34;&gt;バグバウンティにおける脆弱性報告ランキング Top 10 (2025年版)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ Get Your First CVE in 30 Days: An Introduction to OSS Bug Hunting</title>
+      <link>http://localhost:1313/posts/oss_bughunt/</link>
+      <pubDate>Wed, 31 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/oss_bughunt/</guid>
+      <description>&lt;h2 id=&#34;book-japanese&#34;&gt;Book (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://zenn.dev/scgajge12/books/6f6ab44df405b2&#34;&gt;30日でCVE取得! OSSバグハント入門&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;book-english&#34;&gt;Book (English)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leanpub.com/ossbughunting&#34;&gt;Get Your First CVE in 30 Days: An Introduction to OSS Bug Hunting&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Short Survey of Security Jobs seeking Bug Hunter Achievements</title>
+      <link>http://localhost:1313/posts/securityengineer_job_bugbounty/</link>
+      <pubDate>Thu, 18 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/securityengineer_job_bugbounty/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/securityengineer_job_bugbounty&#34;&gt;バグハンター実績を歓迎要件に含むセキュリティエンジニア求人のプチ調査&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Supply Chain Vulnerabilities from a Bug Hunter&#39;s Perspective</title>
+      <link>http://localhost:1313/posts/software_supply_chain/</link>
+      <pubDate>Thu, 04 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/software_supply_chain/</guid>
+      <description>&lt;h2 id=&#34;slide-japanese&#34;&gt;Slide (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://speakerdeck.com/scgajge12/baguhantashi-dian-niyorusapuraitiennocui-ruo-xing&#34;&gt;バグハンター視点によるサプライチェーンの脆弱性&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Bug Bounty Hunter Types, Preferences, and AI</title>
+      <link>http://localhost:1313/posts/bugbountyhunter_type/</link>
+      <pubDate>Sun, 15 Jun 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbountyhunter_type/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbountyhunter_type&#34;&gt;バグバウンティハンターにおけるタイプと好みとAIについて&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Introducing the recommended Rust proxy tool Caido</title>
+      <link>http://localhost:1313/posts/caido/</link>
+      <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/caido/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/caido&#34;&gt;オススメのRust製無料プロキシツール「Caido」の紹介&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>We asked 11 Japanese Bug Hunters about the appeal and fun of Bug Bounty!</title>
+      <link>http://localhost:1313/posts/bughunter_interview_11/</link>
+      <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bughunter_interview_11/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bughunter_interview_11&#34;&gt;日本人バグハンター11人に聞いた！バグバウンティの魅力や面白さについて&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ Introduction to Practical Bug Bounty (2025 Edition)</title>
+      <link>http://localhost:1313/posts/p3nfest_2025_winter_bugbounty/</link>
+      <pubDate>Sat, 15 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/p3nfest_2025_winter_bugbounty/</guid>
+      <description>&lt;h2 id=&#34;slide-japanese&#34;&gt;Slide (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://speakerdeck.com/scgajge12/shi-jian-de-nabagubaunteiru-men-2025nian-ban&#34;&gt;実践的なバグバウンティ入門 (2025年版)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Top 10 Bug Bounty Vulnerability Reports in 2024</title>
+      <link>http://localhost:1313/posts/bugbounty_reports_2024/</link>
+      <pubDate>Mon, 03 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_reports_2024/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_reports_2024&#34;&gt;バグバウンティにおける脆弱性報告ランキング Top 10 (2024年版)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>JavaScript files monitoring tool for Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbounty_js_monitoring/</link>
+      <pubDate>Tue, 11 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_js_monitoring/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_js_monitoring&#34;&gt;バグバウンティにおけるJavaScriptファイルの監視ツールの事例&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Use case of LLM for Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbounty_llm/</link>
+      <pubDate>Fri, 07 Feb 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_llm/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_llm&#34;&gt;バグバウンティにおけるLLMの活用事例&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>2024 Retrospective - Bug Bounty JP Podcast </title>
+      <link>http://localhost:1313/posts/2024_bbjppodcast/</link>
+      <pubDate>Tue, 31 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2024_bbjppodcast/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bbjppodcast_2024&#34;&gt;「Bug Bounty JP Podcast」の2024年振り返りまとめ&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>2024 Retrospective </title>
+      <link>http://localhost:1313/posts/2024_year/</link>
+      <pubDate>Fri, 27 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2024_year/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/2024_year&#34;&gt;2024年の振り返り&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ P3NFEST 2024 Summer Hands-on Course Report (Introduction to Practical Bug Bounty)</title>
+      <link>http://localhost:1313/posts/p3nfest_2024_summer_bugbounty/</link>
+      <pubDate>Mon, 02 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/p3nfest_2024_summer_bugbounty/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/p3nfest_2024_summer_bugbounty&#34;&gt;P3NFEST 2024 Summer のハンズオン講座に関する開催記（実践的なバグバウンティ入門）&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ Introduction to Practical Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbounty_practical/</link>
+      <pubDate>Sat, 31 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_practical/</guid>
+      <description>&lt;h2 id=&#34;slide-japanese&#34;&gt;Slide (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://speakerdeck.com/scgajge12/shi-jian-de-nabagubaunteiru-men&#34;&gt;実践的なバグバウンティ入門&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Summary of recommended learning content in Bug Bounty (YouTube)</title>
+      <link>http://localhost:1313/posts/bugbounty_video/</link>
+      <pubDate>Mon, 29 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_video/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_video&#34;&gt;バグバウンティにおけるおすすめの学習コンテンツまとめ(YouTube編)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Summary of Bug Bounty Village 2024</title>
+      <link>http://localhost:1313/posts/bug_bounty_village_2024/</link>
+      <pubDate>Tue, 23 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bug_bounty_village_2024/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bug_bounty_village_2024&#34;&gt;Bug Bounty Village 概要まとめ (2024)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Interview Summary: Why I work on the Bug Bounty and what I really enjoy about it.</title>
+      <link>http://localhost:1313/posts/interview_bughunter/</link>
+      <pubDate>Wed, 03 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/interview_bughunter/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/interview_bughunter&#34;&gt;インタビュー記事「バグバウンティに取り組む理由とその醍醐味」&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ Why work on the Bug Bounty and What&#39;s really exciting about it</title>
+      <link>http://localhost:1313/posts/bugbounty_interview_levtech/</link>
+      <pubDate>Tue, 25 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_interview_levtech/</guid>
+      <description>&lt;h2 id=&#34;interview-japanese&#34;&gt;Interview (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://levtech.jp/media/article/interview/detail_466/&#34;&gt;その魅力は「お金」——だけじゃない。バグハンター界のホープが語る、バグバウンティに取り組む理由とその醍醐味&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://levtech.jp/media/wp-content/uploads/2024/06/240430_lab_eyecatch_interview_134.jpg&#34; alt=&#34;image&#34;&gt;&lt;/p&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Overview of Nahamcon 2024</title>
+      <link>http://localhost:1313/posts/nahamcon_2024/</link>
+      <pubDate>Sun, 26 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/nahamcon_2024/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/nahamcon_2024&#34;&gt;NahamCon 2024 簡単まとめ&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Intigriti Q1 2024 results</title>
+      <link>http://localhost:1313/posts/intigriti_q1_2024/</link>
+      <pubDate>Tue, 21 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/intigriti_q1_2024/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/intigriti_q1_2024&#34;&gt;Intigriti Q1 2024 の成績&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Summary of CVE IDs obtained while a student</title>
+      <link>http://localhost:1313/posts/student_cve/</link>
+      <pubDate>Mon, 20 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/student_cve/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/student_cve&#34;&gt;学生中に取得した CVE ID まとめ&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>We have started a podcast Bug Bounty JP Podcast</title>
+      <link>http://localhost:1313/posts/bbjp_podcast/</link>
+      <pubDate>Mon, 26 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bbjp_podcast/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bbjp_podcast&#34;&gt;ポッドキャスト「Bug Bounty JP Podcast」始めました&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Summary of specific threat examples of XSS in Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbounty_xss_escalation/</link>
+      <pubDate>Wed, 17 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_xss_escalation/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_xss_escalation&#34;&gt;バグバウンティにおける XSS の具体的な脅威の事例まとめ&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>2023 Retrospective </title>
+      <link>http://localhost:1313/posts/2023_year/</link>
+      <pubDate>Thu, 28 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2023_year/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/2023_year&#34;&gt;2023年の振り返り&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Top 10 Most Vote Vulnerability Reports on Bug Bounty (2023 Edition)</title>
+      <link>http://localhost:1313/posts/hacktivity_votes_2023/</link>
+      <pubDate>Wed, 27 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/hacktivity_votes_2023/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/hacktivity_votes_2023&#34;&gt;バグバウンティにおける人気脆弱性報告 Top 10 (2023年版)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Summary of Mobile App Vulnerability Reporting Cases in Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbounty_mobile/</link>
+      <pubDate>Wed, 13 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_mobile/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_mobile&#34;&gt;バグバウンティにおけるモバイルアプリの脆弱性報告の事例まとめ&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Summary of Critical Vulnerability Reports on the Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbounty_web_critical/</link>
+      <pubDate>Tue, 12 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_web_critical/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_web_critical&#34;&gt;バグバウンティにおける Critical な脆弱性報告の事例まとめ&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>10 recommended Browser Extensions for Bug Bounty</title>
+      <link>http://localhost:1313/posts/browser_extensions_10/</link>
+      <pubDate>Thu, 07 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/browser_extensions_10/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/browser_extensions_10&#34;&gt;バグバウンティで使えるおすすめのブラウザ拡張機能10選&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ Summary of Static and Dynamic Analysis of JavaScript in Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbounty_js_analyze/</link>
+      <pubDate>Wed, 06 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_js_analyze/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_js_analyze&#34;&gt;バグバウンティにおける JavaScript の静的解析と動的解析まとめ&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>10 recommended tools for Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbounty_tools/</link>
+      <pubDate>Tue, 05 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty_tools/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_tools&#34;&gt;バグバウンティで使えるおすすめのツール10選&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>10 recommended Burp Extensions for use in Bug Bounty</title>
+      <link>http://localhost:1313/posts/burp_extensions_10/</link>
+      <pubDate>Mon, 04 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/burp_extensions_10/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/burp_extensions_10&#34;&gt;バグバウンティで使えるおすすめの Burp Extensions 10選&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Summary of the actual situation of Bug Bounty Hunter in Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbountyhunter/</link>
+      <pubDate>Wed, 25 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbountyhunter/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bug_bounty_hunter_report&#34;&gt;バグバウンティにおけるBug Bounty Hunterの実態調査まとめ&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ Introduction to Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbounty/</link>
+      <pubDate>Mon, 25 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbounty/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbounty_beginner&#34;&gt;バグバウンティ入門(始め方)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ Introduction to Bug Hunting (OSS edition)</title>
+      <link>http://localhost:1313/posts/bughunt/</link>
+      <pubDate>Tue, 19 Sep 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bughunt/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bughunt_beginner_oss&#34;&gt;バグハント入門 (OSS編)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>2022 Retrospective </title>
+      <link>http://localhost:1313/posts/2022_year/</link>
+      <pubDate>Wed, 28 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2022_year/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/2022_year&#34;&gt;2022年の振り返り&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+  </channel>
+</rss>

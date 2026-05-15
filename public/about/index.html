@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -18,55 +18,65 @@
 
     
     <title>About</title>
-    <meta name="description" content="Japanese Student, Security Engineer and Bug Hunter">
+    <meta name="description" content="Yuta Morioka (morioka12) — profile, work experience, skills, books, and qualifications. Web/Cloud Security Engineer &amp; Bug Bounty Hunter.">
     <meta name="keywords" content='morioka12, scgajge12, portfolio'>
 
-    <meta property="og:url" content="https://scgajge12.github.io/about/">
+    <meta property="og:url" content="http://localhost:1313/about/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="About">
-    <meta property="og:description" content="Japanese Student, Security Engineer and Bug Hunter">
-    <meta property="og:image" content="https://scgajge12.github.io/images/morioka12.jpg">
-    <meta property="og:image:secure_url" content="https://scgajge12.github.io/images/morioka12.jpg">
+    <meta property="og:description" content="Yuta Morioka (morioka12) — profile, work experience, skills, books, and qualifications. Web/Cloud Security Engineer &amp; Bug Bounty Hunter.">
+    <meta property="og:image" content="http://localhost:1313/images/morioka12.jpg">
+    <meta property="og:image:secure_url" content="http://localhost:1313/images/morioka12.jpg">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="About">
-    <meta name="twitter:description" content="Japanese Student, Security Engineer and Bug Hunter">
-    <meta property="twitter:domain" content="https://scgajge12.github.io/about/">
-    <meta property="twitter:url" content="https://scgajge12.github.io/about/">
-    <meta name="twitter:image" content="https://scgajge12.github.io/images/morioka12.jpg">
+    <meta name="twitter:description" content="Yuta Morioka (morioka12) — profile, work experience, skills, books, and qualifications. Web/Cloud Security Engineer &amp; Bug Bounty Hunter.">
+    <meta property="twitter:domain" content="http://localhost:1313/about/">
+    <meta property="twitter:url" content="http://localhost:1313/about/">
+    <meta name="twitter:image" content="http://localhost:1313/images/morioka12.jpg">
 
     
-    <link rel="canonical" href="https://scgajge12.github.io/about/" />
+    <link rel="canonical" href="http://localhost:1313/about/" />
 
-    <link rel="stylesheet" type="text/css" href="https://scgajge12.github.io//css/normalize.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" type="text/css" href="https://scgajge12.github.io//css/main.css">
-    <link disabled id="dark-theme" rel="stylesheet" href="https://scgajge12.github.io//css/dark.css">
+    <link rel="stylesheet" type="text/css" href="http://localhost:1313//css/normalize.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="http://localhost:1313//css/main.css">
+    <link disabled id="dark-theme" rel="stylesheet" href="http://localhost:1313//css/dark.css">
 
-    <script src="https://scgajge12.github.io//js/svg-injector.min.js"></script>
-    <script src="https://scgajge12.github.io//js/feather-icons.min.js"></script>
-    <script src="https://scgajge12.github.io//js/main.js"></script>
+    <script src="http://localhost:1313//js/svg-injector.min.js"></script>
+    <script src="http://localhost:1313//js/feather-icons.min.js"></script>
+    <script src="http://localhost:1313//js/main.js"></script>
 
     
     
-        <!-- KaTeX -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"></script>
+
+    
+    
+        <!-- ポートフォリオ向け追加スタイル -->
+    <link rel="stylesheet" type="text/css" href="/css/portfolio.css">
+    <!-- ダークテーマの切替を data-pf-theme に同期（カードのカラー追従用） -->
     <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        renderMathInElement(document.body, {
-          // customised options
-          // • auto-render specific keys, e.g.:
-          delimiters: [
-            {left: '$$', right: '$$', display: true},
-            {left: '$', right: '$', display: false},
-          ],
-          // • rendering keys, e.g.:
-          throwOnError : false
+      (function() {
+        function syncPfTheme() {
+          var link = document.getElementById('dark-theme');
+          if (!link) return;
+          // theme.js は dark時に link を有効化、light時に disabled=true
+          var isDark = !link.disabled;
+          document.documentElement.setAttribute('data-pf-theme', isDark ? 'dark' : 'light');
+        }
+        // 初期同期
+        document.addEventListener('DOMContentLoaded', function() {
+          syncPfTheme();
+          var link = document.getElementById('dark-theme');
+          if (!link) return;
+          // disabled属性の変化を監視してリアルタイム反映
+          new MutationObserver(syncPfTheme).observe(link, { attributes: true, attributeFilter: ['disabled'] });
         });
-      });
+      })();
     </script>
   
+    
+
+    
     
 </head>
 <body>
@@ -78,40 +88,48 @@
 
         
         <div class="avatar">
-            <a href="https://scgajge12.github.io/">
-                <img src="https://scgajge12.github.io//images/morioka12.jpg" alt="avatar" />
+            <a href="http://localhost:1313/">
+                <img src="http://localhost:1313//images/morioka12.jpg" alt="avatar" />
             </a>
         </div>
         
 
         <div class="nav-title">
-            <a class="nav-brand" href="https://scgajge12.github.io/">morioka12 site</a>
+            <a class="nav-brand" href="http://localhost:1313/">morioka12 site</a>
         </div>
 
         <div class="nav-links">
             
             <div class="nav-link">
-                <a href="https://scgajge12.github.io/"><span data-feather='home'></span> Home </a>
+                <a href="http://localhost:1313/"><span data-feather='home'></span> Home </a>
             </div>
             
             <div class="nav-link">
-                <a href="https://scgajge12.github.io/about/"><span data-feather='user'></span> About </a>
+                <a href="http://localhost:1313/about/"><span data-feather='user'></span> About </a>
             </div>
             
             <div class="nav-link">
-                <a href="https://scgajge12.github.io/activities/"><span data-feather='activity'></span> Activities </a>
+                <a href="http://localhost:1313/activities/"><span data-feather='activity'></span> Activity </a>
             </div>
             
             <div class="nav-link">
-                <a href="https://scgajge12.github.io/posts/"><span data-feather='book'></span> Posts </a>
+                <a href="http://localhost:1313/posts/"><span data-feather='book'></span> Post </a>
             </div>
             
             <div class="nav-link">
-                <a href="https://scgajge12.github.io/cves/"><span data-feather='star'></span> CVEs </a>
+                <a href="http://localhost:1313/bb/"><span data-feather='search'></span> BB </a>
             </div>
             
             <div class="nav-link">
-                <a href="https://www.amazon.co.jp/hz/wishlist/ls/3PPY9KHO5FSIS?ref_=wl_share"><span data-feather='gift'></span> Gift </a>
+                <a href="http://localhost:1313/cves/"><span data-feather='star'></span> CVE </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/podcast/"><span data-feather='music'></span> Podcast </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="http://localhost:1313/games/"><span data-feather='play-circle'></span> Game </a>
             </div>
             
 
@@ -134,27 +152,35 @@
             <ul class="nav-hamburger-list visibility-hidden">
                 
                 <li class="nav-item">
-                    <a href="https://scgajge12.github.io/"><span data-feather='home'></span> Home </a>
+                    <a href="http://localhost:1313/"><span data-feather='home'></span> Home </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://scgajge12.github.io/about/"><span data-feather='user'></span> About </a>
+                    <a href="http://localhost:1313/about/"><span data-feather='user'></span> About </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://scgajge12.github.io/activities/"><span data-feather='activity'></span> Activities </a>
+                    <a href="http://localhost:1313/activities/"><span data-feather='activity'></span> Activity </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://scgajge12.github.io/posts/"><span data-feather='book'></span> Posts </a>
+                    <a href="http://localhost:1313/posts/"><span data-feather='book'></span> Post </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://scgajge12.github.io/cves/"><span data-feather='star'></span> CVEs </a>
+                    <a href="http://localhost:1313/bb/"><span data-feather='search'></span> BB </a>
                 </li>
                 
                 <li class="nav-item">
-                    <a href="https://www.amazon.co.jp/hz/wishlist/ls/3PPY9KHO5FSIS?ref_=wl_share"><span data-feather='gift'></span> Gift </a>
+                    <a href="http://localhost:1313/cves/"><span data-feather='star'></span> CVE </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/podcast/"><span data-feather='music'></span> Podcast </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="http://localhost:1313/games/"><span data-feather='play-circle'></span> Game </a>
                 </li>
                 
                 <li class="nav-item dark-theme-toggle">
@@ -178,165 +204,226 @@
     <div class="post-content">
         <p>
             <h2 id="profile">Profile</h2>
-<ul>
-<li>Name: Yuta Morioka</li>
-<li>HN: morioka12 (@scgajge12)</li>
-<li>Birthplace: Kanagawa, Japan</li>
-</ul>
-<h2 id="education">Education</h2>
-<ul>
-<li>
-<p><a href="https://isc.iwasaki.ac.jp/">Information Science College</a></p>
-<ul>
-<li>Department of Information Security</li>
-<li><em>period: Apr.2020 - Mar.2024 (present)</em></li>
-</ul>
-</li>
-<li>
-<p>Circle: <a href="https://www.ipfactory.org/">IPFactory</a></p>
-<ul>
-<li>Information Technology Circle</li>
-</ul>
-</li>
-</ul>
+<div class="pf-profile">
+<dl>
+<dt>Name</dt><dd>Yuta Morioka (森岡 優太)</dd>
+<dt>Handle</dt><dd>morioka12 (<a href="https://x.com/scgajge12">@scgajge12</a>)</dd>
+<dt>Birthplace</dt><dd>Kanagawa, Japan</dd>
+<dt>Position</dt><dd>Security Engineer · Business Development (BizDev)</dd>
+<dt>Practice</dt><dd>Bug Bounty Hunter (since 2020)</dd>
+<dt>Community</dt><dd>AWS Community Builder — Security (since 2024)</dd>
+</dl>
+</div>
+<div class="pf-stats">
+  <div class="pf-stat">
+    <span class="pf-stat-value">15+</span>
+    <span class="pf-stat-label">CVE IDs Disclosed</span>
+  </div>
+  <div class="pf-stat">
+    <span class="pf-stat-value">2</span>
+    <span class="pf-stat-label">Books Published</span>
+  </div>
+  <div class="pf-stat">
+    <span class="pf-stat-value">6th</span>
+    <span class="pf-stat-label">Intigriti Peak · Feb.2024</span>
+  </div>
+  <div class="pf-stat">
+    <span class="pf-stat-value">20+</span>
+    <span class="pf-stat-label">Talks &amp; Lectures</span>
+  </div>
+</div>
+<h2 id="books">Books</h2>
+<div class="pf-books">
+<div class="pf-book">
+  <div class="pf-book-year">2026 (Zenn Book)</div>
+  <div class="pf-book-title"><a href="https://zenn.dev/scgajge12/books/06d5b176dfe0d7">脱初心者のための実践バグバウンティ登竜門</a></div>
+  <div class="pf-book-en">EN: <a href="https://leanpub.com/beyond_bugbountyhunting">Beyond the Basics: Practical Bug Bounty Hunting</a></div>
+</div>
+<div class="pf-book">
+  <div class="pf-book-year">2025 (Zenn Book)</div>
+  <div class="pf-book-title"><a href="https://zenn.dev/scgajge12/books/6f6ab44df405b2">30日でCVE取得! OSSバグハント入門</a></div>
+  <div class="pf-book-en">EN: <a href="https://leanpub.com/ossbughunting">Practical Introduction to OSS Bug Hunting</a></div>
+</div>
+<div class="pf-book">
+  <div class="pf-book-year">2026 (Forthcoming · July)</div>
+  <div class="pf-book-title"><em>An introductory book on Bug Bounty / Bug Hunting</em></div>
+  <div class="pf-book-en">Publication · JP — Title &amp; venue to be announced.</div>
+</div>
+</div>
+<h2 id="press">Press</h2>
+<div class="pf-press">
+  <div class="pf-press-source">Levtech LAB · Interview</div>
+  <p class="pf-press-title"><a href="https://levtech.jp/media/article/interview/detail_466/">The Hope of the Bug Hunter World: Why I Tackle Bug Bounty and Their True Appeal</a></p>
+</div>
 <h2 id="work-experience">Work Experience</h2>
+<div class="pf-timeline">
+<div class="pf-tl-item is-current">
+  <div class="pf-tl-period">Apr.2025 – present</div>
+  <div class="pf-tl-role">Security Engineer · BizDev</div>
+  <div class="pf-tl-org">Cyber Security Vendor</div>
+  <div class="pf-tl-desc">
+  <ul>
+    <li>Business Development</li>
+    <li>Security Consulting</li>
+  </ul>
+  </div>
+</div>
+<div class="pf-tl-item">
+  <div class="pf-tl-period">Apr.2024 – Mar.2025 (Full-time) · May.2023 – Mar.2024 (Part-time)</div>
+  <div class="pf-tl-role">Security Engineer・Pentester</div>
+  <div class="pf-tl-org"><a href="https://gmo-cybersecurity.com/">GMO Cybersecurity by Ierae, Inc.</a></div>
+  <div class="pf-tl-desc">
+  <ul>
+    <li>Web Penetration Test</li>
+    <li>Source Code Assessment</li>
+    <li>LLM Security Assessment</li>
+  </ul>
+  </div>
+</div>
+<div class="pf-tl-item">
+  <div class="pf-tl-period">Jul.2020 – Apr.2023 (Long-term Internship)</div>
+  <div class="pf-tl-role">Security Engineer (Intern)</div>
+  <div class="pf-tl-org"><a href="https://flatt.tech/">Flatt Security Inc.</a></div>
+  <div class="pf-tl-desc">Vulnerability Assessment (Web, Cloud, Platform)</div>
+</div>
+<div class="pf-tl-item">
+  <div class="pf-tl-period">Mar.2019 – Jan.2020 (Part-time)</div>
+  <div class="pf-tl-role">Cram School Teacher</div>
+  <div class="pf-tl-org"><a href="https://www.rinkaiseminar.co.jp/">Rinkai Inc.</a></div>
+</div>
+</div>
+<h2 id="education">Education</h2>
+<div class="pf-timeline">
+<div class="pf-tl-item">
+  <div class="pf-tl-period">Apr.2020 – Mar.2024</div>
+  <div class="pf-tl-role">Department of Information Security</div>
+  <div class="pf-tl-org"><a href="https://isc.iwasaki.ac.jp/">Information Science College</a></div>
+  <div class="pf-tl-desc">Research theme: <em>“Current Issues and Solutions Regarding AWS WAF”</em></div>
+</div>
+<div class="pf-tl-item">
+  <div class="pf-tl-period">FY2022 Captain</div>
+  <div class="pf-tl-role">Member · Information Technology Circle</div>
+  <div class="pf-tl-org"><a href="https://www.ipfactory.org/">IPFactory</a></div>
+</div>
+</div>
+<h2 id="interests">Interests</h2>
+<div class="pf-interests">
+<div class="pf-interest">
+  <div class="pf-interest-title">Security</div>
+  <div class="pf-interest-tags">
+    <span class="pf-tag is-strong">Web Security</span>
+    <span class="pf-tag is-strong">Cloud Security</span>
+    <span class="pf-tag">Penetration Test</span>
+    <span class="pf-tag">DevSecOps</span>
+  </div>
+</div>
+<div class="pf-interest">
+  <div class="pf-interest-title">Bug Hunt</div>
+  <div class="pf-interest-tags">
+    <span class="pf-tag is-strong">Bug Bounty</span>
+    <span class="pf-tag">OSS</span>
+  </div>
+</div>
+<div class="pf-interest">
+  <div class="pf-interest-title">CTF / Hands-on</div>
+  <div class="pf-interest-tags">
+    <span class="pf-tag">Capture The Flag</span>
+    <span class="pf-tag">Hack The Box</span>
+  </div>
+  <p style="font-size:0.8rem;color:var(--pf-muted);margin:8px 0 0;">
+    HTB: <a href="https://app.hackthebox.com/profile/503730">Pro Hacker (Mar.2021)</a> · Japan 6th (Jan.2023)
+  </p>
+</div>
+<div class="pf-interest">
+  <div class="pf-interest-title">Other</div>
+  <div class="pf-interest-tags">
+    <span class="pf-tag">Web Development</span>
+    <span class="pf-tag">CLI Tool</span>
+    <span class="pf-tag">Honeypot Log Analysis</span>
+    <span class="pf-tag">Competitive Programming</span>
+    <span class="pf-tag">Support for DX</span>
+  </div>
+</div>
+</div>
+<h2 id="skills">Skills</h2>
+<h3 id="focus-areas">Focus Areas</h3>
+<div class="pf-skills">
+  <span class="pf-skill">Web Application Security</span>
+  <span class="pf-skill">Cloud Security (AWS)</span>
+  <span class="pf-skill">OSS Vulnerability Research</span>
+  <span class="pf-skill">Source Code Assessment</span>
+  <span class="pf-skill">LLM Security Assessment</span>
+</div>
+<h3 id="programming-languages">Programming Languages</h3>
+<div class="pf-skills">
+  <span class="pf-skill">Go</span>
+  <span class="pf-skill">Python</span>
+  <span class="pf-skill">TypeScript</span>
+  <span class="pf-skill">JavaScript</span>
+  <span class="pf-skill">PHP</span>
+  <span class="pf-skill">C</span>
+</div>
+<h3 id="cloud--aws">Cloud · AWS</h3>
+<div class="pf-skills">
+  <span class="pf-skill">AWS</span>
+  <span class="pf-skill">S3</span>
+  <span class="pf-skill">EC2</span>
+  <span class="pf-skill">Lambda</span>
+  <span class="pf-skill">IAM</span>
+  <span class="pf-skill">GuardDuty</span>
+  <span class="pf-skill">WAF</span>
+</div>
+<h3 id="tooling">Tooling</h3>
+<div class="pf-skills">
+  <span class="pf-skill">Claude Code</span>
+  <span class="pf-skill">Caido</span>
+  <span class="pf-skill">Nuclei</span>
+  <span class="pf-skill">Original CLI Tools</span>
+</div>
+<h2 id="qualifications">Qualifications</h2>
+<div class="pf-quals">
+  <div class="pf-qual">
+    <div class="pf-qual-year">2022</div>
+    <div class="pf-qual-name">AWS Certified Solutions Architect – Associate (AWS SAA)</div>
+  </div>
+  <div class="pf-qual">
+    <div class="pf-qual-year">2021</div>
+    <div class="pf-qual-name">AWS Certified Cloud Practitioner (AWS CLF)</div>
+  </div>
+  <div class="pf-qual">
+    <div class="pf-qual-year">2018</div>
+    <div class="pf-qual-name">Information Technology Passport Examination (IPA FE)</div>
+  </div>
+</div>
+<h2 id="links">Links</h2>
+<div class="pf-link-groups">
+<div class="pf-link-group">
+<h4>Primary</h4>
 <ul>
-<li>Cyber Security Company
+  <li><a href="https://x.com/scgajge12">X (Twitter)</a></li>
+  <li><a href="https://github.com/scgajge12">GitHub</a></li>
+  <li><a href="https://keybase.io/morioka12">Keybase</a></li>
+</ul>
+</div>
+<div class="pf-link-group">
+<h4>Writing</h4>
 <ul>
-<li>Security Enginner
+  <li><a href="https://zenn.dev/scgajge12">Zenn</a></li>
+  <li><a href="https://scgajge12.hatenablog.com/archive">HatenaBlog</a></li>
+  <li><a href="https://medium.com/@scgajge12">Medium</a></li>
+  <li><a href="https://qiita.com/scgajge12">Qiita</a></li>
+  <li><a href="https://leanpub.com/u/scgajge12">Leanpub</a></li>
+</ul>
+</div>
+<div class="pf-link-group">
+<h4>Talks &amp; Profile</h4>
 <ul>
-<li>Web Penetration Test</li>
-<li>Source Code Assessment</li>
+  <li><a href="https://speakerdeck.com/scgajge12">Speaker Deck</a></li>
+  <li><a href="https://www.credly.com/users/yuta-morioka.9fcde5f4">Credly</a></li>
+  <li><a href="https://app.hackthebox.com/profile/503730">Hack The Box</a></li>
 </ul>
-</li>
-<li><em>period: May.2023 - (present)</em></li>
-</ul>
-</li>
-<li><a href="https://flatt.tech/">Flatt Security Inc.</a>
-<ul>
-<li>Security Enginner
-<ul>
-<li>Vulnerability Assessment (Web,Cloud,Platform)</li>
-</ul>
-</li>
-<li><em>period: Jul.2020 - Apr.2023</em></li>
-</ul>
-</li>
-<li><a href="https://www.rinkaiseminar.co.jp/">Rinkai Inc.</a>
-<ul>
-<li>Cram School Teacher</li>
-<li><em>period: Mar.2019 - Jan.2020</em></li>
-</ul>
-</li>
-</ul>
-<h2 id="interest">Interest</h2>
-<ul>
-<li>Security
-<ul>
-<li>Web Security</li>
-<li>Cloud Security</li>
-<li>Container Security</li>
-<li>Penetration Test</li>
-</ul>
-</li>
-<li>Bug Hunt
-<ul>
-<li>Bug Bounty</li>
-<li>Open Source Software</li>
-</ul>
-</li>
-<li>Content
-<ul>
-<li>Capture The Flag</li>
-<li>Hack The Box (<a href="https://app.hackthebox.com/profile/503730">Profile</a>)
-<ul>
-<li>Rank: Pro Hacker (Mar.2021)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Other
-<ul>
-<li>Web Development</li>
-<li>Tool Development</li>
-<li>Public Cloud (AWS,GCP)</li>
-<li>Log Analysis (Honeypot)</li>
-<li>Competitive Programming</li>
-</ul>
-</li>
-</ul>
-<h3 id="programming-language">Programming Language</h3>
-<ul>
-<li>Python</li>
-<li>Go</li>
-<li>JavaScript</li>
-<li>PHP</li>
-<li>C</li>
-<li>etc&hellip;</li>
-</ul>
-<h2 id="qualificatio">Qualificatio</h2>
-<ul>
-<li>2022
-<ul>
-<li>AWS Certified Solutions Architect – Associate (SAA)</li>
-</ul>
-</li>
-<li>2021
-<ul>
-<li>AWS Certified Cloud Practitioner (CLF)</li>
-</ul>
-</li>
-<li>2018
-<ul>
-<li>Fundamental Information Technology Engineer Examination (FE)</li>
-</ul>
-</li>
-</ul>
-<h2 id="bug-hunt">Bug Hunt</h2>
-<h3 id="bug-bounty">Bug Bounty</h3>
-<ul>
-<li>Synack Red Team
-<ul>
-<li>join: Jan.2023</li>
-</ul>
-</li>
-<li>YesWeHack
-<ul>
-<li>join: Apr.2020</li>
-</ul>
-</li>
-<li>Intigriti
-<ul>
-<li>join: Mar.2020</li>
-<li>Highest Ranking
-<ul>
-<li>All time: 83rd place (Apr.2020)</li>
-<li>Last 90 days: 26th place (Apr.2020)</li>
-<li>Last 30 days: 20th place (Apr.2020)</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="cve-id">CVE ID</h3>
-<ul>
-<li><a href="/cves/">CVEs</a></li>
-</ul>
-<hr>
-<h2 id="link">Link</h2>
-<ul>
-<li><a href="https://twitter.com/scgajge12">Twitter</a></li>
-<li><a href="https://github.com/scgajge12">GitHub</a></li>
-<li><a href="https://scgajge12.hatenablog.com/archive">HatenaBlog</a></li>
-<li><a href="https://qiita.com/scgajge12">Qiita</a></li>
-<li><a href="https://speakerdeck.com/scgajge12">Speacker Deck</a></li>
-<li><a href="https://keybase.io/morioka12">Keybase</a></li>
-<li><a href="https://www.credly.com/users/yuta-morioka.9fcde5f4">Credly</a></li>
-<li><a href="https://www.intigriti.com/profile/morioka12">Intigriti</a></li>
-<li><a href="https://huntr.dev/users/scgajge12/">huntr.dev</a></li>
-<li><a href="https://www.openbugbounty.org/researchers/morioka12/">Open Bug Bounty</a></li>
-<li><a href="https://www.hackthebox.eu/profile/503730">Hack The Box</a></li>
-</ul>
+</div>
+</div>
 
         </p>
     </div>
@@ -348,10 +435,7 @@
     
     
 
-    <span>&copy; 2023 scgajge12</span>
-    <span>
-        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/526avijitgupta/gokarna">Gokarna</a>
-    </span>
+    <span>&copy; 2026 scgajge12</span>
 </footer>
 </body>
 </html>

@@ -1,7 +1,7 @@
 ---
 title: "2024 Retrospective - Bug Bounty JP Podcast "
 date: 2024-12-31
-tags: ["blog"]
+tags: ["bugbounty"]
 type: post
 showTableOfContents: true
 ---

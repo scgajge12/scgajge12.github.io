@@ -1,0 +1,2594 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#04111e" />
+    <title>
+      バグバウンティ脆弱性ランキング・クイズ | Bug Bounty Top 10 Quiz
+    </title>
+    <meta
+      name="description"
+      content="HackerOne Hacktivity 2023-2025 の人気脆弱性レポートTop10から出題するバグハンター視点のクイズ"
+    />
+
+    <!-- ===== OGP / Twitter Card ===== -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="バグバウンティ脆弱性ランキング・クイズ | morioka12 game site"
+    />
+    <meta
+      property="og:description"
+      content="HackerOne Hacktivity 2023〜2025 の人気脆弱性レポート Top10 から出題する、バグハンター視点の4択クイズ。"
+    />
+    <meta
+      property="og:url"
+      content="https://scgajge12.github.io/games/bug-bounty-top-10-quiz/"
+    />
+    <meta
+      property="og:image"
+      content="https://scgajge12.github.io/images/bug-bounty-top-10-quiz-ogp.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="バグバウンティ脆弱性ランキング・クイズ - morioka12 game site"
+    />
+    <meta property="og:site_name" content="morioka12 game site" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@scgajge12" />
+    <meta name="twitter:creator" content="@scgajge12" />
+    <meta
+      name="twitter:title"
+      content="バグバウンティ脆弱性ランキング・クイズ | morioka12 game site"
+    />
+    <meta
+      name="twitter:description"
+      content="HackerOne Hacktivity 2023〜2025 の人気脆弱性レポート Top10 から出題する、バグハンター視点の4択クイズ。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://scgajge12.github.io/images/bug-bounty-top-10-quiz-ogp.png"
+    />
+
+    <style>
+      :root {
+        /* カワセミ（kingfisher）配色：コバルトブルー × バーントオレンジ */
+        --bg: #04111e;
+        --bg2: #082336;
+        --bg3: #0e3149;
+        --surface: #103e58;
+        --surface-2: #154d6d;
+        --line: rgba(14, 165, 233, 0.2);
+        --line-strong: rgba(14, 165, 233, 0.5);
+
+        --text: #e6f4f9;
+        --text-muted: #93c5d8;
+        --text-dim: #5b8597;
+
+        --primary: #0891b2;
+        --primary-light: #22d3ee;
+        --primary-deep: #155e75;
+        --secondary: #f97316;
+        --secondary-light: #fb923c;
+        --accent: #fbbf24;
+        --gold: #fbbf24;
+        --success: #34d399;
+        --danger: #fb7185;
+
+        --radius: 14px;
+        --radius-sm: 8px;
+        --shadow: 0 12px 40px rgba(14, 165, 233, 0.22);
+        --shadow-strong: 0 0 60px rgba(14, 165, 233, 0.4);
+
+        /* スマホ／safe-area 用 */
+        --pad-x: 20px;
+        --pad-bottom: max(80px, env(safe-area-inset-bottom));
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        height: 100%;
+      }
+
+      html,
+      body {
+        /* モバイルで横スクロールが発生しないよう保険 */
+        overflow-x: hidden;
+        max-width: 100%;
+        /* 横向き回転時の文字サイズ自動拡大を抑止 */
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+
+      body {
+        font-family:
+          "Inter", "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic",
+          "Noto Sans JP", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        /* iOS でのキーボード出現時のズレに強い動的ビューポート単位 */
+        min-height: 100dvh;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        /* 長い英数字（URL・base64 等）が幅を突き破らないように */
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        /* セーフエリア（iPhone ノッチ／ホームインジケータ）対応 */
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+      }
+
+      .bg-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .bg-grid {
+        background-image:
+          linear-gradient(
+            to right,
+            rgba(14, 165, 233, 0.04) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(14, 165, 233, 0.04) 1px,
+            transparent 1px
+          );
+        background-size: 56px 56px;
+        mask-image: radial-gradient(
+          ellipse at center,
+          rgba(0, 0, 0, 0.85) 0%,
+          rgba(0, 0, 0, 0.2) 70%,
+          transparent 100%
+        );
+      }
+      .bg-glow1 {
+        background: radial-gradient(
+          circle at 18% 12%,
+          rgba(14, 165, 233, 0.18),
+          transparent 55%
+        );
+      }
+      .bg-glow2 {
+        background: radial-gradient(
+          circle at 82% 88%,
+          rgba(251, 146, 60, 0.14),
+          transparent 60%
+        );
+      }
+      #particles {
+        z-index: 0;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 880px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 28px var(--pad-x) var(--pad-bottom);
+      }
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: 800;
+        font-size: 18px;
+        box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+      }
+      .brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.15;
+      }
+      .brand-name {
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: var(--text);
+      }
+      .brand-sub {
+        font-size: 10.5px;
+        color: var(--text-dim);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .lang-toggle {
+        display: inline-flex;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 3px;
+        position: relative;
+        overflow: hidden;
+      }
+      .lang-toggle button {
+        background: transparent;
+        border: 0;
+        color: var(--text-muted);
+        /* タップ領域を 32px 程度確保 */
+        padding: 7px 14px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        border-radius: 999px;
+        transition: color 0.2s;
+        position: relative;
+        z-index: 1;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .lang-toggle button.active {
+        color: #fff;
+      }
+      .lang-toggle .lang-pill {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        height: calc(100% - 6px);
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        border-radius: 999px;
+        transition:
+          transform 0.28s ease,
+          width 0.28s ease;
+        z-index: 0;
+        box-shadow: 0 0 16px rgba(14, 165, 233, 0.4);
+      }
+
+      .screen {
+        display: none;
+        animation: fadeIn 0.45s ease;
+      }
+      .screen.active {
+        display: block;
+      }
+
+      .start-hero {
+        text-align: center;
+        margin-top: 6px;
+        margin-bottom: 28px;
+      }
+
+      /* スタートヒーロー：金トロフィーから這い出るバグ＋紙吹雪 */
+      .trophy-illustration {
+        display: block;
+        width: clamp(180px, 32vw, 240px);
+        height: auto;
+        margin: 0 auto 14px;
+        filter: drop-shadow(0 12px 22px rgba(251, 191, 36, 0.3))
+          drop-shadow(0 4px 6px rgba(0, 0, 0, 0.45));
+      }
+      /* バグの足がもぞもぞ動く */
+      .trophy-illustration .bug-leg {
+        animation: bugWiggle 0.9s ease-in-out infinite alternate;
+        transform-origin: 50% 0%;
+      }
+      .trophy-illustration .bug-leg-b {
+        animation-delay: 0.45s;
+      }
+      @keyframes bugWiggle {
+        from {
+          transform: rotate(-6deg);
+        }
+        to {
+          transform: rotate(6deg);
+        }
+      }
+      /* 紙吹雪・スパークがちかちか */
+      .trophy-illustration .spark {
+        animation: sparkTwinkle 1.8s ease-in-out infinite;
+        transform-origin: center;
+      }
+      .trophy-illustration .spark-b {
+        animation-delay: 0.6s;
+      }
+      .trophy-illustration .spark-c {
+        animation-delay: 1.2s;
+      }
+      @keyframes sparkTwinkle {
+        0%,
+        100% {
+          opacity: 0.3;
+          transform: scale(0.85);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.15);
+        }
+      }
+      /* トロフィー全体がほんの少し浮く */
+      .trophy-illustration .trophy-body {
+        animation: trophyHover 3.5s ease-in-out infinite alternate;
+        transform-origin: 50% 100%;
+      }
+      @keyframes trophyHover {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(-3px);
+        }
+      }
+
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        font-size: 11px;
+        letter-spacing: 2.5px;
+        color: var(--secondary-light);
+        background: rgba(251, 146, 60, 0.08);
+        border: 1px solid rgba(251, 146, 60, 0.3);
+        border-radius: 999px;
+        font-weight: 700;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .hero-tag-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--secondary);
+        box-shadow: 0 0 8px var(--secondary);
+        animation: blink 1.4s infinite;
+      }
+      .hero-title {
+        /* 320px 端末でも「脆弱性ランキング・クイズ」が 1 行に収まる最小値 */
+        font-size: clamp(22px, 6vw, 44px);
+        font-weight: 900;
+        letter-spacing: -0.5px;
+        line-height: 1.22;
+        background: linear-gradient(
+          120deg,
+          var(--primary-light) 10%,
+          var(--secondary-light) 55%,
+          var(--accent) 95%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 12px;
+      }
+      .hero-sub {
+        color: var(--text-muted);
+        font-size: clamp(13.5px, 2vw, 15.5px);
+        max-width: 560px;
+        margin: 0 auto;
+      }
+
+      .info-card {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 22px 26px;
+        margin-bottom: 22px;
+        position: relative;
+        overflow: hidden;
+      }
+      .info-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at top right,
+          rgba(14, 165, 233, 0.08),
+          transparent 60%
+        );
+        pointer-events: none;
+      }
+      .info-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 16px;
+        position: relative;
+      }
+      .info-stat {
+        text-align: center;
+      }
+      .info-stat-num {
+        font-size: 26px;
+        font-weight: 900;
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--secondary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        font-feature-settings: "tnum";
+      }
+      .info-stat-label {
+        font-size: 11px;
+        color: var(--text-dim);
+        margin-top: 6px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .sources {
+        background: linear-gradient(160deg, var(--bg2), var(--surface));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        margin-bottom: 26px;
+      }
+      .sources-title {
+        font-size: 12px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .source-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .source-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 13px;
+        transition: all 0.2s;
+      }
+      .source-item:hover {
+        border-color: var(--primary);
+        color: var(--primary-light);
+        transform: translateX(2px);
+      }
+      .source-year {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--secondary-light);
+        background: rgba(251, 146, 60, 0.1);
+        padding: 3px 8px;
+        border-radius: 4px;
+        flex-shrink: 0;
+      }
+      .source-title {
+        flex: 1;
+      }
+      .source-arrow {
+        color: var(--text-dim);
+      }
+
+      .start-btn-wrap {
+        text-align: center;
+      }
+      .btn-start {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 36px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        border: 0;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        box-shadow: 0 8px 32px rgba(14, 165, 233, 0.35);
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-start::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          120deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.18) 50%,
+          transparent 70%
+        );
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 40px rgba(14, 165, 233, 0.5);
+      }
+      .btn-start:hover::after {
+        transform: translateX(100%);
+      }
+      .start-note {
+        margin-top: 14px;
+        color: var(--text-dim);
+        font-size: 12px;
+      }
+
+      .quiz-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px 12px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+        font-size: 12.5px;
+      }
+      .quiz-counter {
+        color: var(--text-muted);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        letter-spacing: 1px;
+      }
+      .quiz-counter strong {
+        color: var(--primary-light);
+        font-size: 16px;
+        font-weight: 800;
+      }
+      .quiz-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        background: rgba(251, 146, 60, 0.08);
+        border: 1px solid rgba(251, 146, 60, 0.25);
+        border-radius: 999px;
+        color: var(--secondary-light);
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .progress {
+        height: 6px;
+        background: var(--surface);
+        border-radius: 999px;
+        overflow: hidden;
+        margin-bottom: 26px;
+        border: 1px solid var(--line);
+      }
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--primary),
+          var(--secondary),
+          var(--accent)
+        );
+        background-size: 200% 100%;
+        animation: shimmer 4s linear infinite;
+        transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        border-radius: 999px;
+        box-shadow: 0 0 12px rgba(14, 165, 233, 0.5);
+      }
+
+      .question-card {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 30px 32px;
+        margin-bottom: 18px;
+        animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .question-text {
+        font-size: clamp(16px, 2.6vw, 19px);
+        line-height: 1.7;
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .choices {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .choice {
+        display: flex;
+        /* 長文選択肢のとき Key/Icon が中央に飛ばないよう先頭揃え */
+        align-items: flex-start;
+        gap: 14px;
+        padding: 16px 18px;
+        background: var(--surface);
+        border: 1.5px solid var(--line);
+        color: var(--text);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        text-align: left;
+        font-size: 14px;
+        line-height: 1.55;
+        transition: all 0.2s;
+        position: relative;
+        font-family: inherit;
+        /* スマホで長単語が幅を突き破らないように */
+        word-break: break-word;
+        /* タップハイライトの紫を抑える */
+        -webkit-tap-highlight-color: transparent;
+      }
+      .choice .choice-key,
+      .choice .choice-icon {
+        /* 1 行目の中央揃えに近づける微調整 */
+        margin-top: 1px;
+      }
+      .choice:hover:not(:disabled) {
+        border-color: var(--primary);
+        background: var(--surface-2);
+        transform: translateX(2px);
+      }
+      .choice:disabled {
+        cursor: default;
+      }
+      .choice-key {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: rgba(14, 165, 233, 0.15);
+        border: 1px solid rgba(14, 165, 233, 0.3);
+        color: var(--primary-light);
+        font-size: 12px;
+        font-weight: 800;
+        flex-shrink: 0;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        transition: all 0.2s;
+      }
+      .choice-text {
+        flex: 1;
+      }
+      .choice-icon {
+        opacity: 0;
+        font-size: 18px;
+        transition: opacity 0.2s;
+      }
+      .choice.correct {
+        border-color: var(--success);
+        background: rgba(52, 211, 153, 0.1);
+      }
+      .choice.correct .choice-key {
+        background: var(--success);
+        color: #04261b;
+        border-color: var(--success);
+      }
+      .choice.correct .choice-icon {
+        opacity: 1;
+        color: var(--success);
+      }
+      .choice.wrong {
+        border-color: var(--danger);
+        background: rgba(251, 113, 133, 0.1);
+      }
+      .choice.wrong .choice-key {
+        background: var(--danger);
+        color: #2a0710;
+        border-color: var(--danger);
+      }
+      .choice.wrong .choice-icon {
+        opacity: 1;
+        color: var(--danger);
+      }
+      .choice.dim {
+        opacity: 0.45;
+      }
+
+      .feedback {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--primary);
+        border-radius: var(--radius-sm);
+        padding: 16px 20px;
+        margin-top: 14px;
+        animation: fadeIn 0.3s ease;
+      }
+      .feedback.correct-fb {
+        border-left-color: var(--success);
+        background: rgba(52, 211, 153, 0.06);
+      }
+      .feedback.wrong-fb {
+        border-left-color: var(--danger);
+        background: rgba(251, 113, 133, 0.06);
+      }
+      .feedback-title {
+        font-weight: 800;
+        font-size: 14px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .feedback.correct-fb .feedback-title {
+        color: var(--success);
+      }
+      .feedback.wrong-fb .feedback-title {
+        color: var(--danger);
+      }
+      .feedback-body {
+        font-size: 13.5px;
+        line-height: 1.7;
+        color: var(--text-muted);
+      }
+      .feedback-body strong {
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .next-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 16px;
+        margin-top: 18px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        border: 0;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
+      }
+      .next-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(14, 165, 233, 0.45);
+      }
+
+      .result {
+        text-align: center;
+        max-width: 620px;
+        margin: 0 auto;
+      }
+      .result-rank-tag {
+        display: inline-block;
+        padding: 6px 18px;
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: var(--gold);
+        background: rgba(251, 191, 36, 0.08);
+        border: 1px solid rgba(251, 191, 36, 0.3);
+        border-radius: 999px;
+        font-weight: 700;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .result-title {
+        font-size: clamp(22px, 6vw, 44px);
+        font-weight: 900;
+        background: linear-gradient(
+          120deg,
+          var(--primary-light),
+          var(--secondary-light),
+          var(--accent)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.2;
+        margin-bottom: 10px;
+      }
+      .result-sub {
+        color: var(--text-muted);
+        margin-bottom: 30px;
+        font-size: 14px;
+      }
+
+      .score-display {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 24px;
+      }
+      .score-ring {
+        --pct: 0;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: conic-gradient(
+          from -90deg,
+          var(--primary) 0%,
+          var(--secondary) calc(var(--pct) * 0.5%),
+          var(--accent) calc(var(--pct) * 1%),
+          var(--surface-2) calc(var(--pct) * 1%)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-shadow: var(--shadow-strong);
+      }
+      .score-ring::before {
+        content: "";
+        position: absolute;
+        inset: 14px;
+        border-radius: 50%;
+        background: var(--bg);
+      }
+      .score-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+      }
+      .score-num {
+        font-size: 48px;
+        font-weight: 900;
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--secondary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        font-feature-settings: "tnum";
+      }
+      .score-total {
+        color: var(--text-dim);
+        font-size: 14px;
+        margin-top: 4px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .result-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 28px;
+      }
+      .result-stat {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        padding: 14px 10px;
+      }
+      .result-stat-num {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--primary-light);
+        font-feature-settings: "tnum";
+      }
+      .result-stat-label {
+        font-size: 10.5px;
+        color: var(--text-dim);
+        letter-spacing: 1px;
+        margin-top: 4px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      .result-comment {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        margin-bottom: 26px;
+        text-align: left;
+        font-size: 14px;
+        line-height: 1.75;
+        color: var(--text-muted);
+      }
+      .result-comment strong {
+        color: var(--text);
+      }
+
+      .result-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+      .btn-share-x {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 28px;
+        background: #000;
+        border: 1.5px solid #2a2a2a;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 800;
+        border-radius: 999px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+      .btn-share-x:hover {
+        background: #111;
+        border-color: #555;
+        transform: translateY(-2px);
+      }
+      .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 28px;
+        background: transparent;
+        color: var(--primary-light);
+        font-size: 14px;
+        font-weight: 800;
+        border-radius: 999px;
+        border: 1.5px solid var(--primary);
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+      }
+      .btn-secondary:hover {
+        background: rgba(14, 165, 233, 0.12);
+        transform: translateY(-2px);
+      }
+
+      .review {
+        margin-top: 36px;
+        text-align: left;
+      }
+      .review-title {
+        font-size: 14px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        text-align: center;
+      }
+      .review-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .review-item {
+        display: flex;
+        gap: 12px;
+        padding: 14px 18px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        font-size: 13px;
+      }
+      .review-mark {
+        flex-shrink: 0;
+        width: 26px;
+        height: 26px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 13px;
+      }
+      .review-mark.ok {
+        background: rgba(52, 211, 153, 0.18);
+        color: var(--success);
+      }
+      .review-mark.ng {
+        background: rgba(251, 113, 133, 0.18);
+        color: var(--danger);
+      }
+      .review-content {
+        flex: 1;
+      }
+      .review-q {
+        color: var(--text);
+        font-weight: 600;
+        margin-bottom: 6px;
+        line-height: 1.5;
+      }
+      .review-a {
+        color: var(--text-muted);
+        font-size: 12.5px;
+      }
+      .review-a-tag {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-weight: 700;
+        margin-right: 6px;
+      }
+
+      .footer {
+        margin-top: 60px;
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-dim);
+      }
+      .footer a {
+        color: var(--text-muted);
+        text-decoration: none;
+        border-bottom: 1px dotted var(--text-dim);
+      }
+      .footer a:hover {
+        color: var(--primary-light);
+        border-color: var(--primary-light);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: 0% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+
+      /* タブレット以下：レイアウトの圧縮 */
+      @media (max-width: 560px) {
+        :root {
+          --pad-x: 16px;
+        }
+        .page {
+          padding-top: 22px;
+        }
+        .question-card {
+          padding: 22px 18px;
+        }
+        .info-card,
+        .sources {
+          padding: 18px 16px;
+        }
+        .top-bar {
+          flex-wrap: wrap;
+        }
+        .choice {
+          padding: 14px 14px;
+          gap: 12px;
+        }
+        .choice-key {
+          width: 26px;
+          height: 26px;
+        }
+        .feedback {
+          padding: 14px 16px;
+        }
+        .feedback-body {
+          font-size: 13px;
+        }
+        .result-stats {
+          gap: 8px;
+        }
+        .result-stat-num {
+          font-size: 18px;
+        }
+        .result-comment {
+          padding: 16px 18px;
+          font-size: 13px;
+        }
+        .review-item {
+          padding: 12px 14px;
+          font-size: 12.5px;
+        }
+        .btn-share-x,
+        .btn-secondary {
+          padding: 13px 22px;
+          font-size: 13.5px;
+        }
+        .source-item {
+          font-size: 12.5px;
+        }
+        .source-title {
+          line-height: 1.45;
+        }
+      }
+
+      /* スマホ：横幅 400px 以下を厳しめに調整（iPhone SE / 旧 Android 想定） */
+      @media (max-width: 400px) {
+        :root {
+          --pad-x: 12px;
+        }
+        .page {
+          padding-top: 18px;
+        }
+        .brand-sub {
+          /* ヘッダー右の言語トグルとぶつからないよう情報量を圧縮 */
+          letter-spacing: 1px;
+          font-size: 9.5px;
+        }
+        .hero-tag {
+          letter-spacing: 1.5px;
+          font-size: 10.5px;
+          padding: 5px 12px;
+        }
+        .hero-sub {
+          font-size: 13px;
+        }
+        .question-card {
+          padding: 20px 16px;
+        }
+        .question-text {
+          font-size: 15.5px;
+          line-height: 1.65;
+        }
+        .choice {
+          padding: 13px 13px;
+          font-size: 13.5px;
+        }
+        .btn-start {
+          padding: 14px 28px;
+          font-size: 14px;
+        }
+        .info-card-grid {
+          gap: 12px;
+        }
+        .info-stat-num {
+          font-size: 22px;
+        }
+        .score-ring {
+          width: 150px;
+          height: 150px;
+        }
+        .score-ring::before {
+          inset: 12px;
+        }
+        .score-num {
+          font-size: 40px;
+        }
+        .result-stats {
+          /* 3 カラム維持しつつ各 100px 未満でも崩れない値に */
+          gap: 6px;
+        }
+        .result-stat {
+          padding: 12px 6px;
+        }
+        .result-stat-num {
+          font-size: 16px;
+        }
+        .result-stat-label {
+          font-size: 9.5px;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      /* 320px 級（iPhone 5/SE 第1世代など）への追い込み */
+      @media (max-width: 340px) {
+        .brand-sub {
+          /* ロゴ右のサブテキストは情報量を切る */
+          display: none;
+        }
+        .lang-toggle button {
+          padding: 6px 11px;
+          font-size: 11px;
+        }
+      }
+
+      /* 動きを抑える設定（OS 設定）の尊重 */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+
+      /* ===== A11y common (focus-visible + 44px touch target) ===== */
+      /* キーボードフォーカス可視化（WCAG 2.4.7）— マウスクリック時は表示しない */
+      :focus {
+        outline: none;
+      }
+      :focus-visible {
+        outline: 2px solid var(--primary-light, #22d3ee);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+      /* lang-toggle 等の小型ボタンのタッチターゲット 44×44px 確保 */
+      .lang-toggle button {
+        min-height: 44px;
+        min-width: 44px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-layer bg-grid"></div>
+    <div class="bg-layer bg-glow1"></div>
+    <div class="bg-layer bg-glow2"></div>
+    <canvas id="particles" class="bg-layer"></canvas>
+
+    <div class="page">
+      <header class="top-bar">
+        <a class="brand" href="../" title="morioka12 game site">
+          <div class="brand-mark">B</div>
+          <div class="brand-text">
+            <span class="brand-name" id="brand-name"></span>
+            <span class="brand-sub">HACKTIVITY · 2023 → 2025</span>
+          </div>
+        </a>
+        <div class="lang-toggle" role="tablist" aria-label="Language">
+          <span class="lang-pill" id="lang-pill"></span>
+          <button data-lang="ja" class="active" role="tab">日本語</button>
+          <button data-lang="en" role="tab">EN</button>
+        </div>
+      </header>
+
+      <section id="screen-start" class="screen active">
+        <div class="start-hero">
+          <!--
+            金トロフィー + バグ + 紙吹雪のヒーローイラスト。
+            装飾用、aria-hidden。トロフィーは浮遊、バグは足を動かす、スパークは明滅。
+          -->
+          <svg
+            class="trophy-illustration"
+            viewBox="0 0 240 200"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#fef3c7" />
+                <stop offset="0.4" stop-color="#fbbf24" />
+                <stop offset="1" stop-color="#92400e" />
+              </linearGradient>
+              <linearGradient id="goldDark" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#d97706" />
+                <stop offset="1" stop-color="#451a03" />
+              </linearGradient>
+              <radialGradient id="goldShine" cx="0.3" cy="0.3" r="0.5">
+                <stop offset="0" stop-color="#ffffff" stop-opacity="0.6" />
+                <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+
+            <!-- 後光（金色のグロー） -->
+            <circle cx="120" cy="80" r="65" fill="#fbbf24" opacity="0.18" />
+            <circle cx="120" cy="80" r="45" fill="#fbbf24" opacity="0.15" />
+
+            <g class="trophy-body">
+              <!-- 台座 -->
+              <rect x="80" y="160" width="80" height="14" rx="2" fill="url(#goldDark)" />
+              <rect x="86" y="146" width="68" height="16" rx="2" fill="url(#goldGrad)" stroke="#7c2d12" stroke-width="1" />
+              <!-- 銘板 -->
+              <rect x="92" y="151" width="56" height="7" rx="1" fill="#451a03" />
+              <text
+                x="120"
+                y="157"
+                text-anchor="middle"
+                font-size="6"
+                font-weight="900"
+                fill="#fbbf24"
+                font-family="JetBrains Mono, monospace"
+                letter-spacing="1.5"
+              >TOP 10</text>
+
+              <!-- 杯の柄（細い柱） -->
+              <rect x="116" y="130" width="8" height="18" fill="url(#goldDark)" />
+
+              <!-- 杯本体 -->
+              <path
+                d="M 75 50
+                   L 165 50
+                   L 158 100
+                   Q 158 130, 120 130
+                   Q 82 130, 82 100 Z"
+                fill="url(#goldGrad)"
+                stroke="#7c2d12"
+                stroke-width="1.4"
+                stroke-linejoin="round"
+              />
+              <!-- 杯の口の縁 -->
+              <rect x="73" y="44" width="94" height="10" rx="2" fill="url(#goldDark)" />
+              <rect x="76" y="42" width="88" height="6" rx="1" fill="url(#goldGrad)" stroke="#7c2d12" stroke-width="0.8" />
+
+              <!-- 取っ手・左 -->
+              <path
+                d="M 75 60 C 50 60, 50 100, 78 100"
+                stroke="url(#goldGrad)"
+                stroke-width="7"
+                fill="none"
+                stroke-linecap="round"
+              />
+              <!-- 取っ手・右 -->
+              <path
+                d="M 165 60 C 190 60, 190 100, 162 100"
+                stroke="url(#goldGrad)"
+                stroke-width="7"
+                fill="none"
+                stroke-linecap="round"
+              />
+
+              <!-- 杯の表面のハイライト -->
+              <ellipse cx="100" cy="70" rx="10" ry="22" fill="url(#goldShine)" />
+            </g>
+
+            <!-- バグが杯から半身を出している -->
+            <g transform="translate(120, 56)">
+              <!-- 胴体 -->
+              <ellipse cx="0" cy="-2" rx="18" ry="12" fill="#1c1917" />
+              <ellipse cx="0" cy="-4" rx="14" ry="8" fill="#3f3f46" />
+              <!-- 目 -->
+              <circle cx="-6" cy="-7" r="2.5" fill="#fbbf24" />
+              <circle cx="6" cy="-7" r="2.5" fill="#fbbf24" />
+              <circle cx="-6" cy="-7" r="1" fill="#1c1917" />
+              <circle cx="6" cy="-7" r="1" fill="#1c1917" />
+              <!-- 触覚 -->
+              <path
+                d="M -7 -12 Q -12 -22, -16 -26"
+                stroke="#1c1917"
+                stroke-width="1.6"
+                fill="none"
+                stroke-linecap="round"
+              />
+              <path
+                d="M 7 -12 Q 12 -22, 16 -26"
+                stroke="#1c1917"
+                stroke-width="1.6"
+                fill="none"
+                stroke-linecap="round"
+              />
+              <circle cx="-16" cy="-26" r="1.6" fill="#fb7185" />
+              <circle cx="16" cy="-26" r="1.6" fill="#fb7185" />
+              <!-- 足（左右に振れる） -->
+              <g class="bug-leg" transform="translate(-14, -2)">
+                <line x1="0" y1="0" x2="-6" y2="6" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round" />
+              </g>
+              <g class="bug-leg bug-leg-b" transform="translate(14, -2)">
+                <line x1="0" y1="0" x2="6" y2="6" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round" />
+              </g>
+              <g class="bug-leg" transform="translate(-15, 4)">
+                <line x1="0" y1="0" x2="-7" y2="2" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round" />
+              </g>
+              <g class="bug-leg bug-leg-b" transform="translate(15, 4)">
+                <line x1="0" y1="0" x2="7" y2="2" stroke="#1c1917" stroke-width="1.5" stroke-linecap="round" />
+              </g>
+            </g>
+
+            <!-- スパーク（金の星型） -->
+            <g fill="#fbbf24">
+              <path class="spark" d="M 50 30 L 52 36 L 58 38 L 52 40 L 50 46 L 48 40 L 42 38 L 48 36 Z" />
+              <path class="spark spark-b" d="M 200 50 L 202 56 L 208 58 L 202 60 L 200 66 L 198 60 L 192 58 L 198 56 Z" />
+              <path class="spark spark-c" d="M 30 110 L 32 116 L 38 118 L 32 120 L 30 126 L 28 120 L 22 118 L 28 116 Z" />
+              <path class="spark spark-b" d="M 210 130 L 212 136 L 218 138 L 212 140 L 210 146 L 208 140 L 202 138 L 208 136 Z" />
+              <path class="spark" d="M 60 175 L 62 179 L 66 181 L 62 183 L 60 187 L 58 183 L 54 181 L 58 179 Z" opacity="0.7" />
+              <path class="spark spark-c" d="M 180 175 L 182 179 L 186 181 L 182 183 L 180 187 L 178 183 L 174 181 L 178 179 Z" opacity="0.7" />
+            </g>
+
+            <!-- ドル記号スパーク -->
+            <g fill="#34d399" font-family="JetBrains Mono, monospace" font-weight="900" font-size="14">
+              <text class="spark spark-b" x="40" y="76">$</text>
+              <text class="spark" x="190" y="100">$</text>
+            </g>
+
+            <!-- 床の影 -->
+            <ellipse cx="120" cy="186" rx="50" ry="4" fill="#000" opacity="0.4" />
+          </svg>
+
+          <div class="hero-tag">
+            <span class="hero-tag-dot"></span>
+            <span id="hero-tag-text"></span>
+          </div>
+          <h1 class="hero-title" id="hero-title"></h1>
+          <p class="hero-sub" id="hero-sub"></p>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-grid">
+            <div class="info-stat">
+              <div class="info-stat-num">10</div>
+              <div class="info-stat-label" id="stat-label-q"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">3y</div>
+              <div class="info-stat-label" id="stat-label-y"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">~5min</div>
+              <div class="info-stat-label" id="stat-label-t"></div>
+            </div>
+            <div class="info-stat">
+              <div class="info-stat-num">4-Choice</div>
+              <div class="info-stat-label" id="stat-label-f"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sources">
+          <div class="sources-title" id="sources-title"></div>
+          <div class="source-list">
+            <a
+              class="source-item"
+              href="https://scgajge12.hatenablog.com/entry/bugbounty_reports_2025"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="source-year">2025</span>
+              <span class="source-title" id="src-2025"></span>
+              <span class="source-arrow">→</span>
+            </a>
+            <a
+              class="source-item"
+              href="https://scgajge12.hatenablog.com/entry/bugbounty_reports_2024"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="source-year">2024</span>
+              <span class="source-title" id="src-2024"></span>
+              <span class="source-arrow">→</span>
+            </a>
+            <a
+              class="source-item"
+              href="https://scgajge12.hatenablog.com/entry/hacktivity_votes_2023"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="source-year">2023</span>
+              <span class="source-title" id="src-2023"></span>
+              <span class="source-arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="start-btn-wrap">
+          <button class="btn-start" id="btn-start">
+            <span id="btn-start-text"></span>
+            <span aria-hidden="true">→</span>
+          </button>
+          <div class="start-note" id="start-note"></div>
+        </div>
+      </section>
+
+      <section id="screen-quiz" class="screen">
+        <div class="quiz-meta">
+          <div class="quiz-counter">
+            <span id="qm-q-label"></span>
+            <strong id="q-current">1</strong>
+            <span style="color: var(--text-dim)">/</span>
+            <span id="q-total">10</span>
+          </div>
+          <span class="quiz-tag" id="q-tag"></span>
+        </div>
+        <div class="progress">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="question-card" id="question-card">
+          <p class="question-text" id="question-text"></p>
+        </div>
+
+        <div class="choices" id="choices"></div>
+
+        <div id="feedback-area" aria-live="polite" aria-atomic="true"></div>
+
+        <button class="next-btn" id="btn-next" style="display: none"></button>
+      </section>
+
+      <section id="screen-result" class="screen">
+        <div class="result">
+          <div class="result-rank-tag" id="result-rank">★ HUNTER RANK</div>
+          <h2 class="result-title" id="result-title"></h2>
+          <p class="result-sub" id="result-sub"></p>
+
+          <div class="score-display">
+            <div class="score-ring" id="score-ring">
+              <div class="score-content">
+                <div class="score-num" id="score-num">0</div>
+                <div class="score-total">/ 10</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-stats">
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-correct">0</div>
+              <div class="result-stat-label" id="stat-lbl-correct"></div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-wrong">0</div>
+              <div class="result-stat-label" id="stat-lbl-wrong"></div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-acc">0%</div>
+              <div class="result-stat-label" id="stat-lbl-acc"></div>
+            </div>
+          </div>
+
+          <div class="result-comment" id="result-comment"></div>
+
+          <div class="result-actions">
+            <button class="btn-share-x" id="btn-share">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631Zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                />
+              </svg>
+              <span id="btn-share-text"></span>
+            </button>
+            <button class="btn-secondary" id="btn-retry">
+              <span id="btn-retry-text"></span>
+            </button>
+          </div>
+
+          <div class="review">
+            <div class="review-title" id="review-title"></div>
+            <div class="review-grid" id="review-grid"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>
+          <span id="footer-by"></span>
+          <a
+            href="https://x.com/scgajge12"
+            target="_blank"
+            rel="noopener noreferrer"
+            >@scgajge12</a
+          >
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      "use strict";
+
+      /* =========================================================
+         全ロジックを IIFE で閉じてグローバル汚染を防止する。
+         （DevTools の console から QUIZ / 正解関数にアクセスできない）
+         ========================================================= */
+      (function () {
+      /* =========================================================
+         I18N - 日本語 / 英語の文字列辞書（プレーンテキストのみ）
+         ========================================================= */
+      const I18N = {
+        ja: {
+          brandName: "Bug Bounty Top 10 Quiz",
+          heroTag: "バグハンター・トリビア",
+          heroTitleLine1: "バグバウンティ",
+          heroTitleLine2: "脆弱性ランキング・クイズ",
+          heroSub:
+            "HackerOne Hacktivity の人気投票 Top 10（2023〜2025）から、バグハンター視点で出題する 10 問。",
+          statQuestions: "問題数",
+          statYears: "対象年",
+          statTime: "プレイ時間",
+          statFormat: "出題形式",
+          sourcesTitle: "// 出典記事",
+          src2025: "バグバウンティ脆弱性報告ランキング 2025年版",
+          src2024: "バグバウンティ脆弱性報告ランキング 2024年版",
+          src2023: "HackerOne 2023年 最も投票された脆弱性 Top 10",
+          startBtn: "挑戦する",
+          startNote: "※ 最後にスコアと X(Twitter) シェアボタンが表示されます",
+          quizQ: "Question",
+          quizNext: "次の問題へ",
+          quizLast: "結果を見る",
+          quizCorrect: "正解！",
+          quizWrong: "不正解",
+          resultCorrect: "正解",
+          resultWrong: "不正解",
+          resultAcc: "正答率",
+          resultShare: "X (Twitter) でシェア",
+          resultRetry: "もう一度挑戦",
+          resultReview: "// 解答レビュー",
+          resultYour: "あなたの解答",
+          resultAnswer: "正解",
+          footerBy: "Created by ",
+        },
+        en: {
+          brandName: "Bug Bounty Top 10 Quiz",
+          heroTag: "Bug Hunter Trivia",
+          heroTitleLine1: "Bug Bounty",
+          heroTitleLine2: "Top 10 Quiz",
+          heroSub:
+            "10 questions on the most-voted vulnerability reports from HackerOne Hacktivity (2023–2025), from a bug hunter's perspective.",
+          statQuestions: "Questions",
+          statYears: "Coverage",
+          statTime: "Play Time",
+          statFormat: "Format",
+          sourcesTitle: "// Source Articles",
+          src2025: "Bug Bounty Vulnerability Reports 2025 (JP)",
+          src2024: "Bug Bounty Vulnerability Reports 2024 (JP)",
+          src2023: "HackerOne Most-Voted Vulnerabilities 2023 (JP)",
+          startBtn: "Start Challenge",
+          startNote:
+            "* Your score and an X (Twitter) share button appear at the end.",
+          quizQ: "Question",
+          quizNext: "Next →",
+          quizLast: "See Results →",
+          quizCorrect: "Correct!",
+          quizWrong: "Incorrect",
+          resultCorrect: "Correct",
+          resultWrong: "Wrong",
+          resultAcc: "Accuracy",
+          resultShare: "Share on X",
+          resultRetry: "Try again",
+          resultReview: "// Answer Review",
+          resultYour: "Your answer",
+          resultAnswer: "Correct answer",
+          footerBy: "Created by ",
+        },
+      };
+
+      /* =========================================================
+         クイズデータ
+         （ex は暗号化済み payload。正解インデックスは別途 _ANS_ENC/_correctIdx で管理）
+         ========================================================= */
+      const QUIZ = [
+        {
+          tag: { ja: "2025 · #1", en: "2025 · #1" },
+          q: {
+            ja: "HackerOne Hacktivity で 2025 年に最も投票（830票）を集めた脆弱性レポートのターゲットと種類はどれか？",
+            en: "Which report received the most votes (830) on HackerOne Hacktivity in 2025?",
+          },
+          choices: [
+            {
+              ja: "GitLab のパスワードリセット機能における不正なアクセス制御（$35,000 / 0-Click）",
+              en: "GitLab password reset broken access control ($35,000 / 0-click)",
+            },
+            {
+              ja: "GitHub Enterprise のリポジトリ参照における IDOR（$10,000）",
+              en: "GitHub Enterprise repository IDOR ($10,000)",
+            },
+            {
+              ja: "HackerOne 本体での情報開示（$25,000）",
+              en: "Information disclosure on HackerOne itself ($25,000)",
+            },
+            {
+              ja: "PayPal の SQL インジェクション（$50,000）",
+              en: "SQL injection in PayPal ($50,000)",
+            },
+          ],
+          ex: {
+            ja: "MEpME2QLFUoBQlkEToL/hdbru5Hoso3k0dK0xxM1AkUiBiQR1umdkeigjeX/0rbH0PHX0u3upbKfi7HJiLLthMW508GsmuiMjebh0rXp0PHB0uzIpbOdi7HLiLLmhMWg1uuakeiQjeT60rfX0PPF1/repbCji7HhiLDJR2RMGUhIUB8TVEdkARgrXxsIWk6Ex5bR04iU776N5ODSttTQ8N3S7duls6eMiuWIsM2CyafW6r+R6bpMS2YTV0oJUh9DGwI7HRUTEQZJC05FZtK3ytDwxNLs3KWzjI27xI6Pz4P+vNDqqpHrs4jt09aQwNXn2xFWVHbSttPW0trUy8+vtqRIF0FeHV5XdhHW6ZuR67CN5tvStMbWy9/S78mgrbWBmOqCkOOExYrT9LObwKmL2dHWkMDQ8PnU/uugqLeLstmMvNyC+KbW6aSR6q6N58QTSDU=",
+            en: "MEpME2QLFUpnGg4RXFd0BBVLAlIcUB1HJxFyAUc+ClNOFydCRh9cAA8cHAI1VEFIUhEIVB0Ua1JaBkcABF1OASpQQkjR8v8RGgYrQVAaEx0FVE4XJ0NUBVYGDkNOBihVFRxSGQ4RAREjQxVKTl5LSkwTZAsVSlIcEhEPBCVeQAZHXktGBxMuEU8NQR1LUgIOJVpGSh9SSVNMXWZFRx1WD0cRFUUyEw9IEVxLCV1XZkdaHFYBRxFKVHMdBVgDUomx+kckXkEAEwYEQU4IIBFBAFZSElQPFWgTSDU=",
+          },
+        },
+        {
+          tag: { ja: "3年トレンド", en: "3-Year Trend" },
+          q: {
+            ja: "2025 年の HackerOne Top 10 で、「不正なアクセス制御（IDOR を含む）」カテゴリは何件ランクインしていたか？",
+            en: "How many of the 2025 HackerOne Top 10 fell into the broken-access-control category (incl. IDOR)?",
+          },
+          choices: [
+            { ja: "4 件", en: "4 reports" },
+            { ja: "全 10 件すべてアクセス制御", en: "All 10 reports" },
+            {
+              ja: "7 件（IDOR・パスワードリセット・SCIM・権限昇格 など）",
+              en: "7 reports (IDOR, password reset, SCIM, privilege escalation, …)",
+            },
+            { ja: "2 件", en: "2 reports" },
+          ],
+          ex: {
+            ja: "MEpME2QLFUoBQlkETjMpQRVZA1KIsMCEx7fW6ZJSSUxCRz0TQUoJUkkGToP9h9bpv5Hpk43l6dK309Dw0tTm0aOPlIux2Yiy6ITEhdbrmVBHEUwFZAsVHEEHDkxCRz0TQUoJUkne0u931YjlEzUCRSIGJNK20wCW1rxONSNVUQFHkeiKWoP7vBUvQRMbWT8rZnhxJ2GR6Ipbg/u8FTpWHwJFAh6lso5f18/mESkOMnlACtDx0AiK2ssRZgBcAgJXF4TFigRY18/mET0kD3za1LqR67M2NBURGkhgIydYToTHm9bpmpfVooj649Sr49DzxNf716Wzp46L6Yiz54THptbospHpk43l6dK309Dw0tTm0aOPlIuy3I+J44LEqNbpv5HrvY3kydK229Dw1NLt26WwuY+464iw6ITHiNbpvpT3nYrf/tK15dDzwNLvzaWwlouy1Iiw6oTEutbosVAWbA==",
+            en: "MEpME2QLFUoRD0cRFUUyEw9IEUVLXghHdwEXRBNQCRNURzJDQA1OXktKTBNkCxVKEwUOQwtHJ1JWDUABRlIBCTJDWgQTEB5WHUdudlwcfxMJHU41I1VRAUdeS3YcBjZZZCQTOy9+PEtmY1AFWgYHSEJHAVhBIEYQRxE9DylBXA5KXktiLS4LGBtIayE4Hj02ClgVA1YXGxECCDVYWw8TAQNQHAJm07X8ExAZXgUCKBFUC1AXGEJOBClfQRpcHktYHUcyWVBIXh0PVBwJZllABkcXGRYdRytQXAYTBgpDCQIyHxcVbg==",
+          },
+        },
+        {
+          tag: { ja: "2023 · #1", en: "2023 · #1" },
+          q: {
+            ja: "2023 年の HackerOne 投票数 1 位は、Snapchat に対する IDOR で「他人の投稿動画を削除できる」脆弱性だった。報奨金額はいくらだったか？",
+            en: "The 2023 #1 was a Snapchat IDOR that let you delete anyone's posted video. How much was the bounty?",
+          },
+          choices: [
+            { ja: "$5,000", en: "$5,000" },
+            { ja: "$15,000", en: "$15,000" },
+            {
+              ja: "$25,000（同年の最高額）",
+              en: "$25,000 (the year's top bounty)",
+            },
+            { ja: "$100,000", en: "$100,000" },
+          ],
+          ex: {
+            ja: "MEpME2QLFUrV38jZycSlsJpIEQ9HERVFMhMPSBFWWgRCV3YBF0QTUAkTVEcyQ0ANTl5LSkwTZAsVStDy6dfk8qGUnY6mwksHWVFm1pDA0PPMEVxXdAIVjYrGSwBOg/u81umTkeqSjebZ1Y3o1eTS0u7mpbCoi7LcjojahMef0/Szm8Cpi8f31JDA2vX60u/Io6G5jqrwiLDFhMWY1uuAkemejeXi0rbb0PP80u/BpbCxi7LtS2I9NQDeieBjNi0RifPZ17340fT5ES8wFRHdwr6aw42I5MPUldnW18HU4fGpjbyLstxLExNLZkoXHBFISxNKVXMdBVgDUEcRTAVkCxUcQQcOTEJHPRNBSglSSRGN5u7StOzQ8+3U5sKlsJuNk8OOoOSExrPW6L+U4aSJwu7XoNgTkOKRToLmgNDNm5vsoI3ny9K3+tvU8dLv76Wwk4uy+Iiw4YTHmdbospHonY3k29K21NDx49nH8qKPlIuy3I218Y/gq9bpv5TlhY3lx9K349Dy6RMTOg==",
+            en: "MEpME2QLFUpwHRlDCwQyEVQGQAUOQ1RHZEwZSEhQHxNUR2QVBF0fQlsBTEtmE1dKCVIfQxsCOx0VExEGSQtORWYZA18FUh1eGgI1HRUaUhwAVApHZQAcRhMmA1ROHiNQR09AUh9eHkckXkAGRwtLRg8UZlBWHEYTB10XRzJZUEgRD0cRFUUyEw9IEVZZBEJXdgEVO2AgLRNCR2RTF1ITBhlECxpqEU5KR1BREUxHbmFxLhMVDl8LFSdFWhoTkO2jTiYRYhULQRcPVAATL1BZGxpcS2MLCiNcVw1BSEtHARMjEVYHRhwfEYzu5hFXB0YcH0hARTts",
+          },
+        },
+        {
+          tag: { ja: "2024 · 最高額", en: "2024 · Top Bounty" },
+          q: {
+            ja: "2024 年の HackerOne Top 10 で最高報奨金（$25,000）が支払われたレポートはどれか？",
+            en: "Which 2024 HackerOne Top 10 report paid the highest bounty ($25,000)?",
+          },
+          choices: [
+            { ja: "GitLab の Stored XSS", en: "Stored XSS in GitLab" },
+            {
+              ja: "Reddit の API キー（PayPal）ハードコード",
+              en: "Reddit hard-coded PayPal API key",
+            },
+            { ja: "TikTok の Reflected XSS", en: "TikTok Reflected XSS" },
+            {
+              ja: "GitHub Enterprise の SAML 署名検証回避",
+              en: "GitHub Enterprise SAML signature bypass",
+            },
+          ],
+          ex: {
+            ja: "MEpME2QLFUrV38jZycSlsJpIEQ9HERVFMhMPSBE1AkUmEiQR1umdUjhwIytm1oja1uLm0u33pbORi7DjiLPXiPq5EVoGXlsBXoj6uBdEE1AJE1RHMkNADU5eS0pME2QLFUrQ8uliPShm0rTW0PDk0uztpbCbgLf0jo3fgcaW1umcUloRitzw0rTP1Mfv1tfzo7SdjI7hiLP8g/iE0MaAkeqWjebL0rfj0PP00uzmpbG0jZPDjpTGjsGg1um/m8CpjebJ0rTC0PDh0uzjpbCsi7L2iLHsNDJeRw1XUjNiPUels7FIciIiEY3l69K21NDx5NLt26WyvIuxwYiy0oTFuNbqsZHomI3k9dK3x9Dwz9Lt1KWwoouy1Iiw6oTEutbpv5HrsI3mwtK08tDw59Ls5aCtmYyIxIiwwILLu9zJvpbQlIrfzdK16hEPNg==",
+            en: "MEpME2QLFUoRD0cRFUUyEw9IETUCRSYSJBFmKX4+S0IHAChQQR1BF0tTFxcnQkZI0fL/EUpVcx0FWANQRxFMBWQLFRxBBw5MQkc9E0FKCVJJH040FX4VCkYVGBEeBj8RQg1fHktTCwQnREYNExNLQgcJIV1QSFUeCkZOBCdfFQtcHxtDAQovQlBIUhxLVAATL0NQSFwADB9ONDJeRw1XUjNiPUcnX1FIRxoOEQYGNFUYC1wWDlVOJhZ4FQNWC0tQAhQpEUcJXRkOVUJHJERBSFIGS10LFDURQQBSHEtZDwsgEUEAWgFLUAMIM19BRhEPNg==",
+          },
+        },
+        {
+          tag: {
+            ja: "2024 · プラットフォーム横断",
+            en: "2024 · Cross-Platform",
+          },
+          q: {
+            ja: "2024 年のバグバウンティプラットフォーム別「最も多い脆弱性タイプ」の組み合わせとして正しいものはどれか？",
+            en: "Which combo correctly shows the most-reported vulnerability type per platform in 2024?",
+          },
+          choices: [
+            {
+              ja: "HackerOne / Bugcrowd / YesWeHack いずれも XSS が 1 位（HackerOne では全体の約 20%）",
+              en: "HackerOne / Bugcrowd / YesWeHack — XSS is #1 on all three (~20% on HackerOne)",
+            },
+            {
+              ja: "HackerOne は SSRF、Bugcrowd は SQLi、YesWeHack は IDOR が 1 位",
+              en: "HackerOne: SSRF / Bugcrowd: SQLi / YesWeHack: IDOR",
+            },
+            {
+              ja: "全プラットフォームで Race Condition が 1 位",
+              en: "Race Condition is #1 on all platforms",
+            },
+            {
+              ja: "全プラットフォームでバッファオーバーフローが 1 位",
+              en: "Buffer Overflow is #1 on all platforms",
+            },
+          ],
+          ex: {
+            ja: "MEpME2QLFUrQ8ufV1N2ggaKOueeMlMaI+rnT25uV8J+L3eDeieHQ8ubS78ClsJpIejYkY43k/dK3ytDwxNLs3KWzjI27xI6Pz4THvdHUi5Hqgo3lzdWN6NXk0tLu5mRMGUhIUB8TVEdk0rXk1tLa1P/toYa6jqbCiLHjhMeW1umcUjNiPUelsLmMje+MtdiEx5nW6aSR6peL4u7Stv/Q8cLS7eSlsr2LsOeIs8eExY3W65OR6pZOVmbViOURXksTDEV8EUEaRhcWHU4cZEUXUhNQhI3mLydSXg1BPQVUToLDmdHVoJHqn4nTwhEHWBad17iN58TStsTQ8fbS7dulsr2LstyIseKB04HW6L6R6pmN58rXv/3U18PX+9epjb2AgNiEjeeExrzW6ZyX45SN5ujXue/V2vLS78ClsbSMi9ONp9eExKPdzriR6bqJ/tDSt/rQ88/S7/als76LstqIsuaExZ3W64CR6LiN5dTZn8XQ89TY7/KlsL2LstiIsOqExrMXFW4=",
+            en: "MEpME2QLFUpkGgJdC0cPdXo6E11LUA0EI0JGSFAdBUUcCCoRQgFdAUtFBgJmQVoYRh4KQwcTPxFDB0cXRxFMGmoRTkpHUFERTD8VYhUbRxsHXU4LI1BRGxMbBREcBjERRw1DHRlFTgQpRFscQFIEX04CMFRHERMCB1AaASlDWEofUklTTF1mRUcdVg9HERVFMhMPSBFSQ09cV2MRWgYTOgpSBQI0flsNGlxLcAIQJ0hGSEQTH1IGRyReQQATAQJWAAYqQhWKs+ZLRwELM1xQSFIcDxEYCDJURkjR8v8RGghmQ1AJV1IfWQtHMkNQBldSCF4cFSNSQQRKXElMMw==",
+          },
+        },
+        {
+          tag: { ja: "2023 · CVE", en: "2023 · CVE" },
+          q: {
+            ja: "2023 年 Top 10 にランクインした「ImageMagick の脆弱性 (CVE-2022-44268)」の正体として正しい説明はどれか？",
+            en: "What is the actual nature of the 2023-listed ImageMagick vulnerability (CVE-2022-44268)?",
+          },
+          choices: [
+            {
+              ja: "PNG パーサのスタックオーバーフローによる DoS（クラッシュのみ）",
+              en: "Stack overflow in the PNG parser causing only DoS",
+            },
+            {
+              ja: "メモリ破壊から確実に RCE できる任意コード実行",
+              en: "Memory-corruption based reliable RCE",
+            },
+            {
+              ja: "細工した PNG 経由でサーバー上の任意ファイル（/etc/passwd 等）を読み出せる Information Disclosure",
+              en: "Crafted PNG that leaks arbitrary server-side files (e.g. /etc/passwd) — information disclosure",
+            },
+            {
+              ja: "ImageMagick の SQL インジェクション",
+              en: "SQL injection in ImageMagick",
+            },
+          ],
+          ex: {
+            ja: "MEpME2QLFUpwJC4cXFd0AxhcB0BdCU6Ex54VIV4TDFQjBiFYVgMTkeqfTkU7HRUTEQZJC05FMnRtHBOR6LCN5OXSttvQ8MQTQkdkUxdSEwYZRAsaahFOSkdQURFMR6Wzp46x2IylxoTHptbospX/iovkydSR4dX98Nf35aWwnouw34iy0oTEmtbrmJHopI3l59K3zNDxwNLs9a6bmIuyzY6++ITHktbplZX/iovkydK2ydDw1NLt4KWyiYuxzYiwxYLZutbqsprVjY3lxte27dbS2tfS6KCFnIuz8Iix4jcpchWLsOiIs8qExZzW64+R6LiN5dTWodPW8eTS78ylsKKLstSCse+ExLrW6ZOR6qCN58vStM/W1vHS7NKlsomLsOGIs9eEx5rQ4ImR6qSN5c3StPfQ8OrS7uZ0AQdbE5fShU4zKUEVWQNSjrTLhMS71umkkequjefEY3MhE5Hqn43lztK07tDzwNfn1qWzuoux/oiz5YTHvdbospT3nYbU7NK0xxNQFh1OHGRFF1ITUCpDDA4yQ1QaSlItWAICZmNQCVdQRxFMBWQLFRxBBw5MQkc9E0FKCVJJ0u7lZExo",
+            en: "MEpME2QLFUpwJC4cXFd0AxhcB0BdCU4GJERGDUBSIlwPACN8VA9aEQAWHUdkTBlISFAfE1RHZEVwMEdSCFkbCS0TGUgREEkLThM0RFAVH1IQExpFfBEXSFsTBVUCDihWD0hSUghDDwEyVFFIYzwsEQsKJFRRGxMGA1ROBClfQQ1dBhgRAQFmUBUbVgAdVBxKNVhRDRMUAl0LRy9fQQcTBgNUTgQpX0MNQQYOVU4IM0VFHUdcS34IEyNfFQ5aHg5VTgY1EWcuelIJRBpHL0USGxMADlACCz8RVAYTUBYdThxkRRdSE1AKQwwOMkNUGkpSDVgCAmZDUAlXUEcRTAVkCxUcQQcOTEJHPRNBSglSSRGM59IRVAZXUg5XCAIlRVweVlIKVg8OKEJBSF4TBUhONCdQZkhAFxlHBwQjQhUcWxMfERwCNVhPDRMTHVAaBjRCG0pOLw==",
+          },
+        },
+        {
+          tag: { ja: "2025 · PlayStation", en: "2025 · PlayStation" },
+          q: {
+            ja: "2025 年 HackerOne Top 10 にランクインした PlayStation のカーネル脆弱性のクラスはどれか？",
+            en: "Which class of kernel vulnerability ranked in the 2025 HackerOne Top 10 for PlayStation?",
+          },
+          choices: [
+            { ja: "Race Condition（TOCTOU）", en: "Race Condition (TOCTOU)" },
+            { ja: "Use After Free（UAF）", en: "Use After Free (UAF)" },
+            { ja: "Heap Buffer Overflow", en: "Heap Buffer Overflow" },
+            { ja: "SQL Injection", en: "SQL Injection" },
+          ],
+          ex: {
+            ja: "MEpME2QLFUrV38jZycSlsJpIEQ9HERVFMhMPSBEnGFROJiBFUBoTNBlUC0VqERcKEUhLRRwSI0wZSEhQHxNUR2TSterW3N3U1MqhpZ2LscCIstKExZHTwayR6IohNGbSt8PQ8dfS7eqlsp6Bk+qOrvGEx5bW6ZyR67CN5OfStsrQ8cHW3dylsJuLsOKIs96I+rlgKXVSRBEmAidBFSdFFxlXAggxERpIYRMIVE6Ex5vW6Zqd17iN5srYnvDa0+bU4vGlsKKLsfaIsPeEx7XW6LElDlNOgPWK1umdkeihjeX20rbn0PHY0uzYpbKJi7LViLPshMaw0MeNmtqQjebK1JHh0PDk0uzrpbCFi7P+iLLPhMWT1uuZldiKjebo17H329Tx0u7qpbC5jYz3g5fvhMea1umZkem6jefH0rTA0PPv0u/hrriai7L2j4/lhMazFxVu",
+            en: "MEpME2QLFUoRD0cRFUUyEw9IEScYVE4mIEVQGhM0GVQLRWoRFwoRSEtFHBIjTBlISFAfE1RHZB8VK1wcGF4CAmYeFSdgXwBUHAkjXRUcUgAMVBoUZkFUERMaCl8KFClcUARKUg1eHEcrVFgHQQtLUxsANREdPXI0RxEGAidBFQdFFxlXAggxHRUaUhEOQkdJZnAVGlYfAl8KAjQRQQBSBktGCwVmWUAGRxcZQk4QLl4VGFoEBEVOEykRRhFABg5cHUcxXkcDExwOVApHMl4VGlYGGVAHCWZFXQ1aAEtYABQyWFsLRwFFExM6",
+          },
+        },
+        {
+          tag: { ja: "2025 · AI", en: "2025 · AI" },
+          q: {
+            ja: "2025 年版の記事が示す、バグハンターの AI ツール日常活用率はおおよそどのくらいか？",
+            en: "Roughly what fraction of bug hunters use AI tools daily, per the 2025 article?",
+          },
+          choices: [
+            { ja: "1 割以下", en: "Under 10%" },
+            { ja: "約 2 割", en: "About 20%" },
+            { ja: "約 5 割", en: "About 50%" },
+            { ja: "約 7 割", en: "About 70%" },
+          ],
+          ex: {
+            ja: "MEpME2QLFUoRD0cRFUUyEw9IEZXftU5QZtS82hFeSxMMRXwRQRpGFxYdThxkRRdSE1CIsew/FWLW64ghOn0HR6Wwm4ux+oiw6ITHm9bov5rsm4vs09S5/tDz59Tk3qWwuouw4oiz3oTGvNbpnJHpgo3k5NK279DwyNLt4aWzlo2/5Iiw4o7Gg9bqs5bTsYjx/9K16REPRxEVRTITD0gROy9+PITFitbroJHpiY3ky9K30dDxxtLs36Wytoux3Yiy1TQVfhWPgMlJHU5FJBMPSEcAHlQTS2ZKFxwRSEsTToTHnhUpelKIsMmExLPdzriR6pWN5tfStMPQ8+TS7+ilsbSMiciCp/2Ex5/S8YmU6IKN5srVi8nW8s/S7PWgvbSLstOMh/SEx6DW6riR6pmGz97Vj+PQ88TU5uGgr6WHj/pW0u7rpbKli7HWiLPEhMW61uuwkemejeT90rbn0PHo0uzMpbKJi7P/iLDAgd+z0dOQnde4jefEE0g1",
+            en: "MEpME2QLFUoRD0cRFUUyEw9IEQxcAUtFahEXChFIS0UcEiNMGUhIUB8TVEdkHxU8WxdLUBwTL1JZDRMTGVYbAjURQQBSBktUDxQ/HEEHHhMeRQEKJ0VQSFEHDEJOTx5iZkQTITp9B05mUEcNExEEXAMIIlhBAUkbBVZCRzFZXARWUklMQkc9E0FKCVJJeCooFBEaSFEHGFgAAjVCFQRcFQJSTkhmYmYnEV5LEwxFfBFBGkYXFh1OHGRFF1ITUEtDCwonWFtIWxMZVU4BKUMVKXpSCl0BCSMR1+inUh9ZC0cjQ1RIXBRLRQYCZtO19FEbBF8HBGZZVAtYFxnT7vpmRl0HEwIKWBwUZn15JUBSHFgaD2ZZQAVSHEtYABMzWEEBXBxFExM6",
+          },
+        },
+        {
+          tag: { ja: "2025 · パスワードリセット", en: "2025 · Password Reset" },
+          q: {
+            ja: "2025 年 HackerOne Top 10 で「パスワードリセット機能の不備」を起点とする報告は何件ランクインしたか？",
+            en: "How many 2025 HackerOne Top 10 reports were triggered by password-reset flaws?",
+          },
+          choices: [
+            {
+              ja: "2 件（GitLab #1 と Remitly #5）",
+              en: "2 (GitLab #1 and Remitly #5)",
+            },
+            { ja: "1 件（GitLab のみ）", en: "1 (GitLab only)" },
+            { ja: "4 件", en: "4" },
+            { ja: "0 件", en: "None" },
+          ],
+          ex: {
+            ja: "MEpME2QLFUoRD0cRFUUyEw9IEUBL1dXRZB0VSlFQUREaFTNUSEQTCUlFTF1mE9bosUNL1dPqZnZcHH8TCRGN5u4RAEjXz+YRPAIrWEEESlKIsOKC1r3W6auR672N5NfSt9HQ8cTS7dulsryLsNiIs9WExbLW67uU8rON5ujSt8rQ8MTS7Nyls4yNu8SOj8+D/rzQ6qqR67yN58TStsXQ8NvS7MOlsoaNuv+IsMCB767d646R6paN5sTSt+PQ8/TS7Oaum7iAm86Is+yD/rzdzrKR6paN58fUiNna7dTU1MGlsLmNl9WIsOOEx77T4qaVzpmI8vbSt+rXztPS79Sls7GLsuuIsOqExrMXFR9SEBMaRXwRF4uz/oiyw4TEgdbql5Hogovuy9SL5NDzxdTM5KGkuYuz/0kdTkUkEw9IRwAeVBNLZkoXHBFISxNOhMee1uujkemBjeTJ0rbb0PDU0u3bpbCbjZ3ojKTEhMSO1uuPkemDjeTF0rbg0PLpExM6",
+            en: "MEpME2QLFUoRD0cRFUUyEw9IEUBLQwsXKUNBGxFeSxMMRXwRQRpGFxYdThxkRRdSE1BFESkOMn1UChNaSABHRydfUUhhFwZYGgs/ER1LBltLRgsVIxFXB0caS0EcAmtQQBxbUhtQHRQxXkcMHgAOQgsTZlBWC1YBGBwNCChFRwdfUglECRRoEWUaVl8KRBoPZkJAGlUTCFROWmZfWkhQAA5VCwkyWFQEQFIFVAsDI1UVVRMaHlYLRyRdVBtHUhlQCg4zQhWKs+ZLUE4XI0NQBl0bCl1OASdHWhpaBg4RCAg0EV0dXQYOQx1JZExo",
+          },
+        },
+        {
+          tag: { ja: "戦略", en: "Strategy" },
+          q: {
+            ja: "2023〜2025 年の HackerOne ランキング推移を踏まえ、現在のバグハンターが投票・報奨金で評価されやすい「狙い目」として最も整合的なのはどれか？",
+            en: "Based on 2023–2025 trends, which target strategy best matches how votes & bounties currently flow?",
+          },
+          choices: [
+            {
+              ja: "公開 Web サイトに対する単純な情報漏洩のみを大量に提出する",
+              en: "Mass-submit trivial info-disclosure findings on public sites",
+            },
+            {
+              ja: "自動スキャナで網羅検出できる XSS と SQLi を可能な限り量産する",
+              en: "Automate XSS / SQLi detection at scale and submit volume",
+            },
+            {
+              ja: "アクセス制御 / IDOR / 認証フロー（パスワードリセット・OTP・SAML・SCIM）など、ロジック理解が必要で自動化されにくい領域を深掘りする",
+              en: "Go deep on access control, IDOR, and auth flows (password reset, OTP, SAML, SCIM) — areas that require domain logic and resist automation",
+            },
+            {
+              ja: "カーネルの Use After Free だけに専念する",
+              en: "Focus exclusively on kernel Use-After-Free bugs",
+            },
+          ],
+          ex: {
+            ja: "MEpME2QLFUoAUo6I2o7Gq9bppJHql43nx2VaGBNDWxGN5ujVjcXWzejS78hmE0hEEwlJRUxdZhPW6pGR6Z6N5f3St9HW+t3U0Malso6Amf+DmdKExaTW656R6I2N5P3StvvQ8NPS7eqls4yLsN+Is9aExbLW6pxQRxFMBWQLFRxBBw5MQkc9E0FKCVJJ0u7lHmJmSBxSOGAiDmbStMfV59vS7/SlsKiNtMiIs+WEx73T4qaVzpmN5P3UldnW18PY6falsJKLst2PjdaEx4LW6ZiR6r6N5snStenQ8MDS7dulsriLsNlLZC8hZtK0x9b60dLv8qWzuYuywoKa9o7nvNbpk5HqvYvI+NmEydDz59fL0qWztIuy1IKo/oLoq9bpppHpvY3lzdK16hEPRxEVRTITD0gRkeu9OQIkEdbqoZrVr43lx9K08tDzwNLtyqWzjYuw8YizwYTHmtPknJHpuo3nyxMZSBEQSQtOEzREUBUfUhATGkV8ERdI0PPF0u/rpbG0jIj4iLDAhMWh1uqDkei+jeT10rfX0PHX0u/Job++gbLhiLDFgdqx1uqxmtSgjebC0rXqEQ82",
+            en: "MEpME2QLFUpyERleHRRmAhURVhMZQk4TLlQVC1YcH1QcRylXFRxbF0tlARdmAAVIWgFLExNLZkoXHBFISxMPBCVURhsTEQRfGhUpXRVHExMeRQZHaRFXHUAbBVQdFGZdWg9aEUkdTkUkEw9IRwAeVBNLZkoXHBFISxNARx5iZkVgIydYTg8nQhUeXB4eXAtHJERBSF8dHFQcRzBeQQ1AXQleGwkyWFAbCFIAVBwJI10VPXI0S0EPHjURQg1fHktTGxNmWEZIXRMZQwEQaBFhAFZSCEQcFSNfQUhABQ5UGkc1QVocExsYEUwaahFOSkdQURFMhcatRhxSC0teAEcyWVBIRBcJHU4LI1BbSFocH15OCylWXAsdkOusTEtmE1dKCVIfQxsCO2w=",
+          },
+        },
+      ];
+
+      /* =========================================================
+         正解インデックス／解説の難読化
+           - 正解は _ANS_ENC[i] ^ mask(i) で復元
+           - 解説 ex は UTF-8 → XOR(_EX_KEY) → Base64 でエンコード
+         （DevTools で QUIZ をぼんやり眺めただけでは答えが分からないようにする目的）
+         ========================================================= */
+      const _ANS_ENC = [3, 0, 0, 3, 3, 0, 0, 3, 3, 0];
+      function _correctIdx(qIdx) {
+        return _ANS_ENC[qIdx] ^ (((qIdx * 7 + 11) | 0) & 3);
+      }
+
+      const _EX_KEY = "k1ngF15h3r";
+      function _decodeEx(payload) {
+        const bin = atob(payload);
+        const out = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) {
+          out[i] = bin.charCodeAt(i) ^ _EX_KEY.charCodeAt(i % _EX_KEY.length);
+        }
+        return JSON.parse(new TextDecoder().decode(out));
+      }
+
+      /* =========================================================
+         セグメント配列を <strong> 込みで安全に DOM へ描画
+         ========================================================= */
+      function renderSegments(target, segments) {
+        target.textContent = "";
+        for (const seg of segments) {
+          if (seg.b) {
+            const strong = document.createElement("strong");
+            strong.textContent = seg.t;
+            target.appendChild(strong);
+          } else {
+            target.appendChild(document.createTextNode(seg.t));
+          }
+        }
+      }
+
+      /* =========================================================
+         状態
+         ========================================================= */
+      let lang = "ja";
+      try {
+        // 全ゲーム共通キー mk12_game_lang を優先、旧キー bb_quiz_lang から移行も読む
+        const stored =
+          localStorage.getItem("mk12_game_lang") ||
+          localStorage.getItem("bb_quiz_lang");
+        if (stored === "ja" || stored === "en") lang = stored;
+      } catch (e) {}
+
+      let qIndex = 0;
+      let answers = [];
+      let answered = false;
+
+      function t(key) {
+        return I18N[lang][key] !== undefined ? I18N[lang][key] : key;
+      }
+
+      /* =========================================================
+         I18N - プレーン文字列のみ textContent でセット
+         ========================================================= */
+      function applyI18n() {
+        document.documentElement.lang = lang;
+        // タブタイトルとブックマーク名を言語に追従させる
+        document.title =
+          (lang === "ja"
+            ? "バグバウンティ脆弱性ランキング・クイズ"
+            : "Bug Bounty Top 10 Vulnerability Quiz") +
+          " | morioka12 game site";
+
+        document.getElementById("brand-name").textContent = t("brandName");
+        document.getElementById("hero-tag-text").textContent = t("heroTag");
+
+        // ヒーロー見出しは 2 行構成（<br> も createElement で）
+        const heroTitle = document.getElementById("hero-title");
+        heroTitle.textContent = "";
+        heroTitle.appendChild(document.createTextNode(t("heroTitleLine1")));
+        heroTitle.appendChild(document.createElement("br"));
+        heroTitle.appendChild(document.createTextNode(t("heroTitleLine2")));
+
+        document.getElementById("hero-sub").textContent = t("heroSub");
+        document.getElementById("stat-label-q").textContent =
+          t("statQuestions");
+        document.getElementById("stat-label-y").textContent = t("statYears");
+        document.getElementById("stat-label-t").textContent = t("statTime");
+        document.getElementById("stat-label-f").textContent = t("statFormat");
+
+        document.getElementById("sources-title").textContent =
+          t("sourcesTitle");
+        document.getElementById("src-2025").textContent = t("src2025");
+        document.getElementById("src-2024").textContent = t("src2024");
+        document.getElementById("src-2023").textContent = t("src2023");
+
+        document.getElementById("btn-start-text").textContent = t("startBtn");
+        document.getElementById("start-note").textContent = t("startNote");
+
+        document.getElementById("qm-q-label").textContent = t("quizQ");
+
+        document.getElementById("stat-lbl-correct").textContent =
+          t("resultCorrect");
+        document.getElementById("stat-lbl-wrong").textContent =
+          t("resultWrong");
+        document.getElementById("stat-lbl-acc").textContent = t("resultAcc");
+        document.getElementById("btn-share-text").textContent =
+          t("resultShare");
+        document.getElementById("btn-retry-text").textContent =
+          t("resultRetry");
+        document.getElementById("review-title").textContent = t("resultReview");
+        document.getElementById("footer-by").textContent = t("footerBy");
+      }
+
+      function updateLangPill() {
+        const pill = document.getElementById("lang-pill");
+        const buttons = document.querySelectorAll(".lang-toggle button");
+        const active = document.querySelector(
+          '.lang-toggle button[data-lang="' + lang + '"]',
+        );
+        if (!active || !pill) return;
+        buttons.forEach((b) => b.classList.toggle("active", b === active));
+        pill.style.width = active.offsetWidth + "px";
+        pill.style.transform = "translateX(" + (active.offsetLeft - 3) + "px)";
+      }
+
+      function setLanguage(next) {
+        if (lang === next) return;
+        lang = next;
+        try {
+          localStorage.setItem("mk12_game_lang", lang);
+        } catch (e) {}
+        applyI18n();
+        updateLangPill();
+        if (
+          document.getElementById("screen-quiz").classList.contains("active")
+        ) {
+          renderQuestion();
+        }
+        if (
+          document.getElementById("screen-result").classList.contains("active")
+        ) {
+          renderResult();
+        }
+      }
+
+      /* =========================================================
+         画面切り替え
+         ========================================================= */
+      function showScreen(id) {
+        document
+          .querySelectorAll(".screen")
+          .forEach((s) => s.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      /* =========================================================
+         クイズ
+         ========================================================= */
+      function startQuiz() {
+        qIndex = 0;
+        answers = [];
+        answered = false;
+        document.getElementById("q-total").textContent = QUIZ.length;
+        showScreen("screen-quiz");
+        renderQuestion();
+      }
+
+      function renderQuestion() {
+        const item = QUIZ[qIndex];
+        answered = !!answers[qIndex];
+
+        document.getElementById("q-current").textContent = qIndex + 1;
+        document.getElementById("q-tag").textContent = item.tag[lang];
+        document.getElementById("question-text").textContent = item.q[lang];
+
+        const pct = (qIndex / QUIZ.length) * 100;
+        document.getElementById("progress-fill").style.width = pct + "%";
+
+        const choicesEl = document.getElementById("choices");
+        choicesEl.textContent = "";
+
+        const keys = ["A", "B", "C", "D"];
+        item.choices.forEach((c, idx) => {
+          const btn = document.createElement("button");
+          btn.className = "choice";
+          btn.type = "button";
+
+          const key = document.createElement("span");
+          key.className = "choice-key";
+          key.textContent = keys[idx];
+
+          const text = document.createElement("span");
+          text.className = "choice-text";
+          text.textContent = c[lang];
+
+          const icon = document.createElement("span");
+          icon.className = "choice-icon";
+          icon.setAttribute("aria-hidden", "true");
+
+          btn.appendChild(key);
+          btn.appendChild(text);
+          btn.appendChild(icon);
+
+          btn.addEventListener("click", () => onAnswer(idx));
+          choicesEl.appendChild(btn);
+        });
+
+        document.getElementById("feedback-area").textContent = "";
+        document.getElementById("btn-next").style.display = "none";
+
+        if (answered) {
+          applyAnswerVisual(answers[qIndex].selected);
+          showFeedback(answers[qIndex].selected);
+        }
+      }
+
+      function onAnswer(selectedIdx) {
+        if (answered) return;
+        answered = true;
+
+        const item = QUIZ[qIndex];
+        const correctIdx = _correctIdx(qIndex);
+        answers[qIndex] = { selected: selectedIdx, correct: correctIdx };
+
+        applyAnswerVisual(selectedIdx);
+        showFeedback(selectedIdx);
+      }
+
+      function applyAnswerVisual(selectedIdx) {
+        const item = QUIZ[qIndex];
+        const correctIdx = _correctIdx(qIndex);
+        const btns = document.querySelectorAll(".choice");
+        btns.forEach((b, idx) => {
+          b.disabled = true;
+          const icon = b.querySelector(".choice-icon");
+          if (idx === correctIdx) {
+            b.classList.add("correct");
+            icon.textContent = "✓";
+          } else if (idx === selectedIdx) {
+            b.classList.add("wrong");
+            icon.textContent = "✕";
+          } else {
+            b.classList.add("dim");
+          }
+        });
+      }
+
+      function showFeedback(selectedIdx) {
+        const item = QUIZ[qIndex];
+        const correctIdx = _correctIdx(qIndex);
+        const isCorrect = selectedIdx === correctIdx;
+
+        const fb = document.createElement("div");
+        fb.className = "feedback " + (isCorrect ? "correct-fb" : "wrong-fb");
+
+        const title = document.createElement("div");
+        title.className = "feedback-title";
+        title.textContent =
+          (isCorrect ? "✓ " : "✕ ") +
+          (isCorrect ? t("quizCorrect") : t("quizWrong"));
+        fb.appendChild(title);
+
+        const body = document.createElement("div");
+        body.className = "feedback-body";
+        renderSegments(body, _decodeEx(item.ex[lang]));
+        fb.appendChild(body);
+
+        const fbArea = document.getElementById("feedback-area");
+        fbArea.textContent = "";
+        fbArea.appendChild(fb);
+
+        const nextBtn = document.getElementById("btn-next");
+        nextBtn.textContent =
+          qIndex >= QUIZ.length - 1 ? t("quizLast") : t("quizNext");
+        nextBtn.style.display = "flex";
+        nextBtn.onclick = onNext;
+        /* focus-next-btn-after-answer */
+        {
+          const _ae = document.activeElement;
+          const _aeChoice = _ae && _ae.classList && _ae.classList.contains('choice');
+          if (!_ae || _ae === document.body || _aeChoice) {
+            requestAnimationFrame(function () {
+              try { nextBtn.focus({ preventScroll: false }); }
+              catch (e) { nextBtn.focus(); }
+            });
+          }
+        }
+      }
+
+      function onNext() {
+        if (qIndex >= QUIZ.length - 1) {
+          finishQuiz();
+        } else {
+          qIndex++;
+          renderQuestion();
+        }
+      }
+
+      /* =========================================================
+         結果
+         ========================================================= */
+      function finishQuiz() {
+        document.getElementById("progress-fill").style.width = "100%";
+        renderResult();
+        showScreen("screen-result");
+      }
+
+      function getRank(score, total) {
+        const pct = (score / total) * 100;
+        const isJa = lang === "ja";
+        if (pct === 100) {
+          return {
+            tag: "★ ELITE HUNTER",
+            title: isJa ? "完全制覇！" : "Flawless Victory!",
+            sub: isJa
+              ? "Hacktivity を年表のように暗記している猛者です。"
+              : "You read Hacktivity like a calendar.",
+            comment: isJa
+              ? [
+                  { t: "10/10、お見事です。", b: true },
+                  {
+                    t: " HackerOne の人気投票・報奨金額・ターゲット選びの観点を、複数年にわたって押さえている証拠。次は同じ視点で「自分の調査ターゲット」を選び直してみると、CVE / 報奨に直結する仮説が立てやすくなります。",
+                  },
+                ]
+              : [
+                  { t: "10/10. ", b: true },
+                  {
+                    t: "You've internalized the popularity-vote, bounty, and target-selection signals across multiple years. Use the same lens on your own targets next — it'll sharpen the hypothesis behind every report.",
+                  },
+                ],
+          };
+        }
+        if (pct >= 80) {
+          return {
+            tag: "★ SENIOR HUNTER",
+            title: isJa ? "シニアハンター級！" : "Senior Hunter!",
+            sub: isJa
+              ? "業界トレンドをほぼ正確に掴めています。"
+              : "You're tracking the industry pulse pretty well.",
+            comment: isJa
+              ? [
+                  { t: "正答率 80% 以上は" },
+                  { t: "業界の動向を把握している層", b: true },
+                  {
+                    t: "。「アクセス制御」「認証フロー」が現代の主戦場であるという感覚と、報奨金 ≠ 投票数の差を理解しているはずです。間違えた問題は、出典記事を流し読みするだけでも一気に埋まります。",
+                  },
+                ]
+              : [
+                  {
+                    t: "80%+ means you're already plugged into the meta. ",
+                    b: true,
+                  },
+                  {
+                    t: "Access control and auth flows are the modern frontline, and you can sense that votes and bounties don't always agree. Skim the source articles for the ones you missed.",
+                  },
+                ],
+          };
+        }
+        if (pct >= 60) {
+          return {
+            tag: "★ JUNIOR HUNTER",
+            title: isJa ? "ジュニアハンター級" : "Junior Hunter",
+            sub: isJa
+              ? "基礎は固まりつつあります。あと一歩。"
+              : "Solid foundation. One more push.",
+            comment: isJa
+              ? [
+                  { t: "「投票数」「報奨金」「ターゲット種類」", b: true },
+                  {
+                    t: " の3軸でランキングを再読すると、頭の中で立体的にトレンドが整理されます。出典記事は3本でも 30 分かからない読了量。次回は 80% 越えを狙えます。",
+                  },
+                ]
+              : [
+                  { t: "Re-read the rankings on three axes: " },
+                  { t: "votes, bounty, and target type", b: true },
+                  {
+                    t: ". The three source posts together take ~30 minutes — and they'll push you over 80% next round.",
+                  },
+                ],
+          };
+        }
+        if (pct >= 30) {
+          return {
+            tag: "★ ROOKIE",
+            title: isJa ? "ルーキー" : "Rookie",
+            sub: isJa ? "ここから伸びる時期です。" : "Plenty of room to grow.",
+            comment: isJa
+              ? [
+                  { t: "脆弱性カテゴリの " },
+                  { t: "名前と特徴の対応", b: true },
+                  {
+                    t: "（IDOR・SSRF・SAML・UAF など）を整理するだけで、得点は一気に伸びます。下のレビューで、自分が引っ掛かったパターンを把握すると次回の伸び幅が大きいです。",
+                  },
+                ]
+              : [
+                  {
+                    t: "Just mapping vulnerability names to their characteristics (IDOR, SSRF, SAML, UAF…) will boost your score quickly. Use the review below to spot the patterns you fell for.",
+                  },
+                ],
+          };
+        }
+        return {
+          tag: "★ NEWCOMER",
+          title: isJa ? "ニューカマー" : "Newcomer",
+          sub: isJa
+            ? "出典記事から始めるのがおすすめ。"
+            : "Start with the source articles.",
+          comment: isJa
+            ? [
+                { t: "まずは " },
+                { t: "出典記事 3 本", b: true },
+                {
+                  t: " に目を通すと、世界のバグハンターが「何にいくら払われているか」の感覚が一気に手に入ります。クイズはそのあとリトライしてみましょう。",
+                },
+              ]
+            : [
+                {
+                  t: "Skim the three source articles first — you'll quickly get a feel for ",
+                },
+                {
+                  t: "what the bug-bounty world is currently paying for",
+                  b: true,
+                },
+                { t: ". Then come back for the retry." },
+              ],
+        };
+      }
+
+      function renderResult() {
+        const correctCount = answers.filter(
+          (a) => a.selected === a.correct,
+        ).length;
+        const wrongCount = QUIZ.length - correctCount;
+        const acc = Math.round((correctCount / QUIZ.length) * 100);
+        const rank = getRank(correctCount, QUIZ.length);
+
+        document.getElementById("result-rank").textContent = rank.tag;
+        document.getElementById("result-title").textContent = rank.title;
+        document.getElementById("result-sub").textContent = rank.sub;
+        document.getElementById("score-num").textContent = correctCount;
+        document.getElementById("score-ring").style.setProperty("--pct", acc);
+        document.getElementById("stat-correct").textContent = correctCount;
+        document.getElementById("stat-wrong").textContent = wrongCount;
+        document.getElementById("stat-acc").textContent = acc + "%";
+        renderSegments(document.getElementById("result-comment"), rank.comment);
+
+        const reviewGrid = document.getElementById("review-grid");
+        reviewGrid.textContent = "";
+        const keys = ["A", "B", "C", "D"];
+        QUIZ.forEach((item, i) => {
+          const ans = answers[i];
+          const isOk = ans && ans.selected === ans.correct;
+          const row = document.createElement("div");
+          row.className = "review-item";
+
+          const mark = document.createElement("div");
+          mark.className = "review-mark " + (isOk ? "ok" : "ng");
+          mark.textContent = isOk ? "✓" : "✕";
+
+          const content = document.createElement("div");
+          content.className = "review-content";
+
+          const qLine = document.createElement("div");
+          qLine.className = "review-q";
+          qLine.textContent = "Q" + (i + 1) + ". " + item.q[lang];
+          content.appendChild(qLine);
+
+          if (ans) {
+            const aLine = document.createElement("div");
+            aLine.className = "review-a";
+            const yourTag = document.createElement("span");
+            yourTag.className = "review-a-tag";
+            yourTag.style.color = isOk ? "var(--success)" : "var(--danger)";
+            yourTag.textContent =
+              "[" + t("resultYour") + "] " + keys[ans.selected];
+            aLine.appendChild(yourTag);
+            aLine.appendChild(
+              document.createTextNode(item.choices[ans.selected][lang]),
+            );
+            content.appendChild(aLine);
+
+            if (!isOk) {
+              const cLine = document.createElement("div");
+              cLine.className = "review-a";
+              cLine.style.marginTop = "4px";
+              const cTag = document.createElement("span");
+              cTag.className = "review-a-tag";
+              cTag.style.color = "var(--success)";
+              cTag.textContent =
+                "[" + t("resultAnswer") + "] " + keys[ans.correct];
+              cLine.appendChild(cTag);
+              cLine.appendChild(
+                document.createTextNode(item.choices[ans.correct][lang]),
+              );
+              content.appendChild(cLine);
+            }
+          }
+
+          row.appendChild(mark);
+          row.appendChild(content);
+          reviewGrid.appendChild(row);
+        });
+      }
+
+      /* =========================================================
+         X (Twitter) シェア
+         ========================================================= */
+      function buildShareText(correct, total, acc) {
+        if (lang === "ja") {
+          return (
+            "「バグバウンティ脆弱性ランキング・クイズ」全 " +
+            total +
+            " 問中 " +
+            correct +
+            " 問正解（正答率 " +
+            acc +
+            "%）\n" +
+            "HackerOne Hacktivity 2023〜2025 のバグハンター・トリビアに挑戦してみよう！\n\n" +
+            "#BugBountyJPGame"
+          );
+        }
+        return (
+          "I scored " +
+          correct +
+          "/" +
+          total +
+          " (" +
+          acc +
+          "%) on the Bug Bounty Top 10 Quiz \n" +
+          "Try the bug-hunter trivia from HackerOne Hacktivity 2023–2025!\n\n" +
+          "#BugBountyJPGame"
+        );
+      }
+
+      function onShare() {
+        const correct = answers.filter((a) => a.selected === a.correct).length;
+        const acc = Math.round((correct / QUIZ.length) * 100);
+        const text = buildShareText(correct, QUIZ.length, acc);
+        // スコア別シェアページ（OGP 画像にスコアが焼き込まれる）へリンクを向ける。
+        // share/<score>/index.html は事前に静的生成されており、og:image が
+        // /images/games/<slug>/score-<score>.png を指している。
+        // new URL の相対パス解決を使うことで、ドット入りディレクトリ名や
+        // /index.html 直指定でも安全に share/<score>/ を組み立てる。
+        const url = new URL("share/" + correct + "/", location.href).href;
+        const intent =
+          "https://x.com/intent/tweet?text=" +
+          encodeURIComponent(text) +
+          "&url=" +
+          encodeURIComponent(url);
+        window.open(intent, "_blank", "noopener,noreferrer");
+      }
+
+      /* =========================================================
+         イベントバインド
+         ========================================================= */
+      document.querySelectorAll(".lang-toggle button").forEach((btn) => {
+        btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+      });
+      document.getElementById("btn-start").addEventListener("click", startQuiz);
+      document.getElementById("btn-share").addEventListener("click", onShare);
+      document.getElementById("btn-retry").addEventListener("click", startQuiz);
+
+      /* =========================================================
+         パーティクル背景
+         ========================================================= */
+      (function initParticles() {
+        const canvas = document.getElementById("particles");
+        const ctx = canvas.getContext("2d");
+        let w = 0;
+        let h = 0;
+        let particles = [];
+        const reduce =
+          window.matchMedia &&
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        function resize() {
+          w = canvas.width = window.innerWidth;
+          h = canvas.height = window.innerHeight;
+        }
+
+        function create() {
+          particles = [];
+          const count = Math.max(28, Math.floor((w * h) / 32000));
+          for (let i = 0; i < count; i++) {
+            particles.push({
+              x: Math.random() * w,
+              y: Math.random() * h,
+              r: Math.random() * 1.6 + 0.4,
+              vx: (Math.random() - 0.5) * 0.18,
+              vy: (Math.random() - 0.5) * 0.18,
+              alpha: Math.random() * 0.5 + 0.15,
+              hue: Math.random() < 0.5 ? "14, 165, 233" : "251, 146, 60",
+            });
+          }
+        }
+
+        function draw() {
+          ctx.clearRect(0, 0, w, h);
+          for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(" + p.hue + ", " + p.alpha + ")";
+            ctx.fill();
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0) p.x = w;
+            if (p.x > w) p.x = 0;
+            if (p.y < 0) p.y = h;
+            if (p.y > h) p.y = 0;
+          }
+          if (!reduce) requestAnimationFrame(draw);
+        }
+
+        resize();
+        create();
+        draw();
+        window.addEventListener("resize", () => {
+          resize();
+          create();
+        });
+      })();
+
+      /* =========================================================
+         初期化
+         ========================================================= */
+      applyI18n();
+      requestAnimationFrame(updateLangPill);
+      /* ===== Quiz keyboard shortcuts (1-4 / A-D / Enter) ===== */
+      document.addEventListener("keydown", function (_kbEvt) {
+        if (_kbEvt.isComposing || _kbEvt.keyCode === 229) return;
+        const _tg = _kbEvt.target;
+        if (_tg && /^(INPUT|TEXTAREA|SELECT)$/i.test(_tg.tagName)) return;
+        // quiz 画面がアクティブな時のみ反応する
+        const _scr = document.querySelector("#screen-quiz.active");
+        if (!_scr) return;
+        // Enter / Space で「次へ」ボタンを進める
+        if (_kbEvt.key === "Enter" || _kbEvt.key === " " || _kbEvt.code === "Space") {
+          const _nb = document.getElementById("btn-next");
+          if (_nb && _nb.style.display !== "none" && !_nb.disabled) {
+            _kbEvt.preventDefault();
+            _nb.click();
+          }
+          return;
+        }
+        // 1-4 / A-D で choice を選択（disabled なら無視）
+        let _idx = -1;
+        if (/^[1-4]$/.test(_kbEvt.key)) _idx = parseInt(_kbEvt.key, 10) - 1;
+        else if (/^[a-dA-D]$/.test(_kbEvt.key))
+          _idx = _kbEvt.key.toUpperCase().charCodeAt(0) - 65;
+        if (_idx < 0) return;
+        const _btns = _scr.querySelectorAll(".choice");
+        if (_btns[_idx] && !_btns[_idx].disabled) {
+          _kbEvt.preventDefault();
+          _btns[_idx].click();
+        }
+      });
+
+      window.addEventListener("resize", updateLangPill);
+      })();
+    </script>
+  </body>
+</html>

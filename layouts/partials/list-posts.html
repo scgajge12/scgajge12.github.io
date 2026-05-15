@@ -1,0 +1,13 @@
+{{/* おすすめ記事（タイトル先頭が "⭐︎"）を視覚的に区別して表示するパーシャル */}}
+{{ $isRec := hasPrefix .Title "⭐︎" }}
+{{ $displayTitle := .Title | replaceRE "^⭐︎\\s*" "" }}
+<article class="post-title{{ if $isRec }} pf-post-recommended{{ end }}">
+    <a href="{{ .Permalink }}" class="post-link">
+        {{- if $isRec -}}
+            <span class="pf-rec-star" aria-label="Recommended" title="Recommended">★</span>
+        {{- end -}}
+        {{ $displayTitle }}
+    </a>
+    <div class="flex-break"></div>
+    <span class="post-date">{{ dateFormat "January 2, 2006" .Date }}</span>
+</article>

@@ -1,7 +1,7 @@
 ---
 title: "Blogs I wrote while a student that got a good response (Top 5)"
 date: 2023-12-19
-tags: ["blog"]
+tags: ["career"]
 type: post
 showTableOfContents: true
 ---

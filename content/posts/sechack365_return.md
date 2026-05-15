@@ -1,7 +1,7 @@
 ---
 title: "Review of SecHack365 Returns (2019)"
 date: 2019-10-12
-tags: ["event", "blog"]
+tags: ["event"]
 type: post
 showTableOfContents: true
 ---

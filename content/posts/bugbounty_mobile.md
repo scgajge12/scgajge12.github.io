@@ -1,7 +1,7 @@
 ---
 title: "Summary of Mobile App Vulnerability Reporting Cases in Bug Bounty"
 date: 2023-12-13
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty"]
 type: post
 showTableOfContents: true
 ---

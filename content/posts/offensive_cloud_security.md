@@ -1,7 +1,7 @@
 ---
 title: "⭐︎ Introduction to Cloud Security from an Offensive Perspective (AWS Edition)"
 date: 2024-01-22
-tags: ["cloud", "security", "blog"]
+tags: ["cloud", "security"]
 type: post
 showTableOfContents: true
 ---

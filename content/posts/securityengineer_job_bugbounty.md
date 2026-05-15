@@ -1,7 +1,7 @@
 ---
 title: "Short Survey of Security Jobs seeking Bug Hunter Achievements"
 date: 2025-12-18
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty", "career"]
 type: post
 showTableOfContents: true
 ---

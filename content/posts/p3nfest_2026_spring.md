@@ -1,7 +1,7 @@
 ---
 title: "P3NFEST 2026 Spring Hands-on Course and Talk Report"
 date: 2026-03-10
-tags: ["bugbounty", "event", "blog"]
+tags: ["bugbounty", "event"]
 type: post
 showTableOfContents: true
 ---

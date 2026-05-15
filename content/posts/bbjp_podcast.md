@@ -1,7 +1,7 @@
 ---
 title: "We have started a podcast Bug Bounty JP Podcast"
 date: 2024-02-26
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty"]
 type: post
 showTableOfContents: true
 ---

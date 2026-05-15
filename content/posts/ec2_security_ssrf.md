@@ -1,7 +1,7 @@
 ---
 title: "⭐︎ Security (vulnerability) cases in Amazon EC2"
 date: 2023-08-31
-tags: ["cloud", "security", "blog"]
+tags: ["cloud", "security"]
 type: post
 showTableOfContents: true
 ---

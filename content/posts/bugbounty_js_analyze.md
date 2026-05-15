@@ -1,7 +1,7 @@
 ---
 title: "⭐︎ Summary of Static and Dynamic Analysis of JavaScript in Bug Bounty"
 date: 2023-12-06
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty", "web"]
 type: post
 showTableOfContents: true
 ---

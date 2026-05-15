@@ -1,7 +1,7 @@
 ---
 title: "Summary of specific threat examples of XSS in Bug Bounty"
 date: 2024-01-17
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty", "web"]
 type: post
 showTableOfContents: true
 ---

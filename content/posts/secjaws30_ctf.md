@@ -1,7 +1,7 @@
 ---
 title: "Security-JAWS DAYS Participation Record & CTF Creator Commentary"
 date: 2023-08-31
-tags: ["cloud", "security", "blog", "event"]
+tags: ["cloud", "ctf", "event"]
 type: post
 showTableOfContents: true
 ---

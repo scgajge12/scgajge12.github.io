@@ -1,7 +1,7 @@
 ---
 title: "Interview with a Young Security Engineer 1"
 date: 2025-01-08
-tags: ["security", "interview"]
+tags: ["interview", "career"]
 type: post
 showTableOfContents: true
 ---

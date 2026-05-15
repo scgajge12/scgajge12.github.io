@@ -1,7 +1,7 @@
 ---
 title: "Security Risks and Countermeasures in Generative AI applications using Amazon Bedrock"
 date: 2025-05-22
-tags: ["cloud", "security", "blog"]
+tags: ["cloud", "security"]
 type: post
 showTableOfContents: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: "AWS Lambda Pitfalls - Risks and Security Measures Due to Vulnerable Libraries"
 date: 2022-02-24
-tags: ["cloud", "security", "blog"]
+tags: ["cloud", "security"]
 type: post
 showTableOfContents: true
 ---

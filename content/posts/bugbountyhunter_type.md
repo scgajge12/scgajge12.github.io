@@ -1,7 +1,7 @@
 ---
 title: "Bug Bounty Hunter Types, Preferences, and AI"
 date: 2025-06-15
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty", "career"]
 type: post
 showTableOfContents: true
 ---

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Career on morioka12 site</title>
+    <link>http://localhost:1313/tags/career/</link>
+    <description>Recent content in Career on morioka12 site</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 11 Jan 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/career/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2025 Retrospective </title>
+      <link>http://localhost:1313/posts/2025_year/</link>
+      <pubDate>Sun, 11 Jan 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2025_year/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/2025_year&#34;&gt;2025年の振り返り&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Short Survey of Security Jobs seeking Bug Hunter Achievements</title>
+      <link>http://localhost:1313/posts/securityengineer_job_bugbounty/</link>
+      <pubDate>Thu, 18 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/securityengineer_job_bugbounty/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/securityengineer_job_bugbounty&#34;&gt;バグハンター実績を歓迎要件に含むセキュリティエンジニア求人のプチ調査&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Bug Bounty Hunter Types, Preferences, and AI</title>
+      <link>http://localhost:1313/posts/bugbountyhunter_type/</link>
+      <pubDate>Sun, 15 Jun 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbountyhunter_type/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bugbountyhunter_type&#34;&gt;バグバウンティハンターにおけるタイプと好みとAIについて&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Interview with a Young Security Engineer 1</title>
+      <link>http://localhost:1313/posts/sec_wakate_interview/</link>
+      <pubDate>Wed, 08 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/sec_wakate_interview/</guid>
+      <description>&lt;h2 id=&#34;interview-japanese&#34;&gt;Interview (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://zenn.dev/sec_wakate/articles/7794490c5ea3af&#34;&gt;若手セキュリティエンジニアのインタビュー記事1「morioka12」&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>2024 Retrospective </title>
+      <link>http://localhost:1313/posts/2024_year/</link>
+      <pubDate>Fri, 27 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2024_year/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/2024_year&#34;&gt;2024年の振り返り&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Intigriti Q1 2024 results</title>
+      <link>http://localhost:1313/posts/intigriti_q1_2024/</link>
+      <pubDate>Tue, 21 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/intigriti_q1_2024/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/intigriti_q1_2024&#34;&gt;Intigriti Q1 2024 の成績&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Summary of CVE IDs obtained while a student</title>
+      <link>http://localhost:1313/posts/student_cve/</link>
+      <pubDate>Mon, 20 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/student_cve/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/student_cve&#34;&gt;学生中に取得した CVE ID まとめ&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Story about being selected as an AWS Community Builder</title>
+      <link>http://localhost:1313/posts/aws_community_builder/</link>
+      <pubDate>Mon, 11 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/aws_community_builder/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/aws_community_builder&#34;&gt;「AWS Community Builder」に選出された話&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>⭐︎ Job hunting story by a new graduate student who wants to become a Security Engineer</title>
+      <link>http://localhost:1313/posts/student_security_engineer_job/</link>
+      <pubDate>Sat, 06 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/student_security_engineer_job/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/student_security_engineer_job&#34;&gt;新卒の学生によるセキュリティエンジニア志望の就活話&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>2023 Retrospective </title>
+      <link>http://localhost:1313/posts/2023_year/</link>
+      <pubDate>Thu, 28 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2023_year/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/2023_year&#34;&gt;2023年の振り返り&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Blogs I wrote while a student that got a good response (Top 5)</title>
+      <link>http://localhost:1313/posts/student_blog_best_5/</link>
+      <pubDate>Tue, 19 Dec 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/student_blog_best_5/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/student_blog_best_5&#34;&gt;学生中に書いて反響が良かったブログ記事集(ベスト5)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Summary of the actual situation of Bug Bounty Hunter in Bug Bounty</title>
+      <link>http://localhost:1313/posts/bugbountyhunter/</link>
+      <pubDate>Wed, 25 Oct 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/bugbountyhunter/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/bug_bounty_hunter_report&#34;&gt;バグバウンティにおけるBug Bounty Hunterの実態調査まとめ&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>2022 Retrospective </title>
+      <link>http://localhost:1313/posts/2022_year/</link>
+      <pubDate>Wed, 28 Dec 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/2022_year/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/2022_year&#34;&gt;2022年の振り返り&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>Technical books recommended by IPFactory for first-year students (2022 edition)</title>
+      <link>http://localhost:1313/posts/ipfactory_books_2022/</link>
+      <pubDate>Thu, 07 Apr 2022 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/ipfactory_books_2022/</guid>
+      <description>&lt;h2 id=&#34;blog-japanese&#34;&gt;Blog (Japanese)&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://scgajge12.hatenablog.com/entry/ipfactory_books_2022&#34;&gt;IPFactoryが1年生におすすめする技術書(2022年度版)&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;hr&gt;</description>
+    </item>
+  </channel>
+</rss>

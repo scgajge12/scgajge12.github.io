@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark" />
+    <title>素人客 — Sushi Bounty（回転寿司バウンティ） | morioka12 game site</title>
+    <meta name="description" content="ここからが伸びしろ。 Plenty of room to grow. — ★ SHIROUTO on Sushi Bounty — Kaiten Bug Bounty Arcade." />
+    <link rel="canonical" href="https://scgajge12.github.io/games/kaiten-bounty/share/shirouto/" />
+
+    <!-- ===== OGP / Twitter Card（スコア／ランク別画像） ===== -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="素人客 — Sushi Bounty（回転寿司バウンティ） | morioka12 game site" />
+    <meta property="og:description" content="ここからが伸びしろ。 Plenty of room to grow. — ★ SHIROUTO on Sushi Bounty — Kaiten Bug Bounty Arcade." />
+    <meta property="og:url" content="https://scgajge12.github.io/games/kaiten-bounty/share/shirouto/" />
+    <meta property="og:image" content="https://scgajge12.github.io/images/games/kaiten-bounty/rank-shirouto.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="素人客 — Sushi Bounty（回転寿司バウンティ）" />
+    <meta property="og:site_name" content="morioka12 game site" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@scgajge12" />
+    <meta name="twitter:creator" content="@scgajge12" />
+    <meta name="twitter:title" content="素人客 — Sushi Bounty（回転寿司バウンティ） | morioka12 game site" />
+    <meta name="twitter:description" content="ここからが伸びしろ。 Plenty of room to grow. — ★ SHIROUTO on Sushi Bounty — Kaiten Bug Bounty Arcade." />
+    <meta name="twitter:image" content="https://scgajge12.github.io/images/games/kaiten-bounty/rank-shirouto.png" />
+
+    <style>
+      :root {
+        --bg: #04111e;
+        --bg2: #082336;
+        --bg3: #0e3149;
+        --text: #e6f4f9;
+        --text-muted: #93c5d8;
+        --text-dim: #5b8597;
+        --accent: #f97316;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body {
+        min-height: 100dvh;
+        background:
+          radial-gradient(circle at 18% 18%, rgba(34,211,238,0.12), transparent 55%),
+          radial-gradient(circle at 82% 82%, rgba(251,191,36,0.08), transparent 55%),
+          linear-gradient(135deg, #04111e 0%, #082336 55%, #0e3149 100%);
+        color: var(--text);
+        font-family:
+          -apple-system,
+          "Hiragino Sans",
+          "Helvetica Neue",
+          Arial,
+          sans-serif;
+        display: flex; flex-direction: column; align-items: center;
+        padding: 32px 20px 40px;
+        -webkit-font-smoothing: antialiased;
+      }
+      header { width: 100%; max-width: 720px; display: flex; align-items: center; gap: 12px; }
+      .logo {
+        width: 40px; height: 40px; border-radius: 10px;
+        background: linear-gradient(135deg, #155e75, #0891b2);
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 800; color: var(--text);
+        border: 1px solid rgba(148,197,216,0.2);
+      }
+      header .name { font-weight: 700; font-size: 16px; }
+      header .sub  { font-size: 11px; color: var(--text-muted); letter-spacing: 0.24em; text-transform: uppercase; }
+
+      main {
+        margin-top: 36px; width: 100%; max-width: 720px;
+        background: rgba(8,35,54,0.55);
+        border: 1px solid rgba(148,197,216,0.18);
+        border-radius: 16px;
+        padding: 32px 28px;
+        text-align: center;
+      }
+      .game-title {
+        font-size: 18px; color: var(--text-muted); font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+      .game-title small { display: block; font-size: 12px; color: var(--text-dim); margin-top: 4px; letter-spacing: 0.08em; }
+      .score {
+        margin: 24px 0 8px;
+        display: flex; align-items: baseline; justify-content: center; gap: 8px;
+      }
+      .score .num {
+        font-size: 96px; font-weight: 800; color: var(--accent);
+        line-height: 1; letter-spacing: -0.04em;
+      }
+      .score .sep { font-size: 48px; color: var(--text-dim); font-weight: 300; }
+      .score .total { font-size: 48px; color: var(--text-muted); font-weight: 600; }
+      .pct {
+        font-size: 14px; color: var(--text-muted); margin-top: 8px;
+      }
+      .pct b { color: var(--accent); font-weight: 700; font-size: 16px; }
+      .rank-display { margin: 28px 0 12px; }
+      .rank-display .rank-tag {
+        display: inline-block; padding: 6px 14px;
+        border-radius: 999px;
+        background: rgba(8,35,54,0.6);
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-size: 12px; font-weight: 700;
+        letter-spacing: 0.18em; text-transform: uppercase;
+      }
+      .rank-display .rank-title {
+        margin-top: 14px;
+        font-size: 40px; font-weight: 800; color: var(--accent);
+        letter-spacing: -0.01em;
+      }
+      .rank-display .rank-title-en {
+        margin-top: 4px;
+        font-size: 14px; color: var(--text-muted);
+        letter-spacing: 0.06em;
+      }
+      .rank {
+        display: inline-block; margin-top: 18px;
+        padding: 10px 18px; border-radius: 10px;
+        background: rgba(8,35,54,0.7);
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-size: 13px; font-weight: 700;
+        letter-spacing: 0.12em; text-transform: uppercase;
+      }
+      .cta {
+        margin-top: 32px;
+        display: flex; flex-direction: column; gap: 12px; align-items: center;
+      }
+      .cta a {
+        display: inline-flex; align-items: center; justify-content: center;
+        padding: 14px 28px; border-radius: 10px;
+        font-weight: 700; font-size: 15px;
+        text-decoration: none;
+        transition: transform 0.15s ease, opacity 0.15s ease;
+      }
+      .cta a:hover { transform: translateY(-1px); opacity: 0.92; }
+      .cta .primary {
+        background: var(--accent);
+        color: #04111e;
+        min-width: 260px;
+      }
+      .cta .secondary {
+        background: transparent;
+        color: var(--text-muted);
+        border: 1px solid rgba(148,197,216,0.3);
+      }
+      .note {
+        margin-top: 20px; font-size: 12px; color: var(--text-dim);
+      }
+      footer {
+        margin-top: 32px; font-size: 12px; color: var(--text-dim);
+      }
+      footer a { color: var(--text-muted); text-decoration: none; }
+    </style>
+
+    <!--
+      4 秒後にゲーム本体へ遷移する。
+      meta http-equiv="refresh" は使わない理由：
+        Twitterbot 等のクローラがリダイレクトと解釈し、遷移先 URL の
+        OGP を見に行く挙動があるため、スコア別 og:image が反映されない。
+      JS で navigator.userAgent を確認し、ボットでない場合のみ遷移する。
+    -->
+    <script>
+      (function () {
+        try {
+          var ua = (navigator && navigator.userAgent) || "";
+          var isBot = /bot|crawl|spider|slurp|twitterbot|discordbot|facebookexternalhit|slackbot|linkedinbot|embedly|telegrambot|whatsapp|skypeuripreview|preview|fetch|http|google|bing|duckduckgo|baidu|yandex/i.test(ua);
+          if (isBot) return;
+          window.setTimeout(function () {
+            window.location.replace("https://scgajge12.github.io/games/kaiten-bounty/");
+          }, 4000);
+        } catch (e) {
+          // 失敗時はシェアページに留まる
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="logo">M</div>
+      <div>
+        <div class="name">morioka12 game site</div>
+        <div class="sub">SHARED RESULT</div>
+      </div>
+    </header>
+
+    <main>
+      <div class="game-title">
+        Sushi Bounty（回転寿司バウンティ）
+        <small>Sushi Bounty — Kaiten Bug Bounty Arcade</small>
+      </div>
+
+      
+      <div class="rank-display" aria-label="rank">
+        <span class="rank-tag">★ SHIROUTO</span>
+        <div class="rank-title">素人客</div>
+        <div class="rank-title-en">Newcomer</div>
+      </div>
+    
+
+      <div class="rank">ここからが伸びしろ。 / Plenty of room to grow.</div>
+
+      <div class="cta">
+        <a class="primary" href="https://scgajge12.github.io/games/kaiten-bounty/" rel="noopener">あなたも挑戦する / Try the game</a>
+        <a class="secondary" href="https://scgajge12.github.io/" rel="noopener">morioka12 game site のトップへ</a>
+      </div>
+
+      <p class="note">
+        ※ このページは X(Twitter) などからシェアされた結果ページです。<br />
+        ※ 4 秒後に自動でゲーム本体へ移動します。
+      </p>
+    </main>
+
+    <footer>
+      <a href="https://scgajge12.github.io/games/kaiten-bounty/" rel="noopener">https://scgajge12.github.io/games/kaiten-bounty/</a> · <a href="https://x.com/scgajge12" rel="noopener noreferrer">@scgajge12</a>
+    </footer>
+  </body>
+</html>

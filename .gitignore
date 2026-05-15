@@ -1,0 +1,6 @@
+# ローカル開発用キャッシュ（scripts/serve.sh が利用するHugoバイナリの保存先）
+.cache/
+
+# ローカル開発時の一時ファイル
+.hugo_build.lock
+resources/_gen/

@@ -1,0 +1,4084 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#04111e" />
+    <title>Caido 忍者道場 | Caido Ninja Dojo</title>
+    <meta
+      name="description"
+      content="Web セキュリティプロキシ Caido のワークスペースを「忍術」に見立てて遊ぶタイムアタック型のアーケード忍者ゲーム。流れてくる脅威の巻物に正しい忍法札で斬りかかれ。"
+    />
+
+    <!-- ===== OGP / Twitter Card ===== -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Caido 忍者道場 | morioka12 game site" />
+    <meta
+      property="og:description"
+      content="Caido のワークスペースを「忍術」に見立てて遊ぶ、タイムアタック型のアーケード忍者ゲーム。流れてくる脅威の巻物に正しい忍法札で斬りかかれ。"
+    />
+    <meta
+      property="og:url"
+      content="https://scgajge12.github.io/games/caido-ninja/"
+    />
+    <meta
+      property="og:image"
+      content="https://scgajge12.github.io/images/caido-ninja-ogp.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Caido 忍者道場 - morioka12 game site"
+    />
+    <meta property="og:site_name" content="morioka12 game site" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@scgajge12" />
+    <meta name="twitter:creator" content="@scgajge12" />
+    <meta name="twitter:title" content="Caido 忍者道場 | morioka12 game site" />
+    <meta
+      name="twitter:description"
+      content="Caido のワークスペースを「忍術」に見立てて遊ぶ、タイムアタック型アーケード忍者ゲーム。"
+    />
+    <meta
+      name="twitter:image"
+      content="https://scgajge12.github.io/images/caido-ninja-ogp.png"
+    />
+
+    <style>
+      :root {
+        /* カワセミ（kingfisher）配色：コバルトブルー × バーントオレンジ */
+        --bg: #04111e;
+        --bg2: #082336;
+        --bg3: #0e3149;
+        --surface: #103e58;
+        --surface-2: #154d6d;
+        --line: rgba(14, 165, 233, 0.2);
+        --line-strong: rgba(14, 165, 233, 0.5);
+
+        --text: #e6f4f9;
+        --text-muted: #93c5d8;
+        --text-dim: #5b8597;
+
+        --primary: #0891b2;
+        --primary-light: #22d3ee;
+        --primary-deep: #155e75;
+        --secondary: #f97316;
+        --secondary-light: #fb923c;
+        --accent: #fbbf24;
+        --gold: #fbbf24;
+        --success: #34d399;
+        --danger: #fb7185;
+        --paper: #fdf6e3;
+        --paper-dim: #d6c89a;
+        --ink: #1a1a1a;
+
+        /* 忍術ごとの差し色 */
+        --j-replay: #22d3ee;
+        --j-automate: #fb7185;
+        --j-mr: #fb923c;
+        --j-convert: #34d399;
+        --j-workflows: #c084fc;
+
+        --radius: 14px;
+        --radius-sm: 8px;
+        --shadow: 0 12px 40px rgba(14, 165, 233, 0.22);
+        --shadow-strong: 0 0 60px rgba(14, 165, 233, 0.4);
+
+        --pad-x: 20px;
+        --pad-bottom: max(80px, env(safe-area-inset-bottom));
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        height: 100%;
+      }
+
+      html,
+      body {
+        overflow-x: hidden;
+        max-width: 100%;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+
+      body {
+        font-family:
+          "Inter", "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic",
+          "Noto Sans JP", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100dvh;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        word-wrap: break-word;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+        /* ゲーム中は誤ってテキスト選択しないようにする */
+        -webkit-user-select: none;
+        user-select: none;
+      }
+      /* 解説テキストなどは選択できるように戻す */
+      .selectable,
+      .selectable * {
+        -webkit-user-select: text;
+        user-select: text;
+      }
+
+      .bg-layer {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .bg-grid {
+        background-image:
+          linear-gradient(
+            to right,
+            rgba(14, 165, 233, 0.04) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(14, 165, 233, 0.04) 1px,
+            transparent 1px
+          );
+        background-size: 56px 56px;
+        mask-image: radial-gradient(
+          ellipse at center,
+          rgba(0, 0, 0, 0.85) 0%,
+          rgba(0, 0, 0, 0.2) 70%,
+          transparent 100%
+        );
+      }
+      .bg-glow1 {
+        background: radial-gradient(
+          circle at 18% 12%,
+          rgba(14, 165, 233, 0.18),
+          transparent 55%
+        );
+      }
+      .bg-glow2 {
+        background: radial-gradient(
+          circle at 82% 88%,
+          rgba(251, 146, 60, 0.14),
+          transparent 60%
+        );
+      }
+      #particles {
+        z-index: 0;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        max-width: 980px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 24px var(--pad-x) var(--pad-bottom);
+      }
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        min-width: 0;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        min-width: 0;
+        flex: 1 1 auto;
+      }
+      .brand-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+        background: linear-gradient(135deg, #1f2937, #0b1220);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent);
+        font-weight: 800;
+        font-size: 18px;
+        box-shadow: 0 0 18px rgba(251, 191, 36, 0.35);
+        flex-shrink: 0;
+        border: 1px solid rgba(251, 191, 36, 0.35);
+      }
+      .brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.15;
+        min-width: 0;
+        overflow: hidden;
+      }
+      .brand-name {
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: var(--text);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .brand-sub {
+        font-size: 10.5px;
+        color: var(--text-dim);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .lang-toggle {
+        display: inline-flex;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 3px;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+      .lang-toggle button {
+        background: transparent;
+        border: 0;
+        color: var(--text-muted);
+        padding: 8px 14px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        border-radius: 999px;
+        transition: color 0.2s;
+        position: relative;
+        z-index: 1;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        -webkit-tap-highlight-color: transparent;
+        min-height: 32px;
+      }
+      .lang-toggle button.active {
+        color: #fff;
+      }
+      .lang-toggle .lang-pill {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        height: calc(100% - 6px);
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-deep)
+        );
+        border-radius: 999px;
+        transition:
+          transform 0.28s ease,
+          width 0.28s ease;
+        z-index: 0;
+        box-shadow: 0 0 16px rgba(14, 165, 233, 0.4);
+      }
+
+      .screen {
+        display: none;
+        animation: fadeIn 0.35s ease;
+      }
+      .screen.active {
+        display: block;
+      }
+
+      /* ====== スタート画面 ====== */
+      .start-hero {
+        text-align: center;
+        margin: 6px 0 22px;
+      }
+
+      /* スタートヒーローの忍者シーン（月・提灯・竹・忍者・巻物） */
+      .ninja-illustration {
+        display: block;
+        width: clamp(220px, 42vw, 320px);
+        height: auto;
+        margin: 0 auto 12px;
+        filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55))
+          drop-shadow(0 0 18px rgba(251, 191, 36, 0.15));
+      }
+      /* 提灯のぼんやりした明滅 */
+      .ninja-illustration .lantern-glow {
+        animation: lanternFlicker 3.2s ease-in-out infinite;
+        transform-origin: center;
+      }
+      @keyframes lanternFlicker {
+        0%,
+        100% {
+          opacity: 0.85;
+          transform: scale(1);
+        }
+        45% {
+          opacity: 1;
+          transform: scale(1.05);
+        }
+        55% {
+          opacity: 0.78;
+          transform: scale(0.98);
+        }
+      }
+      /* 落ち葉が舞う */
+      .ninja-illustration .petal {
+        animation: petalDrift 6s linear infinite;
+        transform-origin: center;
+      }
+      .ninja-illustration .petal-b {
+        animation-delay: 2s;
+      }
+      .ninja-illustration .petal-c {
+        animation-delay: 4s;
+      }
+      @keyframes petalDrift {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+          opacity: 0;
+        }
+        15% {
+          opacity: 0.8;
+        }
+        100% {
+          transform: translate(-8px, 14px) rotate(60deg);
+          opacity: 0;
+        }
+      }
+      /* 竹がそよ風で揺れる */
+      .ninja-illustration .bamboo {
+        animation: bambooSway 5s ease-in-out infinite alternate;
+        transform-origin: 50% 100%;
+      }
+      @keyframes bambooSway {
+        from {
+          transform: rotate(-0.8deg);
+        }
+        to {
+          transform: rotate(1.2deg);
+        }
+      }
+
+      .hero-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        font-size: 11px;
+        letter-spacing: 2.5px;
+        color: var(--accent);
+        background: rgba(251, 191, 36, 0.08);
+        border: 1px solid rgba(251, 191, 36, 0.35);
+        border-radius: 999px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        max-width: 100%;
+      }
+      .hero-tag-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 8px var(--accent);
+        animation: blink 1.4s infinite;
+        flex-shrink: 0;
+      }
+      .hero-title {
+        font-size: clamp(22px, 6vw, 46px);
+        font-weight: 900;
+        letter-spacing: -0.5px;
+        line-height: 1.18;
+        background: linear-gradient(
+          120deg,
+          var(--primary-light) 10%,
+          var(--accent) 50%,
+          var(--secondary-light) 95%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 12px;
+      }
+      .hero-sub {
+        color: var(--text-muted);
+        font-size: clamp(13px, 2vw, 15.5px);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .rules {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        margin-bottom: 18px;
+      }
+      .rules-title {
+        font-size: 12px;
+        color: var(--text-dim);
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .rules-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 10px;
+      }
+      .rules-list li {
+        display: flex;
+        gap: 12px;
+        font-size: 13.5px;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+      .rules-list .num {
+        width: 26px;
+        height: 26px;
+        flex-shrink: 0;
+        border-radius: 6px;
+        background: rgba(14, 165, 233, 0.15);
+        color: var(--primary-light);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-weight: 800;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(14, 165, 233, 0.3);
+      }
+      .rules-list b {
+        color: var(--text);
+      }
+
+      .jutsu-legend {
+        background: linear-gradient(160deg, var(--bg2), var(--surface));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 18px 20px;
+        margin-bottom: 22px;
+      }
+      .jutsu-legend-title {
+        font-size: 12px;
+        color: var(--text-dim);
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .jutsu-legend-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 10px;
+      }
+      .jutsu-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+      }
+      .jutsu-key {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-weight: 800;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: #04111e;
+      }
+      .jutsu-row .jutsu-text {
+        flex: 1;
+        min-width: 0;
+        font-size: 12.5px;
+        line-height: 1.45;
+      }
+      .jutsu-row .jutsu-text b {
+        color: var(--text);
+        font-size: 13.5px;
+        display: block;
+      }
+      .jutsu-row .jutsu-text small {
+        color: var(--text-dim);
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+
+      /* スコアランク（帯位）一覧 */
+      .rank-list {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 18px 20px;
+        margin-bottom: 22px;
+      }
+      .rank-list-title {
+        font-size: 12px;
+        color: var(--text-dim);
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .rank-list-grid {
+        display: grid;
+        gap: 8px;
+      }
+      .rank-row {
+        display: grid;
+        grid-template-columns: 32px 110px 1fr auto;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+      }
+      .rank-row-belt {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3);
+      }
+      .rank-row-score {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--accent);
+        letter-spacing: 0.5px;
+      }
+      .rank-row-name {
+        font-size: 14px;
+        color: var(--text);
+        font-weight: 800;
+        line-height: 1.3;
+      }
+      .rank-row-tag {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 10.5px;
+        color: var(--gold);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .start-btn-wrap {
+        text-align: center;
+      }
+      .btn-start {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 36px;
+        background: linear-gradient(135deg, var(--accent), #d97706);
+        color: #04111e;
+        border: 0;
+        border-radius: 999px;
+        font-size: 15px;
+        font-weight: 900;
+        letter-spacing: 1.5px;
+        cursor: pointer;
+        box-shadow: 0 12px 32px rgba(251, 191, 36, 0.3);
+        transition: all 0.25s;
+        font-family: inherit;
+        text-transform: uppercase;
+        min-height: 48px;
+        max-width: 100%;
+      }
+      .btn-start:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 48px rgba(251, 191, 36, 0.55);
+        filter: brightness(1.06);
+      }
+      .start-note {
+        margin-top: 12px;
+        font-size: 11px;
+        color: var(--text-dim);
+        letter-spacing: 1px;
+      }
+
+      /* ====== ゲーム画面 ====== */
+      .hud {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .hud-cell {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        padding: 9px 10px;
+        text-align: center;
+        min-width: 0;
+        position: relative;
+      }
+      .hud-label {
+        font-size: 10px;
+        color: var(--text-dim);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        margin-bottom: 4px;
+      }
+      .hud-val {
+        font-size: 19px;
+        font-weight: 900;
+        line-height: 1.05;
+        color: var(--text);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-feature-settings: "tnum";
+      }
+      .hud-val.lives {
+        color: var(--danger);
+        letter-spacing: 4px;
+        font-size: 20px;
+      }
+      .hud-val.combo {
+        background: linear-gradient(
+          90deg,
+          var(--primary-light),
+          var(--accent)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .hud-val.rank {
+        font-size: 15px;
+        color: var(--accent);
+      }
+
+      .lane-wrap {
+        position: relative;
+        margin-bottom: 14px;
+      }
+      .lane {
+        position: relative;
+        height: 200px;
+        background:
+          radial-gradient(
+            circle at center,
+            rgba(14, 165, 233, 0.08),
+            transparent 70%
+          ),
+          linear-gradient(180deg, var(--bg2) 0%, var(--surface) 100%);
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .lane::before,
+      .lane::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          rgba(251, 191, 36, 0.25),
+          transparent
+        );
+      }
+      .lane::before {
+        top: 32px;
+      }
+      .lane::after {
+        bottom: 32px;
+      }
+      .ninja-zone {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 22%;
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          rgba(14, 165, 233, 0.15),
+          transparent
+        );
+        pointer-events: none;
+      }
+      .ninja-zone::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 8px;
+        bottom: 8px;
+        width: 2px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          var(--accent),
+          transparent
+        );
+        box-shadow: 0 0 12px rgba(251, 191, 36, 0.5);
+      }
+      .ninja-avatar {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 56px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 38px;
+        line-height: 1;
+        text-shadow:
+          0 0 12px rgba(34, 211, 238, 0.5),
+          0 2px 0 rgba(0, 0, 0, 0.6);
+        z-index: 2;
+        transition: transform 0.12s ease;
+      }
+      .ninja-avatar.attack {
+        animation: ninjaAttack 0.18s ease;
+      }
+      .lane-hint {
+        position: absolute;
+        left: 50%;
+        bottom: 6px;
+        transform: translateX(-50%);
+        font-size: 10px;
+        color: var(--text-dim);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      .scroll {
+        position: absolute;
+        top: 50%;
+        /* JS の translateX(...) で位置を制御するため、ベースラインは
+           レーンの左端（x=0）に置く。right を負値にすると JS の絶対
+           ピクセル座標と二重に効いて、巻物が画面外右側に飛んで見えなくなる。 */
+        left: 0;
+        transform: translateX(-9999px) translateY(-50%);
+        width: 200px;
+        background: linear-gradient(
+          180deg,
+          var(--paper) 0%,
+          var(--paper-dim) 100%
+        );
+        color: var(--ink);
+        border: 1px solid rgba(0, 0, 0, 0.35);
+        border-radius: 6px;
+        padding: 10px 12px 11px;
+        box-shadow:
+          0 6px 18px rgba(0, 0, 0, 0.45),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+        font-family:
+          "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+        font-weight: 600;
+        font-size: 12.5px;
+        line-height: 1.45;
+        text-align: left;
+        will-change: transform, opacity;
+        z-index: 1;
+      }
+      .scroll::before,
+      .scroll::after {
+        content: "";
+        position: absolute;
+        top: -3px;
+        bottom: -3px;
+        width: 8px;
+        background: linear-gradient(180deg, #3a2710, #1c1308);
+        border-radius: 3px;
+        box-shadow:
+          inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+          0 2px 6px rgba(0, 0, 0, 0.5);
+      }
+      .scroll::before {
+        left: -10px;
+      }
+      .scroll::after {
+        right: -10px;
+      }
+      .scroll .scroll-tag {
+        display: inline-block;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 9.5px;
+        font-weight: 800;
+        color: #6b3a04;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .scroll .scroll-text {
+        font-size: 12.5px;
+        line-height: 1.45;
+        color: #1a1a1a;
+        font-weight: 700;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .scroll.active {
+        box-shadow:
+          0 0 0 2px var(--accent),
+          0 0 24px rgba(251, 191, 36, 0.55),
+          0 6px 18px rgba(0, 0, 0, 0.45);
+      }
+      .scroll.slashed {
+        animation: scrollSlash 0.35s ease forwards;
+      }
+      .scroll.wrong {
+        animation: scrollWrong 0.4s ease forwards;
+      }
+      .scroll.missed {
+        animation: scrollMissed 0.4s ease forwards;
+      }
+
+      .slash-fx {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 3;
+      }
+      .slash-fx .slash {
+        position: absolute;
+        top: 50%;
+        left: 22%;
+        width: 60%;
+        height: 5px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.95),
+          var(--accent),
+          rgba(255, 255, 255, 0.95),
+          transparent
+        );
+        transform-origin: left center;
+        transform: translateY(-50%) rotate(-12deg) scaleX(0);
+        opacity: 0;
+        filter: drop-shadow(0 0 12px var(--accent))
+          drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+        border-radius: 2px;
+      }
+      .slash-fx .slash.go {
+        animation: slashGo 0.32s ease forwards;
+      }
+      /* 斬撃時の刹那の白フラッシュ（道場が一瞬白む） */
+      .slash-fx::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at 50% 50%,
+          rgba(255, 255, 255, 0.45),
+          rgba(255, 255, 255, 0.1) 35%,
+          transparent 65%
+        );
+        opacity: 0;
+        pointer-events: none;
+      }
+      .slash-fx.flash::before {
+        animation: slashFlash 0.22s ease forwards;
+      }
+      @keyframes slashFlash {
+        0% {
+          opacity: 0;
+        }
+        20% {
+          opacity: 0.95;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .float-text {
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        font-size: 20px;
+        font-weight: 900;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        pointer-events: none;
+        z-index: 4;
+        opacity: 0;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+      }
+      .float-text.go {
+        animation: floatUp 0.9s ease forwards;
+      }
+      .float-text.ok {
+        color: var(--accent);
+      }
+      .float-text.ng {
+        color: var(--danger);
+      }
+
+      .countdown {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: clamp(72px, 14vw, 140px);
+        font-weight: 900;
+        color: var(--accent);
+        background: rgba(4, 17, 30, 0.6);
+        backdrop-filter: blur(4px);
+        text-shadow: 0 0 24px rgba(251, 191, 36, 0.7);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        z-index: 10;
+      }
+
+      /* 5 つの忍法札 */
+      .jutsu-bar {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .jutsu-card {
+        background: linear-gradient(180deg, var(--surface) 0%, var(--bg2) 100%);
+        border: 1.5px solid var(--line);
+        color: var(--text);
+        border-radius: var(--radius-sm);
+        padding: 10px 6px 12px;
+        /* モバイルで 300ms tap 遅延と scroll ジェスチャ干渉を回避 */
+        touch-action: manipulation;
+        -webkit-user-select: none;
+        user-select: none;
+        /* 札の上では手裏剣カーソル — 投げる/構える感を出す */
+        cursor:
+          url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'><g transform='translate(14,14) rotate(0)'><path d='M 0 -11 L 3 -3 L 11 0 L 3 3 L 0 11 L -3 3 L -11 0 L -3 -3 Z' fill='%23fbbf24' stroke='%231c1917' stroke-width='1' stroke-linejoin='round'/><circle cx='0' cy='0' r='1.8' fill='%231c1917'/></g></svg>")
+            14 14,
+          pointer;
+        text-align: center;
+        font-family: inherit;
+        position: relative;
+        transition:
+          transform 0.1s ease,
+          border-color 0.15s ease,
+          box-shadow 0.15s ease;
+        -webkit-tap-highlight-color: transparent;
+        min-height: 78px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        overflow: hidden;
+      }
+      .jutsu-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          var(--j-color, transparent),
+          transparent 70%
+        );
+        opacity: 0.18;
+        pointer-events: none;
+      }
+      .jutsu-card[data-jutsu="replay"] {
+        --j-color: var(--j-replay);
+      }
+      .jutsu-card[data-jutsu="automate"] {
+        --j-color: var(--j-automate);
+      }
+      .jutsu-card[data-jutsu="mr"] {
+        --j-color: var(--j-mr);
+      }
+      .jutsu-card[data-jutsu="convert"] {
+        --j-color: var(--j-convert);
+      }
+      .jutsu-card[data-jutsu="workflows"] {
+        --j-color: var(--j-workflows);
+      }
+      .jutsu-card:hover {
+        border-color: var(--j-color);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+      }
+      .jutsu-card:active {
+        transform: translateY(0);
+      }
+      .jutsu-card.flash-ok {
+        animation: cardOk 0.32s ease;
+      }
+      .jutsu-card.flash-ng {
+        animation: cardNg 0.32s ease;
+      }
+      .jutsu-card .jc-key {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 10px;
+        font-weight: 800;
+        color: var(--j-color);
+        background: rgba(0, 0, 0, 0.35);
+        border: 1px solid var(--j-color);
+        border-radius: 4px;
+        padding: 1px 6px;
+        letter-spacing: 1px;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+      }
+      .jutsu-card .jc-name {
+        font-size: 13.5px;
+        font-weight: 800;
+        line-height: 1.15;
+        color: var(--text);
+      }
+      .jutsu-card .jc-ws {
+        font-size: 10.5px;
+        color: var(--text-dim);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        letter-spacing: 0.5px;
+        line-height: 1.1;
+      }
+
+      /* ====== 結果画面 ====== */
+      .result {
+        text-align: center;
+        padding: 12px 0 4px;
+      }
+      .result-rank-tag {
+        display: inline-block;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 11.5px;
+        letter-spacing: 3px;
+        color: var(--gold);
+        background: rgba(251, 191, 36, 0.1);
+        border: 1px solid rgba(251, 191, 36, 0.4);
+        padding: 6px 14px;
+        border-radius: 4px;
+        margin-bottom: 18px;
+        font-weight: 800;
+      }
+      .result-title {
+        font-size: clamp(22px, 5vw, 36px);
+        font-weight: 900;
+        background: linear-gradient(
+          120deg,
+          var(--primary-light),
+          var(--accent),
+          var(--secondary-light)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 8px;
+        line-height: 1.2;
+      }
+      .result-sub {
+        color: var(--text-muted);
+        font-size: 14px;
+        max-width: 520px;
+        margin: 0 auto 22px;
+      }
+      .result-score {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: clamp(40px, 10vw, 72px);
+        font-weight: 900;
+        background: linear-gradient(
+          135deg,
+          var(--primary-light),
+          var(--accent)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        font-feature-settings: "tnum";
+        margin: 8px 0 4px;
+      }
+      .result-score-label {
+        font-size: 12px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        margin-bottom: 20px;
+      }
+      .result-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 22px;
+      }
+      .result-stat {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        padding: 14px 8px;
+        text-align: center;
+        min-width: 0;
+      }
+      .result-stat-num {
+        font-size: 22px;
+        font-weight: 900;
+        color: var(--primary-light);
+        line-height: 1;
+        font-feature-settings: "tnum";
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .result-stat-label {
+        font-size: 10.5px;
+        color: var(--text-dim);
+        margin-top: 5px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .result-best {
+        font-size: 12px;
+        color: var(--text-dim);
+        margin-bottom: 20px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .result-best b {
+        color: var(--accent);
+        font-weight: 800;
+      }
+      .result-comment {
+        background: linear-gradient(160deg, var(--bg2), var(--surface));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 18px 22px;
+        font-size: 13.5px;
+        line-height: 1.8;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+        text-align: left;
+      }
+      .result-comment strong {
+        color: var(--text);
+      }
+      .result-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 28px;
+      }
+      .btn-share-x {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        background: #000;
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 999px;
+        font-size: 13.5px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+        min-height: 44px;
+      }
+      .btn-share-x:hover {
+        background: #181818;
+        transform: translateY(-1px);
+      }
+      .btn-secondary {
+        padding: 12px 24px;
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        font-size: 13.5px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+        min-height: 44px;
+      }
+      .btn-secondary:hover {
+        border-color: var(--primary);
+        color: var(--primary-light);
+      }
+
+      .footer {
+        margin-top: 50px;
+        padding-top: 22px;
+        border-top: 1px solid var(--line);
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-dim);
+      }
+      .footer a {
+        color: var(--primary-light);
+        text-decoration: none;
+      }
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* ====== アニメーション ====== */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      @keyframes ninjaAttack {
+        0% {
+          transform: translateY(-50%) translateX(0) scale(1);
+        }
+        50% {
+          transform: translateY(-50%) translateX(8px) scale(1.1);
+        }
+        100% {
+          transform: translateY(-50%) translateX(0) scale(1);
+        }
+      }
+      @keyframes scrollSlash {
+        0% {
+          opacity: 1;
+          filter: brightness(1);
+        }
+        40% {
+          opacity: 1;
+          filter: brightness(2);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-50%) translateY(-20px) rotate(-8deg) scale(1.1);
+        }
+      }
+      @keyframes scrollWrong {
+        0% {
+          filter: brightness(1) hue-rotate(0);
+        }
+        30% {
+          filter: brightness(1.4) hue-rotate(-40deg);
+        }
+        100% {
+          opacity: 0;
+          filter: brightness(0.5);
+          transform: translateY(-50%) translateY(8px) scale(0.95);
+        }
+      }
+      @keyframes scrollMissed {
+        0% {
+          filter: brightness(1);
+        }
+        100% {
+          opacity: 0;
+          filter: brightness(0.3) grayscale(1);
+        }
+      }
+      @keyframes slashGo {
+        0% {
+          transform: translateY(-50%) rotate(-12deg) scaleX(0);
+          opacity: 0;
+        }
+        30% {
+          transform: translateY(-50%) rotate(-12deg) scaleX(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-50%) rotate(-12deg) scaleX(1.05);
+          opacity: 0;
+        }
+      }
+      @keyframes floatUp {
+        0% {
+          opacity: 0;
+          transform: translateY(0) scale(0.9);
+        }
+        25% {
+          opacity: 1;
+          transform: translateY(-10px) scale(1.05);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-40px) scale(1);
+        }
+      }
+      @keyframes cardOk {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 transparent;
+        }
+        50% {
+          box-shadow:
+            0 0 0 2px var(--accent),
+            0 0 18px rgba(251, 191, 36, 0.6);
+        }
+      }
+      @keyframes cardNg {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-3px);
+        }
+        40% {
+          transform: translateX(3px);
+        }
+        60% {
+          transform: translateX(-2px);
+        }
+        80% {
+          transform: translateX(2px);
+        }
+      }
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        50% {
+          transform: translateX(5px);
+        }
+        75% {
+          transform: translateX(-3px);
+        }
+      }
+      .lane.shake {
+        animation: shake 0.3s ease;
+      }
+
+      /* ====== ナビゲーションタブ（ゲーム / 機能解説） ====== */
+      .nav-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        margin-bottom: 22px;
+        padding: 4px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        max-width: 380px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+      }
+      .nav-tab {
+        flex: 1;
+        background: transparent;
+        border: 0;
+        color: var(--text-muted);
+        padding: 9px 16px;
+        font-size: 12.5px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        cursor: pointer;
+        border-radius: 999px;
+        transition: all 0.2s;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        text-transform: uppercase;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .nav-tab.active {
+        color: #04111e;
+        background: linear-gradient(135deg, var(--accent), #d97706);
+        box-shadow: 0 0 16px rgba(251, 191, 36, 0.4);
+      }
+      .nav-tab:hover:not(.active) {
+        color: var(--accent);
+      }
+
+      /* ====== 機能解説（Features Glossary） ====== */
+      .features-hero {
+        text-align: center;
+        margin-bottom: 22px;
+      }
+      .features-title {
+        font-size: clamp(22px, 5vw, 34px);
+        font-weight: 900;
+        letter-spacing: -0.5px;
+        line-height: 1.2;
+        background: linear-gradient(
+          120deg,
+          var(--primary-light) 10%,
+          var(--accent) 50%,
+          var(--secondary-light) 95%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 8px;
+      }
+      .features-sub {
+        color: var(--text-muted);
+        font-size: 13.5px;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .features-filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        margin-bottom: 22px;
+      }
+      .features-chip {
+        padding: 7px 16px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        color: var(--text-muted);
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .features-chip:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .features-chip.active {
+        background: linear-gradient(135deg, var(--accent), #d97706);
+        border-color: var(--accent);
+        color: #1a0a02;
+        box-shadow: 0 0 16px rgba(251, 191, 36, 0.4);
+      }
+
+      .features-section {
+        margin-bottom: 28px;
+      }
+      .features-section-title {
+        font-size: 13px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .features-section-title::before,
+      .features-section-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--line-strong),
+          transparent
+        );
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 14px;
+      }
+      .feat-card {
+        background: linear-gradient(160deg, var(--surface), var(--bg2));
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 18px 20px 20px;
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.2s,
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .feat-card:hover {
+        transform: translateY(-2px);
+        border-color: var(--j-color, var(--primary));
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+      }
+      .feat-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at top right,
+          var(--j-color, transparent),
+          transparent 60%
+        );
+        opacity: 0.08;
+        pointer-events: none;
+      }
+      .feat-card[data-j="replay"] {
+        --j-color: var(--j-replay);
+      }
+      .feat-card[data-j="automate"] {
+        --j-color: var(--j-automate);
+      }
+      .feat-card[data-j="mr"] {
+        --j-color: var(--j-mr);
+      }
+      .feat-card[data-j="convert"] {
+        --j-color: var(--j-convert);
+      }
+      .feat-card[data-j="workflows"] {
+        --j-color: var(--j-workflows);
+      }
+      .feat-card[data-j="general"] {
+        --j-color: var(--accent);
+      }
+
+      .feat-head {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 12px;
+      }
+      .feat-emblem {
+        width: 56px;
+        height: 56px;
+        flex-shrink: 0;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.35);
+        border: 1.5px solid var(--j-color, var(--primary));
+        color: var(--j-color, var(--primary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family:
+          "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
+        font-weight: 900;
+        font-size: 28px;
+        line-height: 1;
+        box-shadow: 0 0 18px rgba(251, 191, 36, 0.06);
+      }
+      .feat-emblem.is-text {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 14px;
+        letter-spacing: 1px;
+      }
+      .feat-meta {
+        flex: 1;
+        min-width: 0;
+      }
+      .feat-name {
+        font-size: 15px;
+        font-weight: 800;
+        color: var(--text);
+        line-height: 1.25;
+        margin-bottom: 4px;
+        word-break: break-word;
+      }
+      .feat-name-en {
+        font-size: 11.5px;
+        color: var(--text-dim);
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        letter-spacing: 0.3px;
+        margin-bottom: 6px;
+        line-height: 1.3;
+      }
+      .feat-burp {
+        display: inline-block;
+        font-size: 10.5px;
+        font-weight: 800;
+        color: var(--secondary-light);
+        background: rgba(251, 146, 60, 0.1);
+        border: 1px solid rgba(251, 146, 60, 0.3);
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        letter-spacing: 0.3px;
+      }
+      .feat-desc {
+        font-size: 13px;
+        line-height: 1.65;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+      }
+      .feat-tip {
+        font-size: 12px;
+        line-height: 1.65;
+        color: var(--text-muted);
+        padding-top: 10px;
+        border-top: 1px dashed var(--line);
+      }
+      .feat-tip-label {
+        display: inline-block;
+        font-size: 10px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        margin-right: 6px;
+        font-weight: 800;
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+      }
+      .feat-tip code {
+        font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", monospace;
+        font-size: 11.5px;
+        background: rgba(0, 0, 0, 0.35);
+        padding: 1px 6px;
+        border-radius: 4px;
+        border: 1px solid var(--line);
+        color: var(--primary-light);
+      }
+
+      /* ====== レスポンシブ ====== */
+      @media (max-width: 720px) {
+        :root {
+          --pad-x: 14px;
+        }
+        .lane {
+          height: 170px;
+        }
+        .ninja-avatar {
+          width: 44px;
+          height: 44px;
+          font-size: 30px;
+        }
+        .scroll {
+          width: 168px;
+          padding: 9px 11px 10px;
+        }
+        .hud-val {
+          font-size: 17px;
+        }
+        .hud-val.rank {
+          font-size: 13px;
+        }
+      }
+      @media (max-width: 520px) {
+        .nav-tabs {
+          max-width: 100%;
+        }
+        .nav-tab {
+          font-size: 11.5px;
+          padding: 8px 12px;
+          letter-spacing: 0.6px;
+        }
+        .features-chip {
+          font-size: 11px;
+          padding: 6px 12px;
+        }
+        .feat-card {
+          padding: 16px 16px 18px;
+        }
+        .feat-emblem {
+          width: 48px;
+          height: 48px;
+          font-size: 24px;
+        }
+        .feat-emblem.is-text {
+          font-size: 12.5px;
+        }
+        .hud-cell {
+          padding: 8px 6px;
+        }
+        .hud-label {
+          font-size: 9px;
+          letter-spacing: 1px;
+        }
+        .hud-val {
+          font-size: 15px;
+        }
+        .hud-val.lives {
+          font-size: 17px;
+          letter-spacing: 3px;
+        }
+        .hud-val.rank {
+          font-size: 12px;
+        }
+        .lane {
+          height: 156px;
+        }
+        .ninja-avatar {
+          width: 38px;
+          height: 38px;
+          font-size: 26px;
+          left: 6px;
+        }
+        .scroll {
+          width: 148px;
+          padding: 8px 10px;
+        }
+        .scroll .scroll-text {
+          font-size: 11.5px;
+          line-height: 1.4;
+        }
+        .scroll .scroll-tag {
+          font-size: 9px;
+          margin-bottom: 3px;
+        }
+        .jutsu-card {
+          padding: 8px 4px 9px;
+          min-height: 70px;
+        }
+        .jutsu-card .jc-name {
+          font-size: 12px;
+        }
+        .jutsu-card .jc-ws {
+          font-size: 9.5px;
+        }
+        .jutsu-card .jc-key {
+          display: none;
+        }
+        .rank-list {
+          padding: 16px 14px;
+        }
+        .rank-row {
+          grid-template-columns: 28px 90px 1fr;
+          gap: 10px;
+          padding: 9px 11px;
+        }
+        .rank-row-belt {
+          width: 22px;
+          height: 22px;
+        }
+        .rank-row-tag {
+          grid-column: 1 / -1;
+          font-size: 10px;
+          color: var(--text-dim);
+          letter-spacing: 1.2px;
+          padding-left: 38px;
+        }
+      }
+      @media (max-width: 380px) {
+        .scroll {
+          width: 132px;
+          padding: 7px 9px;
+        }
+        .scroll .scroll-text {
+          font-size: 11px;
+          -webkit-line-clamp: 3;
+        }
+        .jutsu-card {
+          min-height: 66px;
+        }
+        .jutsu-card .jc-name {
+          font-size: 11.5px;
+        }
+        .jutsu-card .jc-ws {
+          font-size: 9px;
+        }
+        .lane-hint {
+          display: none;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+      }
+
+      /* ===== A11y common (focus-visible + 44px touch target) ===== */
+      /* キーボードフォーカス可視化（WCAG 2.4.7）— マウスクリック時は表示しない */
+      :focus {
+        outline: none;
+      }
+      :focus-visible {
+        outline: 2px solid var(--primary-light, #22d3ee);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+      /* lang-toggle 等の小型ボタンのタッチターゲット 44×44px 確保 */
+      .lang-toggle button {
+        min-height: 44px;
+        min-width: 44px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-layer bg-grid"></div>
+    <div class="bg-layer bg-glow1"></div>
+    <div class="bg-layer bg-glow2"></div>
+    <canvas id="particles" class="bg-layer"></canvas>
+
+    <div class="page">
+      <header class="top-bar">
+        <a class="brand" href="../" title="morioka12 game site">
+          <div class="brand-mark">忍</div>
+          <div class="brand-text">
+            <span class="brand-name" id="brand-name"></span>
+            <span class="brand-sub">CAIDO · NINJA DOJO</span>
+          </div>
+        </a>
+        <div class="lang-toggle" role="tablist" aria-label="Language">
+          <span class="lang-pill" id="lang-pill"></span>
+          <button data-lang="ja" class="active" role="tab">日本語</button>
+          <button data-lang="en" role="tab">EN</button>
+        </div>
+      </header>
+
+      <nav class="nav-tabs" role="tablist" aria-label="Sections">
+        <button
+          class="nav-tab active"
+          data-tab="game"
+          id="tab-game"
+          type="button"
+        ></button>
+        <button
+          class="nav-tab"
+          data-tab="features"
+          id="tab-features"
+          type="button"
+        ></button>
+      </nav>
+
+      <!-- スタート画面 -->
+      <section id="screen-start" class="screen active">
+        <div class="start-hero">
+          <!--
+            忍者シーン：月・提灯・竹・忍者シルエット・巻物。
+            装飾用のため aria-hidden。提灯は明滅、竹はそよ風で揺れる。
+          -->
+          <svg
+            class="ninja-illustration"
+            viewBox="0 0 320 160"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <defs>
+              <radialGradient id="moonGrad" cx="0.35" cy="0.35" r="0.7">
+                <stop offset="0" stop-color="#fef3c7" />
+                <stop offset="0.7" stop-color="#fbbf24" />
+                <stop offset="1" stop-color="#d97706" />
+              </radialGradient>
+              <radialGradient id="lanternGrad" cx="0.5" cy="0.4" r="0.7">
+                <stop offset="0" stop-color="#fff7ed" />
+                <stop offset="0.5" stop-color="#fbbf24" />
+                <stop offset="1" stop-color="#9a3412" />
+              </radialGradient>
+              <linearGradient id="bambooGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#15803d" />
+                <stop offset="0.5" stop-color="#22c55e" />
+                <stop offset="1" stop-color="#15803d" />
+              </linearGradient>
+              <filter id="moonGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" />
+              </filter>
+              <filter id="lanternBlur" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="4" />
+              </filter>
+            </defs>
+
+            <!-- 月（左上） -->
+            <g>
+              <circle
+                cx="56"
+                cy="38"
+                r="26"
+                fill="#fef3c7"
+                opacity="0.25"
+                filter="url(#moonGlow)"
+              />
+              <circle cx="56" cy="38" r="20" fill="url(#moonGrad)" />
+              <circle cx="64" cy="32" r="14" fill="#04111e" />
+            </g>
+
+            <!-- 竹（左端・揺れる） -->
+            <g class="bamboo">
+              <line
+                x1="20"
+                y1="155"
+                x2="20"
+                y2="60"
+                stroke="url(#bambooGrad)"
+                stroke-width="5"
+                stroke-linecap="round"
+              />
+              <line x1="12" y1="68" x2="28" y2="68" stroke="#0f5132" stroke-width="1.5" />
+              <line x1="12" y1="92" x2="28" y2="92" stroke="#0f5132" stroke-width="1.5" />
+              <line x1="12" y1="116" x2="28" y2="116" stroke="#0f5132" stroke-width="1.5" />
+              <line x1="12" y1="140" x2="28" y2="140" stroke="#0f5132" stroke-width="1.5" />
+              <!-- 葉 -->
+              <ellipse cx="34" cy="62" rx="10" ry="3" fill="#16a34a" transform="rotate(-20 34 62)" />
+              <ellipse cx="42" cy="56" rx="9" ry="3" fill="#22c55e" transform="rotate(-35 42 56)" />
+            </g>
+
+            <!-- 竹（右端・反対方向に揺れる） -->
+            <g class="bamboo" style="animation-direction: reverse">
+              <line
+                x1="300"
+                y1="155"
+                x2="300"
+                y2="55"
+                stroke="url(#bambooGrad)"
+                stroke-width="5"
+                stroke-linecap="round"
+              />
+              <line x1="292" y1="64" x2="308" y2="64" stroke="#0f5132" stroke-width="1.5" />
+              <line x1="292" y1="88" x2="308" y2="88" stroke="#0f5132" stroke-width="1.5" />
+              <line x1="292" y1="112" x2="308" y2="112" stroke="#0f5132" stroke-width="1.5" />
+              <line x1="292" y1="136" x2="308" y2="136" stroke="#0f5132" stroke-width="1.5" />
+              <ellipse cx="286" cy="58" rx="10" ry="3" fill="#16a34a" transform="rotate(25 286 58)" />
+              <ellipse cx="278" cy="50" rx="9" ry="3" fill="#22c55e" transform="rotate(40 278 50)" />
+            </g>
+
+            <!-- 提灯（右上・明滅） -->
+            <g class="lantern-glow">
+              <!-- 提灯の光のにじみ -->
+              <circle cx="248" cy="42" r="24" fill="#fbbf24" opacity="0.35" filter="url(#lanternBlur)" />
+              <!-- 紐 -->
+              <line x1="248" y1="14" x2="248" y2="22" stroke="#1c1917" stroke-width="1.2" />
+              <!-- 提灯本体 -->
+              <ellipse
+                cx="248"
+                cy="42"
+                rx="17"
+                ry="22"
+                fill="url(#lanternGrad)"
+                stroke="#1c1917"
+                stroke-width="1.2"
+              />
+              <!-- 横の竹骨 -->
+              <line x1="232" y1="32" x2="264" y2="32" stroke="#1c1917" stroke-width="0.6" opacity="0.5" />
+              <line x1="231" y1="42" x2="265" y2="42" stroke="#1c1917" stroke-width="0.6" opacity="0.5" />
+              <line x1="232" y1="52" x2="264" y2="52" stroke="#1c1917" stroke-width="0.6" opacity="0.5" />
+              <!-- 上下の縁 -->
+              <rect x="240" y="18" width="16" height="5" rx="1" fill="#1c1917" />
+              <rect x="240" y="61" width="16" height="5" rx="1" fill="#1c1917" />
+              <!-- 「忍」の字 -->
+              <text
+                x="248"
+                y="48"
+                text-anchor="middle"
+                font-size="14"
+                font-weight="900"
+                fill="#1c1917"
+                font-family="Hiragino Mincho ProN, Yu Mincho, serif"
+              >忍</text>
+            </g>
+
+            <!-- 忍者シルエット（中央） -->
+            <g transform="translate(160, 150)">
+              <!-- 床の影 -->
+              <ellipse cx="0" cy="2" rx="28" ry="4" fill="#000" opacity="0.55" />
+              <!-- 体（黒シルエット） -->
+              <path
+                d="M -2 -68
+                   Q -12 -68, -12 -58
+                   L -12 -42
+                   Q -25 -38, -26 -18
+                   Q -27 -4, -19 -2
+                   L -19 -4 L -10 -4
+                   L -10 4
+                   Q -12 8, -8 8
+                   L -3 8
+                   L -3 -3
+                   L 3 -3
+                   L 3 8
+                   L 8 8
+                   Q 12 8, 10 4
+                   L 10 -4 L 19 -4
+                   L 19 -2
+                   Q 27 -4, 26 -18
+                   Q 25 -38, 12 -42
+                   L 12 -58
+                   Q 12 -68, 2 -68 Z"
+                fill="#0a0a10"
+                stroke="#1f2937"
+                stroke-width="0.8"
+              />
+              <!-- 頭巾の上の細い切れ目（目） -->
+              <path
+                d="M -6 -57 L -2 -57 M 2 -57 L 6 -57"
+                stroke="#22d3ee"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <!-- 刀（背中越し、斜め） -->
+              <line
+                x1="-22"
+                y1="-70"
+                x2="22"
+                y2="-30"
+                stroke="#cbd5e1"
+                stroke-width="2.2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="-23"
+                y1="-68"
+                x2="-27"
+                y2="-63"
+                stroke="#7c2d12"
+                stroke-width="3.5"
+                stroke-linecap="round"
+              />
+              <!-- 鍔 -->
+              <circle cx="-19" cy="-67" r="2" fill="#fbbf24" stroke="#1c1917" stroke-width="0.5" />
+              <!-- 手裏剣（左手側に握り） -->
+              <g transform="translate(-22, -22) rotate(15)">
+                <path
+                  d="M 0 -5 L 1.5 -1.5 L 5 0 L 1.5 1.5 L 0 5 L -1.5 1.5 L -5 0 L -1.5 -1.5 Z"
+                  fill="#94a3b8"
+                  stroke="#1c1917"
+                  stroke-width="0.5"
+                />
+              </g>
+            </g>
+
+            <!-- 巻物（地面・右下） -->
+            <g transform="translate(248, 142)">
+              <ellipse cx="0" cy="6" rx="26" ry="3" fill="#000" opacity="0.45" />
+              <rect
+                x="-22"
+                y="-6"
+                width="44"
+                height="10"
+                fill="#fdf6e3"
+                stroke="#1c1917"
+                stroke-width="0.6"
+              />
+              <!-- 巻物の文字（横線で書いた風） -->
+              <line x1="-15" y1="-3" x2="-2" y2="-3" stroke="#3b1d09" stroke-width="0.4" opacity="0.7" />
+              <line x1="-15" y1="0" x2="6" y2="0" stroke="#3b1d09" stroke-width="0.4" opacity="0.7" />
+              <line x1="-15" y1="2" x2="-3" y2="2" stroke="#3b1d09" stroke-width="0.4" opacity="0.7" />
+              <!-- 両端の軸（茶色） -->
+              <rect x="-26" y="-8" width="5" height="14" rx="1" fill="#3b1d09" />
+              <rect x="21" y="-8" width="5" height="14" rx="1" fill="#3b1d09" />
+            </g>
+
+            <!-- 散る桜（前景に舞う） -->
+            <g fill="#fbcfe8">
+              <ellipse class="petal" cx="92" cy="60" rx="3" ry="2" />
+              <ellipse class="petal petal-b" cx="195" cy="85" rx="3" ry="2" />
+              <ellipse class="petal petal-c" cx="112" cy="110" rx="2.5" ry="1.5" />
+            </g>
+
+            <!-- 床の霧 -->
+            <ellipse cx="160" cy="155" rx="120" ry="5" fill="#000" opacity="0.35" />
+          </svg>
+
+          <div class="hero-tag">
+            <span class="hero-tag-dot"></span>
+            <span id="hero-tag-text"></span>
+          </div>
+          <h1 class="hero-title" id="hero-title"></h1>
+          <p class="hero-sub" id="hero-sub"></p>
+        </div>
+
+        <div class="rules">
+          <div class="rules-title" id="rules-title"></div>
+          <ol class="rules-list" id="rules-list"></ol>
+        </div>
+
+        <div class="jutsu-legend">
+          <div class="jutsu-legend-title" id="legend-title"></div>
+          <div class="jutsu-legend-grid" id="legend-grid"></div>
+        </div>
+
+        <div class="rank-list">
+          <div class="rank-list-title" id="rank-list-title"></div>
+          <div class="rank-list-grid" id="rank-list-grid"></div>
+        </div>
+
+        <div class="start-btn-wrap">
+          <button class="btn-start" id="btn-start">
+            <span id="btn-start-text"></span>
+            <span aria-hidden="true">→</span>
+          </button>
+          <div class="start-note" id="start-note"></div>
+        </div>
+      </section>
+
+      <!-- ゲーム画面 -->
+      <section id="screen-game" class="screen">
+        <div class="hud">
+          <div class="hud-cell">
+            <div class="hud-label" id="hud-lbl-score"></div>
+            <div class="hud-val" id="hud-score">0</div>
+          </div>
+          <div class="hud-cell">
+            <div class="hud-label" id="hud-lbl-combo"></div>
+            <div class="hud-val combo" id="hud-combo">×1</div>
+          </div>
+          <div class="hud-cell">
+            <div class="hud-label" id="hud-lbl-lives"></div>
+            <div class="hud-val lives" id="hud-lives">★★★</div>
+          </div>
+          <div class="hud-cell">
+            <div class="hud-label" id="hud-lbl-rank"></div>
+            <div class="hud-val rank" id="hud-rank">白帯</div>
+          </div>
+        </div>
+
+        <div class="lane-wrap">
+          <div class="lane" id="lane">
+            <div class="ninja-zone"></div>
+            <div class="ninja-avatar" id="ninja-avatar">🥷</div>
+            <div class="slash-fx" id="slash-fx"></div>
+            <span class="lane-hint" id="lane-hint"></span>
+            <div class="countdown" id="countdown" style="display: none">3</div>
+          </div>
+        </div>
+
+        <div
+          class="jutsu-bar"
+          id="jutsu-bar"
+          role="group"
+          aria-label="忍法札"
+        ></div>
+      </section>
+
+      <!-- 結果画面 -->
+      <section id="screen-result" class="screen">
+        <div class="result">
+          <div class="result-rank-tag" id="result-rank">★ HUNTER RANK</div>
+          <h2 class="result-title" id="result-title"></h2>
+          <p class="result-sub" id="result-sub"></p>
+
+          <div class="result-score" id="result-score">0</div>
+          <div class="result-score-label" id="result-score-label"></div>
+
+          <div class="result-stats">
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-cleared">0</div>
+              <div class="result-stat-label" id="stat-lbl-cleared"></div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-bestcombo">0</div>
+              <div class="result-stat-label" id="stat-lbl-bestcombo"></div>
+            </div>
+            <div class="result-stat">
+              <div class="result-stat-num" id="stat-acc">0%</div>
+              <div class="result-stat-label" id="stat-lbl-acc"></div>
+            </div>
+          </div>
+
+          <div class="result-best" id="result-best"></div>
+
+          <div class="result-comment" id="result-comment"></div>
+
+          <div class="result-actions">
+            <button class="btn-share-x" id="btn-share">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631Zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+                />
+              </svg>
+              <span id="btn-share-text"></span>
+            </button>
+            <button class="btn-secondary" id="btn-retry">
+              <span id="btn-retry-text"></span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 機能解説（Caido の主要機能リファレンス） -->
+      <section id="screen-features" class="screen">
+        <div class="features-hero">
+          <h2 class="features-title" id="features-title"></h2>
+          <p class="features-sub" id="features-sub"></p>
+        </div>
+
+        <div class="features-filter" id="features-filter"></div>
+
+        <div id="features-body"></div>
+      </section>
+
+      <footer class="footer">
+        <p>
+          <span id="footer-by"></span>
+          <a
+            href="https://x.com/scgajge12"
+            target="_blank"
+            rel="noopener noreferrer"
+            >@scgajge12</a
+          >
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      "use strict";
+
+      (function () {
+        /* =========================================================
+           I18N
+           ========================================================= */
+        const I18N = {
+          ja: {
+            brandName: "Caido 忍者道場",
+            heroTag: "CAIDO × NINJA ARCADE",
+            heroTitleLine1: "Caido 忍者道場",
+            heroTitleLine2: "巻物斬りタイムアタック",
+            heroSub:
+              "Web セキュリティプロキシ Caido のワークスペースを「忍術」に見立てたタイムアタック。流れてくる脅威の巻物に正しい忍法札で斬りかかれ。",
+            rulesTitle: "// 道場のおきて",
+            rules: [
+              {
+                head: "巻物を読む",
+                body: "右から流れてくる紙の巻物には『今やりたい攻撃／調査』が書かれている。忍者ライン（左の青い帯）まで届く前に対応すべし。",
+              },
+              {
+                head: "忍法札を選ぶ",
+                body: "下の 5 枚の忍法札はそれぞれ Caido のワークスペース（Replay／Automate／Match & Replace／Convert／Workflows）に対応している。巻物の内容に合うものを 1 枚タップ。",
+              },
+              {
+                head: "成功と失敗",
+                body: "正しい忍法札なら一刀両断＋スコア（コンボで加点）。違う札なら巻物が乱れて手裏剣を 1 本失う。巻物を取り逃しても 1 本失う。",
+              },
+              {
+                head: "手裏剣 3 本まで",
+                body: "手裏剣（ライフ）が 0 になったら道場破り終了。スコアと帯位が表示される。1〜5 のキーでも忍法札を投げられる。",
+              },
+            ],
+            legendTitle: "// 五大忍術＝Caido ワークスペース",
+            startBtn: "道場の門をくぐる",
+            startNote:
+              "※ キーボードの 1〜5 で忍法札を選べる。スコアと帯位は X(Twitter) でシェアできる",
+            hudScore: "SCORE",
+            hudCombo: "COMBO",
+            hudLives: "LIVES",
+            hudRank: "BELT",
+            laneHint: "← 流れる巻物に忍法札で斬りかかれ",
+            scrollTag: "巻物",
+            okText: "+%d",
+            ngText: "ミス",
+            missText: "見逃し",
+            ranks: ["白帯", "黄帯", "紫帯", "黒帯", "師範", "影忍"],
+            rankListTitle: "// 帯位（スコアランク）一覧",
+            rankDescs: [
+              "入門したての見習い。",
+              "巻物の読み方が分かってきた段階。",
+              "Replay / Automate を使い分けられる。",
+              "Match & Replace / Workflows を実戦投入できる。",
+              "Caido を「自分の道場」として使いこなす。",
+              "Workflows を組み上げ、他のハンターを導く存在。",
+            ],
+            resultRank: "★ NINJA RANK",
+            resultTitle: "修行終了",
+            resultSub: "あなたの最終スコアと帯位はこちら。",
+            resultScoreLabel: "FINAL SCORE",
+            statCleared: "斬った巻物",
+            statBestCombo: "最大コンボ",
+            statAcc: "命中率",
+            resultBest: "自己ベスト: <b>%d</b>",
+            resultShare: "X (Twitter) でシェア",
+            resultRetry: "もう一度修行する",
+            footerBy: "Created by ",
+            commentNewbie:
+              "<b>まだ巻物が読めていない</b>。スタート画面の『五大忍術』表を 30 秒だけ眺めてから再挑戦すると、急に当たり始める。",
+            commentRookie:
+              "<b>白帯〜紫帯クラス</b>。Replay / Automate の対応がブレやすい時期。『1 件だけ送りたい＝Replay／自動で大量送信＝Automate』を体に染み込ませよ。",
+            commentMid:
+              "<b>黒帯クラス</b>。Match & Replace と Workflows の役割分担を整理できれば、もう一段上の景色が見える。",
+            commentHigh:
+              "<b>師範クラス</b>。Caido のワークスペース思想を実戦投入できるレベル。Plugin と HTTPQL も組み合わせて、自分専用の道場を組み上げる時期。",
+            commentElite:
+              "<b>影忍級！</b> あなたはもう Caido の言語で世界を見ている。Workflows のノードを組み立てて他のハンターを導く立場へ。",
+            tabGame: "ゲーム",
+            tabFeatures: "機能解説",
+            featuresTitle: "Caido の主要機能",
+            featuresSub:
+              "ゲームに登場する 5 つの忍術＝Caido のワークスペースと、合わせて知っておくと強い周辺機能を、バグハンター視点で解説する。",
+            featuresAll: "ALL",
+            featuresJutsu: "五大忍術",
+            featuresOther: "その他",
+            featuresSectionJutsu: "// 五大忍術＝Workspaces",
+            featuresSectionOther: "// その他の主要機能",
+            featTipLabel: "Tip",
+          },
+          en: {
+            brandName: "Caido Ninja Dojo",
+            heroTag: "CAIDO × NINJA ARCADE",
+            heroTitleLine1: "Caido Ninja Dojo",
+            heroTitleLine2: "Scroll-Slashing Time Attack",
+            heroSub:
+              "A time-attack arcade where each Caido workspace becomes a ninjutsu. Threat scrolls scroll in from the right — slash them with the correct jutsu card.",
+            rulesTitle: "// DOJO RULES",
+            rules: [
+              {
+                head: "Read the scroll",
+                body: "Paper scrolls scroll in from the right, each describing what you want to do (attack / recon). Take action before the scroll reaches the blue ninja line on the left.",
+              },
+              {
+                head: "Pick a jutsu card",
+                body: "The five cards at the bottom each map to a Caido workspace — Replay / Automate / Match & Replace / Convert / Workflows. Tap the one that matches the scroll.",
+              },
+              {
+                head: "Success vs. miss",
+                body: "Correct jutsu → instant slash + score (combo multiplies it). Wrong jutsu → the scroll glitches and you lose a shuriken. Miss the scroll entirely and you also lose one.",
+              },
+              {
+                head: "Three shuriken",
+                body: "Lose all three and the run ends. Final score and belt rank are shown. Keys 1–5 also throw the corresponding jutsu card.",
+              },
+            ],
+            legendTitle: "// FIVE JUTSU = CAIDO WORKSPACES",
+            startBtn: "Enter the Dojo",
+            startNote:
+              "* Press 1–5 to throw a jutsu card. Score and belt rank can be shared on X (Twitter).",
+            hudScore: "SCORE",
+            hudCombo: "COMBO",
+            hudLives: "LIVES",
+            hudRank: "BELT",
+            laneHint: "← Slash incoming scrolls with the right jutsu",
+            scrollTag: "SCROLL",
+            okText: "+%d",
+            ngText: "MISS",
+            missText: "MISSED",
+            ranks: [
+              "White",
+              "Yellow",
+              "Purple",
+              "Black",
+              "Master",
+              "Shadow",
+            ],
+            rankListTitle: "// Belt Ranks (Score Tiers)",
+            rankDescs: [
+              "Just stepped into the dojo.",
+              "Starting to read the scrolls.",
+              "Can tell Replay from Automate at a glance.",
+              "Deploys Match & Replace / Workflows in real engagements.",
+              "Treats Caido as your own custom dojo.",
+              "Composes Workflows and leads other hunters.",
+            ],
+            resultRank: "★ NINJA RANK",
+            resultTitle: "Training Complete",
+            resultSub: "Your final score and belt rank.",
+            resultScoreLabel: "FINAL SCORE",
+            statCleared: "Scrolls Cleared",
+            statBestCombo: "Best Combo",
+            statAcc: "Accuracy",
+            resultBest: "Best: <b>%d</b>",
+            resultShare: "Share on X",
+            resultRetry: "Train again",
+            footerBy: "Created by ",
+            commentNewbie:
+              "<b>Still learning to read the scrolls.</b> Spend 30 seconds on the 'Five Jutsu' chart on the start screen, and your hit rate jumps fast.",
+            commentRookie:
+              "<b>White → Purple belt range.</b> Replay vs Automate still wobbles. Burn this in: 'send one tweaked request = Replay / fire many = Automate.'",
+            commentMid:
+              "<b>Black belt range.</b> Once you separate Match & Replace from Workflows by role, the next ceiling lifts.",
+            commentHigh:
+              "<b>Master class.</b> You can apply Caido's workspace model in real engagements. Time to stack Plugins and HTTPQL into your own custom dojo.",
+            commentElite:
+              "<b>Shadow ninja!</b> You see the world in Caido's vocabulary. Start composing Workflow nodes and lead other hunters.",
+            tabGame: "Game",
+            tabFeatures: "Features",
+            featuresTitle: "Caido — Key Features",
+            featuresSub:
+              "The 5 jutsu in the game map to Caido's core workspaces. Here is a bug hunter's reference to those workspaces plus the surrounding features worth knowing.",
+            featuresAll: "ALL",
+            featuresJutsu: "5 Jutsu",
+            featuresOther: "Others",
+            featuresSectionJutsu: "// 5 Jutsu = Workspaces",
+            featuresSectionOther: "// Other key features",
+            featTipLabel: "Tip",
+          },
+        };
+
+        /* =========================================================
+           五大忍術＝Caido ワークスペース定義
+           ========================================================= */
+        const JUTSU = [
+          {
+            id: "replay",
+            key: "1",
+            ja: "影分身",
+            en: "Kage Bunshin",
+            ws: "Replay",
+            color: "var(--j-replay)",
+            ja_desc: "1 件のリクエストを編集・再送",
+            en_desc: "Edit & resend a single request",
+          },
+          {
+            id: "automate",
+            key: "2",
+            ja: "連弾手裏剣",
+            en: "Rendan Shuriken",
+            ws: "Automate",
+            color: "var(--j-automate)",
+            ja_desc: "ペイロードを大量に自動射出",
+            en_desc: "Spray payloads at scale",
+          },
+          {
+            id: "mr",
+            key: "3",
+            ja: "変わり身",
+            en: "Kawarimi",
+            ws: "Match & Replace",
+            color: "var(--j-mr)",
+            ja_desc: "通信中のリクエスト/レスポンスを自動書換",
+            en_desc: "Auto-rewrite traffic on the fly",
+          },
+          {
+            id: "convert",
+            key: "4",
+            ja: "解読符",
+            en: "Kaidoku-fu",
+            ws: "Convert",
+            color: "var(--j-convert)",
+            ja_desc: "Base64・URLエンコード等のエンコード変換",
+            en_desc: "Encode/decode Base64, URL, hex, etc.",
+          },
+          {
+            id: "workflows",
+            key: "5",
+            ja: "結界札",
+            en: "Kekkai-fuda",
+            ws: "Workflows",
+            color: "var(--j-workflows)",
+            ja_desc: "ノードを繋いで処理パイプラインを自動化",
+            en_desc: "Compose node-based automation pipelines",
+          },
+        ];
+
+        /* =========================================================
+           巻物の正解（jutsu）を XOR + Base64 で難読化
+             DevTools の Sources 検索で "replay" などの平文が見つから
+             ないようにする。kaiten-bounty と同じレベルのカジュアル
+             チート対策（暗号強度は期待しない）。
+           ========================================================= */
+        const _NK = "sH4d0wN1nj4D0j0v1";
+        function _decJ(payload) {
+          const bin = atob(payload);
+          const out = new Uint8Array(bin.length);
+          for (let i = 0; i < bin.length; i++) {
+            out[i] = bin.charCodeAt(i) ^ _NK.charCodeAt(i % _NK.length);
+          }
+          return JSON.parse(new TextDecoder().decode(out));
+        }
+        // 同じ巻物に対して何度もデコードしないようキャッシュ
+        const _jCache = new WeakMap();
+        function jutsuOf(scroll) {
+          let v = _jCache.get(scroll);
+          if (!v) {
+            v = _decJ(scroll.jE);
+            _jCache.set(scroll, v);
+          }
+          return v.j;
+        }
+
+        /* =========================================================
+           巻物データ（脅威シナリオ）
+             40 種類、5 つの忍術にそれぞれ 8 種類ずつ。
+             jE フィールドは XOR+Base64 で隠した正解、ja/en は本文。
+             バグハンターが実戦で「あ、これは Replay／Automate／…」と
+             即断するシナリオを意識して厳選している。
+           ========================================================= */
+        const SCROLLS = [
+          // -- Replay -----------------------------------------------
+          {
+            jE: "CGpeRgpVPFQeBlU9EkYSBRNJagJVBU58CUwX",
+            ja: "認証ヘッダだけ書き換えて 1 件再送し、権限の差を比べたい",
+            en: "Tweak just the auth header on one request and resend it to compare permissions",
+          },
+          {
+            jE: "CGpeRgpVPFQeBlU9EkYSBRNJagICAEZ4UkwX",
+            ja: "JSON ボディの role を admin に書き換えて 1 件だけ送ってみたい",
+            en: "Flip role to admin in the JSON body and send a single request",
+          },
+          {
+            jE: "CGpeRgpVPFQeBlU9EkYSBRNJagZTU054UkwX",
+            ja: "直前に流れたリクエストを編集して、もう 1 回だけ送り直したい",
+            en: "Edit the request that just went by and resend it once",
+          },
+          {
+            jE: "CGpeRgpVPFQeBlU9EkYSBRNJagdcBBZ8CUwX",
+            ja: "Cookie を別アカウントの値に差し替えて、1 件だけ叩いてみる",
+            en: "Swap the cookie with another account's and send just one request",
+          },
+          {
+            jE: "CGpeRgpVPFQeBlU9EkYSBRNJalBVURUqV0wX",
+            ja: "GraphQL のミューテーションを 1 件編集して、認可漏れを単発で確認したい",
+            en: "Tweak a single GraphQL mutation and resend it to confirm an authz gap",
+          },
+          {
+            jE: "CGpeRgpVPFQeBlU9EkYSBRNJagBVA0cvCEwX",
+            ja: "CSRF トークン無しの POST を 1 回だけ再送し、検証の有無を素手で確かめたい",
+            en: "Resend a POST once with the CSRF token stripped to verify the check is missing",
+          },
+          {
+            jE: "CGpeRgpVPFQeBlU9EkYSBRNJagYHAhR2AEwX",
+            ja: "WebSocket Upgrade のハンドシェイクを書き換えて Origin 検証を 1 発で試したい",
+            en: "Edit a WebSocket Upgrade handshake to test whether Origin is enforced",
+          },
+          {
+            jE: "CGpeRgpVPFQeBlU9EkYSBRNJagNWCBN8BkwX",
+            ja: "決済 API の amount=1000 を amount=-1000 / amount=0.01 に書き換えて 1 件だけ送りたい",
+            en: "Tamper amount=1000 → amount=-1000 / amount=0.01 on a payment API and send just one",
+          },
+
+          // -- Automate ---------------------------------------------
+          {
+            jE: "CGpeRgpVL0QaBVklRA8SWhMAag5GBUZ7AApZFjk=",
+            ja: "user_id を 1〜1000 まで総当たりして IDOR の有無を確かめたい",
+            en: "Brute user_id from 1 to 1000 to test for IDOR",
+          },
+          {
+            jE: "CGpeRgpVL0QaBVklRA8SWhMAag5GU0cvAV1dFjk=",
+            ja: "5,000 件のパスワードリストをログイン API に一斉投入したい",
+            en: "Fire a 5,000-entry password list at the login API",
+          },
+          {
+            jE: "CGpeRgpVL0QaBVklRA8SWhMAag5GCBF2AlsJFjk=",
+            ja: "SecLists の wordlist でパラメータ名を発掘したい",
+            en: "Use a SecLists wordlist to discover hidden parameter names",
+          },
+          {
+            jE: "CGpeRgpVL0QaBVklRA8SWhMAag5GCBZ7UlgPFjk=",
+            ja: "並列度を変えながらレート制限を超えるか測定したい",
+            en: "Vary concurrency to measure when the rate limit kicks in",
+          },
+          {
+            jE: "CGpeRgpVL0QaBVklRA8SWhMAag5GVEJ7UgpcFjk=",
+            ja: "同じパスに GET / POST / PUT / PATCH / DELETE を順に投げて、隠れた動詞の挙動を引き出したい",
+            en: "Cycle GET / POST / PUT / PATCH / DELETE on one path to surface hidden verbs",
+          },
+          {
+            jE: "CGpeRgpVL0QaBVklRA8SWhMAag5GBk9+B1wMFjk=",
+            ja: "JWT の kid パラメータを wordlist で総当たりし、SQLi / Path Traversal 経由の検証バイパスを試したい",
+            en: "Brute the JWT `kid` parameter to probe for SQLi / Path Traversal in the lookup",
+          },
+          {
+            jE: "CGpeRgpVL0QaBVklRA8SWhMAag5GCEd7BFkOFjk=",
+            ja: "Host ヘッダにサブドメイン wordlist を大量投入して、隠れたバーチャルホストを掘り起こしたい",
+            en: "Spray a subdomain wordlist into the Host header to enumerate virtual hosts",
+          },
+          {
+            jE: "CGpeRgpVL0QaBVklRA8SWhMAag5GVU8oVQ9TFjk=",
+            ja: "6 桁の招待コードを 100 万通り総当たりして、有効なコードを掴みたい",
+            en: "Brute a 6-digit invite code across 1M values to find a live one",
+          },
+
+          // -- Match & Replace --------------------------------------
+          {
+            jE: "CGpeRgpVI0NMRhY3ElASRAgQfA0FEgo=",
+            ja: "すべての送信リクエストに X-Forwarded-For: 127.0.0.1 を自動付与したい",
+            en: "Auto-add X-Forwarded-For: 127.0.0.1 to every outgoing request",
+          },
+          {
+            jE: "CGpeRgpVI0NMRhY3ElASRQZEfVBcEgo=",
+            ja: "レスポンスの CSP ヘッダを丸ごと削って動作を見たい",
+            en: "Strip the CSP header from responses to see how the app behaves",
+          },
+          {
+            jE: "CGpeRgpVI0NMRhY3ElASFQNLKlZTEgo=",
+            ja: "テスト中だけ全リクエストの User-Agent を自前の値に固定したい",
+            en: "Pin every request's User-Agent to a custom value during the test",
+          },
+          {
+            jE: "CGpeRgpVI0NMRhY3ElASFwkQK1cBEgo=",
+            ja: "特定パスへの Authorization を別アカウントの値に常時差し替えたい",
+            en: "Always swap Authorization for a specific path with another account's value",
+          },
+          {
+            jE: "CGpeRgpVI0NMRhY3ElASFAYRKgBTEgo=",
+            ja: "全レスポンスから X-Frame-Options を常時削除し、Clickjacking PoC をいつでも組めるようにしたい",
+            en: "Strip X-Frame-Options from every response so Clickjacking PoCs are always reachable",
+          },
+          {
+            jE: "CGpeRgpVI0NMRhY3ElASRAAQLAQBEgo=",
+            ja: "通過する全 JSON 内の \"isAdmin\": false / \"role\": \"user\" を昇格させて挙動を観察したい",
+            en: "Rewrite `\"isAdmin\": false` / `\"role\": \"user\"` to elevated values across all passing JSON",
+          },
+          {
+            jE: "CGpeRgpVI0NMRhY3ElASEFBAf1BXEgo=",
+            ja: "API の Content-Type を application/json から text/html に書き換え、反射 XSS を狙いたい",
+            en: "Flip API Content-Type from application/json to text/html to coax reflected XSS",
+          },
+          {
+            jE: "CGpeRgpVI0NMRhY3ElAST1dDfAIAEgo=",
+            ja: "Set-Cookie の SameSite=Lax を SameSite=None; Secure に常時書き換え、CSRF 連鎖を観察したい",
+            en: "Rewrite Set-Cookie SameSite=Lax → None; Secure for the session to study CSRF chains",
+          },
+
+          // -- Convert ----------------------------------------------
+          {
+            jE: "CGpeRgpVLV4AHFE2REgcVEJRchZVVk56U1pISQ==",
+            ja: "キャプチャした JWT を Base64 デコードして claims を読みたい",
+            en: "Base64-decode a captured JWT to read its claims",
+          },
+          {
+            jE: "CGpeRgpVLV4AHFE2REgcVEJRchYGA0cvB1hISQ==",
+            ja: "レスポンスに含まれる URL エンコード文字列を平文に戻したい",
+            en: "URL-decode a string in the response back to plain text",
+          },
+          {
+            jE: "CGpeRgpVLV4AHFE2REgcVEJRchYGUhMoBldISQ==",
+            ja: "SQLi の payload を hex 表記に変換してフィルタ回避を試したい",
+            en: "Convert an SQLi payload to hex to bypass filters",
+          },
+          {
+            jE: "CGpeRgpVLV4AHFE2REgcVEJRchZUVkR5Bl5ISQ==",
+            ja: "謎の長い文字列が gzip+Base64 で出来ているか変換して確かめたい",
+            en: "Inspect a mystery long string by reversing gzip+Base64 encoding",
+          },
+          {
+            jE: "CGpeRgpVLV4AHFE2REgcVEJRchYCBhR+V15ISQ==",
+            ja: "Set-Cookie に乗っていた Base64URL の値をデコードしてセッション構造を読みたい",
+            en: "Base64URL-decode a token from Set-Cookie to read the session structure",
+          },
+          {
+            jE: "CGpeRgpVLV4AHFE2REgcVEJRchYFVkctAVZISQ==",
+            ja: "AWS 署名付き URL の X-Amz-Signature を hex として並べ直し、署名生成過程を追いたい",
+            en: "Reformat an AWS pre-signed URL's X-Amz-Signature to hex to study the signing flow",
+          },
+          {
+            jE: "CGpeRgpVLV4AHFE2REgcVEJRchZdA0J9BFlISQ==",
+            ja: "HTML エンティティ化された WAF の反射出力を平文に戻し、本当にエスケープが効いているか確かめたい",
+            en: "Decode HTML-entity-escaped WAF reflections back to plain text to verify escaping",
+          },
+          {
+            jE: "CGpeRgpVLV4AHFE2REgcVEJRchYGABF7AQtISQ==",
+            ja: "改行 \\r\\n を含む Header smuggling payload を URL/percent エンコードに変換したい",
+            en: "Percent-encode a `\\r\\n`-bearing header-smuggling payload before sending",
+          },
+
+          // -- Workflows --------------------------------------------
+          {
+            jE: "CGpeRgpVOV4cAVIoXx1DVB1ROxZeEhR6BlZYDGZN",
+            ja: "レスポンスに stack trace が含まれていたら自動で Findings に登録したい",
+            en: "Auto-push to Findings whenever a response contains a stack trace",
+          },
+          {
+            jE: "CGpeRgpVOV4cAVIoXx1DVB1ROxZeEk57AFgIDWZN",
+            ja: "特定の Cookie を持つリクエストを検知して Slack に通知したい",
+            en: "Detect requests carrying a specific cookie and notify Slack",
+          },
+          {
+            jE: "CGpeRgpVOV4cAVIoXx1DVB1ROxZeEhEqUw1YBmZN",
+            ja: "アクセスした全 URL からサブドメインを抽出して自動で一覧化したい",
+            en: "Extract and tabulate subdomains from every URL you've visited",
+          },
+          {
+            jE: "CGpeRgpVOV4cAVIoXx1DVB1ROxZeEhMqAA9YUGZN",
+            ja: "SQLi の hint を検知したら sqlmap 用 payload を生成して別 workspace に飛ばしたい",
+            en: "When an SQLi hint is seen, auto-generate sqlmap payloads and pipe them to another workspace",
+          },
+          {
+            jE: "CGpeRgpVOV4cAVIoXx1DVB1ROxZeEkB3V18IDGZN",
+            ja: "AWS Access Key / Slack Token / Stripe sk_live_ など Secret 風の正規表現に応答が一致したら、自動で Findings に積みたい",
+            en: "Auto-stash to Findings whenever a response matches secret regexes (AWS keys, Slack tokens, sk_live_, ...)",
+          },
+          {
+            jE: "CGpeRgpVOV4cAVIoXx1DVB1ROxZeEk9/Ul8OAmZN",
+            ja: "テスト中だけ 401/403 を 200 に書き換えるパイプラインを通し、フロント JS の権限ガード崩しを試したい",
+            en: "During testing, run a pipeline that flips 401/403 to 200 to break frontend permission gates",
+          },
+          {
+            jE: "CGpeRgpVOV4cAVIoXx1DVB1ROxZeEkd5UlZbVmZN",
+            ja: "全 Set-Cookie を解析し、HttpOnly / Secure / SameSite が欠けていたらタグ付きで自動レポートしたい",
+            en: "Parse every Set-Cookie and auto-tag findings whenever HttpOnly / Secure / SameSite is missing",
+          },
+          {
+            jE: "CGpeRgpVOV4cAVIoXx1DVB1ROxZeEkN6VV5fVmZN",
+            ja: "新規ホストが proxy 履歴に現れたら、外部コマンドで nuclei テンプレを自動キックしたい",
+            en: "Trigger nuclei via an external command whenever a new host shows up in proxy history",
+          },
+        ];
+
+        /* =========================================================
+           Caido の主要機能リファレンス
+             - jutsu : 5 つのワークスペース（忍術にも対応）
+             - other : ワークスペース以外で覚えておくと強い機能
+           ========================================================= */
+        const CAIDO_FEATURES = {
+          jutsu: [
+            {
+              j: "replay",
+              emblem: "影",
+              name: {
+                ja: "Replay — 影分身",
+                en: "Replay — Kage Bunshin",
+              },
+              nameSub: "WORKSPACE · 単発リクエスト編集／再送",
+              burpEq: { ja: "≒ Burp Repeater", en: "≒ Burp Repeater" },
+              desc: {
+                ja: "1 件のリクエストを編集して送り直す、調査の基本動作。Replay 内では Collection（フォルダ）を作って HackerOne プログラムごとに整理できる。",
+                en: "Edit and resend a single request. Replays group into Collections so you can keep H1 programs tidy.",
+              },
+              tip: {
+                ja: "Authorization 差し替え・role 昇格・IDOR の単発確認はまず Replay。挙動が確認できたら Automate に送って量産する流れが王道。",
+                en: "Swap Authorization, flip role, test IDOR — verify in Replay first, then promote to Automate when you need scale.",
+              },
+            },
+            {
+              j: "automate",
+              emblem: "連",
+              name: {
+                ja: "Automate — 連弾手裏剣",
+                en: "Automate — Rendan Shuriken",
+              },
+              nameSub: "WORKSPACE · ペイロード自動大量送信",
+              burpEq: { ja: "≒ Burp Intruder", en: "≒ Burp Intruder" },
+              desc: {
+                ja: "1 つ以上のポジションにペイロードリストを差し替えながら、大量のリクエストを自動送信する。Sniper / Cluster bomb 相当の Strategies が用意されている。",
+                en: "Sprays payload lists into one or more positions at scale, with Strategies mirroring Burp Intruder's Sniper / Cluster bomb.",
+              },
+              tip: {
+                ja: "user_id 1〜1000 の総当たり、パスワードリスト投入、SecLists ワードリストでのパラメータ発掘、並列度を変えたレート制限調査などの主戦場。",
+                en: "Brute user_id 1–1000, fire password lists, mine parameter names with SecLists, vary concurrency to probe rate-limits.",
+              },
+            },
+            {
+              j: "mr",
+              emblem: "変",
+              name: {
+                ja: "Match & Replace — 変わり身",
+                en: "Match & Replace — Kawarimi",
+              },
+              nameSub: "WORKSPACE · 通信中のルールベース自動書換",
+              burpEq: {
+                ja: "≒ Burp Match and Replace",
+                en: "≒ Burp Match and Replace",
+              },
+              desc: {
+                ja: "通過するリクエスト／レスポンスのヘッダ・URL・ボディ・ステータスにルールを設定し、テスト中に自動で書き換える機能。",
+                en: "Apply rules that auto-rewrite headers, URLs, bodies, or status of traffic flowing through Caido.",
+              },
+              tip: {
+                ja: "全リクエストに X-Forwarded-For を付与、レスポンスから CSP を削除、特定パスの Authorization を別アカウントに置換、など『常時』適用したいときに使う。",
+                en: "Auto-add X-Forwarded-For everywhere, strip CSP from responses, replace Authorization on a specific path — use it whenever you need 'always-on' rewrites.",
+              },
+            },
+            {
+              j: "convert",
+              emblem: "解",
+              name: {
+                ja: "Convert — 解読符",
+                en: "Convert — Kaidoku-fu",
+              },
+              nameSub: "WORKSPACE · エンコード／デコード変換",
+              burpEq: { ja: "≒ Burp Decoder", en: "≒ Burp Decoder" },
+              desc: {
+                ja: "Base64 / URL / hex / HTML エンティティなどの単発変換を行うユーティリティ。多段変換（gunzip → Base64 → JSON など）にも対応する。",
+                en: "An encoding / decoding utility for Base64, URL, hex, HTML entities, etc. — chains multi-step conversions like gunzip → Base64 → JSON.",
+              },
+              tip: {
+                ja: "JWT を Base64 デコードして claims を読む、SQLi の payload を hex 変換してフィルタ回避を試す、謎の長文字列が gzip+Base64 か確認する、などに使う。",
+                en: "Base64-decode a JWT to read claims, hex-encode an SQLi payload to dodge filters, peel gzip+Base64 layers off a mystery string.",
+              },
+            },
+            {
+              j: "workflows",
+              emblem: "結",
+              name: {
+                ja: "Workflows — 結界札",
+                en: "Workflows — Kekkai-fuda",
+              },
+              nameSub: "WORKSPACE · ノードベースの自動化パイプライン",
+              burpEq: {
+                ja: "Burp には直接の対応機能なし（差別化機能）",
+                en: "No direct Burp counterpart — a Caido differentiator",
+              },
+              desc: {
+                ja: "ノードをドラッグ＆ドロップで繋いで、受動／能動の HTTP 処理パイプラインをコードなしで組み上げる Caido の目玉機能。",
+                en: "Drag-and-drop nodes to compose passive / active HTTP pipelines without writing code — one of Caido's signature features.",
+              },
+              tip: {
+                ja: "「stack trace 検知時に Findings 登録」「特定 Cookie 検知で Slack 通知」「SQLi hint から sqlmap payload を自動生成」のような連鎖処理は全部 Workflows の出番。",
+                en: "Chain-style automations — 'push to Findings on stack trace,' 'notify Slack on a cookie,' 'auto-generate sqlmap payloads on SQLi hint' — are all Workflows.",
+              },
+            },
+          ],
+          other: [
+            {
+              j: "general",
+              emblem: "査",
+              name: { ja: "HTTPQL", en: "HTTPQL" },
+              nameSub: "QUERY LANGUAGE · 検索／フィルタ用 DSL",
+              desc: {
+                ja: "Caido 独自の検索・フィルタ言語。`req.host.cont:\"target.com\" AND resp.code.eq:500` のように書け、Filters / Search / Sitemap で同じ文法が使える。",
+                en: "Caido's custom query language. Write things like `req.host.cont:\"target.com\" AND resp.code.eq:500` — the same grammar works across Filters / Search / Sitemap.",
+              },
+              tip: {
+                ja: "まずは `cont`（含む）と `eq`（等しい）の 2 つだけ覚えれば十分。Burp の Display filter と比べて圧倒的に書きやすい。",
+                en: "Start by memorizing just `cont` (contains) and `eq` (equals) — vastly easier to write than Burp's Display filter.",
+              },
+            },
+            {
+              j: "general",
+              emblem: "図",
+              name: { ja: "Sitemap", en: "Sitemap" },
+              nameSub: "WORKSPACE · クロールした URL ツリー表示",
+              burpEq: { ja: "≒ Burp Target / Site map", en: "≒ Burp Target / Site map" },
+              desc: {
+                ja: "プロキシ経由でアクセスした URL を、ホスト → パス階層のツリーで一覧表示する。HTTPQL でフィルタもできる。",
+                en: "Lists URLs that passed through the proxy in a host → path tree. HTTPQL filters apply here too.",
+              },
+              tip: {
+                ja: "ターゲットの全体像を掴むときの起点。サブドメインや非標準パス（/api/v2/internal/...）を見つけたら、そこから Replay/Automate に飛ばす流れが速い。",
+                en: "Your map for getting a sense of the target. Find subdomains / odd paths (/api/v2/internal/...) and pivot into Replay / Automate from there.",
+              },
+            },
+            {
+              j: "general",
+              emblem: "印",
+              name: { ja: "Findings", en: "Findings" },
+              nameSub: "WORKSPACE · 検出した怪しい点を保存",
+              desc: {
+                ja: "脆弱性の可能性がある場所をタグ・メモ・重要度付きでストックしておく場所。Burp Scanner のような自動スキャナではなく、人間が手動で／Workflows 経由で登録する。",
+                en: "A stash for suspected vulnerabilities with tags, notes, and severity. Not an auto-scanner like Burp Scanner — you (or a Workflow) file each finding manually.",
+              },
+              tip: {
+                ja: "Workflows と組み合わせると強い。「stack trace を含むレスポンスは自動 Findings 登録」のようなパイプラインで、レポート書きの素材集めが楽になる。",
+                en: "Pair with Workflows: 'auto-file every response that contains a stack trace' turns report drafting into 'pick from the stash.'",
+              },
+            },
+            {
+              j: "general",
+              emblem: "範",
+              name: { ja: "Scope", en: "Scope" },
+              nameSub: "SETTINGS · ターゲットの境界定義",
+              burpEq: { ja: "≒ Burp Target Scope", en: "≒ Burp Target Scope" },
+              desc: {
+                ja: "対象に含めるホスト・除外するホストを定義する設定。In-scope に絞ることで、Sitemap / Search / Findings のノイズを劇的に減らせる。",
+                en: "Defines which hosts are in / out of scope. Narrowing to in-scope cuts noise across Sitemap / Search / Findings.",
+              },
+              tip: {
+                ja: "HackerOne プログラムの『In Scope』『Out of Scope』をそのまま反映するのが基本。誤って範囲外を叩かないための保険にもなる。",
+                en: "Mirror the program's 'In Scope' / 'Out of Scope' list. It also acts as a safety belt against accidental out-of-scope hits.",
+              },
+            },
+            {
+              j: "general",
+              emblem: "帖",
+              name: { ja: "Projects", en: "Projects" },
+              nameSub: "SETTINGS · ターゲットごとの作業空間分離",
+              desc: {
+                ja: "ターゲット／調査ごとに独立した Project を作って、履歴・Replay・Findings・設定を完全に切り離せる機能。",
+                en: "Per-target Projects keep history, Replays, Findings, and settings fully isolated.",
+              },
+              tip: {
+                ja: "複数プログラムを並行で見るなら最初に Project を切るべし。終了後にエクスポートして引き継ぎ／再現にも使える。",
+                en: "Always carve a Project per target if you juggle several programs. Export at the end for handoff / repro.",
+              },
+            },
+            {
+              j: "general",
+              emblem: "拡",
+              name: { ja: "Plugins", en: "Plugins" },
+              nameSub: "EXTENSION · TypeScript / JS で機能拡張",
+              burpEq: {
+                ja: "≒ Burp Extensions（ただし Java→JS）",
+                en: "≒ Burp Extensions (but JS instead of Java)",
+              },
+              desc: {
+                ja: "Caido のプラグインは Web 技術ベース（TypeScript / JS）で書く。Burp の Java/Montoya API より敷居が低く、フロント寄りの開発者でも参入しやすい。",
+                en: "Caido plugins are written in TypeScript / JS — far easier to start than Burp's Java/Montoya API.",
+              },
+              tip: {
+                ja: "公式プラグインストアもある。HTTP 履歴をワンクリックで Markdown に整形、JWT 自動デコード表示、など定番の補助ツールが揃ってきている。",
+                en: "There's an official plugin store — staples like 'export HTTP history to Markdown' and 'auto-decoded JWT panel' are already there.",
+              },
+            },
+            {
+              j: "general",
+              emblem: "遠",
+              name: {
+                ja: "CLI / Server モード",
+                en: "CLI / Server mode",
+              },
+              nameSub: "DEPLOYMENT · リモートでブラウザから利用",
+              desc: {
+                ja: "Caido は CLI（`caido-cli`）でサーバーとして起動でき、ブラウザから Web UI にアクセスして使える。VPS や踏み台で動かせばどこからでも作業可能。",
+                en: "Caido ships a CLI (`caido-cli`) you can run as a server and reach via browser. Run it on a VPS or jump host and work from anywhere.",
+              },
+              tip: {
+                ja: "VPN 越しのターゲットや長時間動かしたい仕掛けを、ローカル PC から切り離すのに最適。Burp で同じことをやろうとすると地獄だった、その代替。",
+                en: "Perfect for VPN-only targets or long-running setups you want off your laptop — the headache Burp users used to fight.",
+              },
+            },
+          ],
+        };
+
+        /* =========================================================
+           状態
+           ========================================================= */
+        let lang = "ja";
+        try {
+          // 全ゲーム共通キー mk12_game_lang を優先、旧キー caido_ninja_lang から移行も読む
+          const stored =
+            localStorage.getItem("mk12_game_lang") ||
+            localStorage.getItem("caido_ninja_lang");
+          if (stored === "ja" || stored === "en") lang = stored;
+        } catch (e) {}
+
+        const state = {
+          phase: "start", // start | game | gameover
+          scrolls: [], // 流れている巻物の配列
+          scrollIdSeq: 0,
+          activeScrollId: null,
+          score: 0,
+          combo: 0,
+          bestCombo: 0,
+          lives: 3,
+          slashes: 0, // 当てた／外した札の合計（命中率計算用）
+          hits: 0,
+          cleared: 0,
+          spawned: 0,
+          gameStartMs: 0,
+          nextSpawnAt: 0,
+          spawnInterval: 3600,
+          scrollDuration: 11200,
+          raf: null,
+          countdown: 0,
+          // 直近にスポーンした巻物のインデックス履歴（連続出題防止用）。
+          // SCROLLS が 40 種類あるので、最後の 8 件を除外しても十分プールは残る。
+          recentScrollIdx: [],
+        };
+        // 連続出題を避けるためにスキップしたい直近インデックスの件数
+        const RECENT_SCROLL_WINDOW = 8;
+
+        const laneEl = document.getElementById("lane");
+        const slashFxEl = document.getElementById("slash-fx");
+        const ninjaEl = document.getElementById("ninja-avatar");
+
+        // 機能解説タブの絞り込み（all / jutsu / other）
+        let featuresFilter = "all";
+
+        function t(key) {
+          const v = I18N[lang][key];
+          return v === undefined ? key : v;
+        }
+
+        /* =========================================================
+           DOM 安全構築ユーティリティ
+           ========================================================= */
+        function el(tag, className, text) {
+          const e = document.createElement(tag);
+          if (className) e.className = className;
+          if (text !== undefined && text !== null) e.textContent = text;
+          return e;
+        }
+        function setHtmlSafe(el, html) {
+          // 簡易的に <b>…</b> だけ許可してそれ以外をエスケープする
+          el.textContent = "";
+          const parts = html.split(/(<b>|<\/b>)/);
+          let inBold = false;
+          for (const p of parts) {
+            if (p === "<b>") {
+              inBold = true;
+              continue;
+            }
+            if (p === "</b>") {
+              inBold = false;
+              continue;
+            }
+            if (!p) continue;
+            if (inBold) {
+              const b = document.createElement("b");
+              b.textContent = p;
+              el.appendChild(b);
+            } else {
+              el.appendChild(document.createTextNode(p));
+            }
+          }
+        }
+
+        /* =========================================================
+           スタート画面の i18n 適用
+           ========================================================= */
+        function applyStartI18n() {
+          document.documentElement.lang = lang;
+          document.getElementById("brand-name").textContent = t("brandName");
+          document.getElementById("hero-tag-text").textContent = t("heroTag");
+
+          const heroTitle = document.getElementById("hero-title");
+          heroTitle.textContent = "";
+          const isJa = lang === "ja";
+          heroTitle.appendChild(
+            document.createTextNode(t("heroTitleLine1")),
+          );
+          heroTitle.appendChild(document.createElement("br"));
+          heroTitle.appendChild(
+            document.createTextNode(t("heroTitleLine2")),
+          );
+
+          document.getElementById("hero-sub").textContent = t("heroSub");
+          document.getElementById("rules-title").textContent = t("rulesTitle");
+
+          // ルールリスト
+          const rulesList = document.getElementById("rules-list");
+          rulesList.textContent = "";
+          t("rules").forEach((r, i) => {
+            const li = document.createElement("li");
+            const num = el("span", "num", String(i + 1));
+            const text = document.createElement("span");
+            const head = el("b", null, r.head + "：");
+            text.appendChild(head);
+            text.appendChild(document.createTextNode(r.body));
+            li.appendChild(num);
+            li.appendChild(text);
+            rulesList.appendChild(li);
+          });
+
+          // 忍術凡例
+          document.getElementById("legend-title").textContent =
+            t("legendTitle");
+          const legend = document.getElementById("legend-grid");
+          legend.textContent = "";
+          JUTSU.forEach((j) => {
+            const row = el("div", "jutsu-row");
+            const key = el("span", "jutsu-key", j.key);
+            key.style.background = j.color;
+            const txt = el("div", "jutsu-text");
+            const name = document.createElement("b");
+            name.textContent =
+              (isJa ? j.ja : j.en) + " （" + j.ws + "）";
+            const sm = document.createElement("small");
+            sm.textContent = isJa ? j.ja_desc : j.en_desc;
+            txt.appendChild(name);
+            txt.appendChild(document.createElement("br"));
+            txt.appendChild(sm);
+            row.appendChild(key);
+            row.appendChild(txt);
+            legend.appendChild(row);
+          });
+
+          // スコアランク（帯位）一覧
+          renderRankList();
+
+          document.getElementById("btn-start-text").textContent = t("startBtn");
+          document.getElementById("start-note").textContent = t("startNote");
+          document.getElementById("footer-by").textContent = t("footerBy");
+        }
+
+        /* =========================================================
+           スコアランク（帯位）一覧のレンダリング
+           ========================================================= */
+        const RANK_TIERS = [
+          { min: 4000, max: null, beltColor: "linear-gradient(135deg, #d97706, #fbbf24, #d97706)" },
+          { min: 2500, max: 3999, beltColor: "linear-gradient(135deg, #b91c1c, #ef4444)" },
+          { min: 1500, max: 2499, beltColor: "#0f172a" },
+          { min: 800, max: 1499, beltColor: "#7e22ce" },
+          { min: 300, max: 799, beltColor: "#facc15" },
+          { min: 0, max: 299, beltColor: "#f4f4f5" },
+        ];
+        function renderRankList() {
+          const titleEl = document.getElementById("rank-list-title");
+          const grid = document.getElementById("rank-list-grid");
+          if (!titleEl || !grid) return;
+          titleEl.textContent = t("rankListTitle");
+          grid.textContent = "";
+          const names = t("ranks");
+          const descs = t("rankDescs");
+          RANK_TIERS.forEach((tier) => {
+            const idx = getBeltIdx(tier.min);
+            const row = el("div", "rank-row");
+            const belt = el("span", "rank-row-belt");
+            belt.style.background = tier.beltColor;
+            const score = el("span", "rank-row-score");
+            score.textContent =
+              tier.max === null
+                ? tier.min.toLocaleString() + "+"
+                : tier.min.toLocaleString() +
+                  "–" +
+                  tier.max.toLocaleString();
+            const name = el("div", "rank-row-name", names[idx]);
+            const tag = el(
+              "span",
+              "rank-row-tag",
+              descs && descs[idx] ? descs[idx] : "",
+            );
+            row.appendChild(belt);
+            row.appendChild(score);
+            row.appendChild(name);
+            row.appendChild(tag);
+            grid.appendChild(row);
+          });
+        }
+
+        /* =========================================================
+           ゲーム画面の i18n 適用
+           ========================================================= */
+        function applyGameI18n() {
+          document.getElementById("hud-lbl-score").textContent = t("hudScore");
+          document.getElementById("hud-lbl-combo").textContent = t("hudCombo");
+          document.getElementById("hud-lbl-lives").textContent = t("hudLives");
+          document.getElementById("hud-lbl-rank").textContent = t("hudRank");
+          document.getElementById("lane-hint").textContent = t("laneHint");
+          renderJutsuBar();
+        }
+
+        function renderJutsuBar() {
+          const bar = document.getElementById("jutsu-bar");
+          bar.textContent = "";
+          JUTSU.forEach((j) => {
+            const btn = document.createElement("button");
+            btn.className = "jutsu-card";
+            btn.type = "button";
+            btn.dataset.jutsu = j.id;
+            btn.setAttribute("aria-label", (lang === "ja" ? j.ja : j.en) + " " + j.ws);
+
+            const k = el("span", "jc-key", j.key);
+            const name = el("span", "jc-name", lang === "ja" ? j.ja : j.en);
+            const ws = el("span", "jc-ws", j.ws);
+
+            btn.appendChild(k);
+            btn.appendChild(name);
+            btn.appendChild(ws);
+
+            // PointerEvents で 300ms tap 遅延を回避（モバイル応答性向上）
+            // pointerdown が拾えない環境のため click にもフォールバックを残す
+            if (window.PointerEvent) {
+              btn.addEventListener("pointerdown", (e) => {
+                if (e.button === 0 || e.pointerType !== "mouse") {
+                  e.preventDefault();
+                  tryHit(j.id);
+                }
+              });
+              // 二重発火防止用に click は無効化
+              btn.addEventListener("click", (e) => e.preventDefault());
+            } else {
+              btn.addEventListener("click", () => tryHit(j.id));
+            }
+            bar.appendChild(btn);
+          });
+        }
+
+        /* =========================================================
+           結果画面の i18n 適用
+           ========================================================= */
+        function applyResultI18n() {
+          document.getElementById("result-rank").textContent = t("resultRank");
+          document.getElementById("result-title").textContent =
+            t("resultTitle");
+          document.getElementById("result-sub").textContent = t("resultSub");
+          document.getElementById("result-score-label").textContent =
+            t("resultScoreLabel");
+          document.getElementById("stat-lbl-cleared").textContent =
+            t("statCleared");
+          document.getElementById("stat-lbl-bestcombo").textContent =
+            t("statBestCombo");
+          document.getElementById("stat-lbl-acc").textContent = t("statAcc");
+          document.getElementById("btn-share-text").textContent =
+            t("resultShare");
+          document.getElementById("btn-retry-text").textContent =
+            t("resultRetry");
+        }
+
+        /* =========================================================
+           ナビゲーションタブ（ゲーム / 機能解説）の i18n
+           ========================================================= */
+        function applyTabsI18n() {
+          document.getElementById("tab-game").textContent = t("tabGame");
+          document.getElementById("tab-features").textContent =
+            t("tabFeatures");
+        }
+
+        /* =========================================================
+           機能解説画面のレンダリング
+           ========================================================= */
+        function renderFeatures() {
+          // 上部タイトル
+          document.getElementById("features-title").textContent =
+            t("featuresTitle");
+          document.getElementById("features-sub").textContent =
+            t("featuresSub");
+
+          // フィルタチップ
+          const filterEl = document.getElementById("features-filter");
+          filterEl.textContent = "";
+          const chips = [
+            { k: "all", label: t("featuresAll") },
+            { k: "jutsu", label: t("featuresJutsu") },
+            { k: "other", label: t("featuresOther") },
+          ];
+          for (const c of chips) {
+            const chip = document.createElement("button");
+            chip.type = "button";
+            chip.className =
+              "features-chip" + (c.k === featuresFilter ? " active" : "");
+            chip.textContent = c.label;
+            chip.addEventListener("click", () => {
+              featuresFilter = c.k;
+              renderFeatures();
+            });
+            filterEl.appendChild(chip);
+          }
+
+          // 本体（セクション + カードグリッド）
+          const body = document.getElementById("features-body");
+          body.textContent = "";
+
+          const sections = [
+            {
+              k: "jutsu",
+              title: t("featuresSectionJutsu"),
+              items: CAIDO_FEATURES.jutsu,
+            },
+            {
+              k: "other",
+              title: t("featuresSectionOther"),
+              items: CAIDO_FEATURES.other,
+            },
+          ];
+          for (const sec of sections) {
+            if (featuresFilter !== "all" && featuresFilter !== sec.k) continue;
+
+            const secEl = el("div", "features-section");
+            const titleEl = el("div", "features-section-title");
+            const titleSpan = el("span", null, sec.title);
+            titleEl.appendChild(titleSpan);
+            secEl.appendChild(titleEl);
+
+            const grid = el("div", "features-grid");
+            for (const item of sec.items) {
+              grid.appendChild(renderFeatCard(item));
+            }
+            secEl.appendChild(grid);
+            body.appendChild(secEl);
+          }
+        }
+
+        function renderFeatCard(item) {
+          const card = el("div", "feat-card");
+          card.dataset.j = item.j || "general";
+
+          // ヘッダ：エンブレム + 名称 / サブ / Burp 対応
+          const head = el("div", "feat-head");
+          // 短いラテン文字（HTTPQL の "Q" など）は monospaced 表記、それ以外は明朝
+          const emblemKind = /^[\x20-\x7E]+$/.test(item.emblem)
+            ? " is-text"
+            : "";
+          const emblem = el("div", "feat-emblem" + emblemKind, item.emblem);
+          head.appendChild(emblem);
+
+          const meta = el("div", "feat-meta");
+          const name = el("div", "feat-name", item.name[lang]);
+          meta.appendChild(name);
+          if (item.nameSub) {
+            const sub = el("div", "feat-name-en", item.nameSub);
+            meta.appendChild(sub);
+          }
+          if (item.burpEq) {
+            const burp = el("span", "feat-burp", item.burpEq[lang]);
+            meta.appendChild(burp);
+          }
+          head.appendChild(meta);
+          card.appendChild(head);
+
+          // 説明
+          card.appendChild(el("p", "feat-desc", item.desc[lang]));
+
+          // Tip（一言）
+          if (item.tip) {
+            const tip = el("div", "feat-tip");
+            const label = el("span", "feat-tip-label", t("featTipLabel"));
+            tip.appendChild(label);
+            tip.appendChild(document.createTextNode(" " + item.tip[lang]));
+            card.appendChild(tip);
+          }
+
+          return card;
+        }
+
+        /* =========================================================
+           ナビタブの切替
+             - ゲーム → screen-start（実行中ならキャンセル）
+             - 機能解説 → screen-features
+           ========================================================= */
+        function showTab(tab) {
+          document
+            .querySelectorAll(".nav-tab")
+            .forEach((b) =>
+              b.classList.toggle("active", b.dataset.tab === tab),
+            );
+          if (tab === "features") {
+            if (state.phase === "game") cancelActiveGame();
+            showScreen("screen-features");
+            renderFeatures();
+          } else {
+            if (state.phase === "game") cancelActiveGame();
+            showScreen("screen-start");
+          }
+        }
+
+        function cancelActiveGame() {
+          if (state.raf) cancelAnimationFrame(state.raf);
+          state.raf = null;
+          // カウントダウン setInterval も止めないと、startGame 直後のキャンセル時に
+          // tick が遅延発火して state.raf を勝手に再開してしまう
+          if (state.cdTimer) {
+            clearInterval(state.cdTimer);
+            state.cdTimer = null;
+          }
+          state._cdResume = false;
+          state.pausedAt = 0;
+          for (const s of state.scrolls) s.dom.remove();
+          state.scrolls = [];
+          state.activeScrollId = null;
+          state.phase = "start";
+          // カウントダウンが回っていれば隠す
+          const cdEl = document.getElementById("countdown");
+          if (cdEl) cdEl.style.display = "none";
+        }
+
+        /* =========================================================
+           言語切替
+           ========================================================= */
+        function updateLangPill() {
+          const pill = document.getElementById("lang-pill");
+          const buttons = document.querySelectorAll(".lang-toggle button");
+          const active = document.querySelector(
+            '.lang-toggle button[data-lang="' + lang + '"]',
+          );
+          if (!active || !pill) return;
+          buttons.forEach((b) => b.classList.toggle("active", b === active));
+          pill.style.width = active.offsetWidth + "px";
+          pill.style.transform =
+            "translateX(" + (active.offsetLeft - 3) + "px)";
+        }
+
+        function setLanguage(next) {
+          if (lang === next) return;
+          lang = next;
+          try {
+            localStorage.setItem("mk12_game_lang", lang);
+          } catch (e) {}
+          applyStartI18n();
+          applyGameI18n();
+          applyResultI18n();
+          applyTabsI18n();
+          updateLangPill();
+          // ゲーム中なら巻物のテキストも更新
+          if (state.phase === "game") {
+            for (const s of state.scrolls) {
+              const txtEl = s.dom.querySelector(".scroll-text");
+              const tagEl = s.dom.querySelector(".scroll-tag");
+              if (txtEl)
+                txtEl.textContent = SCROLLS[s.scenarioIdx][lang];
+              if (tagEl) tagEl.textContent = t("scrollTag");
+            }
+            // ランクも再表示
+            updateHud();
+          }
+          // 結果画面なら再レンダ
+          if (state.phase === "gameover") {
+            renderResult();
+          }
+          // 機能解説画面が開いていれば再レンダ
+          if (
+            document
+              .getElementById("screen-features")
+              .classList.contains("active")
+          ) {
+            renderFeatures();
+          }
+        }
+
+        /* =========================================================
+           画面切替
+           ========================================================= */
+        function showScreen(id) {
+          document
+            .querySelectorAll(".screen")
+            .forEach((s) => s.classList.remove("active"));
+          document.getElementById(id).classList.add("active");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        /* =========================================================
+           ベルト（帯位）の判定
+           ========================================================= */
+        function getBeltIdx(score) {
+          if (score >= 4000) return 5; // 影忍
+          if (score >= 2500) return 4; // 師範
+          if (score >= 1500) return 3; // 黒帯
+          if (score >= 800) return 2; // 紫帯
+          if (score >= 300) return 1; // 黄帯
+          return 0; // 白帯
+        }
+        function getBeltLabel(score) {
+          return t("ranks")[getBeltIdx(score)];
+        }
+
+        /* =========================================================
+           ゲームの開始
+           ========================================================= */
+        function startGame() {
+          state.phase = "game";
+          state.scrolls.forEach((s) => s.dom.remove());
+          state.scrolls = [];
+          state.scrollIdSeq = 0;
+          state.activeScrollId = null;
+          state.score = 0;
+          state.combo = 0;
+          state.bestCombo = 0;
+          state.lives = 3;
+          state.slashes = 0;
+          state.hits = 0;
+          state.cleared = 0;
+          state.spawned = 0;
+          state.spawnInterval = 3600;
+          state.scrollDuration = 11200;
+          state.recentScrollIdx = [];
+          updateHud();
+
+          showScreen("screen-game");
+
+          // 3-2-1 カウントダウン（cdTimer は state に持たせて
+          // visibilitychange / endGame / quitGame から確実に停止できるようにする）
+          const cdEl = document.getElementById("countdown");
+          state.countdown = 3;
+          cdEl.style.display = "flex";
+          cdEl.textContent = "3";
+          let tick = 1;
+          if (state.cdTimer) clearInterval(state.cdTimer);
+          state.cdTimer = setInterval(() => {
+            tick++;
+            if (tick === 2) cdEl.textContent = "2";
+            else if (tick === 3) cdEl.textContent = "1";
+            else if (tick === 4) {
+              cdEl.textContent = lang === "ja" ? "斬！" : "GO!";
+            } else {
+              cdEl.style.display = "none";
+              clearInterval(state.cdTimer);
+              state.cdTimer = null;
+              state.gameStartMs = performance.now();
+              state.nextSpawnAt = state.gameStartMs + 600;
+              state.raf = requestAnimationFrame(loop);
+            }
+          }, 700);
+        }
+
+        /* =========================================================
+           メインループ
+           ========================================================= */
+        function loop(now) {
+          if (state.phase !== "game") return;
+
+          // スポーン
+          if (now >= state.nextSpawnAt) {
+            spawnScroll(now);
+            // 難易度上昇：スポーン数に応じて少しずつ速くする
+            const sp = state.spawned;
+            state.spawnInterval = Math.max(1800, 3600 - sp * 35);
+            state.scrollDuration = Math.max(5200, 11200 - sp * 80);
+            state.nextSpawnAt = now + state.spawnInterval;
+          }
+
+          // 巻物の位置を更新
+          const laneW = laneEl.clientWidth;
+          const playerLineX = laneW * 0.18; // 忍者ラインの X（左端から）
+          for (let i = state.scrolls.length - 1; i >= 0; i--) {
+            const s = state.scrolls[i];
+            if (s.removed) continue;
+            const elapsed = now - s.spawnAt;
+            const tt = elapsed / s.duration;
+            // 右端 (laneW + 50) から、左端 (-260) までを 0.0〜1.0 で
+            const startX = laneW + 50;
+            const endX = -260;
+            const px = startX + (endX - startX) * tt;
+            s.x = px;
+            s.dom.style.transform =
+              "translateX(" + px + "px) translateY(-50%)";
+
+            // 見逃し：プレイヤーラインを過ぎてかつまだ無事
+            if (!s.slashed && px < playerLineX - 30) {
+              onMissed(s);
+            }
+            // 完全に画面外に出たら掃除
+            if (px < -260) {
+              s.dom.remove();
+              state.scrolls.splice(i, 1);
+            }
+          }
+
+          // 一番先頭（左寄り）の未斬巻物をアクティブにする
+          updateActiveScroll();
+
+          state.raf = requestAnimationFrame(loop);
+        }
+
+        function spawnScroll(now) {
+          // 直近に出した巻物・現在画面上にある巻物は除外して、連続出題を避ける。
+          // 候補が枯渇した場合は許可セットを段階的に緩めるため、フィルタは
+          // "直近 N 件除外" → "全件許可" の二段フォールバックにする。
+          const active = new Set(state.scrolls.map((s) => s.scenarioIdx));
+          const banned = new Set([...state.recentScrollIdx, ...active]);
+          let candidates = [];
+          for (let i = 0; i < SCROLLS.length; i++) {
+            if (!banned.has(i)) candidates.push(i);
+          }
+          if (candidates.length === 0) {
+            // 直近履歴を切り詰めて再評価。最低でも「画面上に居る巻物」は避ける。
+            for (let i = 0; i < SCROLLS.length; i++) {
+              if (!active.has(i)) candidates.push(i);
+            }
+          }
+          if (candidates.length === 0) {
+            // どうしても枯れたら全部許可（理論的にここに来るのは稀）
+            candidates = SCROLLS.map((_, i) => i);
+          }
+          const idx = candidates[Math.floor(Math.random() * candidates.length)];
+          state.recentScrollIdx.push(idx);
+          if (state.recentScrollIdx.length > RECENT_SCROLL_WINDOW) {
+            state.recentScrollIdx.shift();
+          }
+          const data = SCROLLS[idx];
+          const dom = document.createElement("div");
+          dom.className = "scroll";
+          const tag = el("div", "scroll-tag", t("scrollTag"));
+          const text = el("div", "scroll-text", data[lang]);
+          dom.appendChild(tag);
+          dom.appendChild(text);
+          // 縦のばらつきを少しつける
+          const off = (Math.random() - 0.5) * 30;
+          dom.style.top = "calc(50% + " + off.toFixed(1) + "px)";
+          // 初期 X 位置（レーン右端の少し外側）を append 前に確定させて、
+          // 最初の rAF が回るまでに巻物がレーン左端に一瞬出ないようにする。
+          const initX = laneEl.clientWidth + 50;
+          dom.style.transform =
+            "translateX(" + initX + "px) translateY(-50%)";
+          laneEl.appendChild(dom);
+
+          state.scrollIdSeq += 1;
+          // jutsu は data オブジェクト経由で jutsuOf() から取得する
+          // （state には平文を載せず DevTools 対策にする）
+          state.scrolls.push({
+            id: state.scrollIdSeq,
+            scenarioIdx: idx,
+            data,
+            dom,
+            spawnAt: now,
+            duration: state.scrollDuration,
+            slashed: false,
+            removed: false,
+            x: initX,
+          });
+          state.spawned += 1;
+        }
+
+        function updateActiveScroll() {
+          // 一番 x が小さい（左にある）未斬巻物を active に
+          let target = null;
+          for (const s of state.scrolls) {
+            if (s.slashed) continue;
+            if (!target || s.x < target.x) target = s;
+          }
+          const newActiveId = target ? target.id : null;
+          if (newActiveId !== state.activeScrollId) {
+            for (const s of state.scrolls) {
+              s.dom.classList.toggle("active", s.id === newActiveId);
+            }
+            state.activeScrollId = newActiveId;
+          }
+        }
+
+        /* =========================================================
+           入力処理
+           ========================================================= */
+        function tryHit(jutsuId) {
+          if (state.phase !== "game") return;
+          // 視覚上 active で表示されている巻物のみを判定対象にする
+          // （updateActiveScroll が最後にセットした state.activeScrollId と完全に一致させる）
+          let target = null;
+          if (state.activeScrollId != null) {
+            for (const s of state.scrolls) {
+              if (s.id === state.activeScrollId && !s.slashed) {
+                target = s;
+                break;
+              }
+            }
+          }
+          if (!target) {
+            flashCard(jutsuId, "ng");
+            return;
+          }
+          state.slashes += 1;
+          if (jutsuOf(target.data) === jutsuId) {
+            onSlash(target);
+            flashCard(jutsuId, "ok");
+          } else {
+            onWrong(target);
+            flashCard(jutsuId, "ng");
+          }
+        }
+
+        function onSlash(s) {
+          if (s.slashed) return;
+          s.slashed = true;
+          state.hits += 1;
+          state.cleared += 1;
+          state.combo += 1;
+          if (state.combo > state.bestCombo) state.bestCombo = state.combo;
+
+          const mult = comboMultiplier(state.combo);
+          const gain = 100 * mult;
+          state.score += gain;
+
+          s.dom.classList.add("slashed");
+          playSlash();
+          floatText("+" + gain, "ok");
+          // しばらく後に DOM から消す
+          setTimeout(() => {
+            s.dom.remove();
+            s.removed = true;
+            const i = state.scrolls.indexOf(s);
+            if (i >= 0) state.scrolls.splice(i, 1);
+            if (state.activeScrollId === s.id) state.activeScrollId = null;
+            updateActiveScroll();
+          }, 350);
+          updateHud();
+        }
+
+        function onWrong(s) {
+          if (s.slashed) return;
+          s.slashed = true; // wrong も「処理済み」として扱う
+          state.combo = 0;
+          state.lives -= 1;
+          s.dom.classList.add("wrong");
+          laneEl.classList.add("shake");
+          setTimeout(() => laneEl.classList.remove("shake"), 320);
+          floatText(t("ngText"), "ng");
+          setTimeout(() => {
+            s.dom.remove();
+            s.removed = true;
+            const i = state.scrolls.indexOf(s);
+            if (i >= 0) state.scrolls.splice(i, 1);
+            if (state.activeScrollId === s.id) state.activeScrollId = null;
+            updateActiveScroll();
+          }, 400);
+          updateHud();
+          if (state.lives <= 0) endGame();
+        }
+
+        function onMissed(s) {
+          if (s.slashed) return;
+          s.slashed = true;
+          state.combo = 0;
+          state.lives -= 1;
+          s.dom.classList.add("missed");
+          floatText(t("missText"), "ng");
+          setTimeout(() => {
+            s.dom.remove();
+            s.removed = true;
+            const i = state.scrolls.indexOf(s);
+            if (i >= 0) state.scrolls.splice(i, 1);
+            if (state.activeScrollId === s.id) state.activeScrollId = null;
+            updateActiveScroll();
+          }, 400);
+          updateHud();
+          if (state.lives <= 0) endGame();
+        }
+
+        function comboMultiplier(combo) {
+          if (combo >= 15) return 5;
+          if (combo >= 10) return 4;
+          if (combo >= 6) return 3;
+          if (combo >= 3) return 2;
+          return 1;
+        }
+
+        function flashCard(jutsuId, kind) {
+          const card = document.querySelector(
+            '.jutsu-card[data-jutsu="' + jutsuId + '"]',
+          );
+          if (!card) return;
+          card.classList.remove("flash-ok", "flash-ng");
+          // 強制リフロー
+          void card.offsetWidth;
+          card.classList.add(kind === "ok" ? "flash-ok" : "flash-ng");
+        }
+
+        function playSlash() {
+          // 斬撃エフェクト：1 本のラインを描画してすぐ消す + 道場が一瞬白む
+          const slash = document.createElement("div");
+          slash.className = "slash go";
+          slashFxEl.appendChild(slash);
+          slashFxEl.classList.remove("flash");
+          void slashFxEl.offsetWidth;
+          slashFxEl.classList.add("flash");
+          ninjaEl.classList.remove("attack");
+          void ninjaEl.offsetWidth;
+          ninjaEl.classList.add("attack");
+          setTimeout(() => slash.remove(), 340);
+          setTimeout(() => slashFxEl.classList.remove("flash"), 240);
+        }
+
+        function floatText(txt, kind) {
+          const ft = document.createElement("div");
+          ft.className = "float-text " + (kind === "ok" ? "ok" : "ng") + " go";
+          ft.textContent = txt;
+          slashFxEl.appendChild(ft);
+          setTimeout(() => ft.remove(), 900);
+        }
+
+        /* =========================================================
+           HUD 更新
+           ========================================================= */
+        function updateHud() {
+          document.getElementById("hud-score").textContent = String(state.score);
+          const mult = comboMultiplier(state.combo);
+          document.getElementById("hud-combo").textContent =
+            state.combo > 0 ? state.combo + " ×" + mult : "×1";
+          const hearts = "★".repeat(Math.max(0, state.lives)) +
+            "☆".repeat(Math.max(0, 3 - state.lives));
+          document.getElementById("hud-lives").textContent = hearts;
+          document.getElementById("hud-rank").textContent =
+            getBeltLabel(state.score);
+        }
+
+        /* =========================================================
+           終了処理
+           ========================================================= */
+        function endGame() {
+          state.phase = "gameover";
+          if (state.raf) cancelAnimationFrame(state.raf);
+          state.raf = null;
+          // 残っている巻物を消す
+          for (const s of state.scrolls) {
+            s.dom.remove();
+          }
+          state.scrolls = [];
+
+          // 自己ベスト更新
+          try {
+            const prev = parseInt(
+              localStorage.getItem("caido_ninja_best") || "0",
+              10,
+            );
+            if (state.score > prev) {
+              localStorage.setItem(
+                "caido_ninja_best",
+                String(state.score),
+              );
+            }
+          } catch (e) {}
+
+          renderResult();
+          showScreen("screen-result");
+        }
+
+        function renderResult() {
+          document.getElementById("result-score").textContent = String(
+            state.score,
+          );
+          document.getElementById("stat-cleared").textContent = String(
+            state.cleared,
+          );
+          document.getElementById("stat-bestcombo").textContent = String(
+            state.bestCombo,
+          );
+          const acc =
+            state.slashes > 0
+              ? Math.round((state.hits / state.slashes) * 100)
+              : 0;
+          document.getElementById("stat-acc").textContent = acc + "%";
+
+          // 帯位＝結果のサブにも反映
+          const beltIdx = getBeltIdx(state.score);
+          const belt = getBeltLabel(state.score);
+          const rankTag = "★ " + belt.toUpperCase() + " BELT";
+          document.getElementById("result-rank").textContent = rankTag;
+
+          // 帯位別コメント
+          let commentKey = "commentRookie";
+          if (beltIdx === 0) commentKey = "commentNewbie";
+          else if (beltIdx === 1) commentKey = "commentRookie";
+          else if (beltIdx === 2) commentKey = "commentRookie";
+          else if (beltIdx === 3) commentKey = "commentMid";
+          else if (beltIdx === 4) commentKey = "commentHigh";
+          else if (beltIdx === 5) commentKey = "commentElite";
+          setHtmlSafe(
+            document.getElementById("result-comment"),
+            t(commentKey),
+          );
+
+          // 自己ベスト表示
+          let best = state.score;
+          try {
+            best = parseInt(
+              localStorage.getItem("caido_ninja_best") || "0",
+              10,
+            );
+          } catch (e) {}
+          setHtmlSafe(
+            document.getElementById("result-best"),
+            t("resultBest").replace("%d", String(best)),
+          );
+        }
+
+        /* =========================================================
+           X (Twitter) シェア
+           ========================================================= */
+        function shareBucket(score) {
+          // share/ ディレクトリのインデックスに合わせる
+          if (score >= 4000) return "elite";
+          if (score >= 2500) return "master";
+          if (score >= 1500) return "black";
+          if (score >= 800) return "purple";
+          if (score >= 300) return "yellow";
+          return "white";
+        }
+
+        function onShare() {
+          const acc =
+            state.slashes > 0
+              ? Math.round((state.hits / state.slashes) * 100)
+              : 0;
+          let text;
+          if (lang === "ja") {
+            text =
+              "「Caido 忍者道場」スコア " +
+              state.score +
+              "（" +
+              getBeltLabel(state.score) +
+              "・斬った巻物 " +
+              state.cleared +
+              " 本／最大コンボ " +
+              state.bestCombo +
+              "／命中率 " +
+              acc +
+              "%）\n" +
+              "Caido のワークスペースを忍術に見立てて遊ぶアーケード。あなたも修行してみよう！\n\n" +
+              "#BugBountyJPGame";
+          } else {
+            text =
+              "I scored " +
+              state.score +
+              " on Caido Ninja Dojo (" +
+              getBeltLabel(state.score) +
+              " belt · " +
+              state.cleared +
+              " scrolls / best combo " +
+              state.bestCombo +
+              " / " +
+              acc +
+              "% accuracy)\n" +
+              "An arcade where Caido workspaces become ninjutsu — train your bug-bounty reflexes!\n\n" +
+              "#BugBountyJPGame";
+          }
+          // 現在のページ位置を基準に share/<bucket>/ への絶対 URL を作る。
+          // new URL は相対パス解決を仕様通り行うため、ドット入りディレクトリ名や
+          // /index.html 直指定でも正しく動作する。
+          const url = new URL(
+            "share/" + shareBucket(state.score) + "/",
+            location.href,
+          ).href;
+          const intent =
+            "https://x.com/intent/tweet?text=" +
+            encodeURIComponent(text) +
+            "&url=" +
+            encodeURIComponent(url);
+          window.open(intent, "_blank", "noopener,noreferrer");
+        }
+
+        /* =========================================================
+           入力イベント
+           ========================================================= */
+        document.querySelectorAll(".lang-toggle button").forEach((btn) => {
+          btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+        });
+        document.querySelectorAll(".nav-tab").forEach((btn) => {
+          btn.addEventListener("click", () => showTab(btn.dataset.tab));
+        });
+        // ゲームを開始したらゲームタブを active 状態にする
+        const _origStartBtn = document.getElementById("btn-start");
+        _origStartBtn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".nav-tab")
+            .forEach((b) =>
+              b.classList.toggle("active", b.dataset.tab === "game"),
+            );
+          startGame();
+        });
+        document.getElementById("btn-share").addEventListener("click", onShare);
+        document.getElementById("btn-retry").addEventListener("click", () => {
+          document
+            .querySelectorAll(".nav-tab")
+            .forEach((b) =>
+              b.classList.toggle("active", b.dataset.tab === "game"),
+            );
+          startGame();
+        });
+
+        // キーボード入力
+        document.addEventListener("keydown", (e) => {
+          // IME 入力中の Enter 等で誤発火しないようガード
+          if (e.isComposing || e.keyCode === 229) return;
+          if (state.phase !== "game") {
+            if ((e.key === " " || e.key === "Enter") && state.phase === "start") {
+              e.preventDefault();
+              startGame();
+            }
+            return;
+          }
+          const key = e.key;
+          const jutsu = JUTSU.find((j) => j.key === key);
+          if (jutsu) {
+            e.preventDefault();
+            tryHit(jutsu.id);
+          }
+        });
+
+        // ページが非表示になったら一時停止（戻ったときの猛攻ぎを防ぐ）
+        // カウントダウン中（state.raf 未開始 + state.cdTimer 走行中）も止める
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden && state.phase === "game") {
+            if (state.raf) cancelAnimationFrame(state.raf);
+            state.raf = null;
+            // カウントダウン setInterval も停止しておかないと、戻った瞬間に
+            // throttled で残っていた tick が一気に発火して startGame 直行になる
+            if (state.cdTimer) {
+              clearInterval(state.cdTimer);
+              state.cdTimer = null;
+              state._cdResume = true;
+            }
+            state.pausedAt = performance.now();
+          } else if (!document.hidden && state.phase === "game") {
+            // 経過時間の補正：止まっていた分を巻物に加算
+            if (state.pausedAt) {
+              const delta = performance.now() - state.pausedAt;
+              for (const s of state.scrolls) {
+                s.spawnAt += delta;
+              }
+              if (state.nextSpawnAt) state.nextSpawnAt += delta;
+              if (state.gameStartMs) state.gameStartMs += delta;
+              state.pausedAt = 0;
+            }
+            // カウントダウン中だった場合は「斬！」→ loop 開始へ強制復帰
+            if (state._cdResume) {
+              state._cdResume = false;
+              const cdEl = document.getElementById("countdown");
+              cdEl.textContent = lang === "ja" ? "斬！" : "GO!";
+              cdEl.style.display = "flex";
+              setTimeout(() => {
+                cdEl.style.display = "none";
+                state.gameStartMs = performance.now();
+                state.nextSpawnAt = state.gameStartMs + 600;
+                state.raf = requestAnimationFrame(loop);
+              }, 400);
+            } else if (!state.raf && state.gameStartMs) {
+              state.raf = requestAnimationFrame(loop);
+            }
+          }
+        });
+
+        /* =========================================================
+           背景パーティクル
+           ========================================================= */
+        (function initParticles() {
+          const canvas = document.getElementById("particles");
+          const ctx = canvas.getContext("2d");
+          let w = 0;
+          let h = 0;
+          let particles = [];
+          const reduce =
+            window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+          function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+          }
+          function create() {
+            particles = [];
+            const count = Math.max(28, Math.floor((w * h) / 32000));
+            for (let i = 0; i < count; i++) {
+              particles.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                r: Math.random() * 1.6 + 0.4,
+                vx: (Math.random() - 0.5) * 0.18,
+                vy: (Math.random() - 0.5) * 0.18,
+                alpha: Math.random() * 0.5 + 0.15,
+                hue: Math.random() < 0.5 ? "14, 165, 233" : "251, 146, 60",
+              });
+            }
+          }
+          function draw() {
+            ctx.clearRect(0, 0, w, h);
+            for (let i = 0; i < particles.length; i++) {
+              const p = particles[i];
+              ctx.beginPath();
+              ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+              ctx.fillStyle = "rgba(" + p.hue + ", " + p.alpha + ")";
+              ctx.fill();
+              p.x += p.vx;
+              p.y += p.vy;
+              if (p.x < 0) p.x = w;
+              if (p.x > w) p.x = 0;
+              if (p.y < 0) p.y = h;
+              if (p.y > h) p.y = 0;
+            }
+            if (!reduce) requestAnimationFrame(draw);
+          }
+          resize();
+          create();
+          draw();
+          window.addEventListener("resize", () => {
+            resize();
+            create();
+          });
+        })();
+
+        /* =========================================================
+           初期化
+           ========================================================= */
+        applyStartI18n();
+        applyGameI18n();
+        applyResultI18n();
+        applyTabsI18n();
+        requestAnimationFrame(updateLangPill);
+        window.addEventListener("resize", updateLangPill);
+      })();
+    </script>
+  </body>
+</html>

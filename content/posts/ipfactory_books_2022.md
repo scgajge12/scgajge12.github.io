@@ -1,7 +1,7 @@
 ---
 title: "Technical books recommended by IPFactory for first-year students (2022 edition)"
 date: 2022-04-07
-tags: ["blog"]
+tags: ["career"]
 type: post
 showTableOfContents: true
 ---

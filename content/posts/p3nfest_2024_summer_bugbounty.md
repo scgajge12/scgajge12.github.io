@@ -1,7 +1,7 @@
 ---
 title: "⭐︎ P3NFEST 2024 Summer Hands-on Course Report (Introduction to Practical Bug Bounty)"
 date: 2024-09-02
-tags: ["bugbounty", "event", "blog"]
+tags: ["bugbounty", "event"]
 type: post
 showTableOfContents: true
 ---

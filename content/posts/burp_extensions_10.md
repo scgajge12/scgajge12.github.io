@@ -1,7 +1,7 @@
 ---
 title: "10 recommended Burp Extensions for use in Bug Bounty"
 date: 2023-12-04
-tags: ["bugbounty", "security", "blog"]
+tags: ["bugbounty"]
 type: post
 showTableOfContents: true
 ---

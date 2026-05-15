@@ -1,7 +1,7 @@
 ---
 title: "⭐︎ Introduction to Practical Bug Bounty"
 date: 2024-08-31
-tags: ["bugbounty", "security", "slide"]
+tags: ["bugbounty", "slide"]
 type: post
 showTableOfContents: true
 ---
