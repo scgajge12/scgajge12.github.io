@@ -95,8 +95,9 @@ type: page
   <div class="pf-tl-org">Cyber Security Vendor</div>
   <div class="pf-tl-desc">
   <ul>
-    <li>Business Development</li>
-    <li>Security Consulting</li>
+    <li>Business Development (Professional Services, Product)</li>
+    <li>Security Consulting (DevSecOps / IR Support, Education)</li>
+    <li>Security Advisory</li>
   </ul>
   </div>
 </div>
@@ -104,7 +105,7 @@ type: page
 <div class="pf-tl-group">Past</div>
 
 <div class="pf-tl-item">
-  <div class="pf-tl-period">Apr.2024 – Mar.2025 (Full-time) · May.2023 – Mar.2024 (Part-time)</div>
+  <div class="pf-tl-period">May.2023 – Mar.2025 (Full-time / Part-time)</div>
   <div class="pf-tl-role">Security Engineer・Pentester</div>
   <div class="pf-tl-org"><a href="https://gmo-cybersecurity.com/">GMO Cybersecurity by Ierae, Inc.</a></div>
   <div class="pf-tl-desc">
@@ -118,7 +119,7 @@ type: page
 
 <div class="pf-tl-item">
   <div class="pf-tl-period">Jul.2020 – Apr.2023 (Long-term Internship)</div>
-  <div class="pf-tl-role">Security Engineer (Long-term Intern)</div>
+  <div class="pf-tl-role">Security Engineer・Assessor</div>
   <div class="pf-tl-org"><a href="https://flatt.tech/">Flatt Security Inc.</a></div>
   <div class="pf-tl-desc">
   <ul>
