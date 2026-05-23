@@ -12,6 +12,7 @@ type: page
 <dt>Handle</dt><dd>morioka12 (<a href="https://x.com/scgajge12">@scgajge12</a>)</dd>
 <dt>Birthplace</dt><dd>Kanagawa, Japan</dd>
 <dt>Position</dt><dd>Security Engineer · Business Development (BizDev)</dd>
+<dt>Specialty</dt><dd>Product Security · Offensive Security</dd>
 <dt>Practice</dt><dd>Bug Bounty Hunter (since 2020)</dd>
 <dt>Community</dt><dd>AWS Community Builder — Security (since 2024)</dd>
 </dl>
@@ -71,6 +72,23 @@ type: page
 
 <div class="pf-timeline">
 
+<div class="pf-tl-group is-future">Future</div>
+
+<div class="pf-tl-item is-future">
+  <div class="pf-tl-period">Future · Aspiration</div>
+  <div class="pf-tl-role">Product Security Engineer</div>
+  <div class="pf-tl-org">Enterprise / Product Company (PSIRT · Security Team)</div>
+  <div class="pf-tl-desc">
+  <ul>
+    <li>Product Security Engineering</li>
+    <li>PSIRT · Vulnerability Coordination</li>
+    <li>In-house Security Team Operations</li>
+  </ul>
+  </div>
+</div>
+
+<div class="pf-tl-group is-current">Present</div>
+
 <div class="pf-tl-item is-current">
   <div class="pf-tl-period">Apr.2025 – present</div>
   <div class="pf-tl-role">Security Engineer · BizDev</div>
@@ -82,6 +100,8 @@ type: page
   </ul>
   </div>
 </div>
+
+<div class="pf-tl-group">Past</div>
 
 <div class="pf-tl-item">
   <div class="pf-tl-period">Apr.2024 – Mar.2025 (Full-time) · May.2023 – Mar.2024 (Part-time)</div>
@@ -137,6 +157,18 @@ type: page
 </div>
 
 ## Interests
+
+<div class="pf-press">
+  <div class="pf-press-source">Now · Recent Focus</div>
+  <ul style="margin:6px 0 0;padding-left:20px;font-size:0.95rem;line-height:1.7;">
+    <li>Software Supply Chain Security</li>
+    <li>Cloud Breach</li>
+    <li>Security for AI</li>
+    <li>MCP &amp; Skills Security</li>
+    <li>Incident Response</li>
+    <li>DevSecOps · Shift Left</li>
+  </ul>
+</div>
 
 <div class="pf-interests">
 
@@ -202,6 +234,7 @@ type: page
   <span class="pf-skill">Python</span>
   <span class="pf-skill">TypeScript</span>
   <span class="pf-skill">JavaScript</span>
+  <span class="pf-skill">Ruby</span>
   <span class="pf-skill">PHP</span>
   <span class="pf-skill">C</span>
 </div>

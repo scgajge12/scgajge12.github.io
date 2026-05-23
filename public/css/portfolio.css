@@ -370,6 +370,44 @@ html[data-pf-theme="light"] {
   background: var(--accent-color);
   box-shadow: 0 0 0 4px rgba(56, 180, 139, 0.18);
 }
+.pf-tl-group {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--pf-muted);
+  text-transform: uppercase;
+  margin: 18px 0 8px;
+}
+.pf-tl-group:first-child {
+  margin-top: 0;
+}
+.pf-tl-group.is-future {
+  opacity: 0.5;
+}
+.pf-tl-group.is-current {
+  color: var(--accent-color);
+}
+.pf-tl-item.is-future {
+  opacity: 0.4;
+  color: var(--pf-muted);
+}
+.pf-tl-item.is-future::before {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--pf-muted);
+  opacity: 0.6;
+}
+.pf-tl-item.is-future .pf-tl-period,
+.pf-tl-item.is-future .pf-tl-role,
+.pf-tl-item.is-future .pf-tl-org,
+.pf-tl-item.is-future .pf-tl-desc,
+.pf-tl-item.is-future .pf-tl-desc ul,
+.pf-tl-item.is-future .pf-tl-desc li {
+  color: var(--pf-muted) !important;
+}
+.pf-tl-item.is-future .pf-tl-period {
+  font-style: italic;
+}
 .pf-tl-period {
   font-size: 0.78rem;
   color: var(--pf-muted);
