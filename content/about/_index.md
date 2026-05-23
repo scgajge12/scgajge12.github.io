@@ -98,9 +98,15 @@ type: page
 
 <div class="pf-tl-item">
   <div class="pf-tl-period">Jul.2020 – Apr.2023 (Long-term Internship)</div>
-  <div class="pf-tl-role">Security Engineer (Intern)</div>
+  <div class="pf-tl-role">Security Engineer (Long-term Intern)</div>
   <div class="pf-tl-org"><a href="https://flatt.tech/">Flatt Security Inc.</a></div>
-  <div class="pf-tl-desc">Vulnerability Assessment (Web, Cloud, Platform)</div>
+  <div class="pf-tl-desc">
+  <ul>
+    <li>Vulnerability Assessment (Web, Cloud, Platform)</li>
+    <li>Launched a New Service (Cloud Security Assessment)</li>
+    <li>Technical Blog Writing</li>
+  </ul>
+  </div>
 </div>
 
 <div class="pf-tl-item">
