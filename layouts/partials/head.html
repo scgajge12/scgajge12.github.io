@@ -41,6 +41,10 @@
     <link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}/css/main.css">
     <link disabled id="dark-theme" rel="stylesheet" href="{{ .Site.BaseURL }}/css/dark.css">
 
+    {{/* ポートフォリオ拡張CSS: 内容ハッシュ付きURLでブラウザキャッシュを自動無効化 */}}
+    {{ $portfolioCSS := resources.Get "css/portfolio.css" | fingerprint }}
+    <link rel="stylesheet" type="text/css" href="{{ $portfolioCSS.RelPermalink }}" integrity="{{ $portfolioCSS.Data.Integrity }}">
+
     <script src="{{ .Site.BaseURL }}/js/svg-injector.min.js"></script>
     <script src="{{ .Site.BaseURL }}/js/feather-icons.min.js"></script>
     <script src="{{ .Site.BaseURL }}/js/main.js"></script>

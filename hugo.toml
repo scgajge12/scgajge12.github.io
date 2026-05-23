@@ -19,8 +19,6 @@ googleAnalytics = "G-5RYW8BSKQ2"
   accentColor = "#38b48b"
   togglePreviousAndNextButtons = "true"
   customHeadHTML = """
-    <!-- ポートフォリオ向け追加スタイル -->
-    <link rel="stylesheet" type="text/css" href="/css/portfolio.css">
     <!-- ダークテーマの切替を data-pf-theme に同期（カードのカラー追従用） -->
     <script>
       (function() {
