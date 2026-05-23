@@ -92,12 +92,12 @@ type: page
 <div class="pf-tl-item is-current">
   <div class="pf-tl-period">Apr.2025 – present</div>
   <div class="pf-tl-role">Security Engineer · BizDev</div>
-  <div class="pf-tl-org">Cyber Security Vendor</div>
+  <div class="pf-tl-org">Cyber Security Vendor x2</div>
   <div class="pf-tl-desc">
   <ul>
     <li>Business Development (Professional Services, Product)</li>
     <li>Security Consulting (DevSecOps / IR Support, Education)</li>
-    <li>Security Advisory</li>
+    <li>Security Advisory (External Advisor)</li>
   </ul>
   </div>
 </div>
