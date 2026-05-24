@@ -52,13 +52,13 @@
     <meta property="og:locale:alternate" content="{{ $alternateLocale }}">
     <meta property="og:image" content="{{ absURL $image }}">
     <meta property="og:image:secure_url" content="{{ absURL $image }}">
-    {{ if hasSuffix $image ".svg" }}
+    {{ if strings.HasSuffix $image ".svg" }}
     <meta property="og:image:type" content="image/svg+xml">
-    {{ else if or (hasSuffix $image ".png") (hasSuffix $image ".PNG") }}
+    {{ else if or (strings.HasSuffix $image ".png") (strings.HasSuffix $image ".PNG") }}
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    {{ else if or (hasSuffix $image ".jpg") (hasSuffix $image ".jpeg") }}
+    {{ else if or (strings.HasSuffix $image ".jpg") (strings.HasSuffix $image ".jpeg") }}
     <meta property="og:image:type" content="image/jpeg">
     {{ end }}
 
