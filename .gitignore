@@ -4,3 +4,6 @@
 # ローカル開発時の一時ファイル
 .hugo_build.lock
 resources/_gen/
+
+# Hugo ビルド成果物（本番デプロイは GitHub Actions から gh-pages ブランチに行うため、main では追跡しない）
+public/
