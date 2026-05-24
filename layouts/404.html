@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 · Page Not Found — {{ .Site.Title }}</title>
+  <!-- 404: 5秒表示してからホームへリダイレクト（誤リンク把握のため即時遷移しない） -->
+  <meta http-equiv="refresh" content="5; url={{ .Site.BaseURL }}">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="{{ .Site.BaseURL }}">
+  <style>
+    :root {
+      --accent: #38b48b;
+      --fg: #1a1a1a;
+      --muted: #6b7280;
+      --bg: #ffffff;
+      --border: #e5e7eb;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --fg: #f1f5f9;
+        --muted: #94a3b8;
+        --bg: #0f1115;
+        --border: #1f2937;
+      }
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", "Helvetica Neue", sans-serif;
+      color: var(--fg);
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .wrap {
+      max-width: 520px;
+      text-align: center;
+    }
+    .emoji {
+      font-size: 3rem;
+      margin: 0 0 8px;
+      letter-spacing: 0.08em;
+    }
+    h1 {
+      font-size: 2rem;
+      margin: 0 0 6px;
+      letter-spacing: 0.04em;
+    }
+    .sub {
+      color: var(--muted);
+      margin: 0 0 24px;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+    .countdown {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .countdown-num {
+      color: var(--accent);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      min-width: 1ch;
+      text-align: right;
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    a.btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: opacity 0.15s ease;
+    }
+    a.btn:hover { opacity: 0.85; }
+    a.btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    a.btn-secondary {
+      background: transparent;
+      color: var(--fg);
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="emoji" id="emoji">(·_·)</p>
+    <h1>404</h1>
+    <p class="sub">
+      お探しのページは見つかりませんでした。<br>
+      The page you requested could not be found.
+    </p>
+    <div class="countdown" role="status" aria-live="polite">
+      <span>Redirecting to home in</span>
+      <span class="countdown-num" id="cd">5</span>
+      <span>s</span>
+    </div>
+    <div class="actions">
+      <a class="btn btn-primary" href="{{ .Site.BaseURL }}">Go Home now</a>
+      <a class="btn btn-secondary" href="javascript:history.back()">Back</a>
+    </div>
+  </div>
+  <script>
+    (function () {
+      // ランダム絵文字（テーマ既定の演出を踏襲）
+      var emojiArray = [
+        '\\(o_o)/', '(o^^)o', '(˚Δ˚)b', '(^-^*)', '(≥o≤)', '(^_^)b', '(·_·)',
+        "(='X'=)", '(>_<)', '(;-;)', '\\(^Д^)/'
+      ];
+      var emojiEl = document.getElementById('emoji');
+      if (emojiEl) {
+        emojiEl.textContent = emojiArray[Math.floor(Math.random() * emojiArray.length)];
+      }
+
+      // 5秒カウントダウンしてからホームへ
+      var seconds = 5;
+      var cdEl = document.getElementById('cd');
+      var home = {{ .Site.BaseURL | jsonify }};
+      var timer = setInterval(function () {
+        seconds -= 1;
+        if (cdEl) cdEl.textContent = String(Math.max(seconds, 0));
+        if (seconds <= 0) {
+          clearInterval(timer);
+          window.location.replace(home);
+        }
+      }, 1000);
+    })();
+  </script>
+</body>
+</html>
