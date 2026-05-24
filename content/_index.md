@@ -36,22 +36,22 @@ description: "Yuta Morioka (morioka12) — Security Engineer, Bug Bounty Hunter 
 
 <a class="pf-feature" href="https://zenn.dev/scgajge12/books/06d5b176dfe0d7" target="_blank" rel="noopener noreferrer">
   <div class="pf-feature-eyebrow">Book · 2026</div>
-  <div class="pf-feature-title">脱初心者のための実践バグバウンティ登竜門</div>
-  <p class="pf-feature-desc">バグバウンティの実務を踏まえた初級から中級へのステップアップ本。English edition available on Leanpub.</p>
+  <div class="pf-feature-title" lang="ja">脱初心者のための実践バグバウンティ登竜門</div>
+  <p class="pf-feature-desc"><span lang="ja">バグバウンティの実務を踏まえた初級から中級へのステップアップ本。</span>English edition available on Leanpub.</p>
   <div class="pf-feature-meta">Zenn Book · JP / EN</div>
 </a>
 
 <a class="pf-feature" href="https://zenn.dev/scgajge12/books/6f6ab44df405b2" target="_blank" rel="noopener noreferrer">
   <div class="pf-feature-eyebrow">Book · 2025</div>
-  <div class="pf-feature-title">30日でCVE取得! OSSバグハント入門</div>
-  <p class="pf-feature-desc">OSSに対する脆弱性発見からCVE取得までの流れを30日で学ぶ実践本。English edition available on Leanpub.</p>
+  <div class="pf-feature-title" lang="ja">30日でCVE取得! OSSバグハント入門</div>
+  <p class="pf-feature-desc"><span lang="ja">OSSに対する脆弱性発見からCVE取得までの流れを30日で学ぶ実践本。</span>English edition available on Leanpub.</p>
   <div class="pf-feature-meta">Zenn Book · JP / EN</div>
 </a>
 
 <a class="pf-feature" href="https://levtech.jp/media/article/interview/detail_466/" target="_blank" rel="noopener noreferrer">
   <div class="pf-feature-eyebrow">Interview · 2024</div>
   <div class="pf-feature-title">The Hope of the Bug Hunter World</div>
-  <p class="pf-feature-desc">なぜバグバウンティに取り組むのか、その魅力についてのインタビュー記事。</p>
+  <p class="pf-feature-desc" lang="ja">なぜバグバウンティに取り組むのか、その魅力についてのインタビュー記事。</p>
   <div class="pf-feature-meta">Press · Levtech LAB</div>
 </a>
 

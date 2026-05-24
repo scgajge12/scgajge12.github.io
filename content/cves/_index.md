@@ -32,7 +32,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2026/05/05</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-43936">CVE-2026-43936</a></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2026-43936">CVE-2026-43936</a></div>
     <div class="pf-cve-cwe">CWE-918 · Server-Side Request Forgery</div>
   </div>
   <span class="pf-sev pf-sev-medium">4.3 · Medium</span>
@@ -41,7 +41,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2024/01/22</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2024-23782">CVE-2024-23782</a></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2024-23782">CVE-2024-23782</a></div>
     <div class="pf-cve-cwe">CWE-79 · Cross-site Scripting</div>
   </div>
   <span class="pf-sev pf-sev-medium">5.4 · Medium</span>
@@ -50,7 +50,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2024/01/22</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2024-23348">CVE-2024-23348</a></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2024-23348">CVE-2024-23348</a></div>
     <div class="pf-cve-cwe">CWE-20 · Improper Input Validation</div>
   </div>
   <span class="pf-sev pf-sev-medium">5.4 · Medium</span>
@@ -59,7 +59,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2023/09/30</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-5318">CVE-2023-5318</a></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2023-5318">CVE-2023-5318</a></div>
     <div class="pf-cve-cwe">CWE-798 · Use of Hard-coded Credentials</div>
   </div>
   <span class="pf-sev pf-sev-high">7.5 · High</span>
@@ -68,7 +68,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2023/08/30</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-4624">CVE-2023-4624</a></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2023-4624">CVE-2023-4624</a></div>
     <div class="pf-cve-cwe">CWE-918 · Server-Side Request Forgery</div>
   </div>
   <span class="pf-sev pf-sev-low">2.4 · Low</span>
@@ -77,7 +77,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2023/08/06</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-4187">CVE-2023-4187</a></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2023-4187">CVE-2023-4187</a></div>
     <div class="pf-cve-cwe">CWE-79 · Cross-site Scripting</div>
   </div>
   <span class="pf-sev pf-sev-medium">4.8 · Medium</span>
@@ -86,7 +86,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2023/07/28</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-3982">CVE-2023-3982</a></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2023-3982">CVE-2023-3982</a></div>
     <div class="pf-cve-cwe">CWE-79 · Cross-site Scripting</div>
   </div>
   <span class="pf-sev pf-sev-medium">4.8 · Medium</span>
@@ -95,7 +95,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2023/07/28</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-3981">CVE-2023-3981</a></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2023-3981">CVE-2023-3981</a></div>
     <div class="pf-cve-cwe">CWE-918 · Server-Side Request Forgery</div>
   </div>
   <span class="pf-sev pf-sev-medium">4.9 · Medium</span>
@@ -104,7 +104,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2023/07/28</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-3980">CVE-2023-3980</a></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2023-3980">CVE-2023-3980</a></div>
     <div class="pf-cve-cwe">CWE-79 · Cross-site Scripting</div>
   </div>
   <span class="pf-sev pf-sev-medium">4.8 · Medium</span>
@@ -113,7 +113,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2023/07/26</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-38507">CVE-2023-38507</a><span class="pf-cve-star">⭐︎</span></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2023-38507">CVE-2023-38507</a><span class="pf-cve-star">⭐︎</span></div>
     <div class="pf-cve-cwe">CWE-307 · Improper Rate Limiting</div>
   </div>
   <span class="pf-sev pf-sev-critical">9.8 · Critical</span>
@@ -122,7 +122,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2023/07/08</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-37270">CVE-2023-37270</a><span class="pf-cve-star">⭐︎</span></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2023-37270">CVE-2023-37270</a><span class="pf-cve-star">⭐︎</span></div>
     <div class="pf-cve-cwe">CWE-89 · SQL Injection</div>
   </div>
   <span class="pf-sev pf-sev-high">8.8 · High</span>
@@ -131,7 +131,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2023/07/06</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-3521">CVE-2023-3521</a></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2023-3521">CVE-2023-3521</a></div>
     <div class="pf-cve-cwe">CWE-79 · Cross-site Scripting</div>
   </div>
   <span class="pf-sev pf-sev-medium">6.1 · Medium</span>
@@ -140,7 +140,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2023/06/28</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-3445">CVE-2023-3445</a></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2023-3445">CVE-2023-3445</a></div>
     <div class="pf-cve-cwe">CWE-79 · Cross-site Scripting</div>
   </div>
   <span class="pf-sev pf-sev-medium">4.8 · Medium</span>
@@ -149,7 +149,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2023/06/14</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-34251">CVE-2023-34251</a><span class="pf-cve-star">⭐︎</span></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2023-34251">CVE-2023-34251</a><span class="pf-cve-star">⭐︎</span></div>
     <div class="pf-cve-cwe">CWE-94 · Code Injection</div>
   </div>
   <span class="pf-sev pf-sev-high">7.2 · High</span>
@@ -158,7 +158,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2023/06/13</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-34247">CVE-2023-34247</a></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2023-34247">CVE-2023-34247</a></div>
     <div class="pf-cve-cwe">CWE-601 · Open Redirect</div>
   </div>
   <span class="pf-sev pf-sev-medium">4.1 · Medium</span>
@@ -167,7 +167,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2022/09/01</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2022-3072">CVE-2022-3072</a></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2022-3072">CVE-2022-3072</a></div>
     <div class="pf-cve-cwe">CWE-79 · Cross-site Scripting</div>
   </div>
   <span class="pf-sev pf-sev-medium">5.4 · Medium</span>
@@ -176,7 +176,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <li class="pf-cve">
   <span class="pf-cve-date">2022/05/13</span>
   <div class="pf-cve-body">
-    <div class="pf-cve-id"><a href="https://nvd.nist.gov/vuln/detail/CVE-2022-29894">CVE-2022-29894</a><span class="pf-cve-star">⭐︎</span></div>
+    <div class="pf-cve-id"><a rel="noopener noreferrer" href="https://nvd.nist.gov/vuln/detail/CVE-2022-29894">CVE-2022-29894</a><span class="pf-cve-star">⭐︎</span></div>
     <div class="pf-cve-cwe">CWE-79 · Cross-site Scripting</div>
   </div>
   <span class="pf-sev pf-sev-medium">4.8 · Medium</span>
@@ -226,10 +226,10 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 
 <div class="pf-press">
   <div class="pf-press-source">Strapi · Official Blog</div>
-  <p class="pf-press-title"><a href="https://strapi.io/blog/security-disclosure-of-vulnerabilities-sept-2023">Security Disclosure of Vulnerabilities: CVE-2023-38507</a></p>
+  <p class="pf-press-title"><a rel="noopener noreferrer" href="https://strapi.io/blog/security-disclosure-of-vulnerabilities-sept-2023">Security Disclosure of Vulnerabilities: CVE-2023-38507</a></p>
 </div>
 
 <div class="pf-press">
   <div class="pf-press-source">securityonline.info</div>
-  <p class="pf-press-title"><a href="https://securityonline.info/cve-2023-34251-grav-cms-remote-code-execution-vulnerability/">CVE-2023-34251: Grav CMS Remote Code Execution Vulnerability</a></p>
+  <p class="pf-press-title"><a rel="noopener noreferrer" href="https://securityonline.info/cve-2023-34251-grav-cms-remote-code-execution-vulnerability/">CVE-2023-34251: Grav CMS Remote Code Execution Vulnerability</a></p>
 </div>

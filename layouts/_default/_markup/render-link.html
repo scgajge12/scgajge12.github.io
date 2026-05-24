@@ -1,0 +1,12 @@
+{{- /*
+  Markdown リンク描画フック
+  - 外部リンク（http/https）には rel="noopener noreferrer" を自動付与
+  - サイト内 baseURL を共有する場合は内部リンク扱い（rel 不要）
+*/ -}}
+{{- $dest := .Destination -}}
+{{- $isExternal := or (hasPrefix $dest "http://") (hasPrefix $dest "https://") -}}
+{{- $base := strings.TrimRight "/" .Page.Site.BaseURL -}}
+{{- if and $isExternal $base (hasPrefix $dest (printf "%s/" $base)) -}}
+  {{- $isExternal = false -}}
+{{- end -}}
+<a href="{{ $dest | safeURL }}"{{ with .Title }} title="{{ . | safeHTML }}"{{ end }}{{ if $isExternal }} rel="noopener noreferrer"{{ end }}>{{ .Text | safeHTML }}</a>

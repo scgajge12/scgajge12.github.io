@@ -8,8 +8,8 @@ type: page
 
 <div class="pf-profile">
 <dl>
-<dt>Name</dt><dd>Yuta Morioka (森岡 優太)</dd>
-<dt>Handle</dt><dd>morioka12 (<a href="https://x.com/scgajge12">@scgajge12</a>)</dd>
+<dt>Name</dt><dd>Yuta Morioka (<span lang="ja">森岡 優太</span>)</dd>
+<dt>Handle</dt><dd>morioka12 (<a rel="noopener noreferrer" href="https://x.com/scgajge12">@scgajge12</a>)</dd>
 <dt>Birthplace</dt><dd>Kanagawa, Japan</dd>
 <dt>Position</dt><dd>Security Engineer · Business Development (BizDev)</dd>
 <dt>Specialty</dt><dd>Product Security · Offensive Security</dd>
@@ -76,7 +76,7 @@ type: page
 <div class="pf-tl-item">
   <div class="pf-tl-period">May.2023 – Mar.2025 (Full-time / Part-time)</div>
   <div class="pf-tl-role">Security Engineer・Pentester</div>
-  <div class="pf-tl-org"><a href="https://gmo-cybersecurity.com/">GMO Cybersecurity by Ierae, Inc.</a></div>
+  <div class="pf-tl-org"><a rel="noopener noreferrer" href="https://gmo-cybersecurity.com/">GMO Cybersecurity by Ierae, Inc.</a></div>
   <div class="pf-tl-desc">
   <ul>
     <li>Web Penetration Test</li>
@@ -89,7 +89,7 @@ type: page
 <div class="pf-tl-item">
   <div class="pf-tl-period">Jul.2020 – Apr.2023 (Long-term Internship)</div>
   <div class="pf-tl-role">Security Engineer・Assessor</div>
-  <div class="pf-tl-org"><a href="https://flatt.tech/">Flatt Security Inc.</a></div>
+  <div class="pf-tl-org"><a rel="noopener noreferrer" href="https://flatt.tech/">Flatt Security Inc.</a></div>
   <div class="pf-tl-desc">
   <ul>
     <li>Vulnerability Assessment (Web, Cloud, Platform)</li>
@@ -102,7 +102,7 @@ type: page
 <div class="pf-tl-item">
   <div class="pf-tl-period">Mar.2019 – Jan.2020 (Part-time)</div>
   <div class="pf-tl-role">Cram School Teacher</div>
-  <div class="pf-tl-org"><a href="https://www.rinkaiseminar.co.jp/">Rinkai Inc.</a></div>
+  <div class="pf-tl-org"><a rel="noopener noreferrer" href="https://www.rinkaiseminar.co.jp/">Rinkai Inc.</a></div>
 </div>
 
 </div>
@@ -126,14 +126,14 @@ type: page
 <div class="pf-tl-item">
   <div class="pf-tl-period">Apr.2020 – Mar.2024</div>
   <div class="pf-tl-role">Department of Information Security</div>
-  <div class="pf-tl-org"><a href="https://isc.iwasaki.ac.jp/">Information Science College</a></div>
+  <div class="pf-tl-org"><a rel="noopener noreferrer" href="https://isc.iwasaki.ac.jp/">Information Science College</a></div>
   <div class="pf-tl-desc">Research theme: <em>“Current Issues and Solutions Regarding AWS WAF”</em></div>
 </div>
 
 <div class="pf-tl-item">
   <div class="pf-tl-period">FY2022 Captain</div>
   <div class="pf-tl-role">Member · Information Technology Circle</div>
-  <div class="pf-tl-org"><a href="https://www.ipfactory.org/">IPFactory</a></div>
+  <div class="pf-tl-org"><a rel="noopener noreferrer" href="https://www.ipfactory.org/">IPFactory</a></div>
 </div>
 
 </div>
@@ -144,14 +144,14 @@ type: page
 
 <div class="pf-book">
   <div class="pf-book-year">2026 (Zenn Book)</div>
-  <div class="pf-book-title"><a href="https://zenn.dev/scgajge12/books/06d5b176dfe0d7">脱初心者のための実践バグバウンティ登竜門</a></div>
-  <div class="pf-book-en">EN: <a href="https://leanpub.com/beyond_bugbountyhunting">Beyond the Basics: Practical Bug Bounty Hunting</a></div>
+  <div class="pf-book-title"><a rel="noopener noreferrer" href="https://zenn.dev/scgajge12/books/06d5b176dfe0d7" lang="ja">脱初心者のための実践バグバウンティ登竜門</a></div>
+  <div class="pf-book-en">EN: <a rel="noopener noreferrer" href="https://leanpub.com/beyond_bugbountyhunting">Beyond the Basics: Practical Bug Bounty Hunting</a></div>
 </div>
 
 <div class="pf-book">
   <div class="pf-book-year">2025 (Zenn Book)</div>
-  <div class="pf-book-title"><a href="https://zenn.dev/scgajge12/books/6f6ab44df405b2">30日でCVE取得! OSSバグハント入門</a></div>
-  <div class="pf-book-en">EN: <a href="https://leanpub.com/ossbughunting">Practical Introduction to OSS Bug Hunting</a></div>
+  <div class="pf-book-title"><a rel="noopener noreferrer" href="https://zenn.dev/scgajge12/books/6f6ab44df405b2" lang="ja">30日でCVE取得! OSSバグハント入門</a></div>
+  <div class="pf-book-en">EN: <a rel="noopener noreferrer" href="https://leanpub.com/ossbughunting">Practical Introduction to OSS Bug Hunting</a></div>
 </div>
 
 <div class="pf-book">
@@ -166,7 +166,7 @@ type: page
 
 <div class="pf-press">
   <div class="pf-press-source">Levtech LAB · Interview</div>
-  <p class="pf-press-title"><a href="https://levtech.jp/media/article/interview/detail_466/">The Hope of the Bug Hunter World: Why I Tackle Bug Bounty and Their True Appeal</a></p>
+  <p class="pf-press-title"><a rel="noopener noreferrer" href="https://levtech.jp/media/article/interview/detail_466/">The Hope of the Bug Hunter World: Why I Tackle Bug Bounty and Their True Appeal</a></p>
 </div>
 
 ## Interests
@@ -198,7 +198,7 @@ type: page
     <span class="pf-tag">Hack The Box</span>
   </div>
   <p style="font-size:0.8rem;color:var(--pf-muted);margin:8px 0 0;">
-    HTB: <a href="https://app.hackthebox.com/profile/503730">Pro Hacker (Mar.2021)</a> · Japan 6th (Jan.2023)
+    HTB: <a rel="noopener noreferrer" href="https://app.hackthebox.com/profile/503730">Pro Hacker (Mar.2021)</a> · Japan 6th (Jan.2023)
   </p>
 </div>
 
@@ -297,29 +297,29 @@ type: page
 <div class="pf-link-group">
 <h4>Primary</h4>
 <ul>
-  <li><a href="https://x.com/scgajge12">X (Twitter)</a></li>
-  <li><a href="https://github.com/scgajge12">GitHub</a></li>
-  <li><a href="https://keybase.io/morioka12">Keybase</a></li>
+  <li><a rel="noopener noreferrer" href="https://x.com/scgajge12">X (Twitter)</a></li>
+  <li><a rel="noopener noreferrer" href="https://github.com/scgajge12">GitHub</a></li>
+  <li><a rel="noopener noreferrer" href="https://keybase.io/morioka12">Keybase</a></li>
 </ul>
 </div>
 
 <div class="pf-link-group">
 <h4>Writing</h4>
 <ul>
-  <li><a href="https://zenn.dev/scgajge12">Zenn</a></li>
-  <li><a href="https://scgajge12.hatenablog.com/archive">HatenaBlog</a></li>
-  <li><a href="https://medium.com/@scgajge12">Medium</a></li>
-  <li><a href="https://qiita.com/scgajge12">Qiita</a></li>
-  <li><a href="https://leanpub.com/u/scgajge12">Leanpub</a></li>
+  <li><a rel="noopener noreferrer" href="https://zenn.dev/scgajge12">Zenn</a></li>
+  <li><a rel="noopener noreferrer" href="https://scgajge12.hatenablog.com/archive">HatenaBlog</a></li>
+  <li><a rel="noopener noreferrer" href="https://medium.com/@scgajge12">Medium</a></li>
+  <li><a rel="noopener noreferrer" href="https://qiita.com/scgajge12">Qiita</a></li>
+  <li><a rel="noopener noreferrer" href="https://leanpub.com/u/scgajge12">Leanpub</a></li>
 </ul>
 </div>
 
 <div class="pf-link-group">
 <h4>Talks &amp; Profile</h4>
 <ul>
-  <li><a href="https://speakerdeck.com/scgajge12">Speaker Deck</a></li>
-  <li><a href="https://www.credly.com/users/yuta-morioka.9fcde5f4">Credly</a></li>
-  <li><a href="https://app.hackthebox.com/profile/503730">Hack The Box</a></li>
+  <li><a rel="noopener noreferrer" href="https://speakerdeck.com/scgajge12">Speaker Deck</a></li>
+  <li><a rel="noopener noreferrer" href="https://www.credly.com/users/yuta-morioka.9fcde5f4">Credly</a></li>
+  <li><a rel="noopener noreferrer" href="https://app.hackthebox.com/profile/503730">Hack The Box</a></li>
 </ul>
 </div>
 

@@ -31,7 +31,7 @@ Profiles, platform standing and notable milestones across the bug bounty platfor
 
 <div class="pf-platform">
   <div class="pf-platform-header">
-    <h3 class="pf-platform-name"><a href="https://www.intigriti.com/profile/morioka12">Intigriti</a></h3>
+    <h3 class="pf-platform-name"><a rel="noopener noreferrer" href="https://www.intigriti.com/profile/morioka12">Intigriti</a></h3>
     <span class="pf-platform-since">Since 2020/03</span>
   </div>
   <div class="pf-platform-kind">Open Bug Bounty Platform</div>
@@ -50,24 +50,24 @@ Profiles, platform standing and notable milestones across the bug bounty platfor
   </div>
   <div class="pf-platform-kind">Private / Invite-only Platform</div>
   <dl>
-    <dt>Status</dt><dd>Joined (passed selection) — <a href="https://twitter.com/scgajge12/status/1697783901970932095">tweet</a></dd>
+    <dt>Status</dt><dd>Joined (passed selection) — <a rel="noopener noreferrer" href="https://twitter.com/scgajge12/status/1697783901970932095">tweet</a></dd>
   </dl>
 </div>
 
 <div class="pf-platform">
   <div class="pf-platform-header">
-    <h3 class="pf-platform-name"><a href="https://issuehunt.io/profiles/scgajge12">IssueHunt</a></h3>
+    <h3 class="pf-platform-name"><a rel="noopener noreferrer" href="https://issuehunt.io/profiles/scgajge12">IssueHunt</a></h3>
     <span class="pf-platform-since">Since 2023/08</span>
   </div>
   <div class="pf-platform-kind">Open Bug Bounty Platform</div>
   <dl>
-    <dt>First report</dt><dd>Accepted (Oct.2023) — Rakuten Group, Inc. · <a href="https://twitter.com/scgajge12/status/1713728968656818665">tweet</a></dd>
+    <dt>First report</dt><dd>Accepted (Oct.2023) — Rakuten Group, Inc. · <a rel="noopener noreferrer" href="https://twitter.com/scgajge12/status/1713728968656818665">tweet</a></dd>
   </dl>
 </div>
 
 <div class="pf-platform">
   <div class="pf-platform-header">
-    <h3 class="pf-platform-name"><a href="https://huntr.dev/users/scgajge12/">huntr.dev</a></h3>
+    <h3 class="pf-platform-name"><a rel="noopener noreferrer" href="https://huntr.dev/users/scgajge12/">huntr.dev</a></h3>
     <span class="pf-platform-since">Since 2021/11</span>
   </div>
   <div class="pf-platform-kind">OSS Bug Bounty Platform (legacy)</div>

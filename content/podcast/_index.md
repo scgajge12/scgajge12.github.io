@@ -25,14 +25,14 @@ type: page
 <ul class="pf-pod-links">
 
 <li>
-  <a class="pf-pod-link" href="https://bugbountyjppodcast.notion.site/Bug-Bounty-JP-Podcast-8bf1080383a54c4a8848f10bfeb874b3">
+  <a class="pf-pod-link" rel="noopener noreferrer" href="https://bugbountyjppodcast.notion.site/Bug-Bounty-JP-Podcast-8bf1080383a54c4a8848f10bfeb874b3">
     <span class="pf-pod-link-name">Web Page</span>
     <span class="pf-pod-link-host">Notion</span>
   </a>
 </li>
 
 <li>
-  <a class="pf-pod-link" href="https://x.com/BBJPPodcast">
+  <a class="pf-pod-link" rel="noopener noreferrer" href="https://x.com/BBJPPodcast">
     <span class="pf-pod-link-name">X (Twitter)</span>
     <span class="pf-pod-link-host">@BBJPPodcast</span>
   </a>
@@ -45,28 +45,28 @@ type: page
 <ul class="pf-pod-links">
 
 <li>
-  <a class="pf-pod-link" href="https://open.spotify.com/show/2EO4HVs4Zm2D7wchOPbKyb">
+  <a class="pf-pod-link" rel="noopener noreferrer" href="https://open.spotify.com/show/2EO4HVs4Zm2D7wchOPbKyb">
     <span class="pf-pod-link-name">Spotify</span>
     <span class="pf-pod-link-host">open.spotify.com</span>
   </a>
 </li>
 
 <li>
-  <a class="pf-pod-link" href="https://podcasts.apple.com/jp/podcast/bug-bounty-jp-podcast/id1766648561">
+  <a class="pf-pod-link" rel="noopener noreferrer" href="https://podcasts.apple.com/jp/podcast/bug-bounty-jp-podcast/id1766648561">
     <span class="pf-pod-link-name">Apple Podcasts</span>
     <span class="pf-pod-link-host">podcasts.apple.com</span>
   </a>
 </li>
 
 <li>
-  <a class="pf-pod-link" href="https://music.amazon.co.jp/podcasts/56c636ae-c9bc-45cd-93e4-0edb63e3b220/bug-bounty-jp-podcast">
+  <a class="pf-pod-link" rel="noopener noreferrer" href="https://music.amazon.co.jp/podcasts/56c636ae-c9bc-45cd-93e4-0edb63e3b220/bug-bounty-jp-podcast">
     <span class="pf-pod-link-name">Amazon Music</span>
     <span class="pf-pod-link-host">music.amazon.co.jp</span>
   </a>
 </li>
 
 <li>
-  <a class="pf-pod-link" href="https://creators.spotify.com/pod/show/bbjp-podcast">
+  <a class="pf-pod-link" rel="noopener noreferrer" href="https://creators.spotify.com/pod/show/bbjp-podcast">
     <span class="pf-pod-link-name">Spotify for Creators</span>
     <span class="pf-pod-link-host">creators.spotify.com</span>
   </a>
