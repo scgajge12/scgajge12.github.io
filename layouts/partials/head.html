@@ -10,10 +10,26 @@
 
     {{ $title := .Title | default .Site.Title }}
     {{ $description := .Description | default .Site.Params.Description }}
-    {{ $image := .Params.image | default .Site.Params.AvatarURL }}
     {{ $siteKeywords := .Site.Params.MetaKeywords | default (slice) }}
     {{ $postKeywords := .Params.tags | default (slice) }}
     {{ $keywords := union $siteKeywords $postKeywords }}
+
+    {{/* ============================================================
+       OGP 画像の解決ロジック
+         ポートフォリオ全体で home OGP に統一する。
+         ※ 静的ゲームサイト（/games/ 以下）は Hugo を通らないため影響なし。
+         優先順位:
+           1. ページ frontmatter の image
+           2. 共通 OGP（PNG 優先、SVG フォールバック）
+           3. サイト全体のアバター
+       ============================================================ */}}
+    {{ $autoImage := "" }}
+    {{ $png := "static/images/og/home.png" }}
+    {{ $svg := "static/images/og/home.svg" }}
+    {{ if (os.FileExists $png) }}{{ $autoImage = "images/og/home.png" }}
+    {{ else if (os.FileExists $svg) }}{{ $autoImage = "images/og/home.svg" }}
+    {{ end }}
+    {{ $image := .Params.image | default $autoImage | default .Site.Params.AvatarURL }}
 
     <!-- SEO titles & descriptions -->
     <title>{{ $title }}</title>
@@ -24,8 +40,27 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{ $title }}">
     <meta property="og:description" content="{{ $description }}">
+    <meta property="og:site_name" content="{{ .Site.Title }}">
+    {{/* og:locale: 既定はサイト言語に追従。Podcast など日本語主体のページは ja_JP を優先し、代替言語として en_US を併記 */}}
+    {{ $primaryLocale := "en_US" }}
+    {{ $alternateLocale := "ja_JP" }}
+    {{ if eq .RelPermalink "/podcast/" }}
+      {{ $primaryLocale = "ja_JP" }}
+      {{ $alternateLocale = "en_US" }}
+    {{ end }}
+    <meta property="og:locale" content="{{ $primaryLocale }}">
+    <meta property="og:locale:alternate" content="{{ $alternateLocale }}">
     <meta property="og:image" content="{{ absURL $image }}">
     <meta property="og:image:secure_url" content="{{ absURL $image }}">
+    {{ if hasSuffix $image ".svg" }}
+    <meta property="og:image:type" content="image/svg+xml">
+    {{ else if or (hasSuffix $image ".png") (hasSuffix $image ".PNG") }}
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    {{ else if or (hasSuffix $image ".jpg") (hasSuffix $image ".jpeg") }}
+    <meta property="og:image:type" content="image/jpeg">
+    {{ end }}
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $title }}">
@@ -36,6 +71,85 @@
 
     <!-- SEO canonicals: helps Google understand your site better when using marketing campaign tagging etc -->
     <link rel="canonical" href="{{ .Permalink }}" />
+
+    {{/* JSON-LD: 構造化データ
+         - Home / About: Person schema
+         - Podcast: PodcastSeries
+         - CVEs / BB / Activities / Posts: CollectionPage（author = Person ID で接続）
+         - その他: 個別ページ（投稿等）は単純な WebPage を出力
+    */}}
+    {{ $personId := printf "%s#person" .Site.BaseURL }}
+    {{ $siteId := printf "%s#website" .Site.BaseURL }}
+    {{ if or .IsHome (eq .RelPermalink "/about/") }}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "@id": "{{ $personId }}",
+      "name": "Yuta Morioka",
+      "alternateName": ["morioka12", "森岡 優太"],
+      "url": "{{ .Site.BaseURL }}",
+      "image": "{{ absURL "images/morioka12.jpg" }}",
+      "jobTitle": "Security Engineer",
+      "description": "{{ .Site.Params.Description }}",
+      "sameAs": [
+        "https://x.com/scgajge12",
+        "https://github.com/scgajge12",
+        "https://zenn.dev/scgajge12",
+        "https://speakerdeck.com/scgajge12",
+        "https://scgajge12.hatenablog.com/",
+        "https://medium.com/@scgajge12",
+        "https://qiita.com/scgajge12",
+        "https://www.credly.com/users/yuta-morioka.9fcde5f4",
+        "https://app.hackthebox.com/profile/503730",
+        "https://www.intigriti.com/profile/morioka12",
+        "https://issuehunt.io/profiles/scgajge12",
+        "https://huntr.dev/users/scgajge12/"
+      ],
+      "knowsAbout": [
+        "Web Application Security",
+        "Cloud Security",
+        "AWS Security",
+        "Bug Bounty",
+        "Vulnerability Research",
+        "Penetration Testing",
+        "DevSecOps",
+        "Source Code Assessment",
+        "LLM Security"
+      ],
+      "knowsLanguage": ["ja", "en"],
+      "nationality": "JP"
+    }
+    </script>
+    {{ else if eq .RelPermalink "/podcast/" }}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "PodcastSeries",
+      "name": "Bug Bounty JP Podcast",
+      "alternateName": "BBJP_Podcast",
+      "url": {{ .Permalink | jsonify }},
+      "description": {{ $description | jsonify }},
+      "inLanguage": "ja",
+      "author": { "@type": "Person", "@id": {{ $personId | jsonify }}, "name": "Yuta Morioka", "url": {{ .Site.BaseURL | jsonify }} },
+      "isPartOf": { "@type": "WebSite", "@id": {{ $siteId | jsonify }}, "name": {{ .Site.Title | jsonify }}, "url": {{ .Site.BaseURL | jsonify }} }
+    }
+    </script>
+    {{ else if or (eq .RelPermalink "/cves/") (eq .RelPermalink "/bb/") (eq .RelPermalink "/activities/") (eq .RelPermalink "/posts/") }}
+    {{ $lang := .Site.LanguageCode | default "en" }}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": {{ $title | jsonify }},
+      "url": {{ .Permalink | jsonify }},
+      "description": {{ $description | jsonify }},
+      "inLanguage": {{ $lang | jsonify }},
+      "author": { "@type": "Person", "@id": {{ $personId | jsonify }}, "name": "Yuta Morioka", "url": {{ .Site.BaseURL | jsonify }} },
+      "isPartOf": { "@type": "WebSite", "@id": {{ $siteId | jsonify }}, "name": {{ .Site.Title | jsonify }}, "url": {{ .Site.BaseURL | jsonify }} }
+    }
+    </script>
+    {{ end }}
 
     <link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}/css/normalize.min.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}/css/main.css">
