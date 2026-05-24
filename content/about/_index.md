@@ -171,18 +171,6 @@ type: page
 
 ## Interests
 
-<div class="pf-press">
-  <div class="pf-press-source">Now · Recent Focus</div>
-  <ul style="margin:6px 0 0;padding-left:20px;font-size:0.95rem;line-height:1.7;">
-    <li>Software Supply Chain Security</li>
-    <li>Cloud Breach</li>
-    <li>Security for AI</li>
-    <li>MCP &amp; Skills Security</li>
-    <li>Incident Response</li>
-    <li>DevSecOps · Shift Left</li>
-  </ul>
-</div>
-
 <div class="pf-interests">
 
 <div class="pf-interest">
@@ -225,6 +213,18 @@ type: page
   </div>
 </div>
 
+</div>
+
+<div class="pf-press">
+  <div class="pf-press-source">Now · Recent Focus</div>
+  <ul style="margin:6px 0 0;padding-left:20px;font-size:0.95rem;line-height:1.7;">
+    <li>Software Supply Chain Security</li>
+    <li>Cloud Breach</li>
+    <li>Security for AI</li>
+    <li>MCP &amp; Skills Security</li>
+    <li>Incident Response</li>
+    <li>DevSecOps · Shift Left</li>
+  </ul>
 </div>
 
 ## Tech Skills
