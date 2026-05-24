@@ -1128,6 +1128,18 @@ html[data-pf-theme="light"] {
   line-height: 1.65;
 }
 
+/* 最終更新日（ページ末尾の控えめな表示） */
+.pf-lastmod {
+  margin: 32px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--pf-divider);
+  font-size: 0.78rem;
+  color: var(--pf-muted);
+  letter-spacing: 0.04em;
+  text-align: right;
+}
+.pf-lastmod time { font-variant-numeric: tabular-nums; }
+
 /* レスポンシブ */
 @media (max-width: 720px) {
   .pf-stat-value { font-size: 1.5rem; }

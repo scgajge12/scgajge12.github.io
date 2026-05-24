@@ -7,6 +7,9 @@ theme = "gokarna"
 # Automatically generate robots.txt
 enableRobotsTXT = true
 
+# Last updated 表示用: 各ページの最終更新を git の最終コミット日時から算出
+enableGitInfo = true
+
 # Google Analytics 4 測定ID（Hugo内部テンプレート用）
 googleAnalytics = "G-5RYW8BSKQ2"
 

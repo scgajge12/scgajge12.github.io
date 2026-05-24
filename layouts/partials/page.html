@@ -1,0 +1,19 @@
+<div class="post container">
+
+    <div class="post-header-section">
+        <h1>{{ .Title }}</h1>
+    </div>
+
+    <div class="post-content">
+        <p>
+            {{ .Content }}
+        </p>
+
+        {{/* 最終更新日（git/ファイル mtime ベース） */}}
+        {{ with .Lastmod }}
+        <p class="pf-lastmod" aria-label="Last updated">
+            Last updated: <time datetime="{{ .Format "2006-01-02" }}">{{ .Format "2006-01-02" }}</time>
+        </p>
+        {{ end }}
+    </div>
+</div>
