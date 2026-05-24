@@ -311,8 +311,8 @@ type: page
 </div>
 
 <div class="pf-history-card">
-  <div class="pf-history-org">JAWS</div>
-  <h3 class="pf-history-title">AWS Community</h3>
+  <div class="pf-history-org">AWS User Group – Japan</div>
+  <h3 class="pf-history-title">JAWS-UG</h3>
   <table class="pf-history-table">
     <tbody>
       <tr>
