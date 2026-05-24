@@ -37,37 +37,6 @@ type: page
   </div>
 </div>
 
-## Books
-
-<div class="pf-books">
-
-<div class="pf-book">
-  <div class="pf-book-year">2026 (Zenn Book)</div>
-  <div class="pf-book-title"><a href="https://zenn.dev/scgajge12/books/06d5b176dfe0d7">脱初心者のための実践バグバウンティ登竜門</a></div>
-  <div class="pf-book-en">EN: <a href="https://leanpub.com/beyond_bugbountyhunting">Beyond the Basics: Practical Bug Bounty Hunting</a></div>
-</div>
-
-<div class="pf-book">
-  <div class="pf-book-year">2025 (Zenn Book)</div>
-  <div class="pf-book-title"><a href="https://zenn.dev/scgajge12/books/6f6ab44df405b2">30日でCVE取得! OSSバグハント入門</a></div>
-  <div class="pf-book-en">EN: <a href="https://leanpub.com/ossbughunting">Practical Introduction to OSS Bug Hunting</a></div>
-</div>
-
-<div class="pf-book">
-  <div class="pf-book-year">2026 (Forthcoming · July)</div>
-  <div class="pf-book-title"><em>An introductory book on Bug Bounty / Bug Hunting</em></div>
-  <div class="pf-book-en">Publication · JP — Title &amp; venue to be announced.</div>
-</div>
-
-</div>
-
-## Press
-
-<div class="pf-press">
-  <div class="pf-press-source">Levtech LAB · Interview</div>
-  <p class="pf-press-title"><a href="https://levtech.jp/media/article/interview/detail_466/">The Hope of the Bug Hunter World: Why I Tackle Bug Bounty and Their True Appeal</a></p>
-</div>
-
 ## Work Experience
 
 <div class="pf-timeline">
@@ -138,6 +107,18 @@ type: page
 
 </div>
 
+<div class="pf-press">
+  <div class="pf-press-source">Consulting Track Record</div>
+  <ul style="margin:6px 0 0;padding-left:20px;font-size:0.95rem;line-height:1.7;">
+    <li>DevSecOps maturity uplift &amp; process improvement</li>
+    <li>Security guideline refinement &amp; standardization</li>
+    <li>Security strategy &amp; initiative roadmap planning</li>
+    <li>Incident response support &amp; advisory</li>
+    <li>Security training delivery &amp; internal enablement</li>
+    <li>Sounding-board sessions for day-to-day security operations</li>
+  </ul>
+</div>
+
 ## Education
 
 <div class="pf-timeline">
@@ -155,6 +136,37 @@ type: page
   <div class="pf-tl-org"><a href="https://www.ipfactory.org/">IPFactory</a></div>
 </div>
 
+</div>
+
+## Books
+
+<div class="pf-books">
+
+<div class="pf-book">
+  <div class="pf-book-year">2026 (Zenn Book)</div>
+  <div class="pf-book-title"><a href="https://zenn.dev/scgajge12/books/06d5b176dfe0d7">脱初心者のための実践バグバウンティ登竜門</a></div>
+  <div class="pf-book-en">EN: <a href="https://leanpub.com/beyond_bugbountyhunting">Beyond the Basics: Practical Bug Bounty Hunting</a></div>
+</div>
+
+<div class="pf-book">
+  <div class="pf-book-year">2025 (Zenn Book)</div>
+  <div class="pf-book-title"><a href="https://zenn.dev/scgajge12/books/6f6ab44df405b2">30日でCVE取得! OSSバグハント入門</a></div>
+  <div class="pf-book-en">EN: <a href="https://leanpub.com/ossbughunting">Practical Introduction to OSS Bug Hunting</a></div>
+</div>
+
+<div class="pf-book">
+  <div class="pf-book-year">2026 (Forthcoming · July)</div>
+  <div class="pf-book-title"><em>An introductory book on Bug Bounty / Bug Hunting</em></div>
+  <div class="pf-book-en">Publication · JP — Title &amp; venue to be announced.</div>
+</div>
+
+</div>
+
+## Press
+
+<div class="pf-press">
+  <div class="pf-press-source">Levtech LAB · Interview</div>
+  <p class="pf-press-title"><a href="https://levtech.jp/media/article/interview/detail_466/">The Hope of the Bug Hunter World: Why I Tackle Bug Bounty and Their True Appeal</a></p>
 </div>
 
 ## Interests
@@ -215,7 +227,7 @@ type: page
 
 </div>
 
-## Skills
+## Tech Skills
 
 ### Focus Areas
 
@@ -249,6 +261,7 @@ type: page
   <span class="pf-skill">Lambda</span>
   <span class="pf-skill">GuardDuty</span>
   <span class="pf-skill">WAF</span>
+  <span class="pf-skill">Bedrock</span>
 </div>
 
 ### Tooling
