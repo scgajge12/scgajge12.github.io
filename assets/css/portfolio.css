@@ -793,49 +793,70 @@ html[data-pf-theme="light"] {
   font-variant-numeric: tabular-nums;
 }
 
-/* ---------- BB — Milestones（時系列テーブル） ---------- */
-.pf-milestones {
-  width: 100%;
-  border-collapse: collapse;
-  display: table;
-  margin: 14px 0 28px;
-  font-size: 0.9rem;
+/* ---------- BB — Milestones（縦タイムライン UI） ---------- */
+.pf-ms-timeline {
+  position: relative;
+  list-style: none;
+  margin: 18px 0 28px;
+  padding: 0 0 0 26px;
 }
-.pf-milestones th { display: none; }
-.pf-milestones td {
-  padding: 9px 10px 9px 0;
-  border: none;
-  border-bottom: 1px dashed var(--pf-divider);
-  vertical-align: top;
-  background: transparent !important;
+.pf-ms-timeline::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--accent-color) 0%,
+    var(--pf-divider) 100%
+  );
+  opacity: 0.55;
 }
-.pf-milestones tr:last-child td { border-bottom: none; }
-.pf-milestones .pf-ms-date {
-  width: 108px;
-  white-space: nowrap;
+.pf-ms-item {
+  position: relative;
+  padding: 6px 0 16px;
+  font-size: 0.92rem;
+}
+.pf-ms-item::before {
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: 12px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--pf-surface);
+  border: 2px solid var(--accent-color);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.pf-ms-item:hover::before {
+  transform: scale(1.18);
+  box-shadow: 0 0 0 4px rgba(56, 180, 139, 0.18);
+}
+.pf-ms-item.is-key::before {
+  background: var(--accent-color);
+  box-shadow: 0 0 0 4px rgba(56, 180, 139, 0.18);
+}
+.pf-ms-item.is-origin::before {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--pf-muted);
+}
+.pf-ms-item .pf-ms-date {
+  font-size: 0.78rem;
   color: var(--pf-muted);
+  letter-spacing: 0.04em;
   font-variant-numeric: tabular-nums;
-  font-size: 0.82rem;
-  padding-top: 10px;
+  margin-bottom: 2px;
 }
-.pf-milestones .pf-ms-event { line-height: 1.55; }
-.pf-milestones .pf-ms-event a { color: inherit; }
-.pf-milestones .pf-ms-event a:hover { color: var(--accent-color); }
-.pf-milestones tr.is-key .pf-ms-event { font-weight: 600; }
-
-@media (max-width: 600px) {
-  .pf-milestones,
-  .pf-milestones tbody,
-  .pf-milestones tr,
-  .pf-milestones td { display: block; width: auto; }
-  .pf-milestones tr {
-    border-bottom: 1px dashed var(--pf-divider);
-    padding: 4px 0 8px;
-  }
-  .pf-milestones tr:last-child { border-bottom: none; }
-  .pf-milestones td { border-bottom: none; padding: 2px 0; }
-  .pf-milestones .pf-ms-date { padding-top: 6px; }
+.pf-ms-item .pf-ms-event {
+  line-height: 1.55;
 }
+.pf-ms-item .pf-ms-event a { color: inherit; text-decoration: underline dotted; text-underline-offset: 3px; }
+.pf-ms-item .pf-ms-event a:hover { color: var(--accent-color); }
+.pf-ms-item.is-key .pf-ms-event { font-weight: 600; }
 
 /* ============================================================
    6. Podcast ページ

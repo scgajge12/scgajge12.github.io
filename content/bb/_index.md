@@ -82,48 +82,46 @@ Profiles, platform standing and notable milestones across the bug bounty platfor
 
 ## Intigriti · Milestones
 
-<table class="pf-milestones">
-<tbody>
+<ol class="pf-ms-timeline">
 
-<tr>
-  <td class="pf-ms-date">2024/04/01</td>
-  <td class="pf-ms-event">Ranked <strong>17th</strong> in Q1 2024</td>
-</tr>
+<li class="pf-ms-item is-key">
+  <div class="pf-ms-date">2024/04/01</div>
+  <div class="pf-ms-event">Ranked <strong>17th</strong> in Q1 2024</div>
+</li>
 
-<tr>
-  <td class="pf-ms-date">2024/03/01</td>
-  <td class="pf-ms-event">Ranked <strong>6th</strong> in February 2024</td>
-</tr>
+<li class="pf-ms-item is-key">
+  <div class="pf-ms-date">2024/03/01</div>
+  <div class="pf-ms-event">Ranked <strong>6th</strong> in February 2024</div>
+</li>
 
-<tr class="is-key">
-  <td class="pf-ms-date">2024/02/06</td>
-  <td class="pf-ms-event">First <strong>Exceptional</strong> report accepted (CVSS 9.8 &times; 2) · <a href="https://twitter.com/scgajge12/status/1754854881373106588" rel="noopener noreferrer">tweet</a></td>
-</tr>
+<li class="pf-ms-item is-key">
+  <div class="pf-ms-date">2024/02/06</div>
+  <div class="pf-ms-event">First <strong>Exceptional</strong> report accepted (CVSS 9.8 &times; 2) · <a href="https://twitter.com/scgajge12/status/1754854881373106588" rel="noopener noreferrer">tweet</a></div>
+</li>
 
-<tr class="is-key">
-  <td class="pf-ms-date">2022/04/25</td>
-  <td class="pf-ms-event">First <strong>Critical</strong> report accepted (CVSS 9.1) · <a href="https://twitter.com/scgajge12/status/1518578154830323712" rel="noopener noreferrer">tweet</a></td>
-</tr>
+<li class="pf-ms-item">
+  <div class="pf-ms-date">2022/04/25</div>
+  <div class="pf-ms-event">First <strong>Critical</strong> report accepted (CVSS 9.1) · <a href="https://twitter.com/scgajge12/status/1518578154830323712" rel="noopener noreferrer">tweet</a></div>
+</li>
 
-<tr>
-  <td class="pf-ms-date">2020/04/06</td>
-  <td class="pf-ms-event">Ranked in All-time Top #100 · <a href="https://twitter.com/scgajge12/status/1247149383092559872" rel="noopener noreferrer">tweet</a></td>
-</tr>
+<li class="pf-ms-item">
+  <div class="pf-ms-date">2020/04/06</div>
+  <div class="pf-ms-event">Ranked in All-time Top #100 · <a href="https://twitter.com/scgajge12/status/1247149383092559872" rel="noopener noreferrer">tweet</a></div>
+</li>
 
-<tr>
-  <td class="pf-ms-date">2020/03/23</td>
-  <td class="pf-ms-event">First reward (bounty) · <a href="https://twitter.com/scgajge12/status/1242094314328485888" rel="noopener noreferrer">tweet</a></td>
-</tr>
+<li class="pf-ms-item">
+  <div class="pf-ms-date">2020/03/23</div>
+  <div class="pf-ms-event">First reward (bounty) · <a href="https://twitter.com/scgajge12/status/1242094314328485888" rel="noopener noreferrer">tweet</a></div>
+</li>
 
-<tr>
-  <td class="pf-ms-date">2020/03/03</td>
-  <td class="pf-ms-event">First accepted · <a href="https://twitter.com/scgajge12/status/1234845325371695104" rel="noopener noreferrer">tweet</a></td>
-</tr>
+<li class="pf-ms-item">
+  <div class="pf-ms-date">2020/03/03</div>
+  <div class="pf-ms-event">First accepted · <a href="https://twitter.com/scgajge12/status/1234845325371695104" rel="noopener noreferrer">tweet</a></div>
+</li>
 
-<tr>
-  <td class="pf-ms-date">2020/03/01</td>
-  <td class="pf-ms-event">Joined Intigriti</td>
-</tr>
+<li class="pf-ms-item is-origin">
+  <div class="pf-ms-date">2020/03/01</div>
+  <div class="pf-ms-event">Joined Intigriti</div>
+</li>
 
-</tbody>
-</table>
+</ol>
