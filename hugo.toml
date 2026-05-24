@@ -43,7 +43,8 @@ googleAnalytics = "G-5RYW8BSKQ2"
   socialIcons = [
     {name = "twitter", url = "https://twitter.com/scgajge12"},
     {name = "github", url = "https://github.com/scgajge12"},
-    {name = "email", url = "mailto:morioka1831@gmail.com"}
+    {name = "email", url = "mailto:morioka1831@gmail.com"},
+    {name = "rss", url = "/index.xml"}
   ]
   metaKeywords = ["morioka12", "scgajge12", "portfolio"]
 
@@ -61,13 +62,13 @@ googleAnalytics = "G-5RYW8BSKQ2"
     weight = 2
 
   [[menu.main]]
-    name = "Activity"
+    name = "Activities"
     pre = "<span data-feather='activity'></span>"
     url = "/activities/"
     weight = 3
 
   [[menu.main]]
-    name = "Post"
+    name = "Posts"
     pre = "<span data-feather='book'></span>"
     url = "/posts/"
     weight = 4

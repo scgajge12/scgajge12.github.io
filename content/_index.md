@@ -69,12 +69,12 @@ description: "Yuta Morioka (morioka12) — Security Engineer, Bug Bounty Hunter 
 </a>
 
 <a class="pf-nav-card" href="/activities/">
-  <span class="pf-nav-name">Activity</span>
+  <span class="pf-nav-name">Activities</span>
   <span class="pf-nav-desc">Talks, lectures &amp; community work</span>
 </a>
 
 <a class="pf-nav-card" href="/posts/">
-  <span class="pf-nav-name">Post</span>
+  <span class="pf-nav-name">Posts</span>
   <span class="pf-nav-desc">Writeups &amp; yearly retrospectives</span>
 </a>
 
