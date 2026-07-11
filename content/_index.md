@@ -29,7 +29,7 @@ description: "Yuta Morioka (morioka12) — Security Engineer, Bug Bounty Hunter 
 
 <div class="pf-feature">
   <div class="pf-feature-eyebrow">Book · 2026</div>
-  <div class="pf-feature-title">Coming Soon (July)</div>
+  <div class="pf-feature-title">Coming Soon (August)</div>
   <p class="pf-feature-desc">An introductory book on bug bounty / bug hunting.</p>
   <div class="pf-feature-meta">Publication · JP</div>
 </div>

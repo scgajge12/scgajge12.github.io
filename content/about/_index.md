@@ -161,7 +161,7 @@ type: page
 </div>
 
 <div class="pf-book">
-  <div class="pf-book-year">2026 (Forthcoming · July)</div>
+  <div class="pf-book-year">2026 (Forthcoming · August)</div>
   <div class="pf-book-title"><em>An introductory book on Bug Bounty / Bug Hunting</em></div>
   <div class="pf-book-en">Publication · JP — Title &amp; venue to be announced.</div>
 </div>
