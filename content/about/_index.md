@@ -24,7 +24,7 @@ type: page
     <span class="pf-stat-label">CVE IDs Disclosed</span>
   </div>
   <div class="pf-stat">
-    <span class="pf-stat-value">2</span>
+    <span class="pf-stat-value">3</span>
     <span class="pf-stat-label">Books Published</span>
   </div>
   <div class="pf-stat">
@@ -152,6 +152,12 @@ type: page
   <div class="pf-book-year">2025 (Zenn Book)</div>
   <div class="pf-book-title"><a rel="noopener noreferrer" href="https://zenn.dev/scgajge12/books/6f6ab44df405b2" lang="ja">30日でCVE取得! OSSバグハント入門</a></div>
   <div class="pf-book-en">EN: <a rel="noopener noreferrer" href="https://leanpub.com/ossbughunting">Practical Introduction to OSS Bug Hunting</a></div>
+</div>
+
+<div class="pf-book">
+  <div class="pf-book-year">2026 (Zenn Book)</div>
+  <div class="pf-book-title"><a rel="noopener noreferrer" href="https://zenn.dev/scgajge12/books/119c83fa281d04" lang="ja">バグハンター視点で学ぶ Caido 実践入門</a></div>
+  <div class="pf-book-en">EN: Practical Caido: A Bug Hunter's Guide</div>
 </div>
 
 <div class="pf-book">

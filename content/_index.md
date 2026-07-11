@@ -9,7 +9,7 @@ description: "Yuta Morioka (morioka12) — Security Engineer, Bug Bounty Hunter 
     <span class="pf-stat-label">CVE IDs Disclosed</span>
   </div>
   <div class="pf-stat">
-    <span class="pf-stat-value">2</span>
+    <span class="pf-stat-value">3</span>
     <span class="pf-stat-label">Books Published</span>
   </div>
   <div class="pf-stat">
