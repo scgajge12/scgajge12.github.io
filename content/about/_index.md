@@ -15,6 +15,7 @@ type: page
 <dt>Specialty</dt><dd>Product Security · Offensive Security</dd>
 <dt>Practice</dt><dd>Bug Bounty Hunter (since 2020)</dd>
 <dt>Community</dt><dd>AWS Community Builder — Security (since 2024)</dd>
+<dt>Community</dt><dd>Security Wakate Association — Co-founder (2024-2025)</dd>
 </dl>
 </div>
 
