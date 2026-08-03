@@ -42,21 +42,6 @@ type: page
 
 <div class="pf-timeline">
 
-<div class="pf-tl-group is-future">Future</div>
-
-<div class="pf-tl-item is-future">
-  <div class="pf-tl-period">Future · Aspiration</div>
-  <div class="pf-tl-role">Product Security Engineer</div>
-  <div class="pf-tl-org">Enterprise / Product Company (PSIRT · Security Team)</div>
-  <div class="pf-tl-desc">
-  <ul>
-    <li>Product Security Engineering</li>
-    <li>PSIRT · Vulnerability Coordination</li>
-    <li>In-house Security Team Operations</li>
-  </ul>
-  </div>
-</div>
-
 <div class="pf-tl-group is-current">Present</div>
 
 <div class="pf-tl-item is-current">
