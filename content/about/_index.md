@@ -19,25 +19,6 @@ type: page
 </dl>
 </div>
 
-<div class="pf-stats">
-  <div class="pf-stat">
-    <span class="pf-stat-value">15+</span>
-    <span class="pf-stat-label">CVE IDs Disclosed</span>
-  </div>
-  <div class="pf-stat">
-    <span class="pf-stat-value">3</span>
-    <span class="pf-stat-label">Books Published</span>
-  </div>
-  <div class="pf-stat">
-    <span class="pf-stat-value">6th</span>
-    <span class="pf-stat-label">Intigriti Peak · Feb.2024</span>
-  </div>
-  <div class="pf-stat">
-    <span class="pf-stat-value">20+</span>
-    <span class="pf-stat-label">Talks &amp; Lectures</span>
-  </div>
-</div>
-
 ## Work Experience
 
 <div class="pf-timeline">
@@ -205,18 +186,6 @@ type: page
   </div>
 </div>
 
-</div>
-
-<div class="pf-press">
-  <div class="pf-press-source">Now · Recent Focus</div>
-  <ul style="margin:6px 0 0;padding-left:20px;font-size:0.95rem;line-height:1.7;">
-    <li>Software Supply Chain Security</li>
-    <li>Cloud Breach</li>
-    <li>Security for AI</li>
-    <li>MCP &amp; Skills Security</li>
-    <li>Incident Response</li>
-    <li>DevSecOps · Shift Left</li>
-  </ul>
 </div>
 
 ## Tech Skills
