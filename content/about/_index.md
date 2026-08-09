@@ -171,7 +171,7 @@ type: page
     <span class="pf-tag">Hack The Box</span>
   </div>
   <p style="font-size:0.8rem;color:var(--pf-muted);margin:8px 0 0;">
-    HTB: <a rel="noopener noreferrer" href="https://app.hackthebox.com/profile/503730">Pro Hacker (Mar.2021)</a> · Japan 6th (Jan.2023)
+    HTB: <a rel="noopener noreferrer" href="https://profile.hackthebox.com/profile/019fe60d-fd0a-708b-b48b-1f5cfa8337d2">Pro Hacker (Mar.2021)</a> · Japan 6th (Jan.2023)
   </p>
 </div>
 
