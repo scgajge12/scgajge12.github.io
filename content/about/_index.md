@@ -12,10 +12,10 @@ type: page
 <dt>Handle</dt><dd>morioka12 (<a rel="noopener noreferrer" href="https://x.com/scgajge12">@scgajge12</a>)</dd>
 <dt>Birthplace</dt><dd>Kanagawa, Japan</dd>
 <dt>Position</dt><dd>Security Engineer · Business Development (BizDev)</dd>
-<dt>Specialty</dt><dd>Product Security · Offensive Security</dd>
-<dt>Practice</dt><dd>Bug Bounty Hunter (since 2020)</dd>
+<dt>Specialty</dt><dd>Cyber Security · Product Security · Offensive Security</dd>
+<dt>Practice</dt><dd>Bug Bounty Hunter · Ethical Hacker</dd>
 <dt>Community</dt><dd>AWS Community Builder — Security (since 2024)</dd>
-<dt>Community</dt><dd>Security Wakate Association — Co-founder (2024-2025)</dd>
+<dt>Community</dt><dd>Security Wakate Association — Co-Founder (2024-2025)</dd>
 </dl>
 </div>
 
@@ -194,7 +194,7 @@ type: page
 
 <div class="pf-skills">
   <span class="pf-skill">Web Application Security</span>
-  <span class="pf-skill">Cloud Security (AWS)</span>
+  <span class="pf-skill">Cloud Security</span>
   <span class="pf-skill">Offensive Security</span>
   <span class="pf-skill">Vulnerability Research</span>
   <span class="pf-skill">Source Code Assessment</span>
