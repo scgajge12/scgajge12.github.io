@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>OGP</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap");
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    /* ----- 1200x630 キャンバス ----- */
+    .ogp {
+      width: 1200px;
+      height: 630px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(1100px 700px at 78% 22%, rgba(56, 180, 139, 0.22) 0%, rgba(56, 180, 139, 0) 60%),
+        radial-gradient(900px 600px at 8% 90%, rgba(34, 211, 238, 0.10) 0%, rgba(34, 211, 238, 0) 65%),
+        linear-gradient(140deg, #0a1320 0%, #0d1c2c 45%, #102434 100%);
+      color: #e9f4ef;
+      font-family: "Inter", -apple-system, "Hiragino Sans", "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      letter-spacing: -0.01em;
+    }
+
+    /* ----- 背景ドットグリッド（セキュリティ的なテクスチャ） ----- */
+    .grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+      background-size: 22px 22px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.15));
+      -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.15));
+    }
+
+    /* ----- 装飾：右上のアクセントリング ----- */
+    .ring {
+      position: absolute;
+      top: -180px;
+      right: -180px;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      border: 2px solid rgba(56, 180, 139, 0.35);
+      box-shadow:
+        inset 0 0 0 28px rgba(56, 180, 139, 0.07),
+        0 0 80px rgba(56, 180, 139, 0.25);
+    }
+    .ring::after {
+      content: "";
+      position: absolute;
+      inset: 60px;
+      border-radius: 50%;
+      border: 1px dashed rgba(56, 180, 139, 0.45);
+    }
+
+    /* ----- 装飾：左下のコードスニペット風シェイプ ----- */
+    .chip-row {
+      position: absolute;
+      left: 64px;
+      bottom: 64px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      max-width: 720px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(56, 180, 139, 0.10);
+      border: 1px solid rgba(56, 180, 139, 0.32);
+      color: #a8f0d0;
+      font-size: 18px;
+      font-weight: 600;
+      font-family: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    }
+    .chip::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #38b48b;
+      box-shadow: 0 0 8px rgba(56, 180, 139, 0.9);
+    }
+
+    /* ----- ヘッダー：左上ブランド ----- */
+    .brand {
+      position: absolute;
+      top: 56px;
+      left: 64px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #38b48b;
+      box-shadow: 0 0 0 4px rgba(56, 180, 139, 0.18), 0 0 22px rgba(56, 180, 139, 0.55);
+    }
+    .brand-name {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-weight: 700;
+      font-size: 22px;
+      color: #d6f1e3;
+      letter-spacing: 0.04em;
+    }
+    .brand-domain {
+      position: absolute;
+      top: 56px;
+      right: 64px;
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 18px;
+      color: rgba(214, 241, 227, 0.55);
+      letter-spacing: 0.04em;
+    }
+
+    /* ----- 本文 ----- */
+    .body {
+      position: absolute;
+      left: 64px;
+      top: 138px;
+      right: 64px;
+      max-width: 900px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 17px;
+      font-weight: 700;
+      color: #38b48b;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 6px 14px 6px 12px;
+      border: 1px solid rgba(56, 180, 139, 0.45);
+      border-radius: 6px;
+      background: rgba(56, 180, 139, 0.08);
+    }
+    .eyebrow::before {
+      content: "//";
+      color: rgba(56, 180, 139, 0.65);
+    }
+
+    h1 {
+      font-size: 96px;
+      font-weight: 900;
+      line-height: 1.02;
+      margin: 22px 0 16px;
+      letter-spacing: -0.035em;
+      color: #ffffff;
+      max-width: 1020px;
+    }
+    h1 .accent {
+      color: #38b48b;
+    }
+    .subtitle {
+      font-size: 28px;
+      font-weight: 500;
+      color: rgba(214, 241, 227, 0.78);
+      line-height: 1.4;
+      max-width: 880px;
+      margin: 0;
+    }
+
+    /* ----- 右下の統計（任意） ----- */
+    .stats {
+      position: absolute;
+      right: 64px;
+      bottom: 64px;
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      gap: 14px 28px;
+      text-align: right;
+    }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .stat-value {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 36px;
+      font-weight: 800;
+      color: #38b48b;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: rgba(214, 241, 227, 0.55);
+      margin-top: 4px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ----- 下部の発光ライン ----- */
+    .underline {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg,
+        rgba(56, 180, 139, 0) 0%,
+        rgba(56, 180, 139, 0.85) 22%,
+        rgba(34, 211, 238, 0.85) 52%,
+        rgba(56, 180, 139, 0.85) 82%,
+        rgba(56, 180, 139, 0) 100%);
+      filter: drop-shadow(0 0 12px rgba(56, 180, 139, 0.5));
+    }
+  </style>
+</head>
+<body>
+  <div class="ogp" id="ogp">
+    <div class="grid"></div>
+    <div class="ring"></div>
+
+    <div class="brand">
+      <div class="brand-dot"></div>
+      <div class="brand-name" id="brandName">morioka12</div>
+    </div>
+    <div class="brand-domain" id="brandDomain">scgajge12.github.io</div>
+
+    <div class="body">
+      <div class="eyebrow" id="eyebrow">PORTFOLIO</div>
+      <h1 id="title">Title</h1>
+      <p class="subtitle" id="subtitle">Subtitle</p>
+    </div>
+
+    <div class="chip-row" id="chipRow"></div>
+    <div class="stats" id="stats"></div>
+
+    <div class="underline"></div>
+  </div>
+
+  <script>
+    // クエリパラメータから内容を差し込む（すべて textContent で安全に挿入）
+    // 例: ?eyebrow=Bug+Bounty&title=Bug+Bounty&accent=Bounty&subtitle=...&chips=Intigriti|Synack&stats=17|CVEs;6th|Intigriti
+    const q = new URLSearchParams(location.search);
+
+    function setText(id, key, fallback) {
+      const v = q.get(key);
+      if (v !== null) document.getElementById(id).textContent = v;
+      else if (fallback !== undefined) document.getElementById(id).textContent = fallback;
+    }
+
+    setText("brandName", "brand", "morioka12");
+    setText("brandDomain", "domain", "scgajge12.github.io");
+    setText("eyebrow", "eyebrow", "PORTFOLIO");
+    setText("subtitle", "subtitle", "Security Engineer & Bug Bounty Hunter");
+
+    // title と accent を組み合わせる: title 内で accent と一致する部分をスパンで強調
+    const title = q.get("title") || "Yuta Morioka";
+    const accent = q.get("accent") || "";
+    const h1 = document.getElementById("title");
+    h1.textContent = "";
+    if (accent && title.includes(accent)) {
+      const idx = title.indexOf(accent);
+      h1.appendChild(document.createTextNode(title.slice(0, idx)));
+      const span = document.createElement("span");
+      span.className = "accent";
+      span.textContent = accent;
+      h1.appendChild(span);
+      h1.appendChild(document.createTextNode(title.slice(idx + accent.length)));
+    } else {
+      h1.textContent = title;
+    }
+
+    // chips: "A|B|C"
+    const chips = q.get("chips");
+    if (chips) {
+      const row = document.getElementById("chipRow");
+      chips.split("|").forEach((s) => {
+        const span = document.createElement("span");
+        span.className = "chip";
+        span.textContent = s;
+        row.appendChild(span);
+      });
+    }
+
+    // stats: "value|label;value|label;..."
+    const stats = q.get("stats");
+    if (stats) {
+      const root = document.getElementById("stats");
+      stats.split(";").forEach((pair) => {
+        const [v, l] = pair.split("|");
+        const wrap = document.createElement("div");
+        wrap.className = "stat";
+        const vv = document.createElement("div");
+        vv.className = "stat-value";
+        vv.textContent = v || "";
+        const ll = document.createElement("div");
+        ll.className = "stat-label";
+        ll.textContent = l || "";
+        wrap.appendChild(vv);
+        wrap.appendChild(ll);
+        root.appendChild(wrap);
+      });
+    }
+
+    // Web フォント読み込み待ち
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        document.documentElement.setAttribute("data-fonts-ready", "1");
+      });
+    } else {
+      setTimeout(() => {
+        document.documentElement.setAttribute("data-fonts-ready", "1");
+      }, 800);
+    }
+  </script>
+</body>
+</html>
