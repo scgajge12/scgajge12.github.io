@@ -51,6 +51,8 @@ type: page
   - <span class="pf-chip pf-chip-organizer">Organizer</span> Organizer Member
 - [Hack Fes. 2025](https://hackfes2025.hacker.or.jp/)
   - <span class="pf-chip pf-chip-lecturer">Lecturer</span> "Introduction to Bug Bounty ~ The journey to becoming a Bug Hunter ~"
+- [BizDevKaigi #1](https://raksul.connpass.com/event/347280/)
+  - <span class="pf-chip pf-chip-attendee">Attendee</span> Offline BizDev Event
 - [The 2nd Security Wakate Association (LT & Networking Event)](https://sec-wakate.connpass.com/event/339267/)
   - <span class="pf-chip pf-chip-organizer">Organizer</span> Organizer Member
 - [Security Camp Forum 2025](https://www.security-camp.or.jp/event/forum2025.html) & [Security Camp Awards 2025](https://www.security-camp.or.jp/event/award2025.html)
