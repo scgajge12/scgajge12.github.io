@@ -1,6 +1,6 @@
 ---
 title: "About"
-description: "Yuta Morioka (morioka12) — profile, work experience, skills, books, and qualifications. Web/Cloud Security Engineer & Bug Bounty Hunter."
+description: "Yuta Morioka (morioka12) — profile, work experience, skills, books, and qualifications. Security Engineer & Bug Hunter."
 type: page
 ---
 
@@ -14,6 +14,7 @@ type: page
 <dt>Position</dt><dd>Security Engineer · Business Development (BizDev)</dd>
 <dt>Specialty</dt><dd>Cyber Security · Product Security · Offensive Security</dd>
 <dt>Practice</dt><dd>Bug Bounty Hunter · Ethical Hacker</dd>
+<dt>Member</dt><dd>Japan Hackers Association (since 2020)</dd>
 <dt>Community</dt><dd>AWS Community Builder — Security (since 2024)</dd>
 <dt>Community</dt><dd>Security Wakate Association — Co-Founder (2024-2025)</dd>
 </dl>
