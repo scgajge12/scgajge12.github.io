@@ -13,10 +13,11 @@ type: page
 <dt>Birthplace</dt><dd>Kanagawa, Japan</dd>
 <dt>Position</dt><dd>Security Engineer · Business Development (BizDev)</dd>
 <dt>Specialty</dt><dd>Cyber Security · Product Security · Offensive Security</dd>
-<dt>Practice</dt><dd>Bug Bounty Hunter · Ethical Hacker</dd>
+<dt>Practice</dt><dd>Bug Bounty Hunter · Ethical Hacker (since 2020)</dd>
 <dt>Member</dt><dd>Japan Hackers Association (since 2020)</dd>
 <dt>Community</dt><dd>AWS Community Builder — Security (since 2024)</dd>
 <dt>Community</dt><dd>Security Wakate Association — Co-Founder (2024-2025)</dd>
+<dt>Theme</dt><dd>MedTech・HealthTech × Cyber Security (since 2026)</dd>
 </dl>
 </div>
 
