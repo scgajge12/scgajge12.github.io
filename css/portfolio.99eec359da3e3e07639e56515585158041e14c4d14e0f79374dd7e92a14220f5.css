@@ -80,20 +80,6 @@ html[data-pf-theme="light"] {
   text-align: left;
 }
 
-.pf-pitch {
-  font-size: 1.08rem;
-  line-height: 1.75;
-  color: var(--pf-muted);
-  max-width: 620px;
-  margin: 16px auto 28px;
-  text-align: center;
-}
-
-.pf-pitch strong {
-  color: var(--accent-color);
-  font-weight: 700;
-}
-
 /* セクション見出し（Home内の小見出し） */
 .pf-section {
   margin: 48px 0 16px;
@@ -237,34 +223,6 @@ html[data-pf-theme="light"] {
 /* ============================================================
    2. About ページ
    ============================================================ */
-
-/* Highlight 4枚 */
-.pf-highlights {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 14px;
-  margin: 24px 0 36px;
-}
-.pf-highlight {
-  border: 1px solid var(--pf-border);
-  border-left: 3px solid var(--accent-color);
-  border-radius: 8px;
-  padding: 14px 16px;
-  background: var(--pf-card-bg);
-}
-.pf-highlight-title {
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  color: var(--pf-muted);
-  text-transform: uppercase;
-  margin-bottom: 6px;
-  font-weight: 700;
-}
-.pf-highlight-body {
-  font-size: 0.95rem;
-  line-height: 1.55;
-  font-weight: 600;
-}
 
 /* Profile vital card（About上部のラベル+値） */
 .pf-profile {
@@ -878,6 +836,28 @@ html[data-pf-theme="light"] {
   font-size: 0.92rem;
   line-height: 1.6;
   color: var(--pf-muted);
+}
+/* Why not: 休止は一時的な状態のためアクセント色は使わず、中立なミュート配色に留める */
+.pf-pod-status {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+  padding: 2px 10px;
+  border: 1px solid var(--pf-border-strong);
+  border-radius: 999px;
+  background: var(--pf-card-bg);
+  color: var(--pf-muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.pf-pod-hero p.pf-pod-note {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--pf-divider);
+  font-size: 0.86rem;
 }
 .pf-pod-links {
   display: grid;

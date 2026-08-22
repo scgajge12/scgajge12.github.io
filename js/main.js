@@ -1,3 +1,28 @@
+// ============================================================
+// gokarna テーマの static/js/main.js をプロジェクト側で上書きしたもの。
+// Hugo は project の static/ をテーマの static/ より優先するため、
+// 同一パスに置くことで差し替わる。
+//
+// テーマ側との差分は setTheme() / setThemeByUserPref() の2点のみ。
+//
+//   1. id="dark-theme-toggle-screen-reader-target" を
+//      class="dark-theme-toggle-sr" 参照に変更
+//      → テーマ側は PC 用とハンバーガー用の2箇所に同じ id を出力しており
+//        HTML 仕様違反だったため、layouts/partials/header.html で class 化した。
+//
+//   2. トグル操作時に全てのトグル要素を更新するよう変更
+//      → テーマ側は event.currentTarget だけを更新するため、PC 側で切り替えると
+//        ハンバーガーメニュー内のアイコンとスクリーンリーダー用テキストが
+//        旧状態のまま残っていた。
+//
+// Why not: テーマ本体（themes/gokarna/）は直接編集しない。
+//   テーマを差し替え・更新したときに変更が消えるのを避けるため、
+//   Hugo の上書き機構に載せる形を取っている。
+//   Why not: この2点のためだけに main.js 全体を複製するのは重複だが、
+//   テーマ側が id 直参照でハードコードしている以上、部分上書きの手段がない。
+//   テーマ更新時は本ファイルとテーマ側の差分を確認すること。
+// ============================================================
+
 document.addEventListener('DOMContentLoaded', ready, false);
 
 const THEME_PREF_STORAGE_KEY = "theme-preference";
@@ -112,10 +137,11 @@ function setThemeByUserPref() {
     setTheme(savedTheme, darkThemeToggles);
     darkThemeToggles.forEach(el => el.addEventListener('click', (event) => {
         toggleIcon = event.currentTarget.querySelector("a svg.feather");
+        // クリックされた要素だけでなく全トグルへ反映する（PC / ハンバーガーの表示ずれ防止）
         if (toggleIcon.classList[1] === THEME_TO_ICON_CLASS.dark) {
-            setTheme('light', [event.currentTarget]);
+            setTheme('light', darkThemeToggles);
         } else if (toggleIcon.classList[1] === THEME_TO_ICON_CLASS.light) {
-            setTheme('dark', [event.currentTarget]);
+            setTheme('dark', darkThemeToggles);
         }
     }));
 }
@@ -125,6 +151,9 @@ function setTheme(themeToSet, targets) {
     darkThemeCss.disabled = themeToSet === 'light';
     targets.forEach((target) => {
         target.querySelector('a').innerHTML = feather.icons[THEME_TO_ICON_CLASS[themeToSet].split('-')[1]].toSvg();
-        target.querySelector("#dark-theme-toggle-screen-reader-target").textContent = [THEME_TO_ICON_TEXT_CLASS[themeToSet]];
+        const srTarget = target.querySelector(".dark-theme-toggle-sr");
+        if (srTarget) {
+            srTarget.textContent = [THEME_TO_ICON_TEXT_CLASS[themeToSet]];
+        }
     });
 }

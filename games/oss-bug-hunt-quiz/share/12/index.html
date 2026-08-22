@@ -11,6 +11,13 @@
     <meta name="description" content="正答率 60% / GOOD JOB。あなたも 4 択クイズに挑戦してみよう！ — Score 12/20 (60%) on the OSS Bug Hunting 101 Quiz." />
     <link rel="canonical" href="https://scgajge12.github.io/games/oss-bug-hunt-quiz/share/12/" />
 
+    <!-- 結果シェア用ページはスコア別に本文がほぼ同一のため、検索インデックスからは外す。
+         layouts/sitemap.xml でこれらを列挙しないのと同じ理由（重複コンテンツ回避）。
+         Why not: nofollow は付けない。ゲーム本体への導線は辿らせたいので follow のまま残す。
+         Why not: sitemap から外すだけでは足りない。SNS 共有で URL が拡散した先から
+         クロールされうるため、ページ側でも明示する。 -->
+    <meta name="robots" content="noindex, follow" />
+
     <!-- ===== OGP / Twitter Card（スコア／ランク別画像） ===== -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="12/20 正解 — OSSバグハント入門 クイズ | morioka12 game site" />
