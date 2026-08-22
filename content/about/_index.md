@@ -282,7 +282,7 @@ type: page
 <ul>
   <li><a rel="noopener noreferrer" href="https://speakerdeck.com/scgajge12">Speaker Deck</a></li>
   <li><a rel="noopener noreferrer" href="https://www.credly.com/users/yuta-morioka.9fcde5f4">Credly</a></li>
-  <li><a rel="noopener noreferrer" href="https://app.hackthebox.com/profile/503730">Hack The Box</a></li>
+  <li><a rel="noopener noreferrer" href="https://profile.hackthebox.com/profile/019fe60d-fd0a-708b-b48b-1f5cfa8337d2">Hack The Box</a></li>
 </ul>
 </div>
 
