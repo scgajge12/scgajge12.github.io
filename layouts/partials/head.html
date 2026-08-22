@@ -36,11 +36,21 @@
     <meta name="description" content="{{ $description }}">
     <meta name="keywords" content='{{ delimit $keywords ", "}}'>
 
+    {{/* og:type: 個別記事は article、それ以外（Home / 一覧 / ポートフォリオ各ページ）は website */}}
+    {{ $isArticle := and .IsPage (eq .Section "posts") }}
     <meta property="og:url" content="{{ .Permalink }}">
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="{{ cond $isArticle "article" "website" }}">
     <meta property="og:title" content="{{ $title }}">
     <meta property="og:description" content="{{ $description }}">
     <meta property="og:site_name" content="{{ .Site.Title }}">
+    {{ if $isArticle }}
+    {{ if not .Date.IsZero }}<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ end }}
+    {{ if not .Lastmod.IsZero }}<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">{{ end }}
+    <meta property="article:author" content="{{ .Site.BaseURL }}">
+    {{ range .Params.tags }}
+    <meta property="article:tag" content="{{ . }}">
+    {{ end }}
+    {{ end }}
     {{/* og:locale: 既定はサイト言語に追従。Podcast など日本語主体のページは ja_JP を優先し、代替言語として en_US を併記 */}}
     {{ $primaryLocale := "en_US" }}
     {{ $alternateLocale := "ja_JP" }}
@@ -65,7 +75,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $title }}">
     <meta name="twitter:description" content="{{ $description }}">
-    <meta property="twitter:domain" content="{{ .Permalink }}">
+    {{/* twitter:domain は URL ではなくホスト名を入れる（カード上の出典表示に使われる） */}}
+    <meta property="twitter:domain" content="{{ (urls.Parse .Site.BaseURL).Host }}">
     <meta property="twitter:url" content="{{ .Permalink }}">
     <meta name="twitter:image" content="{{ absURL $image }}">
 
