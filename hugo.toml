@@ -25,21 +25,36 @@ googleAnalytics = "G-5RYW8BSKQ2"
     <!-- ダークテーマの切替を data-pf-theme に同期（カードのカラー追従用） -->
     <script>
       (function() {
-        function syncPfTheme() {
-          var link = document.getElementById('dark-theme');
-          if (!link) return;
-          // theme.js は dark時に link を有効化、light時に disabled=true
-          var isDark = !link.disabled;
-          document.documentElement.setAttribute('data-pf-theme', isDark ? 'dark' : 'light');
+        // Why not: DOMContentLoaded を待たない。
+        //   テーマ側 baseof.html は <body> 直後に setThemeByUserPref() を呼んで
+        //   dark.css を切り替えるため、ここで待つと最初の描画では
+        //   pf-* カードだけ @prefers-color-scheme の配色のまま残り、
+        //   手動テーマ ≠ システムテーマのときに一瞬だけ配色が食い違う。
+        //   この <script> は <link id="dark-theme"> より後に差し込まれるため、
+        //   要素はこの時点で既に参照できる。
+        var THEME_PREF_STORAGE_KEY = 'theme-preference'; // static/js/main.js と同じキー
+        var root = document.documentElement;
+
+        function applyPfTheme(theme) {
+          root.setAttribute('data-pf-theme', theme);
         }
-        // 初期同期
-        document.addEventListener('DOMContentLoaded', function() {
-          syncPfTheme();
-          var link = document.getElementById('dark-theme');
-          if (!link) return;
-          // disabled属性の変化を監視してリアルタイム反映
-          new MutationObserver(syncPfTheme).observe(link, { attributes: true, attributeFilter: ['disabled'] });
-        });
+
+        // 初期描画前に確定させる（判定順は main.js の setThemeByUserPref と同一）
+        var saved = null;
+        try {
+          saved = localStorage.getItem(THEME_PREF_STORAGE_KEY);
+        } catch (e) {
+          // プライベートモード等で localStorage が読めない場合はシステム設定に従う
+        }
+        applyPfTheme(saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+        // 以降はトグル操作に追従する
+        // （theme.js は dark時に link を有効化、light時に disabled=true）
+        var link = document.getElementById('dark-theme');
+        if (!link) return;
+        new MutationObserver(function() {
+          applyPfTheme(link.disabled ? 'light' : 'dark');
+        }).observe(link, { attributes: true, attributeFilter: ['disabled'] });
       })();
     </script>
   """
