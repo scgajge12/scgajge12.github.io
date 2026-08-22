@@ -12,12 +12,18 @@
 <div class="flex-break"></div>
 
 {{ if isset .Site.Params "socialicons" }}
+{{/* アイコン名をそのまま読み上げると "Rss" / "Github" になるため、表記を明示する。
+     未定義の名前は humanize にフォールバックする。 */}}
+{{ $socialLabels := dict "twitter" "X (Twitter)" "github" "GitHub" "email" "Email" "rss" "RSS" }}
 <section class="social-icons">
     <ul class="social-icons-list">
         {{ range .Site.Params.SocialIcons }}
         <li class="social-icon">
-            <a href="{{ .url }}" {{ if .rel }}rel="{{ .rel }}"{{ end }} aria-label="Learn more on {{ .name }}">
-                <img class="svg-inject" src="{{ $.Site.BaseURL }}/svg/icons/{{ .name }}.svg" />
+            {{/* リンク自体が aria-label でアクセシブル名を持つため、
+                 アイコン画像は装飾扱いにして alt="" で読み上げ対象から外す
+                 （alt 未指定だと支援技術が src を読み上げてしまう）。 */}}
+            <a href="{{ .url }}" {{ if .rel }}rel="{{ .rel }}"{{ end }} aria-label="{{ index $socialLabels .name | default (.name | humanize) }}">
+                <img class="svg-inject" src="{{ printf "svg/icons/%s.svg" .name | absURL }}" alt="" />
             </a>
         </li>
         {{ end }}

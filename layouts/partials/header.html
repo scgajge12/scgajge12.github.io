@@ -1,0 +1,77 @@
+{{/*
+  gokarna テーマの header.html をオーバーライドしたもの。
+  テーマ側との差分は次の3点だけで、それ以外は同一に保つ
+  （テーマ更新時の差分確認を容易にするため）。
+
+  1. メニュー項目の params.target を <a target> に反映させる
+     Why not: hugo.toml の url に外部URLや JS を書く回避策は取らない。
+     内部リンクのままターゲットだけ変えたいので、テンプレート側で対応する。
+
+  2. 同一ページ内で重複していた id を廃止
+     テーマ側は PC 用とハンバーガー用の2箇所に同じ
+     id="dark-theme-toggle-screen-reader-target" / id="theme-toggle-icon"
+     を出力しており HTML 仕様違反だった。前者は class 化、
+     後者はどこからも参照されていないため削除した。
+     ※ class 化に伴い static/js/main.js 側の参照も合わせて上書きしている。
+
+  3. アバター画像を absURL 化（baseURL 直結合による `//images/...` の解消）
+*/}}
+<header class="header">
+    <nav class="header-nav">
+
+        {{ if isset .Site.Params "avatarurl" }}
+        <div class="avatar">
+            <a href="{{ .Site.BaseURL }}">
+                <img src="{{ .Site.Params.AvatarURL | absURL }}" alt="{{ .Site.Params.AvatarAltText|default "avatar" }}" />
+            </a>
+        </div>
+        {{ end }}
+
+        <div class="nav-title">
+            <a class="nav-brand" href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+        </div>
+
+        <div class="nav-links">
+            {{ range .Site.Menus.main }}
+            <div class="nav-link">
+                <a href="{{ .URL | absURL }}"{{ with .Params.target }} target="{{ . }}" rel="noopener"{{ end }}>
+                    {{- .Pre | safeHTML }} {{ .Name }} {{ .Post | safeHTML -}}
+                </a>
+            </div>
+            {{ end }}
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span class="sr-only dark-theme-toggle-sr"></span>
+                <a>
+                    <span data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span id="hamburger-menu-toggle-screen-reader-target" class="sr-only">menu</span>
+                <a>
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            <!-- For mobile -->
+            <ul class="nav-hamburger-list visibility-hidden">
+                {{ range .Site.Menus.main }}
+                <li class="nav-item">
+                    <a href="{{ .URL | absURL }}"{{ with .Params.target }} target="{{ . }}" rel="noopener"{{ end }}>
+                        {{- .Pre | safeHTML }} {{ .Name }} {{ .Post | safeHTML -}}
+                    </a>
+                </li>
+                {{ end }}
+                <li class="nav-item dark-theme-toggle">
+                    <span class="sr-only dark-theme-toggle-sr">theme</span>
+                    <a>
+                        <span data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
