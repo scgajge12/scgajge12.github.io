@@ -14,10 +14,9 @@ type: page
 <dt>Position</dt><dd>Security Engineer · Business Development (BizDev)</dd>
 <dt>Specialty</dt><dd>Cyber Security · Product Security · Offensive Security</dd>
 <dt>Practice</dt><dd>Bug Bounty Hunter · Ethical Hacker (since 2020)</dd>
-<dt>Member</dt><dd>Japan Hackers Association (since 2020)</dd>
 <dt>Community</dt><dd>AWS Community Builder — Security (since 2024)</dd>
 <dt>Community</dt><dd>Security Wakate Association — Co-Founder (2024-2025)</dd>
-<dt>Theme</dt><dd>MedTech・HealthTech × Cyber Security (since 2026)</dd>
+<dt>Theme</dt><dd>Healthcare × Cyber Security (since 2026)</dd>
 </dl>
 </div>
 
@@ -25,10 +24,25 @@ type: page
 
 <div class="pf-timeline">
 
+<div class="pf-tl-group is-future">Future</div>
+
+<div class="pf-tl-item is-future">
+  <div class="pf-tl-period">Sep.2026 – </div>
+  <div class="pf-tl-role">Security Engineer</div>
+  <div class="pf-tl-org">Medical AI Startup</div>
+  <div class="pf-tl-desc">
+  <ul>
+    <li>Product Security Engineering</li>
+    <li>AI Security, DevSecOps</li>
+    <li>Public Awareness Activities (Healthcare × Security)</li>
+  </ul>
+  </div>
+</div>
+
 <div class="pf-tl-group is-current">Present</div>
 
 <div class="pf-tl-item is-current">
-  <div class="pf-tl-period">Apr.2025 – present</div>
+  <div class="pf-tl-period">Apr.2025 – Aug.2026</div>
   <div class="pf-tl-role">Security Engineer · BizDev</div>
   <div class="pf-tl-org">Cyber Security Vendor x2</div>
   <div class="pf-tl-desc">
@@ -44,7 +58,7 @@ type: page
 
 <div class="pf-tl-item">
   <div class="pf-tl-period">May.2023 – Mar.2025 (Full-time / Part-time)</div>
-  <div class="pf-tl-role">Security Engineer・Pentester</div>
+  <div class="pf-tl-role">Security Engineer · Pentester</div>
   <div class="pf-tl-org"><a rel="noopener noreferrer" href="https://gmo-cybersecurity.com/">GMO Cybersecurity by Ierae, Inc.</a></div>
   <div class="pf-tl-desc">
   <ul>
@@ -57,7 +71,7 @@ type: page
 
 <div class="pf-tl-item">
   <div class="pf-tl-period">Jul.2020 – Apr.2023 (Long-term Internship)</div>
-  <div class="pf-tl-role">Security Engineer・Assessor</div>
+  <div class="pf-tl-role">Security Engineer · Assessor</div>
   <div class="pf-tl-org"><a rel="noopener noreferrer" href="https://flatt.tech/">Flatt Security Inc.</a></div>
   <div class="pf-tl-desc">
   <ul>
@@ -74,6 +88,15 @@ type: page
   <div class="pf-tl-org"><a rel="noopener noreferrer" href="https://www.rinkaiseminar.co.jp/">Rinkai Inc.</a></div>
 </div>
 
+</div>
+
+<div class="pf-press">
+  <div class="pf-press-source">Theme</div>
+  <p class="pf-press-title">Healthcare × Cyber Security</p>
+  <ul style="margin:6px 0 0;padding-left:20px;font-size:0.95rem;line-height:1.7;">
+    <li><a rel="noopener noreferrer" href="https://github.com/scgajge12/awesome-healthcare-security">awesome-healthcare-security</a> — Curated resources on healthcare security</li>
+    <li><a rel="noopener noreferrer" href="https://note.com/scgajge12">Note</a> — Writings on healthcare &amp; security</li>
+  </ul>
 </div>
 
 <div class="pf-press">
@@ -269,8 +292,9 @@ type: page
 <div class="pf-link-group">
 <h4>Writing</h4>
 <ul>
-  <li><a rel="noopener noreferrer" href="https://zenn.dev/scgajge12">Zenn</a></li>
   <li><a rel="noopener noreferrer" href="https://scgajge12.hatenablog.com/archive">HatenaBlog</a></li>
+  <li><a rel="noopener noreferrer" href="https://zenn.dev/scgajge12">Zenn</a></li>
+  <li><a rel="noopener noreferrer" href="https://note.com/scgajge12">Note</a></li>
   <li><a rel="noopener noreferrer" href="https://medium.com/@scgajge12">Medium</a></li>
   <li><a rel="noopener noreferrer" href="https://qiita.com/scgajge12">Qiita</a></li>
   <li><a rel="noopener noreferrer" href="https://leanpub.com/u/scgajge12">Leanpub</a></li>
