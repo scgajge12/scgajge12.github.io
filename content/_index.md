@@ -27,9 +27,16 @@ description: "Yuta Morioka (morioka12) — Security Engineer, Bug Bounty Hunter 
 
 <div class="pf-feature-grid">
 
+<a class="pf-feature" href="https://github.com/scgajge12/awesome-healthcare-security" target="_blank" rel="noopener noreferrer">
+  <div class="pf-feature-eyebrow">Repository · 2026</div>
+  <div class="pf-feature-title">Awesome Healthcare Security</div>
+  <p class="pf-feature-desc"><span lang="ja">医療 × セキュリティの知見を一次情報から体系化したキュレーション。</span>Curated from primary sources.</p>
+  <div class="pf-feature-meta">GitHub · JP / EN</div>
+</a>
+
 <div class="pf-feature">
   <div class="pf-feature-eyebrow">Book · 2026</div>
-  <div class="pf-feature-title">Coming Soon (August)</div>
+  <div class="pf-feature-title">Coming Soon</div>
   <p class="pf-feature-desc">An introductory book on bug bounty / bug hunting.</p>
   <div class="pf-feature-meta">Publication · JP</div>
 </div>
@@ -38,13 +45,6 @@ description: "Yuta Morioka (morioka12) — Security Engineer, Bug Bounty Hunter 
   <div class="pf-feature-eyebrow">Book · 2026</div>
   <div class="pf-feature-title" lang="ja">脱初心者のための実践バグバウンティ登竜門</div>
   <p class="pf-feature-desc"><span lang="ja">バグバウンティの実務を踏まえた初級から中級へのステップアップ本。</span>English edition available on Leanpub.</p>
-  <div class="pf-feature-meta">Zenn Book · JP / EN</div>
-</a>
-
-<a class="pf-feature" href="https://zenn.dev/scgajge12/books/6f6ab44df405b2" target="_blank" rel="noopener noreferrer">
-  <div class="pf-feature-eyebrow">Book · 2025</div>
-  <div class="pf-feature-title" lang="ja">30日でCVE取得! OSSバグハント入門</div>
-  <p class="pf-feature-desc"><span lang="ja">OSSに対する脆弱性発見からCVE取得までの流れを30日で学ぶ実践本。</span>English edition available on Leanpub.</p>
   <div class="pf-feature-meta">Zenn Book · JP / EN</div>
 </a>
 
