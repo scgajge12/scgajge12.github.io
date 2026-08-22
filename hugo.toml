@@ -1,6 +1,5 @@
 baseURL = "https://scgajge12.github.io/"
 defaultContentLanguage = "en"
-languageCode = "en"
 title = "morioka12 site"
 theme = "gokarna"
 

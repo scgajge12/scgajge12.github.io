@@ -136,7 +136,7 @@
     }
     </script>
     {{ else if or (eq .RelPermalink "/cves/") (eq .RelPermalink "/bb/") (eq .RelPermalink "/activities/") (eq .RelPermalink "/posts/") }}
-    {{ $lang := .Site.LanguageCode | default "en" }}
+    {{ $lang := .Site.Language.Lang | default "en" }}
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
