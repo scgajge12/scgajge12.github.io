@@ -191,7 +191,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <div class="pf-oss-card">
   <div class="pf-oss-name"><a href="https://github.com/strapi/strapi" rel="noopener noreferrer">Strapi</a></div>
   <div class="pf-oss-kind">Headless CMS</div>
-  <div class="pf-oss-stars">★ 72.2k</div>
+  <div class="pf-oss-stars">★ 73.0k</div>
   <div class="pf-oss-cve">
     Stored XSS<br>
     Improper Rate Limiting
@@ -201,7 +201,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <div class="pf-oss-card">
   <div class="pf-oss-name"><a href="https://github.com/BookStackApp/BookStack" rel="noopener noreferrer">BookStack</a></div>
   <div class="pf-oss-kind">Documentation / Wiki</div>
-  <div class="pf-oss-stars">★ 18.8k</div>
+  <div class="pf-oss-stars">★ 19.0k</div>
   <div class="pf-oss-cve">
     Blind SSRF
   </div>
@@ -210,7 +210,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 <div class="pf-oss-card">
   <div class="pf-oss-name"><a href="https://github.com/getgrav/grav" rel="noopener noreferrer">Grav</a></div>
   <div class="pf-oss-kind">Flat-File CMS</div>
-  <div class="pf-oss-stars">★ 15.5k</div>
+  <div class="pf-oss-stars">★ 15.6k</div>
   <div class="pf-oss-cve">
     SSTI to RCE
   </div>
@@ -219,7 +219,7 @@ Disclosed vulnerabilities in OSS, sorted by year (newest first).
 </div>
 
 <p style="font-size:0.78rem;color:var(--pf-muted);margin:4px 0 24px;">
-  GitHub star counts as of May 2026.
+  GitHub star counts as of August 2026.
 </p>
 
 ## Press
