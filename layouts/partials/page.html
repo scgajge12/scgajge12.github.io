@@ -5,9 +5,11 @@
     </div>
 
     <div class="post-content">
-        <p>
-            {{ .Content }}
-        </p>
+        {{/* Why not: テーマ既定の <p> ラップは踏襲しない。
+             .Content は <h2> / <div> / <ul> / <table> といったブロック要素を含むため、
+             <p> の中に置くとパーサが <p> を即座に閉じ、空の <p> と迷子の </p> が残る
+             （HTML 仕様上ブロック要素は <p> の子になれない）。 */}}
+        {{ .Content }}
 
         {{/* 最終更新日（git/ファイル mtime ベース） */}}
         {{ with .Lastmod }}
