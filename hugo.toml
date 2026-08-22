@@ -98,6 +98,7 @@ googleAnalytics = "G-5RYW8BSKQ2"
     name = "Game"
     pre = "<span data-feather='play-circle'></span>"
     url = "/games/"
+    params = { target = "_blank" }
     weight = 8
 
 [markup]

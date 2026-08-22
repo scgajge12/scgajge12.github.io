@@ -93,7 +93,7 @@ description: "Yuta Morioka (morioka12) — Security Engineer, Bug Bounty Hunter 
   <span class="pf-nav-desc">Bug Bounty JP Podcast</span>
 </a>
 
-<a class="pf-nav-card" href="/games/">
+<a class="pf-nav-card" href="/games/" target="_blank" rel="noopener">
   <span class="pf-nav-name">Games</span>
   <span class="pf-nav-desc">Bug Bounty Online Game</span>
 </a>
