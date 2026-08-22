@@ -5,18 +5,19 @@ type: page
 ---
 
 <div class="pf-pod-hero">
-<h3>Bug Bounty JP Podcast (BBJP_Podcast)</h3>
+<h3>Bug Bounty JP Podcast (BBJP_Podcast) <span class="pf-pod-status">On hiatus</span></h3>
 <p>A casual security chat by hosts whose hobby is bug hunting through Bug Bounty and OSS. <em>Japanese content.</em></p>
+<p class="pf-pod-note">New episodes are currently paused. Past episodes remain available on the platforms below.</p>
 </div>
 
 <div class="pf-stats">
   <div class="pf-stat">
-    <span class="pf-stat-value">2024-</span>
+    <span class="pf-stat-value">2024–2025</span>
     <span class="pf-stat-label">Hosting since Feb.2024</span>
   </div>
   <div class="pf-stat">
-    <span class="pf-stat-value">4</span>
-    <span class="pf-stat-label">Distribution platforms</span>
+    <span class="pf-stat-value">16</span>
+    <span class="pf-stat-label">Episodes through Jun.2025</span>
   </div>
 </div>
 
@@ -52,6 +53,13 @@ type: page
 </li>
 
 <li>
+  <a class="pf-pod-link" rel="noopener noreferrer" href="https://creators.spotify.com/pod/show/bbjp-podcast">
+    <span class="pf-pod-link-name">Spotify for Creators</span>
+    <span class="pf-pod-link-host">creators.spotify.com</span>
+  </a>
+</li>
+
+<li>
   <a class="pf-pod-link" rel="noopener noreferrer" href="https://podcasts.apple.com/jp/podcast/bug-bounty-jp-podcast/id1766648561">
     <span class="pf-pod-link-name">Apple Podcasts</span>
     <span class="pf-pod-link-host">podcasts.apple.com</span>
@@ -62,13 +70,6 @@ type: page
   <a class="pf-pod-link" rel="noopener noreferrer" href="https://music.amazon.co.jp/podcasts/56c636ae-c9bc-45cd-93e4-0edb63e3b220/bug-bounty-jp-podcast">
     <span class="pf-pod-link-name">Amazon Music</span>
     <span class="pf-pod-link-host">music.amazon.co.jp</span>
-  </a>
-</li>
-
-<li>
-  <a class="pf-pod-link" rel="noopener noreferrer" href="https://creators.spotify.com/pod/show/bbjp-podcast">
-    <span class="pf-pod-link-name">Spotify for Creators</span>
-    <span class="pf-pod-link-host">creators.spotify.com</span>
   </a>
 </li>
 
