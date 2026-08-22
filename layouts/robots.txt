@@ -1,0 +1,13 @@
+{{/*
+  robots.txt のカスタムテンプレート。
+  Hugo 既定の出力は `User-agent: *` の1行のみで Sitemap 行を持たないため、
+  クロール導線を明示するために上書きしている。
+
+  Why not: Disallow は書かない。GitHub Pages 上の公開ポートフォリオであり
+  秘匿したいパスが無いうえ、robots.txt の Disallow は「隠したい場所の一覧」を
+  公開する副作用があるため、非公開にしたいものはそもそも配置しない方針とする。
+*/ -}}
+User-agent: *
+Allow: /
+
+Sitemap: {{ "sitemap.xml" | absURL }}

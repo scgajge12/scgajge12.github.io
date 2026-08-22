@@ -1,0 +1,38 @@
+{{/*
+  サイトマップのカスタムテンプレート。
+
+  Hugo 既定のサイトマップは Page（content/ 配下）しか列挙しないため、
+  static/ にそのまま置いている静的ゲームサイト（/games/）が丸ごと
+  インデックス導線から漏れていた。Home からも導線を張っている以上
+  取りこぼしたくないので、readDir で列挙して追記する。
+
+  Why not: /games/<name>/share/ 配下（結果シェア用の 89 ページ）は含めない。
+  スコア別に本文がほぼ同一の薄いページで、インデックスさせると
+  重複コンテンツ扱いになりうるため、入口となるゲーム本体のみを載せる。
+
+  Why not: ゲーム側に <lastmod> は付けない。static ファイルの mtime は
+  CI のチェックアウト時刻になり、毎ビルド「今」に化けて意味を成さないため。
+*/ -}}
+{{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\" ?>" | safeHTML }}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  {{- range .Data.Pages }}
+  {{- if .Permalink }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+    {{- if not .Lastmod.IsZero }}
+    <lastmod>{{ safeHTML ( .Lastmod.Format "2006-01-02T15:04:05-07:00" ) }}</lastmod>
+    {{- end }}
+  </url>
+  {{- end }}
+  {{- end }}
+  <url>
+    <loc>{{ "games/" | absURL }}</loc>
+  </url>
+  {{- range readDir "static/games" }}
+  {{- if .IsDir }}
+  <url>
+    <loc>{{ printf "games/%s/" .Name | absURL }}</loc>
+  </url>
+  {{- end }}
+  {{- end }}
+</urlset>

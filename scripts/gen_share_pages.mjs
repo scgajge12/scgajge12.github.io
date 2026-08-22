@@ -456,6 +456,13 @@ function renderTemplate(opts) {
     <meta name="description" content="${escapeHtml(ogDesc)}" />
     <link rel="canonical" href="${escapeHtml(shareUrl)}" />
 
+    <!-- 結果シェア用ページはスコア別に本文がほぼ同一のため、検索インデックスからは外す。
+         layouts/sitemap.xml でこれらを列挙しないのと同じ理由（重複コンテンツ回避）。
+         Why not: nofollow は付けない。ゲーム本体への導線は辿らせたいので follow のまま残す。
+         Why not: sitemap から外すだけでは足りない。SNS 共有で URL が拡散した先から
+         クロールされうるため、ページ側でも明示する。 -->
+    <meta name="robots" content="noindex, follow" />
+
     <!-- ===== OGP / Twitter Card（スコア／ランク別画像） ===== -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="${escapeHtml(ogTitle)}" />
