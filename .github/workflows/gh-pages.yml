@@ -6,25 +6,62 @@ on:
       - main  # Set a branch to deploy
   pull_request:
 
+# 既定の write-all を避け、gh-pages ブランチへの push に必要な権限だけ与える。
+# Why not: ジョブ単位ではなくワークフロー単位で絞る。ジョブが1つしかなく、
+# 将来ジョブを増やしたときに「絞り忘れ」が起きない側に倒すため。
+permissions:
+  contents: write
+
+# 使用する Hugo のバージョン。scripts/serve.sh の HUGO_VERSION と揃えること。
+#
+# HUGO_SHA256 は hugo_extended_<version>_linux-amd64.tar.gz の SHA-256。
+# 公式リリースの hugo_<version>_checksums.txt に記載された値をここへ固定する。
+# バージョンを上げるときは必ずセットで更新すること（片方だけ変えるとビルドが落ちる）。
+env:
+  HUGO_VERSION: '0.164.0'
+  HUGO_SHA256: 'fea17b8c076f950bb2e9f9486667bdaa29422883888d509d63931c73e8a9b3a4'
+
 jobs:
   deploy:
     runs-on: ubuntu-22.04
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - uses: actions/checkout@v3
+      # Why not: Action は可変タグ（@v4 等）ではなくコミット SHA で固定する。
+      # タグは上流で付け替え可能で、乗っ取られた場合に GITHUB_TOKEN ごと
+      # 持っていかれるため（サプライチェーン対策）。末尾コメントは可読性用。
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: '0.110.0'
-          # extended: true
+      # Why not: peaceiris/actions-hugo は使わない。同 action の installer は
+      # 取得したアーカイブのハッシュを検証しないため、サイトを生成するビルドツールの
+      # 完全性が「GitHub Release の健全性 + TLS」だけに依存する状態になる。
+      # Action を SHA でピン止めしている以上、その先で検証が切れているのは一貫しない。
+      # リポジトリに固定した SHA-256 と突き合わせる自前ステップに置き換える。
+      # 副次的に、信頼する必要のあるサードパーティ Action も1つ減る。
+      - name: Setup Hugo (with checksum verification)
+        run: |
+          set -euo pipefail
+          archive="hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz"
+          url="https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${archive}"
+
+          curl --fail --silent --show-error --location --retry 3 -o "$archive" "$url"
+
+          # 固定した期待値と一致しなければここで停止する（改ざん・破損の検知）
+          echo "${HUGO_SHA256}  ${archive}" | sha256sum --check --strict -
+
+          install_dir="${RUNNER_TEMP}/hugo"
+          mkdir -p "$install_dir"
+          tar -xzf "$archive" -C "$install_dir" hugo
+          rm -f "$archive"
+          echo "$install_dir" >> "$GITHUB_PATH"
 
       - name: Build
-        run: hugo --minify
+        run: |
+          hugo version
+          hugo --minify
 
       - name: Inject Google Analytics into static HTML (e.g. /games)
         run: |
@@ -39,7 +76,7 @@ jobs:
           python3 scripts/inject_ga.py public/games --measurement-id "$GA_ID"
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
         if: github.ref == 'refs/heads/main'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
