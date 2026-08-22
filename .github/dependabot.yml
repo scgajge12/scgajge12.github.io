@@ -1,0 +1,38 @@
+# Dependabot 設定
+#
+# 目的: gh-pages.yml で使う Action は commit SHA でピン止めしているが、
+#   ピンは放置すると自動的に古くなる（上流のセキュリティ修正が入ってこない）。
+#   SHA ピン止めは「更新の自動化」とセットで初めて成立するため、ここで補う。
+#
+# Dependabot は SHA ピンを認識し、`uses: owner/repo@<新SHA> # vX.Y.Z` の形で
+# SHA と末尾コメントの両方を書き換えた PR を出す。ピン運用は維持される。
+#
+# Why not: npm / gomod の設定は置かない。package.json も go.mod も持たない
+#   （テーマはベンダリング、OGP スクリプトは Node 標準モジュールのみ）ため、
+#   対象が存在しない ecosystem を書いても更新は発生しない。
+#   scripts/ogp/generate.sh が固定している @resvg/resvg-js のバージョンと、
+#   gh-pages.yml / serve.sh の HUGO_VERSION・SHA-256 は Dependabot の
+#   対象外なので、手動更新であることを各ファイル側のコメントに残してある。
+version: 2
+
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
+    # Why not: 公開直後のバージョンには飛びつかない。
+    #   Action の乗っ取りは「新バージョンを公開 → 気付かれる前に取り込ませる」形で
+    #   成立するため、公開から一定期間を置くことで検知・撤回の猶予を作る。
+    #   自動追従の速さより、取り込む先が枯れていることを優先する。
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    commit-message:
+      # コミット規約（Gitmoji + Conventional Commits）に寄せる
+      prefix: "⬆️ ci"
+    labels:
+      - "dependencies"
+      - "github-actions"
