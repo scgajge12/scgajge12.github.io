@@ -213,7 +213,7 @@ const pages = [
     eyebrow: "Portfolio",
     titleLine1: "Yuta Morioka",
     titleLine2: "morioka12",
-    subtitle: "Security Engineer and Bug Hunter",
+    subtitle: "Security Engineer / Bug Hunter / Ethical Hacker",
   },
 ];
 
