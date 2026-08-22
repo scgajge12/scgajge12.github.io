@@ -128,11 +128,11 @@
       "@type": "PodcastSeries",
       "name": "Bug Bounty JP Podcast",
       "alternateName": "BBJP_Podcast",
-      "url": {{ .Permalink | jsonify }},
-      "description": {{ $description | jsonify }},
+      "url": {{ .Permalink }},
+      "description": {{ $description }},
       "inLanguage": "ja",
-      "author": { "@type": "Person", "@id": {{ $personId | jsonify }}, "name": "Yuta Morioka", "url": {{ .Site.BaseURL | jsonify }} },
-      "isPartOf": { "@type": "WebSite", "@id": {{ $siteId | jsonify }}, "name": {{ .Site.Title | jsonify }}, "url": {{ .Site.BaseURL | jsonify }} }
+      "author": { "@type": "Person", "@id": {{ $personId }}, "name": "Yuta Morioka", "url": {{ .Site.BaseURL }} },
+      "isPartOf": { "@type": "WebSite", "@id": {{ $siteId }}, "name": {{ .Site.Title }}, "url": {{ .Site.BaseURL }} }
     }
     </script>
     {{ else if or (eq .RelPermalink "/cves/") (eq .RelPermalink "/bb/") (eq .RelPermalink "/activities/") (eq .RelPermalink "/posts/") }}
@@ -141,12 +141,12 @@
     {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "name": {{ $title | jsonify }},
-      "url": {{ .Permalink | jsonify }},
-      "description": {{ $description | jsonify }},
-      "inLanguage": {{ $lang | jsonify }},
-      "author": { "@type": "Person", "@id": {{ $personId | jsonify }}, "name": "Yuta Morioka", "url": {{ .Site.BaseURL | jsonify }} },
-      "isPartOf": { "@type": "WebSite", "@id": {{ $siteId | jsonify }}, "name": {{ .Site.Title | jsonify }}, "url": {{ .Site.BaseURL | jsonify }} }
+      "name": {{ $title }},
+      "url": {{ .Permalink }},
+      "description": {{ $description }},
+      "inLanguage": {{ $lang }},
+      "author": { "@type": "Person", "@id": {{ $personId }}, "name": "Yuta Morioka", "url": {{ .Site.BaseURL }} },
+      "isPartOf": { "@type": "WebSite", "@id": {{ $siteId }}, "name": {{ .Site.Title }}, "url": {{ .Site.BaseURL }} }
     }
     </script>
     {{ end }}
