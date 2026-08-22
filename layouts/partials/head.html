@@ -151,17 +151,17 @@
     </script>
     {{ end }}
 
-    <link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}/css/normalize.min.css" media="print" onload="this.media='all'">
-    <link rel="stylesheet" type="text/css" href="{{ .Site.BaseURL }}/css/main.css">
-    <link disabled id="dark-theme" rel="stylesheet" href="{{ .Site.BaseURL }}/css/dark.css">
+    <link rel="stylesheet" type="text/css" href="{{ "css/normalize.min.css" | absURL }}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" type="text/css" href="{{ "css/main.css" | absURL }}">
+    <link disabled id="dark-theme" rel="stylesheet" href="{{ "css/dark.css" | absURL }}">
 
     {{/* ポートフォリオ拡張CSS: 内容ハッシュ付きURLでブラウザキャッシュを自動無効化 */}}
     {{ $portfolioCSS := resources.Get "css/portfolio.css" | fingerprint }}
     <link rel="stylesheet" type="text/css" href="{{ $portfolioCSS.RelPermalink }}" integrity="{{ $portfolioCSS.Data.Integrity }}">
 
-    <script src="{{ .Site.BaseURL }}/js/svg-injector.min.js"></script>
-    <script src="{{ .Site.BaseURL }}/js/feather-icons.min.js"></script>
-    <script src="{{ .Site.BaseURL }}/js/main.js"></script>
+    <script src="{{ "js/svg-injector.min.js" | absURL }}"></script>
+    <script src="{{ "js/feather-icons.min.js" | absURL }}"></script>
+    <script src="{{ "js/main.js" | absURL }}"></script>
 
     <!-- Google Analytics 4（Hugo内部テンプレートで gtag.js を出力） -->
     {{ if hugo.IsProduction }}

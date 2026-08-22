@@ -1,0 +1,27 @@
+{{/*
+  gokarna テーマの terms.html をオーバーライドしたもの。
+  タグへのリンクが `{{ $.Site.BaseURL }}/tags/` で組まれており、
+  baseURL 末尾のスラッシュと重なって `//tags/` になるため absURL に置き換える。
+  それ以外はテーマ側と同一に保つ（テーマ更新時の差分確認を容易にするため）。
+*/}}
+{{ define "main" }}
+<div class="container tags-list">
+
+    <h1 class="list-title">{{ i18n "tags" }}</h1>
+    {{if eq (len $.Site.Taxonomies.tags) 0}}
+        {{ i18n "nothing" }}
+    {{else}}
+    <ul class="post-tags">
+        {{ range $.Site.Taxonomies.tags.ByCount }}
+        <li class="post-tag">
+            <a href="{{ printf "tags/%s/" (.Name | urlize) | absURL }}">
+                <div class="tag-name">{{ .Name }}</div>
+                <div class="tag-posts-count">{{ .Count }}</div>
+            </a>
+        </li>
+        {{ end }}
+    </ul>
+    {{ end }}
+
+</div>
+{{ end }}
