@@ -95,6 +95,7 @@ type: page
   <p class="pf-press-title">Healthcare × Cyber Security</p>
   <ul style="margin:6px 0 0;padding-left:20px;font-size:0.95rem;line-height:1.7;">
     <li><a rel="noopener noreferrer" href="https://github.com/scgajge12/awesome-healthcare-security">awesome-healthcare-security</a> — Curated resources on healthcare security</li>
+    <li><a rel="noopener noreferrer" href="https://scgajge12.hatenablog.com/archive/category/Healthcare">Tech Blog</a> — Technical articles in the Healthcare category</li>
     <li><a rel="noopener noreferrer" href="https://note.com/scgajge12">Note</a> — Writings on healthcare &amp; security</li>
   </ul>
 </div>
