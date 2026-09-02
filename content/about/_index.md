@@ -11,7 +11,7 @@ type: page
 <dt>Name</dt><dd>Yuta Morioka (<span lang="ja">森岡 優太</span>)</dd>
 <dt>Handle</dt><dd>morioka12 (<a rel="noopener noreferrer" href="https://x.com/scgajge12">@scgajge12</a>)</dd>
 <dt>Birthplace</dt><dd>Kanagawa, Japan</dd>
-<dt>Position</dt><dd>Security Engineer · Business Development (BizDev)</dd>
+<dt>Position</dt><dd>Security Engineer</dd>
 <dt>Specialty</dt><dd>Cyber Security · Product Security · Offensive Security</dd>
 <dt>Practice</dt><dd>Bug Bounty Hunter · Ethical Hacker (since 2020)</dd>
 <dt>Community</dt><dd>AWS Community Builder — Security (since 2024)</dd>
@@ -24,9 +24,9 @@ type: page
 
 <div class="pf-timeline">
 
-<div class="pf-tl-group is-future">Future</div>
+<div class="pf-tl-group is-current">Present</div>
 
-<div class="pf-tl-item is-future">
+<div class="pf-tl-item is-current">
   <div class="pf-tl-period">Sep.2026 – </div>
   <div class="pf-tl-role">Security Engineer</div>
   <div class="pf-tl-org">Medical AI Startup</div>
@@ -39,9 +39,9 @@ type: page
   </div>
 </div>
 
-<div class="pf-tl-group is-current">Present</div>
+<div class="pf-tl-group">Past</div>
 
-<div class="pf-tl-item is-current">
+<div class="pf-tl-item">
   <div class="pf-tl-period">Apr.2025 – Aug.2026</div>
   <div class="pf-tl-role">Security Engineer · BizDev</div>
   <div class="pf-tl-org">Cyber Security Vendor x2</div>
@@ -53,8 +53,6 @@ type: page
   </ul>
   </div>
 </div>
-
-<div class="pf-tl-group">Past</div>
 
 <div class="pf-tl-item">
   <div class="pf-tl-period">May.2023 – Mar.2025 (Full-time / Part-time)</div>
