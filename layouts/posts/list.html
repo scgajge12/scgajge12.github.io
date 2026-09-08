@@ -7,7 +7,7 @@
   <div class="pf-tagbar">
     <div class="pf-tagbar-label">Topics</div>
     <div class="pf-tagbar-pills">
-      {{- $featured := slice "bugbounty" "cloud" "web" "security" "career" "event" "slide" -}}
+      {{- $featured := slice "bugbounty" "cloud" "web" "security" "healthcare" "career" "event" "slide" -}}
       {{- $taxonomy := .Site.Taxonomies.tags -}}
       {{- range $featured -}}
         {{- $key := . | urlize -}}

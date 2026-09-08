@@ -1,7 +1,7 @@
 ---
 title: "Solving Five Hack The Box Machines Themed on Healthcare Organizations"
 date: 2026-08-30
-tags: ["security", "ctf"]
+tags: ["security", "ctf", "healthcare"]
 type: post
 showTableOfContents: true
 ---

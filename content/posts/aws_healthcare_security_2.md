@@ -1,7 +1,7 @@
 ---
 title: "An Introduction to Cloud Security for Healthcare Information Systems on AWS from an Attacker's Perspective (Part 2)"
 date: 2026-08-30
-tags: ["cloud", "security"]
+tags: ["cloud", "security", "healthcare"]
 type: post
 showTableOfContents: true
 ---
