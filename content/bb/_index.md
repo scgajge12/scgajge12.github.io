@@ -1,5 +1,5 @@
 ---
-title: "Bug Bounty"
+title: "Bug Bounty Hunting"
 description: "Bug bounty platform standing & milestones by morioka12 — Intigriti, Synack Red Team, IssueHunt, huntr.dev. Highest CVSS 9.8 (Exceptional)."
 type: page
 ---
@@ -80,7 +80,7 @@ Profiles, platform standing and notable milestones across the bug bounty platfor
 
 </div>
 
-## Intigriti · Milestones
+## Intigriti Milestones
 
 <ol class="pf-ms-timeline">
 
@@ -125,3 +125,8 @@ Profiles, platform standing and notable milestones across the bug bounty platfor
 </li>
 
 </ol>
+
+## Records & Events
+
+- 2024: Intigriti Q1 2024 Results ([Blog](https://scgajge12.hatenablog.com/entry/intigriti_q1_2024))
+- 2025: HackerOne Ambassador World Cup 2025 (Team Japan)
