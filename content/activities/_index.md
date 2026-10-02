@@ -40,6 +40,8 @@ type: page
 - [P3NFEST 2026 Spring](https://issuehunt.jp/p3nfest/2026/spring)
   - <span class="pf-chip pf-chip-lecturer">Lecturer</span> "Introduction to Practical Bug Bounty (2026 Edition)"
   - <span class="pf-chip pf-chip-speaker">Speaker</span> Panel Discussion
+- [SecHack365 Returns 2026](https://sechack365.nict.go.jp/)
+  - <span class="pf-chip pf-chip-attendee">Attendee</span> Returns event
 
 ## 2025
 
@@ -62,7 +64,7 @@ type: page
 
 ## 2024
 
-- [SecHack365 Returns 2024](https://sechack365.nict.go.jp/)
+- [SecHack365 Returns 2024](https://sechack365.nict.go.jp/report/2024/report_r2024.html)
   - <span class="pf-chip pf-chip-attendee">Attendee</span> Returns event
 - [The 1st Security Wakate Association (LT & Networking Event)](https://sec-wakate.connpass.com/event/332518/)
   - <span class="pf-chip pf-chip-organizer">Organizer</span> Organizer Member
@@ -176,6 +178,11 @@ type: page
   <h3 class="pf-history-title">SecHack365</h3>
   <table class="pf-history-table">
     <tbody>
+      <tr>
+        <td class="pf-history-year">2026</td>
+        <td class="pf-history-role"><span class="pf-chip pf-chip-attendee">Attendee</span></td>
+        <td class="pf-history-detail">Returns</td>
+      </tr>
       <tr>
         <td class="pf-history-year">2024</td>
         <td class="pf-history-role"><span class="pf-chip pf-chip-tutor">Assistant</span></td>
