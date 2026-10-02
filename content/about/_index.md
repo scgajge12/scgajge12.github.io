@@ -29,12 +29,16 @@ type: page
 <div class="pf-tl-item is-current">
   <div class="pf-tl-period">Sep.2026 – </div>
   <div class="pf-tl-role">Security Engineer</div>
-  <div class="pf-tl-org">Medical AI Startup</div>
+  <div class="pf-tl-org">Ubie, Inc.</div>
   <div class="pf-tl-desc">
   <ul>
     <li>Product Security Engineering</li>
-    <li>AI Security, DevSecOps</li>
-    <li>Public Awareness Activities (Healthcare × Security)</li>
+    <li>Security for Medical Institutions</li>
+    <li>Public Education Activities (Healthcare × Cyber Security)
+      <ul>
+        <li><a rel="noopener noreferrer" href="https://note.com/scgajge12/n/n89630b73728c">Blog: Joining Story at Ubie</a></li>
+      </ul>
+    </li>
   </ul>
   </div>
 </div>
